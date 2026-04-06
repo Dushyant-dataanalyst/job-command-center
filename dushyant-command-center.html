@@ -352,6 +352,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
     </div>
     <div class="tb-right">
       <span class="live"><span class="live-dot"></span>Live</span>
+      <span id="refresh-badge" style="font-size:10px;color:var(--muted);display:none"></span>
       <button class="btn btn-g" onclick="refreshAll()">↻ Refresh</button>
       <button class="btn btn-a" onclick="nav('checkin',document.querySelector('.nav-item[onclick*=checkin]'))">Weekly Check-in</button>
     </div>
@@ -723,9 +724,9 @@ function checkForRefresh(){
       if(data.last_refresh === lastRefreshSeen) return; // nothing new
       lastRefreshSeen = data.last_refresh;
 
-      // Update refresh badge in topbar
-      document.getElementById('tb-sub').textContent =
-        `Last refreshed ${data.refresh_date} at ${data.refresh_time} · ${data.message}`;
+      // Update dedicated refresh badge — never overwrite tb-sub date
+      const rb = document.getElementById('refresh-badge');
+      if(rb){ rb.textContent = `↻ ${data.refresh_date} ${data.refresh_time}`; rb.style.display='inline'; }
 
       // Show alert banner if set
       if(data.alert){
@@ -1256,15 +1257,43 @@ function tailorCV(){
 // ═══════════════════════════════════════
 // NAV
 // ═══════════════════════════════════════
-const TITLES={briefing:["Daily Briefing","Sunday, April 5, 2026 — Week 14 · Delhi, India"],checkin:["Weekly Check-in","Score your week and get your action plan"],jobs:["Jobs Feed","6 new roles matched to your profile"],tracker:["Application Log","Track every opportunity in your pipeline"],outreach:["Outreach Templates","Personalised to Dushyant Kapoor · AI & Data Transformation PM"],recruiters:["Recruiter CRM","Your contacts — copy-ready messages"],resume:["CV Tailor","Zero fabrication — your best story, perfectly framed"],negotiate:["Offer Negotiation","Calculate leverage · ₹50 LPA minimum target"],interview:["Interview Prep","Company-specific STAR questions"],news:["Market Intelligence","Netherlands · Singapore · India — April 5, 2026"],positioning:["My Positioning Bible","AI & Data Transformation PM — never deviate"]};
+const TITLES={
+  briefing:  ["Daily Briefing",       null],
+  checkin:   ["Weekly Check-in",      "Score your week · get your action plan"],
+  jobs:      ["Jobs Feed",            null],
+  tracker:   ["Application Log",      "Track every opportunity in your pipeline"],
+  outreach:  ["Outreach Templates",   "Personalised to Dushyant Kapoor · AI & Data Transformation PM"],
+  recruiters:["Recruiter CRM",        "Your contacts — copy-ready messages"],
+  resume:    ["CV Tailor",            "Zero fabrication — your best story, perfectly framed"],
+  negotiate: ["Offer Negotiation",    "Calculate leverage · ₹50 LPA minimum target"],
+  interview: ["Interview Prep",       "Company-specific STAR questions"],
+  news:      ["Market Intelligence",  null],
+  positioning:["My Positioning Bible","AI & Data Transformation PM — never deviate"]
+};
+
+function getLiveSubtitle(name){
+  const d   = new Date();
+  const days  = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months= ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const shortM= ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const startOfYear = new Date(d.getFullYear(),0,1);
+  const week = Math.ceil(((d - startOfYear)/86400000 + startOfYear.getDay()+1)/7);
+  const dateStr = `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  if(name==='briefing') return `${dateStr} — Week ${week} · Delhi, India`;
+  if(name==='jobs')     return `Roles matched to your profile · ${shortM[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  if(name==='news')     return `Netherlands · Singapore · India · ${shortM[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+  return null;
+}
+
 function nav(name,el){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('s-'+name).classList.add('active');
   if(el) el.classList.add('active');
-  const t=TITLES[name]||[name,''];
-  document.getElementById('tb-title').textContent=t[0];
-  document.getElementById('tb-sub').textContent=t[1];
+  const t = TITLES[name]||[name,''];
+  document.getElementById('tb-title').textContent = t[0];
+  const sub = getLiveSubtitle(name) || t[1] || '';
+  document.getElementById('tb-sub').textContent = sub;
 }
 function refreshAll(){showToast('Pipeline refreshed ↺','🔄');updateKPIBars()}
 
