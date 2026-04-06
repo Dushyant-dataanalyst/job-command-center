@@ -130,9 +130,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .jtags{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
 .tag{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--surface3);border:1px solid var(--border2);color:var(--muted)}
 .tag.hot{border-color:rgba(79,142,247,.4);color:var(--accent);background:rgba(79,142,247,.08)}
-.jfoot{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.jfoot{display:flex;align-items:center;justify-content:space-between;margin-top:9px;flex-wrap:wrap;gap:6px}
 .jloc{font-size:11px;color:var(--muted)}
-.jabts{display:flex;gap:5px}
+.jabts{display:flex;gap:5px;flex-wrap:wrap}
 .abt{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;border:none;transition:all .15s}
 .abt:hover{opacity:.85}
 .abt-a{background:var(--accent);color:#fff}
@@ -348,7 +348,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
   <div class="topbar">
     <div class="tb-left">
       <h1 id="tb-title">Daily Briefing</h1>
-      <p id="tb-sub">Sunday, April 5, 2026 — Week 14 · Delhi, India</p>
+      <p id="tb-sub"></p>
     </div>
     <div class="tb-right">
       <span class="live"><span class="live-dot"></span>Live</span>
@@ -393,7 +393,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
         <div>
           <!-- Today's 3 Actions -->
           <div class="next-actions" style="margin-top:0;margin-bottom:18px">
-            <div class="na-title">🎯 TODAY'S 3 PRIORITY ACTIONS — April 5, 2026</div>
+            <div class="na-title" id="todays-actions-title">🎯 TODAY'S 3 PRIORITY ACTIONS</div>
             <div class="na-item">
               <div class="na-num">1</div>
               <div class="na-text">
@@ -418,7 +418,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
           </div>
 
           <!-- Top matched jobs today -->
-          <div class="sh"><h2>🔥 Top 3 New Roles — April 5</h2><span onclick="nav('jobs',document.querySelector('.nav-item[onclick*=jobs]'))" style="cursor:pointer;color:var(--accent)">See all 6 →</span></div>
+          <div class="sh"><h2 id="top-roles-title">🔥 Top 3 New Roles</h2><span onclick="nav('jobs',document.querySelector('.nav-item[onclick*=jobs]'))" style="cursor:pointer;color:var(--accent)">See all →</span></div>
           <div id="brief-jobs"></div>
         </div>
 
@@ -579,7 +579,7 @@ Azure · Data Transformation · Stakeholder Management · Six Sigma</textarea>
 
     <!-- ── NEWS ── -->
     <div id="s-news" class="section">
-      <div class="sh"><h2>📡 Market Intelligence</h2><span>Updated April 5, 2026</span></div>
+      <div class="sh"><h2>📡 Market Intelligence</h2><span id="intel-date"></span></div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
         <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--purple);font-weight:700;margin-bottom:10px">🤖 AI & Data</div><div id="news-ai"></div></div>
         <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:700;margin-bottom:10px">💼 NL/SG Jobs</div><div id="news-jobs"></div></div>
@@ -673,6 +673,24 @@ const NEWS = {
 // INIT
 // ═══════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
+  // ── Live date / week injection ──
+  const now = new Date();
+  const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dayName = dayNames[now.getDay()];
+  const dateStr = `${dayName}, ${monthNames[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+  const shortDate = `${monthNames[now.getMonth()].slice(0,3)} ${now.getDate()}`;
+  const startOfYear = new Date(now.getFullYear(), 0, 1);
+  const weekNum = Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+  const tbSub = document.getElementById('tb-sub');
+  if(tbSub) tbSub.textContent = `${dateStr} — Week ${weekNum} · Delhi, India`;
+  const actTitle = document.getElementById('todays-actions-title');
+  if(actTitle) actTitle.textContent = `🎯 TODAY'S 3 PRIORITY ACTIONS — ${shortDate}, ${now.getFullYear()}`;
+  const rolesTitle = document.getElementById('top-roles-title');
+  if(rolesTitle) rolesTitle.textContent = `🔥 Top 3 New Roles — ${shortDate}`;
+  const intelDate = document.getElementById('intel-date');
+  if(intelDate) intelDate.textContent = `Updated ${shortDate}, ${now.getFullYear()}`;
+
   renderBriefJobs();
   renderPipeline();
   renderActiveApps();
