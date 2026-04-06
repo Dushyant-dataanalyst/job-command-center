@@ -154,10 +154,66 @@ def dedupe(jobs):
     return out
 
 
+def load_rejection_filters():
+    """Load dynamic filters from rejection_reasons.json if it exists."""
+    filters = {"companies": [], "reason_counts": {}, "raise_salary_floor": False}
+    path = "rejection_reasons.json"
+    if not os.path.exists(path):
+        return filters
+    try:
+        with open(path) as f:
+            entries = json.load(f)
+        for e in entries:
+            code = e.get("reason_code","")
+            filters["reason_counts"][code] = filters["reason_counts"].get(code, 0) + 1
+            co = (e.get("company") or "").lower().strip()
+            if co and co not in filters["companies"]:
+                filters["companies"].append(co)
+        # If SALARY_LOW triggered 3+ times → raise salary floor flag
+        if filters["reason_counts"].get("SALARY_LOW", 0) >= 3:
+            filters["raise_salary_floor"] = True
+        print(f"  Rejection filters loaded: {len(filters['companies'])} skipped companies, patterns: {filters['reason_counts']}")
+    except Exception as e:
+        print(f"  Could not load rejection_reasons.json: {e}")
+    return filters
+
+
+def passes_rejection_filter(job, geo, dyn_filters):
+    """Return False if this job should be skipped."""
+    title   = safe_str(job.get("title")).lower()
+    company = safe_str(job.get("company")).lower()
+
+    # Hardcoded filters
+    if any(e in title for e in ["junior","intern","trainee","graduate"]):
+        return False
+    if "uae" in title or "dubai" in title:
+        return False
+
+    # Salary floor (hardcoded)
+    salary = job.get("salary_max") or job.get("salary_min") or 0
+    min_salary = {"NL": 60000, "SG": 100000, "IN": 3500000}
+    if salary and salary < min_salary.get(geo, 0):
+        return False
+
+    # Raise floor if SALARY_LOW pattern detected 3+ times
+    if dyn_filters.get("raise_salary_floor") and salary:
+        raised = {"NL": 65000, "SG": 105000, "IN": 4000000}
+        if salary < raised.get(geo, 0):
+            return False
+
+    # Skip companies Dushyant explicitly rejected
+    if any(c in company for c in dyn_filters.get("companies", [])):
+        return False
+
+    return True
+
+
 def main():
     now = datetime.datetime.utcnow()
     ist = now + datetime.timedelta(hours=5, minutes=30)
     print(f"\nDushyant Job Refresh - {ist.strftime('%A, %d %b %Y %I:%M %p IST')}\n")
+
+    dyn_filters = load_rejection_filters()
 
     if not APP_ID or not APP_KEY:
         print("ERROR: ADZUNA_APP_ID or ADZUNA_APP_KEY not set. Check GitHub Secrets.")
@@ -191,9 +247,13 @@ def main():
     print(f"  Unique results: {len(raw_jobs)}")
 
     scored = []
+    skipped_by_filter = 0
     for j in raw_jobs:
         try:
             geo   = j.get("_geo", "IN")
+            if not passes_rejection_filter(j, geo, dyn_filters):
+                skipped_by_filter += 1
+                continue
             score = score_job(j, geo)
             if score < 5:
                 continue
@@ -216,6 +276,7 @@ def main():
     scored.sort(key=lambda x: -x["fit"])
     top = scored[:10]
 
+    print(f"  Filtered by rejection rules: {skipped_by_filter}")
     print(f"  Qualified jobs (score >= 5): {len(scored)} - showing top {len(top)}")
 
     alert  = ""

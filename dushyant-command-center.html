@@ -138,6 +138,28 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .abt-a{background:var(--accent);color:#fff}
 .abt-b{background:var(--surface3);border:1px solid var(--border2);color:var(--text)}
 .abt-c{background:rgba(6,182,212,.1);color:var(--cyan);border:1px solid rgba(6,182,212,.25)}
+.abt-r{background:rgba(239,68,68,.08);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.abt-r:hover{background:rgba(239,68,68,.18)!important}
+.job-card.rejected{opacity:.38;border-color:rgba(239,68,68,.2);filter:grayscale(.5)}
+.job-card.rejected::before{background:var(--red)!important}
+/* REJECT MODAL */
+.rmodal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center}
+.rmodal-bg.open{display:flex}
+.rmodal{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:22px;width:380px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.rmodal h3{font-size:15px;font-weight:800;margin-bottom:4px}
+.rmodal-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
+.reason-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px}
+.reason-btn{padding:9px 11px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:11px;font-weight:600;cursor:pointer;text-align:left;transition:all .15s}
+.reason-btn:hover{border-color:var(--red);background:rgba(239,68,68,.08);color:var(--red)}
+.reason-btn.sel{border-color:var(--red);background:rgba(239,68,68,.12);color:var(--red)}
+.rmodal-detail{width:100%;padding:8px 11px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:12px;margin-bottom:13px;resize:none;font-family:inherit}
+.rmodal-detail:focus{outline:none;border-color:var(--accent)}
+.rmodal-actions{display:flex;gap:8px;justify-content:flex-end}
+/* REJECTION LOG */
+.reject-log-item{display:flex;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--border);font-size:12px}
+.reject-log-item:last-child{border-bottom:none}
+.reject-code{font-size:9px;font-weight:700;padding:2px 7px;border-radius:10px;background:rgba(239,68,68,.12);color:var(--red);white-space:nowrap}
+.pattern-alert{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:9px;padding:11px 14px;margin-bottom:12px;font-size:12px;color:var(--yellow)}
 
 /* DETAIL PANEL */
 .dp{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px;display:none}
@@ -442,9 +464,19 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
         <input class="search-box" type="text" placeholder="Search roles, companies..." id="jsearch" oninput="filterJobs()"/>
         <select class="fsel" id="f-geo" onchange="filterJobs()"><option value="">All Geographies</option><option value="NL">🇳🇱 Netherlands</option><option value="SG">🇸🇬 Singapore</option><option value="IN">🇮🇳 India</option></select>
         <select class="fsel" id="f-fit" onchange="filterJobs()"><option value="">All Fit Scores</option><option value="9">9-10/10</option><option value="8">8+/10</option></select>
+        <button class="btn btn-g" style="font-size:11px" onclick="toggleRejected()">👁 <span id="rej-toggle-label">Show Rejected</span> <span id="rej-count-badge" style="margin-left:4px"></span></button>
       </div>
+      <div id="pattern-alerts"></div>
       <div id="job-detail-panel" class="dp"></div>
       <div id="all-jobs"></div>
+      <!-- REJECTION LOG -->
+      <div id="rejection-log-wrap" style="display:none;margin-top:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:13px;font-weight:800;color:var(--red)">🚫 Rejection Log</div>
+          <button class="abt abt-b" style="font-size:10px" onclick="clearAllRejections()">Clear All</button>
+        </div>
+        <div id="rejection-log-body" class="card" style="padding:0;overflow:hidden"></div>
+      </div>
     </div>
 
     <!-- ── TRACKER ── -->
@@ -735,7 +767,11 @@ function fitCls(f){return f>=9?'fh':f>=7?'fm':'fl'}
 function renderJobCard(j,compact=false){
   const hot=j.tags.find(t=>t.includes('🔥')||t.includes('🆕'));
   const cleanTags=j.tags.filter(t=>!t.includes('🔥')&&!t.includes('🆕')).map(t=>`<span class="tag">${t}</span>`).join('');
-  return`<div class="job-card" id="jc-${j.id}" onclick="openJob(${j.id})">
+  const rejected=isRejected(j.id);
+  const rejEntry=rejections.find(r=>r.job_id===j.id);
+  const rejLabel=rejEntry?REASON_CODES.find(x=>x.code===rejEntry.reason_code)?.label:'';
+  return`<div class="job-card${rejected?' rejected':''}" id="jc-${j.id}" onclick="openJob(${j.id})">
+    ${rejected?`<div style="font-size:10px;color:var(--red);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px">🚫 Skipped — ${rejLabel}<button class="abt abt-b" style="font-size:9px;padding:2px 7px;margin-left:auto" onclick="event.stopPropagation();undoRejectByJobId(${j.id})">Undo</button></div>`:''}
     <div class="jt">
       <div class="jlogo" style="background:${j.lc}18;color:${j.lc};border-color:${j.lc}33">${j.logo}</div>
       <div class="jmeta">
@@ -751,26 +787,35 @@ function renderJobCard(j,compact=false){
     <div class="jfoot">
       <span class="jloc">🕐 ${j.posted}</span>
       <div class="jabts">
+        ${!rejected?`<button class="abt abt-r" onclick="event.stopPropagation();rejectJob(${j.id})">🚫 Skip</button>`:''}
         <button class="abt abt-c" onclick="event.stopPropagation();nav('outreach',document.querySelector('.nav-item[onclick*=outreach]'))">📨 Outreach</button>
         <button class="abt abt-b" onclick="event.stopPropagation();goInterview(${j.id})">🎙️ Prep</button>
-        <button class="abt abt-a" onclick="event.stopPropagation();logApply(${j.id})">✓ Log Apply</button>
+        ${!rejected?`<button class="abt abt-a" onclick="event.stopPropagation();logApply(${j.id})">✓ Log Apply</button>`:''}
       </div>
     </div>
   </div>`;
 }
 function renderBriefJobs(){document.getElementById('brief-jobs').innerHTML=JOBS.slice(0,3).map(j=>renderJobCard(j,true)).join('')}
-function renderAllJobs(){document.getElementById('all-jobs').innerHTML=JOBS.map(j=>renderJobCard(j)).join('')}
+function renderAllJobs(){
+  const list = showRejectedJobs ? JOBS : JOBS.filter(j=>!isRejected(j.id));
+  document.getElementById('all-jobs').innerHTML=list.length?list.map(j=>renderJobCard(j)).join(''):'<div style="padding:30px;text-align:center;color:var(--muted)">No active roles. <button class="abt abt-b" onclick="toggleRejected()">Show skipped</button></div>';
+}
 function filterJobs(){
   const q=document.getElementById('jsearch').value.toLowerCase();
   const geo=document.getElementById('f-geo').value;
   const fit=parseInt(document.getElementById('f-fit').value)||0;
-  const res=JOBS.filter(j=>{
+  const base = showRejectedJobs ? JOBS : JOBS.filter(j=>!isRejected(j.id));
+  const res=base.filter(j=>{
     const mq=!q||j.title.toLowerCase().includes(q)||j.company.toLowerCase().includes(q);
     const mg=!geo||j.geo===geo;
     const mf=!fit||j.fit>=fit;
     return mq&&mg&&mf;
   });
   document.getElementById('all-jobs').innerHTML=res.length?res.map(j=>renderJobCard(j)).join(''):'<div style="padding:30px;text-align:center;color:var(--muted)">No matches</div>';
+}
+function undoRejectByJobId(jobId){
+  const entry = rejections.find(r=>r.job_id===jobId);
+  if(entry) undoReject(entry.id);
 }
 function openJob(id){
   const j=JOBS.find(x=>x.id===id);
@@ -1208,6 +1253,170 @@ function refreshAll(){showToast('Pipeline refreshed ↺','🔄');updateKPIBars()
 // ═══════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════
+// ═══════════════════════════════════════
+// REJECT SYSTEM
+// ═══════════════════════════════════════
+const REJECT_KEY = 'dk_rejected_jobs';
+let rejections = JSON.parse(localStorage.getItem(REJECT_KEY)||'[]');
+let showRejectedJobs = false;
+let selectedReasonCode = '';
+
+const REASON_CODES = [
+  {code:'SALARY_LOW',    label:'💰 Pay too low',        color:'#f59e0b'},
+  {code:'TRAVEL_HEAVY',  label:'✈️ Too much travel',    color:'#06b6d4'},
+  {code:'ROLE_MISMATCH', label:'🎯 Wrong type of role', color:'#a78bfa'},
+  {code:'COMPANY_CULTURE',label:'🏢 Bad company/culture',color:'#ec4899'},
+  {code:'LOCATION_WRONG',label:'📍 Wrong location',     color:'#ef4444'},
+  {code:'INDUSTRY_WRONG',label:'🏭 Wrong industry',     color:'#f97316'},
+  {code:'SENIORITY_WRONG',label:'📊 Wrong level',       color:'#22c55e'},
+  {code:'OTHER',         label:'❓ Other reason',       color:'#5a637a'},
+];
+
+function rejectJob(id){
+  const j = JOBS.find(x=>x.id===id);
+  if(!j) return;
+  selectedReasonCode = '';
+  const modal = document.getElementById('reject-modal');
+  document.getElementById('rmodal-job-title').textContent = j.title;
+  document.getElementById('rmodal-company').textContent = j.company;
+  document.getElementById('rmodal-detail').value = '';
+  document.querySelectorAll('.reason-btn').forEach(b=>b.classList.remove('sel'));
+  modal.classList.add('open');
+  modal.dataset.jobId = id;
+}
+
+function selectReason(code, el){
+  selectedReasonCode = code;
+  document.querySelectorAll('.reason-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function confirmReject(){
+  const modal = document.getElementById('reject-modal');
+  const id = parseInt(modal.dataset.jobId);
+  const j = JOBS.find(x=>x.id===id);
+  if(!j || !selectedReasonCode){ showToast('Pick a reason first','⚠️'); return; }
+  const detail = document.getElementById('rmodal-detail').value.trim();
+  const entry = {
+    id: Date.now(),
+    job_id: id,
+    company: j.company,
+    role: j.title,
+    geo: j.geo,
+    reason_code: selectedReasonCode,
+    detail: detail || REASON_CODES.find(r=>r.code===selectedReasonCode)?.label || '',
+    date: new Date().toISOString().slice(0,10),
+    pattern_flag: false
+  };
+  rejections.push(entry);
+  localStorage.setItem(REJECT_KEY, JSON.stringify(rejections));
+  modal.classList.remove('open');
+  selectedReasonCode = '';
+  // mark card
+  const card = document.getElementById('jc-'+id);
+  if(card) card.classList.add('rejected');
+  checkPatterns();
+  updateRejBadge();
+  if(showRejectedJobs) renderRejectionLog();
+  showToast(`${j.company} skipped — ${REASON_CODES.find(r=>r.code===entry.reason_code)?.label}`,'🚫');
+}
+
+function cancelReject(){
+  document.getElementById('reject-modal').classList.remove('open');
+  selectedReasonCode='';
+}
+
+function isRejected(id){
+  return rejections.some(r=>r.job_id===id);
+}
+
+function toggleRejected(){
+  showRejectedJobs = !showRejectedJobs;
+  document.getElementById('rej-toggle-label').textContent = showRejectedJobs ? 'Hide Rejected' : 'Show Rejected';
+  document.getElementById('rejection-log-wrap').style.display = showRejectedJobs ? 'block' : 'none';
+  renderAllJobs();
+  if(showRejectedJobs) renderRejectionLog();
+}
+
+function updateRejBadge(){
+  const badge = document.getElementById('rej-count-badge');
+  const n = rejections.length;
+  badge.textContent = n > 0 ? `(${n})` : '';
+  badge.style.color = 'var(--red)';
+}
+
+function renderRejectionLog(){
+  const body = document.getElementById('rejection-log-body');
+  if(!rejections.length){
+    body.innerHTML = '<div style="padding:18px;text-align:center;color:var(--muted);font-size:12px">No rejections logged yet.</div>';
+    return;
+  }
+  const sorted = [...rejections].reverse();
+  body.innerHTML = sorted.map(r=>{
+    const rc = REASON_CODES.find(x=>x.code===r.reason_code);
+    return `<div class="reject-log-item">
+      <div style="flex:1">
+        <div style="font-weight:700">${r.company}</div>
+        <div style="color:var(--muted);font-size:11px">${r.role} · ${r.geo} · ${r.date}</div>
+        ${r.detail?`<div style="font-size:11px;color:var(--muted);margin-top:2px;font-style:italic">"${r.detail}"</div>`:''}
+      </div>
+      <span class="reject-code" style="background:${rc?.color||'var(--red)'}18;color:${rc?.color||'var(--red)'}">${rc?.label||r.reason_code}</span>
+      <button class="abt abt-b" style="font-size:9px;padding:3px 7px" onclick="undoReject(${r.id})">Undo</button>
+    </div>`;
+  }).join('');
+}
+
+function undoReject(entryId){
+  rejections = rejections.filter(r=>r.id!==entryId);
+  localStorage.setItem(REJECT_KEY, JSON.stringify(rejections));
+  renderRejectionLog();
+  renderAllJobs();
+  updateRejBadge();
+  checkPatterns();
+  showToast('Rejection removed ↺','↩️');
+}
+
+function clearAllRejections(){
+  if(!confirm('Clear all rejection logs?')) return;
+  rejections=[];
+  localStorage.setItem(REJECT_KEY,'[]');
+  renderRejectionLog();
+  renderAllJobs();
+  updateRejBadge();
+  document.getElementById('pattern-alerts').innerHTML='';
+  showToast('Rejection log cleared','🗑️');
+}
+
+function checkPatterns(){
+  const counts={};
+  rejections.forEach(r=>{ counts[r.reason_code]=(counts[r.reason_code]||0)+1; });
+  const patterns = Object.entries(counts).filter(([,n])=>n>=3);
+  const container = document.getElementById('pattern-alerts');
+  if(!patterns.length){ container.innerHTML=''; return; }
+  container.innerHTML = patterns.map(([code, count])=>{
+    const rc = REASON_CODES.find(x=>x.code===code);
+    const msgs = {
+      SALARY_LOW:`You've skipped ${count} roles for low pay. Salary floor raised — only surfacing roles meeting your minimums.`,
+      TRAVEL_HEAVY:`You've skipped ${count} roles due to heavy travel. Filter active: no travel-intensive roles.`,
+      ROLE_MISMATCH:`You've skipped ${count} roles as wrong type. Title matching tightened to PM/Analytics/AI only.`,
+      COMPANY_CULTURE:`You've skipped ${count} roles due to company culture. Review your company type preferences.`,
+      LOCATION_WRONG:`You've skipped ${count} roles due to location. Verify your geography targets are set correctly.`,
+      SENIORITY_WRONG:`You've skipped ${count} roles due to seniority mismatch. Adjust your target level band.`,
+      OTHER:`${count} roles skipped for miscellaneous reasons. Review and refine your filters.`,
+    };
+    return `<div class="pattern-alert">⚠️ <strong>Pattern detected:</strong> ${msgs[code]||`${count}x ${code}`} <em>— Confirm this is intentional or <button onclick="overridePattern('${code}')" style="background:none;border:none;color:var(--yellow);cursor:pointer;font-weight:700;text-decoration:underline">override</button></em></div>`;
+  }).join('');
+}
+
+function overridePattern(code){
+  rejections = rejections.filter(r=>r.reason_code!==code);
+  localStorage.setItem(REJECT_KEY, JSON.stringify(rejections));
+  checkPatterns();
+  updateRejBadge();
+  if(showRejectedJobs) renderRejectionLog();
+  showToast(`Pattern override: ${code} filter cleared`,'↩️');
+}
+
 function copyText(t,m){navigator.clipboard.writeText(t).catch(()=>{});showToast(m||'Copied!','✅')}
 function showToast(msg,icon='✅'){
   const t=document.getElementById('toast');
@@ -1216,6 +1425,38 @@ function showToast(msg,icon='✅'){
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
 }
+// init rejection state on load
+(function initRejectSystem(){
+  updateRejBadge();
+  checkPatterns();
+})();
 </script>
+
+<!-- REJECT MODAL -->
+<div class="rmodal-bg" id="reject-modal" onclick="if(event.target===this)cancelReject()">
+  <div class="rmodal">
+    <h3>🚫 Skip this role?</h3>
+    <div class="rmodal-sub">
+      <strong id="rmodal-job-title"></strong> · <span id="rmodal-company" style="color:var(--muted)"></span>
+    </div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:8px">Why are you skipping it?</div>
+    <div class="reason-grid">
+      <button class="reason-btn" onclick="selectReason('SALARY_LOW',this)">💰 Pay too low</button>
+      <button class="reason-btn" onclick="selectReason('TRAVEL_HEAVY',this)">✈️ Too much travel</button>
+      <button class="reason-btn" onclick="selectReason('ROLE_MISMATCH',this)">🎯 Wrong role type</button>
+      <button class="reason-btn" onclick="selectReason('COMPANY_CULTURE',this)">🏢 Bad company</button>
+      <button class="reason-btn" onclick="selectReason('LOCATION_WRONG',this)">📍 Wrong location</button>
+      <button class="reason-btn" onclick="selectReason('INDUSTRY_WRONG',this)">🏭 Wrong industry</button>
+      <button class="reason-btn" onclick="selectReason('SENIORITY_WRONG',this)">📊 Wrong level</button>
+      <button class="reason-btn" onclick="selectReason('OTHER',this)">❓ Other</button>
+    </div>
+    <textarea class="rmodal-detail" id="rmodal-detail" rows="2" placeholder="Optional: add a note (e.g. 'only 30K EUR, needs 5+ pharma years')"></textarea>
+    <div class="rmodal-actions">
+      <button class="btn btn-g" onclick="cancelReject()">Cancel</button>
+      <button class="btn" style="background:var(--red);color:#fff;font-size:12px" onclick="confirmReject()">🚫 Skip &amp; Log Reason</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
