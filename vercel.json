@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "dushyant-job-command-center",
+  "builds": [
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.json", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/", "dest": "/dushyant-command-center.html" },
+    { "src": "/jobs-update.json", "headers": { "Cache-Control": "no-store" }, "dest": "/jobs-update.json" }
+  ]
+}

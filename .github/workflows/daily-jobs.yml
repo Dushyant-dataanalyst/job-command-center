@@ -1,0 +1,38 @@
+name: Daily Job Refresh — Dushyant Kapoor
+
+on:
+  schedule:
+    - cron: '30 4 * * 1-6'   # 4:30 UTC = 10:00 AM IST, Mon–Sat
+  workflow_dispatch:          # allow manual trigger from GitHub UI anytime
+
+jobs:
+  refresh-jobs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write         # needed to commit jobs-update.json back
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run job search
+        env:
+          ADZUNA_APP_ID:  ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+        run: python fetch_jobs.py
+
+      - name: Commit updated jobs-update.json
+        run: |
+          git config user.name  "Job Refresh Bot"
+          git config user.email "bot@dushyant-jobs"
+          git add jobs-update.json
+          git diff --staged --quiet || git commit -m "chore: daily job refresh $(date +'%d %b %Y %H:%M IST')"
+          git push

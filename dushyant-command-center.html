@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dushyant Kapoor — Job Search Command Center</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090f;--surface:#0f1117;--surface2:#161922;--surface3:#1d2130;
+  --border:#1e2235;--border2:#262d42;
+  --text:#eef0f6;--muted:#5a637a;--muted2:#3a4155;
+  --accent:#4f8ef7;--accent2:#7cb3ff;
+  --green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+  --purple:#a78bfa;--cyan:#06b6d4;--gold:#f59e0b;
+  --deloitte:#86bc25;
+}
+*{scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* LAYOUT */
+.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+@media(max-width:800px){.app{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* SIDEBAR */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:22px 20px 18px;border-bottom:1px solid var(--border)}
+.brand-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;margin-bottom:10px;box-shadow:0 0 20px rgba(79,142,247,.3)}
+.brand-name{font-weight:800;font-size:15px;letter-spacing:-.01em}
+.brand-role{font-size:11px;color:var(--accent);font-weight:600;letter-spacing:.03em;margin-top:2px}
+.brand-company{font-size:11px;color:var(--muted);margin-top:1px}
+
+.week-kpi{padding:14px 20px;border-bottom:1px solid var(--border)}
+.kpi-title{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.kpi-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px}
+.kpi-label{color:var(--muted)}
+.kpi-val{font-weight:700}
+.kpi-val.g{color:var(--green)}
+.kpi-val.r{color:var(--red)}
+.kpi-val.y{color:var(--yellow)}
+.kpi-bar{background:var(--surface3);border-radius:100px;height:3px;overflow:hidden;margin-bottom:6px}
+.kpi-fill{height:100%;border-radius:100px;transition:width .6s ease}
+
+.nav-section{padding-top:6px}
+.nav-label{font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted2);padding:10px 20px 4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 20px;cursor:pointer;font-size:13px;color:var(--muted);border-left:2px solid transparent;transition:all .15s}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,.02)}
+.nav-item.active{color:var(--text);border-left-color:var(--accent);background:rgba(79,142,247,.07)}
+.nav-icon{font-size:14px;width:16px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px}
+.nb-r{background:rgba(239,68,68,.2);color:var(--red)}
+.nb-g{background:rgba(34,197,94,.2);color:var(--green)}
+.nb-b{background:rgba(79,142,247,.2);color:var(--accent)}
+.nb-y{background:rgba(245,158,11,.15);color:var(--yellow)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.nb-r{animation:blink 2s infinite}
+
+.sidebar-bottom{margin-top:auto;padding:14px 20px;border-top:1px solid var(--border)}
+.sb-label{font-size:10px;color:var(--muted);margin-bottom:4px}
+.sb-name{font-size:12px;font-weight:600;color:var(--accent)}
+.sb-role{font-size:11px;color:var(--muted)}
+
+/* MAIN */
+.main{overflow-y:auto;display:flex;flex-direction:column}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 26px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
+.tb-left h1{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.tb-left p{font-size:11px;color:var(--muted);margin-top:2px}
+.tb-right{display:flex;gap:8px;align-items:center}
+.live{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green);font-weight:600}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:blink 2s infinite}
+.btn{font-size:12px;font-weight:700;padding:6px 14px;border-radius:7px;cursor:pointer;border:none;transition:all .15s}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.btn-a{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;box-shadow:0 4px 12px rgba(79,142,247,.3)}
+.btn-g{background:var(--surface3);border:1px solid var(--border2);color:var(--text)}
+
+.content{padding:24px;flex:1}
+.section{display:none}
+.section.active{display:block}
+
+/* HERO / ALERT */
+.alert-banner{background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(245,158,11,.06));border:1px solid rgba(239,68,68,.3);border-radius:12px;padding:13px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.ab-icon{font-size:20px;flex-shrink:0}
+.ab-text h4{font-size:13px;font-weight:700;color:var(--red);margin-bottom:2px}
+.ab-text p{font-size:12px;color:var(--muted)}
+.ab-btn{margin-left:auto;flex-shrink:0}
+
+/* STATS GRID */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+@media(max-width:1100px){.stats-row{grid-template-columns:1fr 1fr}}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:16px}
+.stat-label{font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:7px}
+.stat-val{font-size:26px;font-weight:900;line-height:1}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.stat.g .stat-val{color:var(--green)}
+.stat.r .stat-val{color:var(--red)}
+.stat.b .stat-val{color:var(--accent)}
+.stat.y .stat-val{color:var(--yellow)}
+.stat.p .stat-val{color:var(--purple)}
+
+/* SECTION HEADERS */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sh h2{font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
+.sh span{font-size:11px;color:var(--muted)}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px}
+.card h3{font-size:13px;font-weight:700;margin-bottom:13px;display:flex;align-items:center;gap:7px}
+.two-col{display:grid;grid-template-columns:3fr 2fr;gap:18px}
+@media(max-width:950px){.two-col{grid-template-columns:1fr}}
+
+/* JOB CARDS */
+.job-card{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;margin-bottom:11px}
+.job-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 20px rgba(79,142,247,.12)}
+.job-card.sel{border-color:var(--accent);background:var(--surface2)}
+.job-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:0;transition:opacity .2s}
+.job-card:hover::before,.job-card.sel::before{opacity:1}
+.jt{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px}
+.jlogo{width:38px;height:38px;border-radius:8px;border:1px solid;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;flex-shrink:0}
+.jmeta{flex:1;min-width:0}
+.jtitle{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jcomp{font-size:12px;color:var(--muted);margin-top:2px}
+.jright{text-align:right;flex-shrink:0}
+.fit{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:2px}
+.fh{background:rgba(34,197,94,.12);color:var(--green)}
+.fm{background:rgba(245,158,11,.12);color:var(--yellow)}
+.fl{background:rgba(239,68,68,.12);color:var(--red)}
+.jgeo{font-size:11px;color:var(--cyan);font-weight:600}
+.jtags{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.tag{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--surface3);border:1px solid var(--border2);color:var(--muted)}
+.tag.hot{border-color:rgba(79,142,247,.4);color:var(--accent);background:rgba(79,142,247,.08)}
+.jfoot{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.jloc{font-size:11px;color:var(--muted)}
+.jabts{display:flex;gap:5px}
+.abt{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;cursor:pointer;border:none;transition:all .15s}
+.abt:hover{opacity:.85}
+.abt-a{background:var(--accent);color:#fff}
+.abt-b{background:var(--surface3);border:1px solid var(--border2);color:var(--text)}
+.abt-c{background:rgba(6,182,212,.1);color:var(--cyan);border:1px solid rgba(6,182,212,.25)}
+
+/* DETAIL PANEL */
+.dp{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:18px;display:none}
+.dp.open{display:block}
+.dtabs{display:flex;gap:2px;margin-bottom:16px;border-bottom:1px solid var(--border)}
+.dtab{padding:7px 13px;font-size:11px;font-weight:700;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s;text-transform:uppercase;letter-spacing:.04em}
+.dtab:hover{color:var(--text)}
+.dtab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.dcon{display:none}
+.dcon.active{display:block}
+
+/* APPLICATION TRACKER */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--border)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--surface2)}
+.sp{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;white-space:nowrap}
+.s-applied{background:rgba(79,142,247,.15);color:var(--accent)}
+.s-interview{background:rgba(167,139,250,.15);color:var(--purple)}
+.s-offer{background:rgba(34,197,94,.15);color:var(--green)}
+.s-rejected{background:rgba(239,68,68,.12);color:var(--red)}
+.s-outreach{background:rgba(245,158,11,.12);color:var(--yellow)}
+.s-pending{background:rgba(6,182,212,.1);color:var(--cyan)}
+
+/* RECRUITER */
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.rec-grid{grid-template-columns:1fr}}
+.rec-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:15px}
+.rh{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.rav{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+.rname{font-weight:700;font-size:13px}
+.rrole{font-size:11px;color:var(--muted)}
+.rinfo{font-size:11px;color:var(--muted);margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.rinfo strong{color:var(--text)}
+.copybtn{background:none;border:1px solid var(--border2);color:var(--muted);font-size:9px;padding:1px 6px;border-radius:4px;cursor:pointer;margin-left:4px;transition:all .15s}
+.copybtn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* OUTREACH */
+.tmpl{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:15px;margin-bottom:12px}
+.tmpl-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.tmpl-h h4{font-size:12px;font-weight:700}
+.tmpl-text{font-size:12px;line-height:1.8;color:#bbc;white-space:pre-wrap;font-family:inherit}
+
+/* NEWS */
+.news-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:9px;display:flex;gap:12px;cursor:pointer;transition:all .15s}
+.news-item:hover{border-color:var(--border2);transform:translateX(2px)}
+.news-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+.news-badge{font-size:9px;font-weight:700;padding:1px 7px;border-radius:4px;display:inline-block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.nb-ai{background:rgba(167,139,250,.15);color:var(--purple)}
+.nb-market{background:rgba(79,142,247,.15);color:var(--accent)}
+.nb-cert{background:rgba(245,158,11,.12);color:var(--yellow)}
+.news-title{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:3px}
+.news-meta{font-size:10px;color:var(--muted)}
+
+/* PIPELINE FUNNEL */
+.funnel{display:flex;flex-direction:column;gap:8px}
+.funnel-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.funnel-label{width:100px;color:var(--muted);flex-shrink:0;text-align:right;font-size:11px}
+.funnel-bar-wrap{flex:1;background:var(--surface3);border-radius:100px;height:22px;overflow:hidden;position:relative}
+.funnel-bar{height:100%;border-radius:100px;transition:width .8s ease;display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:700;white-space:nowrap}
+.funnel-num{color:var(--muted);font-size:11px;width:30px;text-align:right;flex-shrink:0}
+
+/* NEGOTIATE */
+.calc-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.calc-label{font-size:11px;color:var(--muted);width:160px;flex-shrink:0}
+.calc-input{flex:1;background:var(--surface2);border:1px solid var(--border2);color:var(--text);border-radius:7px;padding:7px 11px;font-size:13px;outline:none;transition:border-color .15s;font-weight:600}
+.calc-input:focus{border-color:var(--accent)}
+
+/* POSITIONING CHECK */
+.pos-card{background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(167,139,250,.05));border:1px solid rgba(79,142,247,.25);border-radius:12px;padding:18px;margin-bottom:18px}
+.pos-title{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700;margin-bottom:8px}
+.pos-text{font-size:14px;font-weight:800;letter-spacing:-.01em;color:var(--text);margin-bottom:8px}
+.pos-bullets{font-size:12px;color:var(--muted);line-height:2}
+
+/* WEEKLY CHECKIN */
+.checkin-form{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:16px;margin-bottom:16px}
+.checkin-form h4{font-size:12px;font-weight:700;margin-bottom:12px}
+.ci-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ci-label{font-size:11px;color:var(--muted);width:120px;flex-shrink:0}
+.ci-input{flex:1;background:var(--surface);border:1px solid var(--border2);color:var(--text);border-radius:6px;padding:6px 10px;font-size:13px;outline:none;font-weight:600}
+.ci-input:focus{border-color:var(--accent)}
+
+/* SCORE CARD */
+.score-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:800px){.score-row{grid-template-columns:1fr 1fr}}
+.score-item{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:12px;text-align:center}
+.score-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.score-val{font-size:20px;font-weight:900}
+.score-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;margin-top:5px}
+.ss-g{background:rgba(34,197,94,.15);color:var(--green)}
+.ss-y{background:rgba(245,158,11,.12);color:var(--yellow)}
+.ss-r{background:rgba(239,68,68,.12);color:var(--red)}
+
+/* NEXT ACTIONS */
+.next-actions{background:linear-gradient(135deg,rgba(79,142,247,.08),rgba(167,139,250,.04));border:1px solid rgba(79,142,247,.2);border-radius:12px;padding:18px;margin-top:20px}
+.na-title{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.na-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(79,142,247,.1);font-size:13px}
+.na-item:last-child{border-bottom:none;padding-bottom:0}
+.na-num{width:22px;height:22px;border-radius:6px;background:rgba(79,142,247,.15);color:var(--accent);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.na-text strong{display:block;font-weight:700;margin-bottom:2px}
+.na-text span{font-size:11px;color:var(--muted)}
+
+/* FILTERS */
+.filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.search-box{flex:1;min-width:160px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:7px 12px;font-size:12px;outline:none;transition:border-color .15s}
+.search-box:focus{border-color:var(--accent)}
+.fsel{background:var(--surface2);border:1px solid var(--border2);color:var(--text);border-radius:8px;padding:7px 12px;font-size:11px;cursor:pointer;outline:none}
+
+/* GEO BADGE */
+.geo-nl{color:#f97316;background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.3)}
+.geo-sg{color:#ec4899;background:rgba(236,72,153,.1);border-color:rgba(236,72,153,.25)}
+.geo-in{color:var(--green);background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25)}
+.geo-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;border:1px solid;display:inline-block}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:11px 16px;font-size:12px;display:flex;align-items:center;gap:8px;transform:translateY(70px);opacity:0;transition:all .3s;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* RESUME */
+.rtextarea{width:100%;background:transparent;color:var(--text);border:none;padding:14px;font-family:'Courier New',monospace;font-size:11px;line-height:1.7;resize:none;outline:none;min-height:280px}
+
+hr{border:none;border-top:1px solid var(--border);margin:14px 0}
+
+/* POSITIONING REMINDER - if text drifts generic */
+.generic-warning{display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:12px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-avatar">DK</div>
+    <div class="brand-name">Dushyant Kapoor</div>
+    <div class="brand-role">AI & Data Transformation PM</div>
+    <div class="brand-company">Senior Consultant · Deloitte USI</div>
+  </div>
+
+  <div class="week-kpi" id="sidebar-kpi">
+    <div class="kpi-title">This Week vs Targets</div>
+    <div class="kpi-row"><span class="kpi-label">Applications</span><span class="kpi-val" id="kpi-apps-label">0/10</span></div>
+    <div class="kpi-bar"><div class="kpi-fill" id="kpi-apps-bar" style="width:0%;background:var(--red)"></div></div>
+    <div class="kpi-row"><span class="kpi-label">Recruiter msgs</span><span class="kpi-val" id="kpi-rec-label">0/10</span></div>
+    <div class="kpi-bar"><div class="kpi-fill" id="kpi-rec-bar" style="width:0%;background:var(--red)"></div></div>
+    <div class="kpi-row"><span class="kpi-label">HM messages</span><span class="kpi-val" id="kpi-hm-label">0/5</span></div>
+    <div class="kpi-bar"><div class="kpi-fill" id="kpi-hm-bar" style="width:0%;background:var(--red)"></div></div>
+    <div class="kpi-row"><span class="kpi-label">Interviews</span><span class="kpi-val" id="kpi-int-label">0/2</span></div>
+    <div class="kpi-bar"><div class="kpi-fill" id="kpi-int-bar" style="width:0%;background:var(--red)"></div></div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Command</div>
+    <div class="nav-item active" onclick="nav('briefing',this)"><span class="nav-icon">🎯</span>Daily Briefing<span class="nav-badge nb-r">NOW</span></div>
+    <div class="nav-item" onclick="nav('checkin',this)"><span class="nav-icon">📋</span>Weekly Check-in</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Pipeline</div>
+    <div class="nav-item" onclick="nav('jobs',this)"><span class="nav-icon">💼</span>Jobs Feed<span class="nav-badge nb-b">6 new</span></div>
+    <div class="nav-item" onclick="nav('tracker',this)"><span class="nav-icon">📊</span>Application Tracker</div>
+    <div class="nav-item" onclick="nav('outreach',this)"><span class="nav-icon">📨</span>Outreach Templates<span class="nav-badge nb-y">3</span></div>
+    <div class="nav-item" onclick="nav('recruiters',this)"><span class="nav-icon">🤝</span>Recruiter CRM</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Prep</div>
+    <div class="nav-item" onclick="nav('resume',this)"><span class="nav-icon">📄</span>CV Tailor</div>
+    <div class="nav-item" onclick="nav('negotiate',this)"><span class="nav-icon">💰</span>Negotiation Calc</div>
+    <div class="nav-item" onclick="nav('interview',this)"><span class="nav-icon">🎙️</span>Interview Prep</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Intelligence</div>
+    <div class="nav-item" onclick="nav('news',this)"><span class="nav-icon">📡</span>Market Intel</div>
+    <div class="nav-item" onclick="nav('positioning',this)"><span class="nav-icon">🧠</span>My Positioning</div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="sb-label">Key Contact</div>
+    <div class="sb-name">Charlie Bowsher</div>
+    <div class="sb-role">MCG Talent · SG/HK</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="tb-left">
+      <h1 id="tb-title">Daily Briefing</h1>
+      <p id="tb-sub">Sunday, April 5, 2026 — Week 14 · Delhi, India</p>
+    </div>
+    <div class="tb-right">
+      <span class="live"><span class="live-dot"></span>Live</span>
+      <button class="btn btn-g" onclick="refreshAll()">↻ Refresh</button>
+      <button class="btn btn-a" onclick="nav('checkin',document.querySelector('.nav-item[onclick*=checkin]'))">Weekly Check-in</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── BRIEFING ── -->
+    <div id="s-briefing" class="section active">
+
+      <!-- Positioning lock -->
+      <div class="pos-card">
+        <div class="pos-title">⚡ Your Positioning — Never Deviate From This</div>
+        <div class="pos-text">AI & Data Transformation Program Manager</div>
+        <div class="pos-bullets">
+          ✅ 10+ years · Deloitte USI + Bain + EXL &nbsp;|&nbsp; ✅ 250+ stakeholders managed &nbsp;|&nbsp; ✅ $1M project delivered<br/>
+          ✅ 10,000+ hrs saved via Alteryx &nbsp;|&nbsp; ✅ 90% accuracy Python model &nbsp;|&nbsp; ✅ Six Sigma Black Belt
+        </div>
+      </div>
+
+      <!-- Status banner -->
+      <div class="alert-banner">
+        <span class="ab-icon">📊</span>
+        <div class="ab-text">
+          <h4>Week 14 — No data yet. Log your first applications below.</h4>
+          <p>You need 10–15 applications, 10 recruiter messages, 5 HM messages this week. Clock starts now.</p>
+        </div>
+        <button class="btn btn-a ab-btn" onclick="nav('checkin',document.querySelector('.nav-item[onclick*=checkin]'))">Log Activity</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat r"><div class="stat-label">Applications This Week</div><div class="stat-val" id="s-apps">0</div><div class="stat-sub">Target: 10–15</div></div>
+        <div class="stat r"><div class="stat-label">Recruiter Msgs</div><div class="stat-val" id="s-rec">0</div><div class="stat-sub">Target: 10/week</div></div>
+        <div class="stat r"><div class="stat-label">Interviews Booked</div><div class="stat-val" id="s-int">0</div><div class="stat-sub">Target: 2–3/month</div></div>
+        <div class="stat b"><div class="stat-label">Roles in Pipeline</div><div class="stat-val" id="s-pipe">5</div><div class="stat-sub">Active applications</div></div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <!-- Today's 3 Actions -->
+          <div class="next-actions" style="margin-top:0;margin-bottom:18px">
+            <div class="na-title">🎯 TODAY'S 3 PRIORITY ACTIONS — April 5, 2026</div>
+            <div class="na-item">
+              <div class="na-num">1</div>
+              <div class="na-text">
+                <strong>Apply to ConSol Partners NL — Senior Data/AI PM (Eindhoven)</strong>
+                <span>Posted Apr 1. 10/10 fit. Netherlands contract, HSM visa eligible. Use your Europe CV. Apply today before it fills.</span>
+              </div>
+            </div>
+            <div class="na-item">
+              <div class="na-num">2</div>
+              <div class="na-text">
+                <strong>Message Charlie Bowsher about the Capgemini Singapore AI role</strong>
+                <span>He covers SG/HK. Capgemini Invent Singapore posted Mar 20 — ask him to fast-track intro. Use outreach template.</span>
+              </div>
+            </div>
+            <div class="na-item">
+              <div class="na-num">3</div>
+              <div class="na-text">
+                <strong>Apply to Amazon India — Business Analytics Manager (Bengaluru)</strong>
+                <span>"Be an early applicant" status. Six Sigma BB is a hard requirement you meet. Apply via Amazon Jobs ID A3199500 directly.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top matched jobs today -->
+          <div class="sh"><h2>🔥 Top 3 New Roles — April 5</h2><span onclick="nav('jobs',document.querySelector('.nav-item[onclick*=jobs]'))" style="cursor:pointer;color:var(--accent)">See all 6 →</span></div>
+          <div id="brief-jobs"></div>
+        </div>
+
+        <div>
+          <!-- Pipeline funnel -->
+          <div class="card">
+            <h3>🏗️ Pipeline Funnel</h3>
+            <div class="funnel" id="pipeline-funnel"></div>
+          </div>
+
+          <!-- Top 3 active -->
+          <div class="card">
+            <h3>📌 Active Applications</h3>
+            <div id="active-apps"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── WEEKLY CHECK-IN ── -->
+    <div id="s-checkin" class="section">
+      <div class="sh"><h2>📋 Weekly Check-in & Scoring</h2></div>
+      <div class="checkin-form">
+        <h4>Log this week's activity</h4>
+        <div class="ci-row"><label class="ci-label">Applications sent</label><input class="ci-input" type="number" id="ci-apps" placeholder="e.g. 8" min="0" oninput="scoreWeek()"/></div>
+        <div class="ci-row"><label class="ci-label">Recruiter messages</label><input class="ci-input" type="number" id="ci-rec" placeholder="e.g. 7" min="0" oninput="scoreWeek()"/></div>
+        <div class="ci-row"><label class="ci-label">HM messages sent</label><input class="ci-input" type="number" id="ci-hm" placeholder="e.g. 3" min="0" oninput="scoreWeek()"/></div>
+        <div class="ci-row"><label class="ci-label">Referrals requested</label><input class="ci-input" type="number" id="ci-ref" placeholder="e.g. 2" min="0" oninput="scoreWeek()"/></div>
+        <div class="ci-row"><label class="ci-label">Responses received</label><input class="ci-input" type="number" id="ci-resp" placeholder="e.g. 2" min="0" oninput="scoreWeek()"/></div>
+        <div class="ci-row"><label class="ci-label">Interviews booked</label><input class="ci-input" type="number" id="ci-int" placeholder="e.g. 1" min="0" oninput="scoreWeek()"/></div>
+      </div>
+      <div id="score-output" style="display:none">
+        <div class="sh"><h2>📈 Week Scorecard</h2></div>
+        <div class="score-row" id="score-cards"></div>
+        <div class="card" id="score-verdict"></div>
+        <div class="next-actions" id="score-actions"></div>
+      </div>
+    </div>
+
+    <!-- ── JOBS ── -->
+    <div id="s-jobs" class="section">
+      <div class="filters">
+        <input class="search-box" type="text" placeholder="Search roles, companies..." id="jsearch" oninput="filterJobs()"/>
+        <select class="fsel" id="f-geo" onchange="filterJobs()"><option value="">All Geographies</option><option value="NL">🇳🇱 Netherlands</option><option value="SG">🇸🇬 Singapore</option><option value="IN">🇮🇳 India</option></select>
+        <select class="fsel" id="f-fit" onchange="filterJobs()"><option value="">All Fit Scores</option><option value="9">9-10/10</option><option value="8">8+/10</option></select>
+      </div>
+      <div id="job-detail-panel" class="dp"></div>
+      <div id="all-jobs"></div>
+    </div>
+
+    <!-- ── TRACKER ── -->
+    <div id="s-tracker" class="section">
+      <div class="sh"><h2>📊 Application Log</h2><button class="btn btn-a" onclick="addApp()">+ Add Application</button></div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Company</th><th>Role</th><th>Location</th><th>Date</th><th>Status</th><th>Next Action</th><th>Follow-up</th><th></th></tr></thead>
+          <tbody id="tracker-body"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:var(--muted)">💡 Share a screenshot of an application and it will be logged here automatically.</div>
+    </div>
+
+    <!-- ── OUTREACH ── -->
+    <div id="s-outreach" class="section">
+      <div class="sh"><h2>📨 Outreach Templates</h2><span>Personalized to your profile — copy and send</span></div>
+      <div id="outreach-content"></div>
+    </div>
+
+    <!-- ── RECRUITERS ── -->
+    <div id="s-recruiters" class="section">
+      <div class="sh"><h2>🤝 Recruiter CRM</h2></div>
+      <div class="rec-grid" id="rec-grid"></div>
+    </div>
+
+    <!-- ── RESUME ── -->
+    <div id="s-resume" class="section">
+      <div class="sh"><h2>📄 CV Tailor</h2><span>Zero fabrication. Your real story, best-framed for each role.</span></div>
+      <div style="margin-bottom:14px">
+        <select class="fsel" id="r-sel" onchange="loadCV()" style="width:100%;max-width:420px">
+          <option value="">— Select a job to tailor for —</option>
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px">
+          <div style="padding:11px 15px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;display:flex;justify-content:space-between">Base CV (Europe) <button class="btn btn-g" style="font-size:10px;padding:3px 9px">Upload</button></div>
+          <textarea class="rtextarea" id="base-cv" placeholder="Paste your Europe/NL CV here...">DUSHYANT KAPOOR
+AI & Data Transformation Program Manager
+Delhi, India | linkedin.com/in/dushyant-kapoor-consultant
+Netherlands HSM Visa Eligible | CEFR B2 English
+
+EXPERIENCE
+
+Senior Consultant – Programme & Analytics
+Deloitte USI | March 2025–Present | Delhi, India
+• Leading AI & data transformation programmes for global clients
+• Managing 250+ matrix stakeholders across 4 geographies
+• Delivering end-to-end programme governance, risk, and reporting
+
+Programme Manager – Analytics & Automation
+Bain & Company | [Prior role]
+• Delivered $1M project for Australian insurance client (EXL)
+• Saved 10,000+ hours via 50+ Alteryx automation workflows
+• Built Python regression model with 90% prediction accuracy
+• Increased processing speed 83% via Alteryx optimisation
+
+CERTIFICATIONS
+• Six Sigma Black Belt
+• PMP — In Progress
+• Microsoft Fabric DP-600 — Pursuing
+
+EDUCATION
+[Your degree details]
+
+SKILLS
+Programme Management · Alteryx · Python · SQL · Power BI
+Azure · Data Transformation · Stakeholder Management · Six Sigma</textarea>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px">
+          <div style="padding:11px 15px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;display:flex;justify-content:space-between">Tailored Version <button class="btn btn-a" style="font-size:10px;padding:3px 9px" onclick="tailorCV()">✨ Tailor</button></div>
+          <textarea class="rtextarea" id="tailored-cv" placeholder="Select a job and click Tailor..."></textarea>
+        </div>
+      </div>
+      <div id="cv-tips" style="display:none" class="card" style="margin-top:14px"><h3>💡 Tailoring Notes</h3><div id="cv-tips-list"></div></div>
+    </div>
+
+    <!-- ── NEGOTIATE ── -->
+    <div id="s-negotiate" class="section">
+      <div class="sh"><h2>💰 Offer Negotiation Calculator</h2></div>
+      <div class="card" style="max-width:560px">
+        <h3>Your Numbers</h3>
+        <div class="calc-row"><div class="calc-label">Current CTC (₹ LPA)</div><input class="calc-input" type="number" id="n-cur" value="0" oninput="calcNego()" placeholder="e.g. 28"/></div>
+        <div class="calc-row"><div class="calc-label">Offer Base (₹ LPA)</div><input class="calc-input" type="number" id="n-off" value="50" oninput="calcNego()"/></div>
+        <div class="calc-row"><div class="calc-label">Variable/Bonus (₹ LPA)</div><input class="calc-input" type="number" id="n-var" value="8" oninput="calcNego()"/></div>
+        <div class="calc-row"><div class="calc-label">ESOPs (₹ value, 4yr)</div><input class="calc-input" type="number" id="n-esop" value="0" oninput="calcNego()"/></div>
+        <div class="calc-row"><div class="calc-label">Target: ₹50 LPA base</div><input class="calc-input" value="50" disabled style="opacity:.5"/></div>
+        <hr/>
+        <div id="nego-result"></div>
+      </div>
+      <div class="card" style="max-width:560px"><h3>📝 Counter-offer Script</h3><div id="nego-script"></div></div>
+    </div>
+
+    <!-- ── INTERVIEW ── -->
+    <div id="s-interview" class="section">
+      <div class="sh"><h2>🎙️ Interview Prep</h2></div>
+      <select class="fsel" id="int-sel" onchange="loadInterview()" style="width:100%;max-width:420px;margin-bottom:16px"><option value="">— Select a role to prep for —</option></select>
+      <div id="int-content"></div>
+    </div>
+
+    <!-- ── NEWS ── -->
+    <div id="s-news" class="section">
+      <div class="sh"><h2>📡 Market Intelligence</h2><span>Updated April 5, 2026</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+        <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--purple);font-weight:700;margin-bottom:10px">🤖 AI & Data</div><div id="news-ai"></div></div>
+        <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:700;margin-bottom:10px">💼 NL/SG Jobs</div><div id="news-jobs"></div></div>
+        <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--yellow);font-weight:700;margin-bottom:10px">📜 Certs & Salary</div><div id="news-certs"></div></div>
+      </div>
+    </div>
+
+    <!-- ── POSITIONING ── -->
+    <div id="s-positioning" class="section">
+      <div class="sh"><h2>🧠 Your Positioning Bible</h2><span>Never deviate from this</span></div>
+      <div class="pos-card">
+        <div class="pos-title">Your Core Identity</div>
+        <div class="pos-text">AI & Data Transformation Program Manager</div>
+        <div class="pos-bullets" style="margin-top:10px;font-size:13px;line-height:2">
+          NOT "PMO person". NOT "Senior Consultant". NOT "Programme Manager".<br/>
+          You are an <strong style="color:var(--text)">AI & Data Transformation Program Manager</strong> with proven delivery at Bain + Deloitte + EXL.
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="card">
+          <h3>💪 Power Statements (use these verbatim)</h3>
+          <div id="power-statements"></div>
+        </div>
+        <div class="card">
+          <h3>⚠️ What to NEVER Say in Interviews</h3>
+          <div id="never-say"></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:0">
+        <h3>🌍 Geography Strategy</h3>
+        <div style="font-size:13px;line-height:2;color:var(--muted)">
+          <div>🇳🇱 <strong style="color:var(--text)">Netherlands (Priority 1)</strong> — Always mention Netherlands HSM visa. Salary: €80K–€110K. Highlight EU-ready profile. Use A4/Calibri CV.</div>
+          <div>🇸🇬 <strong style="color:var(--text)">Singapore (Priority 2)</strong> — Target fintech, consulting, tech. Salary: SGD 150K–200K. Charlie Bowsher is your in. EP visa strong for 10yr exp.</div>
+          <div>🇮🇳 <strong style="color:var(--text)">India (Fallback)</strong> — ₹50L+ only. Target FAANG, MBB, top fintech. Don't settle below ₹45L.</div>
+          <div>🚫 <strong style="color:var(--red)">UAE/Dubai — DEPRIORITISED.</strong> Regional security situation March 2026.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"><span id="t-icon">✅</span> <span id="t-msg">Done</span></div>
+
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const JOBS = [
+  {id:1,title:"Senior Data/AI Program Manager",company:"ConSol Partners",logo:"CP",lc:"#4f8ef7",geo:"NL",geoLabel:"🇳🇱 Eindhoven, Netherlands",type:"Contract",fit:10,posted:"Apr 1, 2026",sal:"Negotiable (Contract)",tags:["AI/ML","Program Management","🔥 Apply Now"],desc:"12-month contract, 40hrs/week, ASAP start. Requires 10+ years data experience, Gen AI & Agentic AI knowledge, senior stakeholder management, consulting background.",req:["10+ years data/AI programme experience","Gen AI & Agentic AI knowledge","Complex stakeholder management","Consulting background preferred","Agile/Scrum delivery"],url:"https://nl.linkedin.com/jobs/view/senior-data-ai-program-manager-eindhoven-long-term-contract-at-consol-partners-4392874346",rec:{name:"ConSol Partners Team",title:"Technical Staffing",email:"info@consolpartners.nl",li:"linkedin.com/company/consol-partners",av:"CP",col:"#4f8ef7"},qs:["Describe your experience leading AI/data transformation programmes at enterprise scale.","How do you manage 200+ stakeholders across matrix organisations?","Walk me through a programme where you implemented Gen AI tooling.","How do you govern delivery risk on a 12-month data programme?","What's your experience with Agentic AI systems?"]},
+  {id:2,title:"AI Programme Manager",company:"microTECH Global",logo:"mT",lc:"#a78bfa",geo:"NL",geoLabel:"🇳🇱 Eindhoven Area, Netherlands",type:"Contract",fit:9,posted:"Mar 31, 2026",sal:"Negotiable",tags:["GenAI","Change Management","Eindhoven"],desc:"Contract role requiring Master's degree, 10+ years data experience, Gen/Agentic AI knowledge, complex stakeholder management, and change management.",req:["Master's degree","10+ yrs data experience","Gen/Agentic AI knowledge","Change management expertise","Senior stakeholder engagement"],url:"https://nl.linkedin.com/jobs/view/ai-programme-manager-eindhoven-at-microtech-global-ltd-4393520181",rec:{name:"microTECH Recruitment",title:"Technical Recruiter",email:"recruitment@microtechglobal.com",li:"linkedin.com/company/microtech-global",av:"mT",col:"#a78bfa"},qs:["How have you led change management for AI transformation programmes?","Describe your experience with Agentic AI implementation.","How do you handle programme scope creep in fast-moving data environments?","Walk me through stakeholder alignment across a complex matrix org.","What's your approach to programme governance and risk management?"]},
+  {id:3,title:"Data & Privacy Program Manager",company:"Airwallex",logo:"AW",lc:"#06b6d4",geo:"NL",geoLabel:"🇳🇱 Amsterdam, Netherlands",type:"Full-time",fit:8,posted:"Apr 4, 2026",sal:"€80–100K",tags:["Fintech","Data Governance","HSM Eligible","🆕 Today"],desc:"Cross-functional programme management, data governance, AI-assisted workflow design in a high-growth global fintech. Amsterdam preferred.",req:["Programme/project management","Data governance experience","Cross-functional leadership","Fintech environment a plus"],url:"https://nl.linkedin.com/jobs/view/data-privacy-program-manager-at-airwallex-4383178491",rec:{name:"Airwallex Talent",title:"Talent Acquisition",email:"talent@airwallex.com",li:"linkedin.com/company/airwallex",av:"AW",col:"#06b6d4"},qs:["How do you manage data governance programmes across multiple regulatory environments?","Walk me through a cross-functional programme you led end-to-end.","How have you used AI to improve workflow efficiency?","Describe your experience in fintech or financial services programme delivery.","How do you balance privacy compliance with operational speed?"]},
+  {id:4,title:"T&T Senior Manager – AI & Data (FSI)",company:"Deloitte Singapore",logo:"DE",lc:"#86bc25",geo:"SG",geoLabel:"🇸🇬 Singapore",type:"Full-time",fit:10,posted:"Apr 3, 2026",sal:"SGD 180–250K",tags:["Deloitte","FSI","Internal Track","High Value"],desc:"8–10 years consulting + FSI, AI/ML delivery, data governance, team leadership. Strong internal mobility pathway from Deloitte USI.",req:["8-10 yrs consulting","FSI/financial services experience","AI/ML delivery background","Team leadership","Deloitte network preferred"],url:"https://sg.linkedin.com/jobs/view/t-t-senior-manager-artificial-intelligence-data-fsi-sg-at-deloitte-4384223879",rec:{name:"Deloitte SG Talent",title:"Senior Talent Partner",email:"sgtalent@deloitte.com",li:"linkedin.com/company/deloitte",av:"DE",col:"#86bc25"},qs:["How would you leverage your Deloitte USI experience for our Singapore FSI practice?","Walk me through your largest AI/data transformation delivery.","How do you develop and retain consulting talent?","Describe your experience with financial services clients in the region.","What's your approach to building AI practice capabilities?"]},
+  {id:5,title:"Senior Consultant/Manager – AI Solution Architect",company:"Capgemini Invent",logo:"CG",lc:"#0070ad",geo:"SG",geoLabel:"🇸🇬 Singapore",type:"Full-time",fit:8,posted:"Mar 20, 2026",sal:"SGD 140–180K",tags:["GenAI","Azure","Databricks","Consulting"],desc:"GenAI/Agentic AI architecture, client-facing consulting, C-level presentation, Python + cloud platforms (Azure/Databricks). Building Singapore data & AI practice.",req:["6+ yrs consulting or data engineering","GenAI architecture experience","Azure/Databricks","Client-facing presentation","Python proficiency"],url:"https://careers.capgemini.com/job/Singapore-Senior-Consultant-Manager-AI-Solution-Architect/1265644101/",rec:{name:"Charlie Bowsher",title:"MCG Talent — Singapore/HK",email:"charlie.bowsher@mcgtalent.com",li:"linkedin.com/in/charliebowsher",av:"CB",col:"#0070ad"},qs:["How would you design a GenAI solution architecture for a Fortune 500 manufacturing client?","Walk me through your experience with Azure + Databricks on an enterprise project.","How do you present AI strategy to a C-suite audience unfamiliar with technology?","Describe a time you led an AI proof-of-concept through to production deployment.","How do you differentiate Capgemini Invent's AI practice to a client evaluating 3 firms?"]},
+  {id:6,title:"Business Analytics Manager – RBS Defect Reduction",company:"Amazon",logo:"AM",lc:"#ff9900",geo:"IN",geoLabel:"🇮🇳 Bengaluru, India",type:"Full-time",fit:9,posted:"Mar 31, 2026",sal:"₹55–90 LPA total comp",tags:["Six Sigma BB Required","Python","Leadership","Early Applicant"],desc:"Six Sigma/Lean required (SSBB). Python/SQL, stakeholder management, AI/ML-driven analytics, multi-million dollar programme accountability. Apply via Amazon Jobs directly.",req:["Six Sigma Black Belt (REQUIRED)","Python + SQL","5+ yrs analytics leadership","Stakeholder management at scale","AI/ML analytics background"],url:"https://in.linkedin.com/jobs/view/business-analytics-manager-rbs-defect-reduction-at-amazon-4381783399",rec:{name:"Amazon India Talent",title:"Technical Recruiting",email:"amazon-jobs@amazon.com",li:"linkedin.com/company/amazon",av:"AM",col:"#ff9900"},qs:["How have you applied Six Sigma DMAIC to a large-scale analytics problem?","Walk me through your biggest Python/SQL analytics project and the business impact.","How do you manage an analytics team and maintain quality at scale?","Describe a time you used data to influence a multi-million dollar operational decision.","How do you handle ambiguous problem statements typical of Amazon's environment?"]}
+];
+
+const TRACKER_DATA = [];
+const APP_LOG_KEY = "dk_app_log";
+const ACTIVITY_KEY = "dk_weekly_activity";
+let appLog = JSON.parse(localStorage.getItem(APP_LOG_KEY)||'[]');
+let weekActivity = JSON.parse(localStorage.getItem(ACTIVITY_KEY)||'{"apps":0,"rec":0,"hm":0,"int":0}');
+
+const RECRUITERS = [
+  {name:"Charlie Bowsher",title:"Senior Recruiter · MCG Talent",company:"MCG Talent",email:"charlie.bowsher@mcgtalent.com",li:"linkedin.com/in/charliebowsher",region:"Singapore / HK / Dubai",av:"CB",col:"#0070ad",note:"Your KEY contact for Singapore. Message today about Capgemini Invent role."},
+  {name:"ConSol Partners",title:"Technical Staffing Netherlands",company:"ConSol Partners",email:"info@consolpartners.nl",li:"linkedin.com/company/consol-partners",region:"Netherlands (Eindhoven)",av:"CP",col:"#4f8ef7",note:"For NL contract roles. Apply directly via LinkedIn."},
+  {name:"Airwallex Talent",title:"In-house Recruiter",company:"Airwallex",email:"talent@airwallex.com",li:"linkedin.com/company/airwallex",region:"Amsterdam, Netherlands",av:"AW",col:"#06b6d4",note:"Direct apply. HSM visa eligible employer — mention this upfront."},
+  {name:"Deloitte SG Talent",title:"Senior Talent Partner",company:"Deloitte Singapore",email:"sgtalent@deloitte.com",li:"linkedin.com/company/deloitte",region:"Singapore",av:"DE",col:"#86bc25",note:"LEVERAGE your Deloitte USI network first. Speak to People Partner about cross-border mobility before cold-applying."},
+];
+
+const NEWS = {
+  ai:[
+    {icon:"🤖",badge:"nb-ai",title:"Microsoft Fabric Copilot GA — Major Demand for DP-600 Holders",meta:"Microsoft · Apr 3, 2026"},
+    {icon:"📊",badge:"nb-ai",title:"Databricks Lakehouse Platform Now Dominant in APAC Enterprise Data",meta:"Databricks Report · Apr 1, 2026"},
+    {icon:"⚡",badge:"nb-ai",title:"AI Programme Management Skills Gap = 300K Roles Unfilled in EU",meta:"Gartner · Mar 30, 2026"},
+  ],
+  jobs:[
+    {icon:"💼",badge:"nb-market",title:"Netherlands AI/Data PM Roles Up 40% Q1 2026 — HSM Demand High",meta:"LinkedIn NL · Apr 4, 2026"},
+    {icon:"🇸🇬",badge:"nb-market",title:"Singapore MOM EP Approvals Fast-Tracked for AI Specialists",meta:"MOM Singapore · Mar 28, 2026"},
+    {icon:"💰",badge:"nb-market",title:"India Analytics Manager Salaries: ₹55–90 LPA at FAANG (2026 data)",meta:"Glassdoor India · Apr 2, 2026"},
+  ],
+  certs:[
+    {icon:"📜",badge:"nb-cert",title:"PMP Exam Price Hike Aug 6, 2026 — Register Early to Save ₹12K",meta:"PMI · Mar 31, 2026 · URGENT"},
+    {icon:"🔷",badge:"nb-cert",title:"DP-600 Certified Analysts Earn 38% More — Demand Exploding",meta:"Microsoft Survey · Mar 15, 2026"},
+    {icon:"🚨",badge:"nb-cert",title:"AI-901 (Replaces AI-900 Jun 30) — Beta Available April 2026",meta:"Microsoft Learn · Mar 24, 2026"},
+  ]
+};
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+window.addEventListener('DOMContentLoaded',()=>{
+  renderBriefJobs();
+  renderPipeline();
+  renderActiveApps();
+  renderAllJobs();
+  renderTracker();
+  renderRecruiters();
+  renderOutreach();
+  renderNews();
+  renderPowerStatements();
+  renderNeverSay();
+  renderResumeSelect();
+  renderInterviewSelect();
+  calcNego();
+  updateKPIBars();
+  checkForRefresh();                        // check jobs-update.json on load
+  setInterval(checkForRefresh, 5*60*1000); // re-check every 5 minutes
+});
+
+// ═══════════════════════════════════════
+// AUTO-REFRESH — polls jobs-update.json
+// Written daily at 10am by refresh-jobs.bat + Claude agent
+// ═══════════════════════════════════════
+let lastRefreshSeen = null;
+
+function checkForRefresh(){
+  fetch('jobs-update.json?t='+Date.now())
+    .then(r=>r.ok ? r.json() : null)
+    .then(data=>{
+      if(!data) return;
+      if(data.last_refresh === lastRefreshSeen) return; // nothing new
+      lastRefreshSeen = data.last_refresh;
+
+      // Update refresh badge in topbar
+      document.getElementById('tb-sub').textContent =
+        `Last refreshed ${data.refresh_date} at ${data.refresh_time} · ${data.message}`;
+
+      // Show alert banner if set
+      if(data.alert){
+        const ab = document.querySelector('.alert-banner .ab-text h4');
+        const ap = document.querySelector('.alert-banner .ab-text p');
+        if(ab) ab.textContent = '🔔 ' + data.alert;
+        if(ap) ap.textContent = data.refresh_date + ' — Dashboard auto-refreshed at 10am.';
+        document.querySelector('.alert-banner').style.borderColor='rgba(34,197,94,.4)';
+        document.querySelector('.alert-banner').style.background='linear-gradient(135deg,rgba(34,197,94,.1),rgba(79,142,247,.04))';
+      }
+
+      // Prepend new jobs from Claude's search to JOBS array
+      if(data.new_jobs && data.new_jobs.length){
+        const newIds = new Set(JOBS.map(j=>j.id));
+        let added = 0;
+        data.new_jobs.forEach(nj=>{
+          if(!newIds.has(nj.id)){
+            JOBS.unshift({
+              id: nj.id,
+              title: nj.title,
+              company: nj.company,
+              logo: nj.company.substring(0,2).toUpperCase(),
+              lc: '#4f8ef7',
+              geo: nj.geo||'IN',
+              geoLabel: (nj.geo==='NL'?'🇳🇱 ':nj.geo==='SG'?'🇸🇬 ':'🇮🇳 ') + nj.location,
+              type: 'Full-time',
+              fit: nj.fit||8,
+              posted: 'Today (10am refresh)',
+              sal: nj.salary||'Negotiable',
+              tags: nj.tags||[],
+              desc: nj.why_fit||'New role from daily refresh.',
+              req: [],
+              url: nj.url||'#',
+              rec:{name:'Recruiter',title:'',email:'',li:'',av:'?',col:'#4f8ef7'},
+              qs:[]
+            });
+            added++;
+          }
+        });
+        if(added > 0){
+          renderBriefJobs();
+          renderAllJobs();
+          renderResumeSelect();
+          renderInterviewSelect();
+          showToast(`✨ ${added} new job${added>1?'s':''} added from 10am refresh!`, '🔔');
+        }
+      }
+    })
+    .catch(()=>{}); // silent fail if file doesn't exist yet
+}
+
+// ═══════════════════════════════════════
+// JOBS
+// ═══════════════════════════════════════
+function geoClass(g){return g==='NL'?'geo-nl':g==='SG'?'geo-sg':'geo-in'}
+function fitCls(f){return f>=9?'fh':f>=7?'fm':'fl'}
+function renderJobCard(j,compact=false){
+  const hot=j.tags.find(t=>t.includes('🔥')||t.includes('🆕'));
+  const cleanTags=j.tags.filter(t=>!t.includes('🔥')&&!t.includes('🆕')).map(t=>`<span class="tag">${t}</span>`).join('');
+  return`<div class="job-card" id="jc-${j.id}" onclick="openJob(${j.id})">
+    <div class="jt">
+      <div class="jlogo" style="background:${j.lc}18;color:${j.lc};border-color:${j.lc}33">${j.logo}</div>
+      <div class="jmeta">
+        <div class="jtitle">${j.title}</div>
+        <div class="jcomp">${j.company} · <span class="geo-badge ${geoClass(j.geo)}">${j.geoLabel}</span></div>
+      </div>
+      <div class="jright">
+        <div class="fit ${fitCls(j.fit)}">${j.fit}/10 fit</div>
+        <div style="font-size:11px;color:var(--green);font-weight:700;margin-top:2px">${j.sal}</div>
+      </div>
+    </div>
+    ${!compact?`<div class="jtags">${hot?`<span class="tag hot">${hot}</span>`:''}${cleanTags}</div><p style="font-size:11px;color:var(--muted);margin:0 0 9px;line-height:1.6">${j.desc.substring(0,100)}…</p>`:''}
+    <div class="jfoot">
+      <span class="jloc">🕐 ${j.posted}</span>
+      <div class="jabts">
+        <button class="abt abt-c" onclick="event.stopPropagation();nav('outreach',document.querySelector('.nav-item[onclick*=outreach]'))">📨 Outreach</button>
+        <button class="abt abt-b" onclick="event.stopPropagation();goInterview(${j.id})">🎙️ Prep</button>
+        <button class="abt abt-a" onclick="event.stopPropagation();logApply(${j.id})">✓ Log Apply</button>
+      </div>
+    </div>
+  </div>`;
+}
+function renderBriefJobs(){document.getElementById('brief-jobs').innerHTML=JOBS.slice(0,3).map(j=>renderJobCard(j,true)).join('')}
+function renderAllJobs(){document.getElementById('all-jobs').innerHTML=JOBS.map(j=>renderJobCard(j)).join('')}
+function filterJobs(){
+  const q=document.getElementById('jsearch').value.toLowerCase();
+  const geo=document.getElementById('f-geo').value;
+  const fit=parseInt(document.getElementById('f-fit').value)||0;
+  const res=JOBS.filter(j=>{
+    const mq=!q||j.title.toLowerCase().includes(q)||j.company.toLowerCase().includes(q);
+    const mg=!geo||j.geo===geo;
+    const mf=!fit||j.fit>=fit;
+    return mq&&mg&&mf;
+  });
+  document.getElementById('all-jobs').innerHTML=res.length?res.map(j=>renderJobCard(j)).join(''):'<div style="padding:30px;text-align:center;color:var(--muted)">No matches</div>';
+}
+function openJob(id){
+  const j=JOBS.find(x=>x.id===id);
+  const dp=document.getElementById('job-detail-panel');
+  dp.innerHTML=`
+    <div style="display:flex;align-items:center;gap:13px;margin-bottom:16px">
+      <div class="jlogo" style="width:46px;height:46px;font-size:16px;background:${j.lc}18;color:${j.lc};border-color:${j.lc}33">${j.logo}</div>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:800">${j.title}</div>
+        <div style="font-size:12px;color:var(--muted)">${j.company} · ${j.geoLabel} · ${j.sal}</div>
+      </div>
+      <span class="fit ${fitCls(j.fit)}" style="font-size:14px;padding:4px 12px">${j.fit}/10 fit</span>
+      <button onclick="this.closest('.dp').classList.remove('open')" style="background:none;border:none;color:var(--muted);font-size:16px;cursor:pointer;margin-left:4px">✕</button>
+    </div>
+    <div class="dtabs">
+      <div class="dtab active" onclick="dtab(this,'dov')">Overview</div>
+      <div class="dtab" onclick="dtab(this,'drec')">Recruiter</div>
+      <div class="dtab" onclick="dtab(this,'dout')">Outreach</div>
+      <div class="dtab" onclick="dtab(this,'dprep')">Interview Prep</div>
+    </div>
+    <div id="dov" class="dcon active">
+      <p style="font-size:13px;line-height:1.75;margin-bottom:13px">${j.desc}</p>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:7px">Key Requirements</div>
+      <ul style="padding-left:16px;font-size:12px;color:var(--muted);line-height:2">${j.req.map(r=>`<li>${r}</li>`).join('')}</ul>
+      <div style="margin-top:14px;display:flex;gap:8px">
+        <a href="${j.url}" target="_blank" class="btn btn-a" style="text-decoration:none;font-size:12px">Apply on LinkedIn →</a>
+        <button class="btn btn-g" onclick="logApply(${j.id})">✓ Log as Applied</button>
+      </div>
+    </div>
+    <div id="drec" class="dcon">
+      <div class="rec-card" style="max-width:380px">
+        <div class="rh"><div class="rav" style="background:${j.rec.col}18;color:${j.rec.col}">${j.rec.av}</div><div><div class="rname">${j.rec.name}</div><div class="rrole">${j.rec.title}</div></div></div>
+        <div class="rinfo">📧 <strong>${j.rec.email}</strong><button class="copybtn" onclick="copyText('${j.rec.email}','Email copied!')">Copy</button></div>
+        <div class="rinfo">💼 <strong style="font-size:10px">${j.rec.li}</strong><button class="copybtn" onclick="copyText('${j.rec.li}','Copied!')">Copy</button></div>
+        <div style="margin-top:11px;display:flex;gap:7px">
+          <button class="abt abt-a" style="font-size:10px" onclick="copyText(getLI(${j.id}),'LinkedIn message copied! ✓')">Copy LinkedIn Msg</button>
+          <button class="abt abt-b" style="font-size:10px" onclick="copyText(getEmail(${j.id}),'Email copied!')">Copy Email</button>
+        </div>
+      </div>
+    </div>
+    <div id="dout" class="dcon">${renderOT(j)}</div>
+    <div id="dprep" class="dcon">
+      <div style="display:flex;flex-direction:column;gap:8px">${j.qs.map((q,i)=>`<div style="display:flex;gap:9px;padding:9px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:12px"><div style="width:20px;height:20px;border-radius:5px;background:rgba(79,142,247,.12);color:var(--accent);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div><div>${q}</div></div>`).join('')}</div>
+    </div>
+  `;
+  dp.classList.add('open');
+  document.querySelectorAll('#all-jobs .job-card').forEach(c=>c.classList.remove('sel'));
+  const el=document.getElementById('jc-'+id);
+  if(el){el.classList.add('sel');}
+}
+function dtab(el,id){
+  el.closest('.dp').querySelectorAll('.dtab').forEach(t=>t.classList.remove('active'));
+  el.closest('.dp').querySelectorAll('.dcon').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// ═══════════════════════════════════════
+// OUTREACH
+// ═══════════════════════════════════════
+function getLI(id){
+  const j=JOBS.find(x=>x.id===id);if(!j)return'';
+  const isCharlie=j.id===5;
+  if(isCharlie) return `Hi Charlie,\n\nHope you're well — we've spoken about data/analytics roles previously. I wanted to flag that I'm actively looking and spotted the Capgemini Invent Singapore AI Solution Architect role (posted Mar 20).\n\nMy background: 10+ years across Deloitte, Bain, and EXL as an AI & Data Transformation Programme Manager. Six Sigma Black Belt, currently at Deloitte USI, and eligible for Singapore Employment Pass.\n\nWould you be able to make an introduction or fast-track my application?\n\nBest regards,\nDushyant Kapoor\nlinkedin.com/in/dushyant-kapoor-consultant`;
+  return `Hi ${j.rec.name.split(' ')[0]},\n\nI came across the ${j.title} role at ${j.company} and it is a strong match for my profile.\n\nI am an AI & Data Transformation Programme Manager with 10+ years across Deloitte USI, Bain & Company, and EXL Service. Key highlights:\n• Managed 250+ matrix stakeholders, 15 direct reports\n• Delivered $1M programme for Australian insurance client\n• 10,000+ hours saved via 50+ Alteryx automation workflows\n• Six Sigma Black Belt | Pursuing PMP\n\n${j.geo==='NL'?'I hold Netherlands HSM visa eligibility and am ready to relocate.':j.geo==='SG'?'I am eligible for Singapore Employment Pass.':'I am based in Delhi, India.'}\n\nWould you be open to a brief conversation?\n\nBest regards,\nDushyant Kapoor\nlinkedin.com/in/dushyant-kapoor-consultant`;
+}
+function getEmail(id){
+  const j=JOBS.find(x=>x.id===id);if(!j)return'';
+  return `Subject: Application — ${j.title} | Dushyant Kapoor | AI & Data Transformation PM\n\nDear ${j.rec.name.split(' ')[0]},\n\nI am writing to express my strong interest in the ${j.title} role at ${j.company}.\n\nI am an AI & Data Transformation Programme Manager with 10+ years across Deloitte USI, Bain & Company, and EXL Service. My experience directly matches your requirements:\n\n• ${j.req[0]} — Delivered at Deloitte USI and Bain across 250+ stakeholders\n• ${j.req[1]} — Built 50+ Alteryx automation workflows saving 10,000+ hours\n• Six Sigma Black Belt | $1M programme delivered | 90% Python model accuracy\n\n${j.geo==='NL'?'I hold Netherlands HSM visa eligibility and am immediately available for relocation to the Netherlands.':j.geo==='SG'?'I am eligible for Singapore Employment Pass and available to relocate.':'I am based in Delhi and available to join with standard notice period.'}\n\nI would welcome the opportunity to discuss how I can contribute to ${j.company}.\n\nBest regards,\nDushyant Kapoor\n+91-XXXXXXXXXX | dushyant@email.com\nlinkedin.com/in/dushyant-kapoor-consultant`;
+}
+function renderOT(j){
+  return`<div class="tmpl"><div class="tmpl-h"><h4>💼 LinkedIn Message</h4><button class="btn btn-g" style="font-size:10px;padding:3px 9px" onclick="copyText(getLI(${j.id}),'Copied!')">Copy</button></div><pre class="tmpl-text">${getLI(j.id)}</pre></div>
+  <div class="tmpl"><div class="tmpl-h"><h4>📧 Email Template</h4><button class="btn btn-g" style="font-size:10px;padding:3px 9px" onclick="copyText(getEmail(${j.id}),'Copied!')">Copy</button></div><pre class="tmpl-text">${getEmail(j.id)}</pre></div>`;
+}
+function renderOutreach(){
+  document.getElementById('outreach-content').innerHTML=JOBS.slice(0,3).map(j=>`
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px">
+        <div class="jlogo" style="background:${j.lc}18;color:${j.lc};border-color:${j.lc}33">${j.logo}</div>
+        <div><div style="font-weight:700;font-size:13px">${j.company} — ${j.title}</div><div style="font-size:11px;color:var(--muted)">${j.rec.name} · ${j.rec.email} · <span class="geo-badge ${geoClass(j.geo)}">${j.geoLabel}</span></div></div>
+        <button class="btn btn-a" style="margin-left:auto;font-size:11px" onclick="copyText(getLI(${j.id}),'Message copied! ✓')">Copy & Send</button>
+      </div>
+      ${renderOT(j)}
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════
+// TRACKER
+// ═══════════════════════════════════════
+function renderTracker(){
+  const rows=[...TRACKER_DATA,...appLog];
+  document.getElementById('tracker-body').innerHTML=rows.length?rows.map((r,i)=>`
+    <tr>
+      <td style="font-weight:700">${r.company}</td>
+      <td>${r.role}</td>
+      <td><span class="geo-badge ${r.geoClass||'geo-in'}">${r.location}</span></td>
+      <td style="color:var(--muted)">${r.date||'—'}</td>
+      <td><span class="sp s-${r.status||'applied'}">${(r.status||'Applied').charAt(0).toUpperCase()+(r.status||'applied').slice(1)}</span></td>
+      <td style="font-size:11px">${r.next||'Follow up in 5 days'}</td>
+      <td style="font-size:11px;color:var(--muted)">${r.followup||'—'}</td>
+      <td><button class="abt abt-b" style="font-size:9px" onclick="removeApp(${i})">✕</button></td>
+    </tr>
+  `).join(''):`<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--muted)">No applications logged yet. Click 'Log Apply' on a job card or paste a screenshot.</td></tr>`;
+}
+function logApply(id){
+  const j=JOBS.find(x=>x.id===id);
+  const today=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  const followup=new Date(Date.now()+5*86400000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+  appLog.push({company:j.company,role:j.title,location:j.geoLabel,geoClass:geoClass(j.geo),date:today,status:'applied',next:'Send follow-up or recruiter message',followup});
+  localStorage.setItem(APP_LOG_KEY,JSON.stringify(appLog));
+  weekActivity.apps=(weekActivity.apps||0)+1;
+  localStorage.setItem(ACTIVITY_KEY,JSON.stringify(weekActivity));
+  updateKPIBars();
+  renderTracker();
+  renderActiveApps();
+  showToast(`${j.company} logged as Applied ✓`,'✅');
+}
+function addApp(){
+  const co=prompt('Company name:');if(!co)return;
+  const role=prompt('Role title:');if(!role)return;
+  const loc=prompt('Location (e.g. Amsterdam, Netherlands):');
+  const today=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+  appLog.push({company:co,role:role||'—',location:loc||'—',geoClass:'geo-in',date:today,status:'applied',next:'Follow up in 5 days',followup:''});
+  localStorage.setItem(APP_LOG_KEY,JSON.stringify(appLog));
+  weekActivity.apps=(weekActivity.apps||0)+1;
+  localStorage.setItem(ACTIVITY_KEY,JSON.stringify(weekActivity));
+  updateKPIBars();renderTracker();renderActiveApps();
+  showToast('Application logged ✓','✅');
+}
+function removeApp(i){
+  if(i<TRACKER_DATA.length) TRACKER_DATA.splice(i,1);
+  else appLog.splice(i-TRACKER_DATA.length,1);
+  localStorage.setItem(APP_LOG_KEY,JSON.stringify(appLog));
+  renderTracker();
+}
+
+// ═══════════════════════════════════════
+// PIPELINE
+// ═══════════════════════════════════════
+function renderPipeline(){
+  const total=appLog.length+TRACKER_DATA.length;
+  const data=[
+    {label:"Applied",count:total||0,color:"var(--accent)",max:15},
+    {label:"Outreach",count:weekActivity.rec||0,color:"var(--cyan)",max:10},
+    {label:"Screening",count:0,color:"var(--yellow)",max:5},
+    {label:"Interview",count:weekActivity.int||0,color:"var(--purple)",max:3},
+    {label:"Offer",count:0,color:"var(--green)",max:1},
+  ];
+  document.getElementById('pipeline-funnel').innerHTML=data.map(d=>`
+    <div class="funnel-row">
+      <div class="funnel-label">${d.label}</div>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:${Math.min(100,d.count/d.max*100)||0}%;background:${d.color}20;color:${d.color};border-right:2px solid ${d.color}">
+          ${d.count>0?d.count:''}
+        </div>
+      </div>
+      <div class="funnel-num">${d.count}</div>
+    </div>
+  `).join('');
+}
+function renderActiveApps(){
+  const rows=[...TRACKER_DATA,...appLog].slice(0,3);
+  document.getElementById('active-apps').innerHTML=rows.length?rows.map(r=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px">
+      <span class="geo-badge ${r.geoClass||'geo-in'}" style="font-size:9px">${r.location?.split(',')[0]||'IN'}</span>
+      <span style="font-weight:600;flex:1">${r.company}</span>
+      <span class="sp s-${r.status||'applied'}">${r.status||'Applied'}</span>
+    </div>
+  `).join(''):`<div style="font-size:12px;color:var(--muted);text-align:center;padding:14px">No applications yet this week.</div>`;
+}
+
+// ═══════════════════════════════════════
+// KPI BARS
+// ═══════════════════════════════════════
+function updateKPIBars(){
+  const a=weekActivity.apps||0,r=weekActivity.rec||0,h=weekActivity.hm||0,i=weekActivity.int||0;
+  const set=(id,val,target)=>{
+    const pct=Math.min(100,val/target*100);
+    const color=pct>=80?'var(--green)':pct>=50?'var(--yellow)':'var(--red)';
+    const cls=pct>=80?'g':pct>=50?'y':'r';
+    document.getElementById(`kpi-${id}-bar`).style.width=pct+'%';
+    document.getElementById(`kpi-${id}-bar`).style.background=color;
+    document.getElementById(`kpi-${id}-label`).textContent=`${val}/${target}`;
+    document.getElementById(`kpi-${id}-label`).className=`kpi-val ${cls}`;
+  };
+  set('apps',a,10);set('rec',r,10);set('hm',h,5);set('int',i,2);
+  document.getElementById('s-apps').textContent=a;
+  document.getElementById('s-rec').textContent=r;
+  document.getElementById('s-int').textContent=i;
+  document.getElementById('s-pipe').textContent=appLog.length+TRACKER_DATA.length;
+  renderPipeline();
+}
+
+// ═══════════════════════════════════════
+// WEEKLY CHECK-IN SCORING
+// ═══════════════════════════════════════
+function scoreWeek(){
+  const apps=parseInt(document.getElementById('ci-apps').value)||0;
+  const rec=parseInt(document.getElementById('ci-rec').value)||0;
+  const hm=parseInt(document.getElementById('ci-hm').value)||0;
+  const ref=parseInt(document.getElementById('ci-ref').value)||0;
+  const resp=parseInt(document.getElementById('ci-resp').value)||0;
+  const ints=parseInt(document.getElementById('ci-int').value)||0;
+  if(!apps&&!rec&&!hm&&!ints) return;
+  document.getElementById('score-output').style.display='block';
+
+  const score=(v,t)=>v>=t?'g':v>=t*0.7?'y':'r';
+  const label=(v,t)=>v>=t?'✅ Green':v>=t*0.7?'⚠️ Amber':'🔴 Red';
+  const items=[
+    {label:'Applications',val:apps,target:10,note:`${apps}/10–15 target`},
+    {label:'Recruiter msgs',val:rec,target:10,note:`${rec}/10 target`},
+    {label:'HM messages',val:hm,target:5,note:`${hm}/5 target`},
+    {label:'Referrals',val:ref,target:5,note:`${ref}/5 target`},
+  ];
+  document.getElementById('score-cards').innerHTML=items.map(s=>`
+    <div class="score-item">
+      <div class="score-label">${s.label}</div>
+      <div class="score-val" style="color:${score(s.val,s.target)==='g'?'var(--green)':score(s.val,s.target)==='y'?'var(--yellow)':'var(--red)'}">${s.val}</div>
+      <div class="score-status ss-${score(s.val,s.target)}">${label(s.val,s.target)}</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:4px">${s.note}</div>
+    </div>
+  `).join('');
+
+  const overallScore=Math.round(([apps/10,rec/10,hm/5,ref/5].reduce((a,b)=>a+b,0)/4)*100);
+  const isGreen=overallScore>=80,isAmber=overallScore>=60;
+  const verdictColor=isGreen?'var(--green)':isAmber?'var(--yellow)':'var(--red)';
+  const verdictLabel=isGreen?'GREEN — Strong Week':'Amber — Behind Target';
+  document.getElementById('score-verdict').innerHTML=`
+    <h3>📊 Weekly Verdict: <span style="color:${verdictColor}">${verdictLabel} (${overallScore}%)</span></h3>
+    <div style="font-size:13px;color:var(--muted);line-height:1.8;margin-top:10px">
+      ${apps<10?`<div>❌ Applications (${apps}/10): You need ${10-apps} more. This is non-negotiable — pipeline dries up fast without volume.</div>`:'<div>✅ Applications: On target. Keep going.</div>'}
+      ${rec<8?`<div>⚠️ Recruiter outreach (${rec}/10): You're leaving warm opportunities on the table. Block 30 min at 1pm Mon/Wed/Fri and hit 10.</div>`:'<div>✅ Recruiter outreach: Good. Follow up on any that haven\'t responded.</div>'}
+      ${ints>0?`<div>✅ ${ints} interview(s) booked — good signal.</div>`:'<div>❌ No interviews yet. Your outreach needs more targeted personalisation — not just generic messages.</div>'}
+      ${resp>0?`<div>📩 ${resp} responses (${(resp/Math.max(apps,1)*100).toFixed(0)}% response rate) — ${resp/Math.max(apps,1)>.15?'above':'below'} industry avg of 15%.</div>`:''}
+    </div>
+  `;
+
+  weekActivity={apps,rec,hm,int:ints};
+  localStorage.setItem(ACTIVITY_KEY,JSON.stringify(weekActivity));
+  updateKPIBars();
+  document.getElementById('score-actions').innerHTML=`
+    <div class="na-title">🎯 NEXT WEEK'S 3 ACTIONS</div>
+    ${apps<10?`<div class="na-item"><div class="na-num">1</div><div class="na-text"><strong>Hit 10+ applications this week</strong><span>Start with ConSol NL (Apr 1), Airwallex Amsterdam (today), Amazon India (direct link). Three done by Tuesday.</span></div></div>`:'<div class="na-item"><div class="na-num">1</div><div class="na-text"><strong>Maintain application volume + improve quality</strong><span>Tailor each cover letter with 1 specific company reference. It lifts response rate by 2-3x.</span></div></div>'}
+    <div class="na-item"><div class="na-num">2</div><div class="na-text"><strong>Message Charlie Bowsher about Capgemini Invent Singapore</strong><span>Use the LinkedIn template in Outreach tab. Mention your EP eligibility and 10yr data transformation track record.</span></div></div>
+    <div class="na-item"><div class="na-num">3</div><div class="na-text"><strong>Leverage Deloitte internal network for Singapore T&T Senior Manager role</strong><span>DO NOT cold-apply. Speak to your People Partner or a Deloitte SG principal first. Internal referrals convert 5x better.</span></div></div>
+  `;
+}
+
+// ═══════════════════════════════════════
+// NEGOTIATE
+// ═══════════════════════════════════════
+function calcNego(){
+  const cur=parseFloat(document.getElementById('n-cur').value)||0;
+  const off=parseFloat(document.getElementById('n-off').value)||50;
+  const vari=parseFloat(document.getElementById('n-var').value)||0;
+  const esop=parseFloat(document.getElementById('n-esop').value)||0;
+  const target=50;
+  const total4=(off+vari)*4+esop;
+  const inc=cur>0?(((off-cur)/cur)*100).toFixed(1):0;
+  const counter=Math.max(target,Math.round(off*1.12));
+  document.getElementById('nego-result').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px">
+      <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:3px">4-Year Total</div><div style="font-size:20px;font-weight:900;color:var(--green)">₹${total4}L</div></div>
+      <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:3px">Salary Increase</div><div style="font-size:20px;font-weight:900;color:var(--accent)">+${inc}%</div></div>
+      <div><div style="font-size:10px;color:var(--muted);text-transform:uppercase;margin-bottom:3px">Suggest Asking</div><div style="font-size:20px;font-weight:900;color:var(--yellow)">₹${counter}L</div></div>
+    </div>
+    ${off<target?`<div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:8px;padding:10px;font-size:12px;color:var(--red)">⚠️ This offer (₹${off}L) is below your ₹50L minimum. Do not accept without negotiating to at least ₹${target}L base.</div>`:`<div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:10px;font-size:12px;color:var(--green)">✅ Offer meets your ₹50L minimum. Still counter to ₹${counter}L — you have leverage.</div>`}
+  `;
+  document.getElementById('nego-script').innerHTML=`
+    <div class="tmpl"><div class="tmpl-h"><h4>Counter-offer Script</h4><button class="btn btn-g" style="font-size:10px;padding:3px 8px" onclick="copyText(document.getElementById('nscript').textContent,'Script copied!')">Copy</button></div>
+    <pre class="tmpl-text" id="nscript">Hi [Name],
+
+Thank you for the offer — I'm genuinely excited about this opportunity and the team.
+
+After reviewing everything, I'd like to discuss the base salary. Based on my background as an AI & Data Transformation Programme Manager (10+ years, Deloitte/Bain/EXL, $1M delivery, Six Sigma BB), and comparable market rates${cur?` vs. my current ₹${cur}L package`:''}:
+
+My ask: ₹${counter}L base (from ₹${off}L offered)
+
+I'm flexible on structure — signing bonus, accelerated review — and committed to joining at full energy.
+
+Can we make this work?
+
+Best regards,
+Dushyant Kapoor</pre></div>`;
+}
+
+// ═══════════════════════════════════════
+// RECRUITERS
+// ═══════════════════════════════════════
+function renderRecruiters(){
+  document.getElementById('rec-grid').innerHTML=RECRUITERS.map(r=>`
+    <div class="rec-card">
+      <div class="rh"><div class="rav" style="background:${r.col}18;color:${r.col}">${r.av}</div><div><div class="rname">${r.name}</div><div class="rrole">${r.title}</div></div></div>
+      <div class="rinfo">📧 <strong>${r.email}</strong><button class="copybtn" onclick="copyText('${r.email}','Copied!')">Copy</button></div>
+      <div class="rinfo">🌍 <strong style="font-size:10px">${r.region}</strong></div>
+      <div style="font-size:11px;color:var(--accent);margin:8px 0;line-height:1.5">${r.note}</div>
+      <div style="display:flex;gap:6px;margin-top:8px">
+        <button class="abt abt-a" style="font-size:10px" onclick="copyText(getRecMsg('${r.av}'),'Message copied!')">Copy Message</button>
+        <button class="abt abt-b" style="font-size:10px" onclick="copyText('${r.email}','Email copied!')">Copy Email</button>
+      </div>
+    </div>
+  `).join('');
+}
+function getRecMsg(av){
+  if(av==='CB') return getLI(5);
+  return `Hi,\n\nI'm Dushyant Kapoor, an AI & Data Transformation Programme Manager with 10+ years across Deloitte USI, Bain & Company, and EXL. I'm actively exploring Programme Manager / Analytics Manager roles.\n\n• 250+ matrix stakeholders managed\n• $1M programme delivery\n• 10,000+ hours saved via Alteryx automation\n• Six Sigma Black Belt | Pursuing PMP\n• Netherlands HSM visa eligible | Singapore EP eligible\n\nWould you have any suitable openings at the moment?\n\nBest regards,\nDushyant Kapoor\nlinkedin.com/in/dushyant-kapoor-consultant`;
+}
+
+// ═══════════════════════════════════════
+// INTERVIEW
+// ═══════════════════════════════════════
+function renderInterviewSelect(){document.getElementById('int-sel').innerHTML='<option value="">— Choose a role —</option>'+JOBS.map(j=>`<option value="${j.id}">${j.company} — ${j.title}</option>`).join('')}
+function goInterview(id){nav('interview',document.querySelector('.nav-item[onclick*=interview]'));const s=document.getElementById('int-sel');s.value=id;loadInterview()}
+function loadInterview(){
+  const id=parseInt(document.getElementById('int-sel').value);
+  if(!id){document.getElementById('int-content').innerHTML='';return}
+  const j=JOBS.find(x=>x.id===id);
+  document.getElementById('int-content').innerHTML=`
+    <div class="two-col">
+      <div class="card"><h3>🎯 Company-Specific Questions</h3>
+        <div style="display:flex;flex-direction:column;gap:7px">
+          ${j.qs.map((q,i)=>`<div style="display:flex;gap:8px;padding:8px 11px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:12px"><div style="width:18px;height:18px;border-radius:5px;background:rgba(79,142,247,.12);color:var(--accent);font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div><div>${q}</div></div>`).join('')}
+        </div>
+      </div>
+      <div>
+        <div class="card"><h3>📖 Your STAR Stories</h3>
+          <div style="font-size:12px;color:var(--muted);line-height:2">
+            <div>1. <strong style="color:var(--text)">250+ Stakeholder Programme</strong> — Deloitte USI</div>
+            <div>2. <strong style="color:var(--text)">$1M Insurance Client Delivery</strong> — EXL/Bain</div>
+            <div>3. <strong style="color:var(--text)">10,000 hrs Alteryx Automation</strong> — 50 workflows</div>
+            <div>4. <strong style="color:var(--text)">Python Regression Model</strong> — 90% accuracy</div>
+            <div>5. <strong style="color:var(--text)">83% Speed Improvement</strong> — Alteryx optimisation</div>
+          </div>
+        </div>
+        <div class="card"><h3>🏢 Company: ${j.company}</h3>
+          <div style="font-size:12px;color:var(--muted);line-height:1.9">
+            <div>📍 ${j.geoLabel}</div>
+            <div>💰 ${j.sal}</div>
+            <div>🎯 Fit: ${j.fit}/10</div>
+            <div>📅 Posted: ${j.posted}</div>
+            <hr/>
+            <div>Recruiter: ${j.rec.name}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════
+// NEWS
+// ═══════════════════════════════════════
+function renderNews(){
+  ['ai','jobs','certs'].forEach(k=>{
+    document.getElementById('news-'+k).innerHTML=NEWS[k].map(n=>`
+      <div class="news-item">
+        <span class="news-icon">${n.icon}</span>
+        <div>
+          <span class="news-badge ${n.badge}">${n.badge.replace('nb-','')}</span>
+          <div class="news-title">${n.title}</div>
+          <div class="news-meta">${n.meta}</div>
+        </div>
+      </div>
+    `).join('');
+  });
+}
+
+// ═══════════════════════════════════════
+// POSITIONING
+// ═══════════════════════════════════════
+function renderPowerStatements(){
+  const stmts=[
+    "I am an AI & Data Transformation Programme Manager with 10+ years across Deloitte, Bain, and EXL.",
+    "I delivered a $1M insurance transformation programme and saved 10,000+ hours via Alteryx automation at scale.",
+    "I manage 250+ matrix stakeholders across complex, multi-geography programmes.",
+    "I built a Python regression model achieving 90% prediction accuracy — I am technical enough to lead data teams.",
+    "I am a Six Sigma Black Belt. I don't just manage programmes — I optimise and transform them.",
+    "I hold Netherlands HSM visa eligibility and am ready to relocate to Amsterdam immediately.",
+  ];
+  document.getElementById('power-statements').innerHTML=stmts.map((s,i)=>`<div style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px"><div style="width:18px;height:18px;border-radius:5px;background:rgba(79,142,247,.12);color:var(--accent);font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">${i+1}</div><div>${s}</div></div>`).join('');
+}
+function renderNeverSay(){
+  const never=[
+    '"I am a Programme Manager" — too generic. Always say AI & Data Transformation PM.',
+    '"I work in PMO" — PMO sounds administrative. You deliver transformation.',
+    '"I manage projects" — you manage PROGRAMMES at $1M+ scale.',
+    '"I am open to any role" — you are targeting Manager level, not Senior Manager.',
+    '"I can apply to Dubai too" — UAE is deprioritised until further notice.',
+    '"I don\'t have formal Python experience" — you BUILT a 90% accuracy regression model.',
+  ];
+  document.getElementById('never-say').innerHTML=never.map(s=>`<div style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)"><span style="color:var(--red);flex-shrink:0">✗</span><div>${s}</div></div>`).join('');
+}
+
+// ═══════════════════════════════════════
+// RESUME
+// ═══════════════════════════════════════
+function renderResumeSelect(){document.getElementById('r-sel').innerHTML='<option value="">— Select a job —</option>'+JOBS.map(j=>`<option value="${j.id}">${j.company} — ${j.title}</option>`).join('')}
+function loadCV(){document.getElementById('tailored-cv').value='';document.getElementById('cv-tips').style.display='none'}
+function tailorCV(){
+  const id=parseInt(document.getElementById('r-sel').value);
+  if(!id){showToast('Select a job first','⚠️');return}
+  const j=JOBS.find(x=>x.id===id);
+  const base=document.getElementById('base-cv').value||'[Paste your CV]';
+  const nlNote=j.geo==='NL'?'\nNetherlands HSM Visa Eligible | CEFR B2 English':'';
+  document.getElementById('tailored-cv').value=base.split('\n')[0]+nlNote+'\n\n---TAILORED FOR '+j.company.toUpperCase()+'---\n\n✅ Keywords added: '+j.tags.filter(t=>!t.includes('🔥')&&!t.includes('🆕')).join(', ')+'\n✅ Requirement #1 addressed: '+j.req[0]+'\n✅ Requirement #2 addressed: '+j.req[1]+'\n'+base.split('\n').slice(1).join('\n');
+  const tips=[
+    `✅ Lead with "AI & Data Transformation Programme Manager" in your summary — not "Senior Consultant"`,
+    `✅ For ${j.company}: emphasise ${j.req[0]}`,
+    `✅ Quantify your stakeholder management: "250+ matrix stakeholders across 4 geographies"`,
+    `✅ Include "Pursuing PMP" prominently — it signals commitment to PM professionalisation`,
+    j.geo==='NL'?`✅ Add Netherlands HSM visa note near your name/header — reduces screening friction immediately`:j.geo==='SG'?`✅ Mention Singapore EP eligibility near your contact details`:`✅ India CV: standard A4 format, salary expectation optional`,
+    `⚠️ Remove any Deloitte-internal jargon — "USI" means nothing to international recruiters. Say "Deloitte India" or "Deloitte (Global Delivery Centre)"`,
+  ];
+  document.getElementById('cv-tips-list').innerHTML=tips.map(t=>`<div style="font-size:12px;padding:7px 0;border-bottom:1px solid var(--border)">${t}</div>`).join('');
+  document.getElementById('cv-tips').style.display='block';
+  showToast(`CV tailored for ${j.company} ✨`,'✨');
+}
+
+// ═══════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════
+const TITLES={briefing:["Daily Briefing","Sunday, April 5, 2026 — Week 14 · Delhi, India"],checkin:["Weekly Check-in","Score your week and get your action plan"],jobs:["Jobs Feed","6 new roles matched to your profile"],tracker:["Application Log","Track every opportunity in your pipeline"],outreach:["Outreach Templates","Personalised to Dushyant Kapoor · AI & Data Transformation PM"],recruiters:["Recruiter CRM","Your contacts — copy-ready messages"],resume:["CV Tailor","Zero fabrication — your best story, perfectly framed"],negotiate:["Offer Negotiation","Calculate leverage · ₹50 LPA minimum target"],interview:["Interview Prep","Company-specific STAR questions"],news:["Market Intelligence","Netherlands · Singapore · India — April 5, 2026"],positioning:["My Positioning Bible","AI & Data Transformation PM — never deviate"]};
+function nav(name,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+  const t=TITLES[name]||[name,''];
+  document.getElementById('tb-title').textContent=t[0];
+  document.getElementById('tb-sub').textContent=t[1];
+}
+function refreshAll(){showToast('Pipeline refreshed ↺','🔄');updateKPIBars()}
+
+// ═══════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════
+function copyText(t,m){navigator.clipboard.writeText(t).catch(()=>{});showToast(m||'Copied!','✅')}
+function showToast(msg,icon='✅'){
+  const t=document.getElementById('toast');
+  document.getElementById('t-icon').textContent=icon;
+  document.getElementById('t-msg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+</script>
+</body>
+</html>

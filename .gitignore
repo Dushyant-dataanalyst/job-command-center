@@ -1,0 +1,18 @@
+# Keep private — never commit these
+.env
+*.key
+*.pem
+*.p12
+secrets.txt
+
+# Local server files
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+
+# Local-only scripts (not needed on Vercel)
+start-dashboard.bat
+stop-dashboard.bat
+refresh-jobs.bat
+screenshot.py
