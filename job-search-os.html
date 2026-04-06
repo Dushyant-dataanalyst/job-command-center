@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Claude Code Job Search Operating System – Product Growth</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0f0f0f;
+      --dark: #1a1a1a;
+      --text: #1c1c1c;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --accent: #ff6719;
+      --accent-light: #fff3ee;
+      --pill-bg: #f3f4f6;
+    }
+
+    body {
+      font-family: "Georgia", "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .topbar-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6719, #ff9d5c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      font-family: sans-serif;
+      flex-shrink: 0;
+    }
+    .topbar-name {
+      font-family: sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .topbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn {
+      font-family: sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 7px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      transition: opacity .15s;
+    }
+    .btn:hover { opacity: .85; }
+    .btn-ghost {
+      background: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── Post container ── */
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 120px;
+    }
+
+    /* ── Meta ── */
+    .meta {
+      margin-bottom: 32px;
+    }
+    .meta-pub {
+      font-family: sans-serif;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      margin-bottom: 8px;
+    }
+    h1.post-title {
+      font-size: clamp(28px, 5vw, 38px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      color: var(--black);
+    }
+    .post-subtitle {
+      font-size: 20px;
+      color: #444;
+      font-style: italic;
+      margin-bottom: 22px;
+      line-height: 1.4;
+    }
+    .author-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: sans-serif;
+      font-size: 14px;
+    }
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6719, #ff9d5c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .author-name { font-weight: 600; }
+    .author-date { color: var(--muted); font-size: 13px; }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    /* ── Body text ── */
+    .post-body p {
+      margin-bottom: 20px;
+      font-size: 17px;
+    }
+    .post-body h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 40px 0 14px;
+      color: var(--black);
+      line-height: 1.25;
+    }
+    .post-body h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin: 28px 0 10px;
+      color: var(--black);
+    }
+    .post-body ul, .post-body ol {
+      margin: 0 0 20px 24px;
+      font-size: 17px;
+    }
+    .post-body li { margin-bottom: 6px; }
+    .post-body strong { color: var(--black); }
+    .post-body a { color: var(--accent); text-decoration: none; }
+    .post-body a:hover { text-decoration: underline; }
+
+    /* ── Callout / highlight box ── */
+    .callout {
+      background: var(--accent-light);
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 18px 22px;
+      margin: 28px 0;
+      font-size: 16px;
+    }
+    .callout strong { display: block; font-size: 14px; font-family: sans-serif; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); margin-bottom: 6px; }
+
+    /* ── Tweet embed mock ── */
+    .tweet-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 28px 0;
+      font-family: sans-serif;
+      font-size: 15px;
+    }
+    .tweet-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .tweet-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff6719, #ff9d5c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .tweet-author-name { font-weight: 700; font-size: 15px; }
+    .tweet-handle { color: var(--muted); font-size: 13px; }
+    .tweet-text { font-size: 15px; line-height: 1.55; color: #111; }
+    .tweet-stats { margin-top: 14px; color: var(--muted); font-size: 13px; display: flex; gap: 20px; }
+
+    /* ── Feature grid ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0;
+    }
+    @media (max-width: 540px) { .feature-grid { grid-template-columns: 1fr; } }
+    .feature-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      font-family: sans-serif;
+    }
+    .feature-card .icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .feature-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .feature-card p {
+      font-size: 13px !important;
+      color: var(--muted);
+      margin: 0 !important;
+      font-family: sans-serif;
+    }
+
+    /* ── ROI box ── */
+    .roi-box {
+      background: var(--black);
+      color: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      margin: 36px 0;
+      text-align: center;
+      font-family: sans-serif;
+    }
+    .roi-box h3 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+    .roi-big {
+      font-size: 52px;
+      font-weight: 800;
+      color: #4ade80;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .roi-label {
+      font-size: 15px;
+      color: #d1d5db;
+      margin-bottom: 20px;
+    }
+    .roi-row {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 20px;
+    }
+    .roi-item .num {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .roi-item .lbl {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    /* ── Paywall banner ── */
+    .paywall {
+      margin: 48px 0 0;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 40px 32px;
+      text-align: center;
+      background: linear-gradient(180deg, #fff 0%, #fafafa 100%);
+      font-family: sans-serif;
+    }
+    .paywall h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+    .paywall p {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+    @media (max-width: 520px) { .plans { grid-template-columns: 1fr; } }
+    .plan-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 18px;
+      text-align: left;
+    }
+    .plan-card.featured {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .plan-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 10px;
+    }
+    .plan-name {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .plan-price {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--black);
+    }
+    .plan-price span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .plan-desc {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 8px 0 16px;
+      line-height: 1.4;
+    }
+    .plan-card .btn { width: 100%; text-align: center; display: block; }
+
+    /* ── Skills list ── */
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 28px;
+    }
+    .skill-pill {
+      background: var(--pill-bg);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-family: sans-serif;
+      color: #374151;
+    }
+
+    /* ── Day schedule ── */
+    .schedule-block {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 24px 0;
+      font-family: sans-serif;
+    }
+    .schedule-header {
+      background: var(--black);
+      color: #fff;
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .schedule-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-time {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      width: 70px;
+      flex-shrink: 0;
+      padding-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .schedule-task strong { font-size: 14px; display: block; margin-bottom: 2px; }
+    .schedule-task span { font-size: 13px; color: var(--muted); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<nav class="topbar">
+  <a class="topbar-left" href="#">
+    <div class="topbar-logo">PG</div>
+    <span class="topbar-name">Product Growth</span>
+  </a>
+  <div class="topbar-right">
+    <button class="btn btn-ghost">Sign in</button>
+    <button class="btn btn-primary">Subscribe</button>
+  </div>
+</nav>
+
+<!-- Post -->
+<main class="post-wrap">
+
+  <!-- Meta -->
+  <div class="meta">
+    <div class="meta-pub">Product Growth &nbsp;·&nbsp; Issue #148</div>
+    <h1 class="post-title">The Claude Code Job Search Operating System</h1>
+    <p class="post-subtitle">I've put together the best AI product for job search (ever)</p>
+    <div class="author-row">
+      <div class="author-avatar">AG</div>
+      <div>
+        <div class="author-name">Aakash Gupta</div>
+        <div class="author-date">March 31, 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- Body -->
+  <div class="post-body">
+
+    <p>When Jensen Huang said AGI is coming in the next few years, he wasn't talking about a chatbot. He was talking about AI systems that can autonomously complete complex, multi-step work — things like job searches.</p>
+
+    <p>The 2026 job market is brutal. Everyone is applying everywhere. Mass-blast strategies are hitting a wall: recruiters can spot AI-generated cover letters instantly, and ATS systems are getting smarter by the week.</p>
+
+    <p>The candidates who are breaking through are doing the opposite: <strong>fewer applications, surgical targeting, deep personalization</strong>.</p>
+
+    <p>I've spent the last several months coaching hundreds of job seekers and running job search cohorts. I've placed candidates at OpenAI, Anthropic, Meta, and Google. And I've now distilled everything into a single Claude Code-powered system.</p>
+
+    <!-- Tweet mock -->
+    <div class="tweet-card">
+      <div class="tweet-header">
+        <div class="tweet-avatar">AG</div>
+        <div>
+          <div class="tweet-author-name">Aakash Gupta</div>
+          <div class="tweet-handle">@aakashg0 · Mar 28, 2026</div>
+        </div>
+      </div>
+      <div class="tweet-text">
+        I just built an end-to-end AI job search agent using Claude Code.<br /><br />
+        It wakes up every morning, finds your best-matched roles, rewrites your resume for each one, drafts outreach messages, and tracks everything.<br /><br />
+        20-30 min/day instead of 3 hours. Here's the full system 🧵
+      </div>
+      <div class="tweet-stats">
+        <span>💬 312 replies</span>
+        <span>🔁 4.8K retweets</span>
+        <span>❤️ 21.4K likes</span>
+      </div>
+    </div>
+
+    <h2>What your morning looks like</h2>
+
+    <p>Instead of spending your first three hours doom-scrolling job boards and rewriting the same resume bullet 40 times, the Job Search OS handles it for you. Here's a real morning with the system:</p>
+
+    <div class="schedule-block">
+      <div class="schedule-header">Your Daily Job Search — 20–30 minutes</div>
+      <div class="schedule-row">
+        <div class="schedule-time">7:00 AM</div>
+        <div class="schedule-task">
+          <strong>Morning Briefing</strong>
+          <span>Agent surfaces top 5 role matches ranked by fit score, pre-customized resumes ready to review.</span>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time">7:10 AM</div>
+        <div class="schedule-task">
+          <strong>Outreach Queue</strong>
+          <span>Personalized LinkedIn messages and referral asks drafted for each role — approve or edit in seconds.</span>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time">7:20 AM</div>
+        <div class="schedule-task">
+          <strong>Follow-up Tracker</strong>
+          <span>Status updates on applications in progress, auto-reminders for follow-ups that haven't heard back.</span>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time">7:25 AM</div>
+        <div class="schedule-task">
+          <strong>Interview Prep (as needed)</strong>
+          <span>Company-specific question sets, interviewer LinkedIn research, and frameworks for the day's calls.</span>
+        </div>
+      </div>
+      <div class="schedule-row">
+        <div class="schedule-time">7:30 AM</div>
+        <div class="schedule-task">
+          <strong>Post-interview Debrief</strong>
+          <span>Scoring and thank-you templates sent — maintain the impression you worked hard to make.</span>
+        </div>
+      </div>
+    </div>
+
+    <h2>What you get: 18 Claude Code skills</h2>
+
+    <p>The OS ships with 18 purpose-built skills that cover every stage of the job search funnel:</p>
+
+    <div class="skills-list">
+      <span class="skill-pill">Resume Tailoring</span>
+      <span class="skill-pill">Job Fit Scoring</span>
+      <span class="skill-pill">Role Discovery</span>
+      <span class="skill-pill">Cover Letter Generator</span>
+      <span class="skill-pill">LinkedIn Outreach</span>
+      <span class="skill-pill">Referral Ask Templates</span>
+      <span class="skill-pill">Application Tracker</span>
+      <span class="skill-pill">Follow-up Scheduler</span>
+      <span class="skill-pill">Interview Question Bank</span>
+      <span class="skill-pill">Company Deep Dive</span>
+      <span class="skill-pill">Interviewer Research</span>
+      <span class="skill-pill">Behavioral Story Bank</span>
+      <span class="skill-pill">Offer Comparison</span>
+      <span class="skill-pill">Negotiation Scripts</span>
+      <span class="skill-pill">Thank-you Note Writer</span>
+      <span class="skill-pill">Post-interview Scorer</span>
+      <span class="skill-pill">Daily Briefing Agent</span>
+      <span class="skill-pill">End-to-End Automation</span>
+    </div>
+
+    <h2>Why this works in 2026</h2>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">🎯</div>
+        <h4>Surgical targeting</h4>
+        <p>Apply to 5 roles you're a 90% fit for, not 200 you're a 40% fit for.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📄</div>
+        <h4>Authentic resumes</h4>
+        <p>Each resume is customized — never fabricated. Your real experience, framed to match the JD.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🤝</div>
+        <h4>Referrals first</h4>
+        <p>Strategy always starts with who you know. Referrals convert at 5–10× the rate of cold apps.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">⏰</div>
+        <h4>20–30 min/day</h4>
+        <p>AI does the grunt work. You make the high-judgment calls. Reclaim your mornings.</p>
+      </div>
+    </div>
+
+    <h2>The ROI math is simple</h2>
+
+    <div class="roi-box">
+      <h3>Typical outcome</h3>
+      <div class="roi-big">$20–30K</div>
+      <div class="roi-label">salary increase on a successful job switch</div>
+      <div class="roi-row">
+        <div class="roi-item">
+          <div class="num">10–15%</div>
+          <div class="lbl">avg. raise on switch</div>
+        </div>
+        <div class="roi-item">
+          <div class="num">$200K</div>
+          <div class="lbl">median PM salary</div>
+        </div>
+        <div class="roi-item">
+          <div class="num">$49</div>
+          <div class="lbl">product cost</div>
+        </div>
+      </div>
+    </div>
+
+    <p>Even at a $120K salary, a 10% bump is $12,000. The product pays for itself 245× over on a single job switch.</p>
+
+    <div class="callout">
+      <strong>From the cohort</strong>
+      "I went from 2 interviews in 3 months to 6 in 3 weeks. The resume tailoring skill alone changed everything." — Cohort 2 graduate, now at Anthropic
+    </div>
+
+    <h2>About the author</h2>
+
+    <p>I'm Aakash Gupta. I've coached hundreds of job search candidates, run two job search cohorts (Cohort 3 starts May 4), and previously built the PM Operating System which now has 2,000+ users. I've personally helped place candidates at OpenAI, Anthropic, Meta, and Google.</p>
+
+    <p>This is the product I wish I'd had during my own job searches.</p>
+
+  </div>
+
+  <!-- Paywall -->
+  <div class="paywall">
+    <h2>Get the full Job Search OS</h2>
+    <p>Full skill breakdowns, step-by-step setup guide, video walkthroughs, and access to the private Slack community.</p>
+    <div class="plans">
+      <div class="plan-card">
+        <div class="plan-name">One-time purchase</div>
+        <div class="plan-price">$49 <span>one time</span></div>
+        <div class="plan-desc">All 18 Claude Code skills + setup guide. Yours forever.</div>
+        <button class="btn btn-primary">Buy on Gumroad</button>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Best value</div>
+        <div class="plan-name">Founding Member</div>
+        <div class="plan-price">$250 <span>/year</span></div>
+        <div class="plan-desc">Everything above + full newsletter archive, all digital products, AI bundle, and private community.</div>
+        <button class="btn btn-primary">Subscribe</button>
+      </div>
+    </div>
+    <p style="font-size:13px; color: #9ca3af;">Cohort 3 starts May 4, 2026 · Limited spots</p>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 Product Growth by Aakash Gupta &nbsp;·&nbsp; Powered by Substack
+</footer>
+
+</body>
+</html>

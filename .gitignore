@@ -1,18 +1,26 @@
-# Keep private — never commit these
+# ── PRIVATE — never commit ──────────────────────────────
 .env
 *.key
 *.pem
 *.p12
 secrets.txt
 
-# Local server files
-*.log
-__pycache__/
-*.pyc
-.DS_Store
+# CV / personal documents — keep off GitHub
+*.pdf
+*.docx
+*.doc
 
-# Local-only scripts (not needed on Vercel)
+# Claude Code local config & memory — personal data inside
+.claude/
+
+# Local server & utility scripts — not needed on Vercel
 start-dashboard.bat
 stop-dashboard.bat
 refresh-jobs.bat
 screenshot.py
+
+# Python artifacts
+*.log
+__pycache__/
+*.pyc
+.DS_Store

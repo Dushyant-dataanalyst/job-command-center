@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Job Search OS — Daily Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #888;
+    --accent: #ff6b35;
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --purple: #a855f7;
+    --yellow: #eab308;
+    --red: #ef4444;
+  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── Layout ── */
+  .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+  @media(max-width:768px){ .app { grid-template-columns: 1fr; } .sidebar { display: none; } }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 20px 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(135deg, #ff6b35, #ff9d5c);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0;
+  }
+  .logo-text { font-weight: 700; font-size: 15px; }
+  .logo-sub { font-size: 11px; color: var(--muted); }
+
+  .nav-label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 8px 20px 4px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 20px; cursor: pointer; font-size: 14px;
+    color: var(--muted); border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+  .nav-item:hover { color: var(--text); background: var(--surface2); }
+  .nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(255,107,53,.06); }
+  .nav-item .nav-icon { font-size: 16px; width: 20px; text-align: center; }
+  .nav-badge {
+    margin-left: auto; background: var(--accent); color: #fff;
+    font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px;
+  }
+
+  /* ── Main ── */
+  .main { overflow-y: auto; }
+
+  /* ── Topbar ── */
+  .topbar {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 16px 28px; display: flex; align-items: center;
+    justify-content: space-between; position: sticky; top: 0; z-index: 50;
+  }
+  .topbar-left h1 { font-size: 20px; font-weight: 700; }
+  .topbar-left p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .topbar-right { display: flex; gap: 10px; align-items: center; }
+  .badge { background: var(--surface2); border: 1px solid var(--border); padding: 5px 12px; border-radius: 20px; font-size: 12px; }
+  .badge.green { border-color: var(--green); color: var(--green); background: rgba(34,197,94,.08); }
+  .btn { font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 8px; cursor: pointer; border: none; transition: opacity .15s; }
+  .btn:hover { opacity: .85; }
+  .btn-accent { background: var(--accent); color: #fff; }
+  .btn-ghost { background: var(--surface2); border: 1px solid var(--border); color: var(--text); }
+
+  /* ── Content ── */
+  .content { padding: 28px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── Stats row ── */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+  @media(max-width:900px){ .stats-row { grid-template-columns: 1fr 1fr; } }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .stat-val { font-size: 32px; font-weight: 800; }
+  .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .stat-card.accent .stat-val { color: var(--accent); }
+  .stat-card.green .stat-val { color: var(--green); }
+  .stat-card.blue .stat-val { color: var(--blue); }
+  .stat-card.purple .stat-val { color: var(--purple); }
+
+  /* ── Section headers ── */
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .section-header h2 { font-size: 17px; font-weight: 700; }
+  .section-header span { font-size: 13px; color: var(--muted); }
+
+  /* ── Job cards ── */
+  .jobs-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+  .job-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; cursor: pointer;
+    transition: border-color .15s, background .15s;
+    position: relative; overflow: hidden;
+  }
+  .job-card:hover { border-color: var(--accent); background: var(--surface2); }
+  .job-card.selected { border-color: var(--accent); background: var(--surface2); }
+  .job-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--accent); opacity: 0;
+    transition: opacity .15s;
+  }
+  .job-card.selected::before, .job-card:hover::before { opacity: 1; }
+
+  .job-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .job-company-logo {
+    width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; flex-shrink: 0;
+  }
+  .job-meta { flex: 1; }
+  .job-title { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+  .job-company { font-size: 14px; color: var(--muted); }
+  .job-right { text-align: right; flex-shrink: 0; }
+  .fit-score {
+    font-size: 13px; font-weight: 700; padding: 3px 10px;
+    border-radius: 20px; margin-bottom: 4px; display: inline-block;
+  }
+  .fit-high { background: rgba(34,197,94,.15); color: var(--green); }
+  .fit-med { background: rgba(234,179,8,.15); color: var(--yellow); }
+  .fit-low { background: rgba(239,68,68,.15); color: var(--red); }
+  .job-salary { font-size: 14px; font-weight: 700; color: var(--green); }
+  .job-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
+  .tag.hot { border-color: var(--accent); color: var(--accent); background: rgba(255,107,53,.08); }
+  .job-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+  .job-loc { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+  .job-actions { display: flex; gap: 8px; }
+  .action-btn {
+    font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 6px;
+    cursor: pointer; border: none; transition: all .15s;
+  }
+  .action-btn:hover { opacity: .85; }
+  .ab-primary { background: var(--accent); color: #fff; }
+  .ab-ghost { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+  .ab-blue { background: rgba(59,130,246,.15); color: var(--blue); border: 1px solid rgba(59,130,246,.3); }
+
+  /* ── Detail panel ── */
+  .detail-panel {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; margin-bottom: 24px;
+    display: none;
+  }
+  .detail-panel.open { display: block; }
+  .detail-tabs { display: flex; gap: 4px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 0; }
+  .dtab {
+    padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: var(--muted); border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: all .15s;
+  }
+  .dtab:hover { color: var(--text); }
+  .dtab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .dtab-content { display: none; }
+  .dtab-content.active { display: block; }
+
+  /* ── Recruiter card ── */
+  .recruiter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:600px){ .recruiter-grid { grid-template-columns: 1fr; } }
+  .recruiter-card {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px;
+  }
+  .rec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .rec-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; flex-shrink: 0;
+  }
+  .rec-name { font-weight: 700; font-size: 15px; }
+  .rec-role { font-size: 12px; color: var(--muted); }
+  .rec-info { font-size: 13px; color: var(--muted); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .rec-info strong { color: var(--text); }
+  .copy-btn {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    font-size: 11px; padding: 2px 8px; border-radius: 4px; cursor: pointer;
+    margin-left: 6px; transition: all .15s;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Outreach template ── */
+  .template-box {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px; margin-bottom: 16px;
+  }
+  .template-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .template-header h4 { font-size: 14px; font-weight: 700; }
+  .template-text {
+    font-size: 13px; line-height: 1.7; color: #ccc;
+    white-space: pre-wrap; font-family: inherit;
+  }
+  .highlight { color: var(--accent); font-weight: 600; }
+
+  /* ── Interview prep ── */
+  .question-list { display: flex; flex-direction: column; gap: 10px; }
+  .question-item {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; font-size: 14px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .q-num {
+    width: 24px; height: 24px; border-radius: 6px; background: rgba(255,107,53,.15);
+    color: var(--accent); font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  /* ── Tracker ── */
+  .tracker-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .tracker-table th {
+    text-align: left; font-size: 11px; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--muted); padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tracker-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+  .tracker-table tr:last-child td { border-bottom: none; }
+  .status-pill {
+    font-size: 11px; font-weight: 700; padding: 3px 10px;
+    border-radius: 20px; display: inline-block;
+  }
+  .s-applied { background: rgba(59,130,246,.15); color: var(--blue); }
+  .s-interview { background: rgba(168,85,247,.15); color: var(--purple); }
+  .s-offer { background: rgba(34,197,94,.15); color: var(--green); }
+  .s-rejected { background: rgba(239,68,68,.15); color: var(--red); }
+  .s-outreach { background: rgba(234,179,8,.15); color: var(--yellow); }
+
+  /* ── Search / filter ── */
+  .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .search-box {
+    flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 9px 14px; font-size: 14px;
+    outline: none; transition: border-color .15s;
+  }
+  .search-box:focus { border-color: var(--accent); }
+  .filter-select {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 9px 14px;
+    font-size: 14px; cursor: pointer; outline: none;
+  }
+
+  /* ── Resume tailoring ── */
+  .resume-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media(max-width:700px){ .resume-row { grid-template-columns: 1fr; } }
+  .resume-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; }
+  .resume-box-header { padding: 14px 18px; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; }
+  .resume-textarea {
+    width: 100%; background: transparent; color: var(--text); border: none;
+    padding: 16px 18px; font-family: 'Courier New', monospace; font-size: 12px;
+    line-height: 1.7; resize: none; outline: none; min-height: 320px;
+  }
+
+  /* ── Negotiation ── */
+  .nego-calc { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+  .nego-calc h3 { font-size: 15px; font-weight: 700; margin-bottom: 18px; }
+  .calc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .calc-label { font-size: 13px; color: var(--muted); width: 160px; flex-shrink: 0; }
+  .calc-input {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); border-radius: 6px; padding: 8px 12px; font-size: 14px; outline: none;
+    transition: border-color .15s;
+  }
+  .calc-input:focus { border-color: var(--accent); }
+  .calc-result { font-size: 28px; font-weight: 800; color: var(--green); margin: 16px 0 4px; }
+  .calc-result-label { font-size: 13px; color: var(--muted); }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 20px; font-size: 14px;
+    display: flex; align-items: center; gap: 10px;
+    transform: translateY(80px); opacity: 0;
+    transition: all .3s; z-index: 1000;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast-icon { font-size: 18px; }
+
+  /* ── Progress bar ── */
+  .progress-bar { background: var(--surface2); border-radius: 100px; height: 6px; overflow: hidden; margin-top: 4px; }
+  .progress-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--accent), #ff9d5c); transition: width .6s ease; }
+
+  /* ── Spinner ── */
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; }
+
+  /* ── Briefing card ── */
+  .briefing-card {
+    background: linear-gradient(135deg, rgba(255,107,53,.12), rgba(255,107,53,.04));
+    border: 1px solid rgba(255,107,53,.3); border-radius: 12px; padding: 24px; margin-bottom: 24px;
+  }
+  .briefing-card h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .briefing-card p { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+  .briefing-stats { display: flex; gap: 24px; }
+  .bs { text-align: center; }
+  .bs-num { font-size: 24px; font-weight: 800; }
+  .bs-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+
+  .two-col { display: grid; grid-template-columns: 3fr 2fr; gap: 24px; }
+  @media(max-width:900px){ .two-col { grid-template-columns: 1fr; } }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+  .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">JS</div>
+      <div>
+        <div class="logo-text">Job Search OS</div>
+        <div class="logo-sub">Powered by Claude</div>
+      </div>
+    </div>
+
+    <div class="nav-label">Daily</div>
+    <div class="nav-item active" onclick="showSection('briefing',this)">
+      <span class="nav-icon">☀️</span> Morning Briefing
+      <span class="nav-badge">5</span>
+    </div>
+    <div class="nav-item" onclick="showSection('jobs',this)">
+      <span class="nav-icon">💼</span> Job Feed
+      <span class="nav-badge">18</span>
+    </div>
+    <div class="nav-item" onclick="showSection('outreach',this)">
+      <span class="nav-icon">📨</span> Outreach Queue
+      <span class="nav-badge">3</span>
+    </div>
+
+    <div class="nav-label">Prep</div>
+    <div class="nav-item" onclick="showSection('resume',this)">
+      <span class="nav-icon">📄</span> Resume Tailor
+    </div>
+    <div class="nav-item" onclick="showSection('interview',this)">
+      <span class="nav-icon">🎯</span> Interview Prep
+    </div>
+    <div class="nav-item" onclick="showSection('negotiate',this)">
+      <span class="nav-icon">💰</span> Offer Negotiation
+    </div>
+
+    <div class="nav-label">Track</div>
+    <div class="nav-item" onclick="showSection('tracker',this)">
+      <span class="nav-icon">📊</span> Application Tracker
+    </div>
+    <div class="nav-item" onclick="showSection('recruiters',this)">
+      <span class="nav-icon">🤝</span> Recruiter CRM
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1 id="page-title">Morning Briefing</h1>
+        <p id="page-date">Friday, April 4, 2026 — 18 new matches found overnight</p>
+      </div>
+      <div class="topbar-right">
+        <span class="badge green">● Live</span>
+        <button class="btn btn-ghost" onclick="refreshJobs()">↻ Refresh</button>
+        <button class="btn btn-accent">Set Profile</button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- ── BRIEFING ── -->
+      <div id="section-briefing" class="section active">
+        <div class="briefing-card">
+          <h2>Good morning! Your daily job briefing is ready.</h2>
+          <p>Based on your profile: <strong>Senior Product Manager</strong> · $200K+ target · Remote / SF / NYC</p>
+          <div class="briefing-stats">
+            <div class="bs"><div class="bs-num" style="color:var(--accent)">5</div><div class="bs-label">Top Matches</div></div>
+            <div class="bs"><div class="bs-num" style="color:var(--green)">3</div><div class="bs-label">Follow-ups Due</div></div>
+            <div class="bs"><div class="bs-num" style="color:var(--blue)">2</div><div class="bs-label">Interviews This Week</div></div>
+            <div class="bs"><div class="bs-num" style="color:var(--purple)">1</div><div class="bs-label">Offers Pending</div></div>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card accent">
+            <div class="stat-label">Fit Score Avg</div>
+            <div class="stat-val">87%</div>
+            <div class="stat-sub">↑ 4% vs last week</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Avg Salary (matches)</div>
+            <div class="stat-val">$218K</div>
+            <div class="stat-sub">Base + equity</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-label">Applications Sent</div>
+            <div class="stat-val">12</div>
+            <div class="stat-sub">This month</div>
+          </div>
+          <div class="stat-card purple">
+            <div class="stat-label">Response Rate</div>
+            <div class="stat-val">41%</div>
+            <div class="stat-sub">Industry avg: 8%</div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div>
+            <div class="section-header">
+              <h2>🔥 Today's Top 5 Matches</h2>
+              <span onclick="showSection('jobs', document.querySelector('.nav-item:nth-child(5)') )" style="cursor:pointer;color:var(--accent)">See all 18 →</span>
+            </div>
+            <div class="jobs-list" id="briefing-jobs"></div>
+          </div>
+          <div>
+            <div class="card">
+              <h3>📅 Today's Action Items</h3>
+              <div id="action-list"></div>
+            </div>
+            <div class="card">
+              <h3>📈 Weekly Progress</h3>
+              <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Applications sent this week</div>
+              <div style="font-size:28px; font-weight:800; margin-bottom:8px;">4 <span style="font-size:14px;color:var(--muted)">/ 5 goal</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+              <hr />
+              <div style="font-size:13px; color:var(--muted); margin-bottom:12px;">Outreach messages sent</div>
+              <div style="font-size:28px; font-weight:800; margin-bottom:8px;">7 <span style="font-size:14px;color:var(--muted)">/ 10 goal</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:70%; background: linear-gradient(90deg,var(--blue),#93c5fd)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── JOB FEED ── -->
+      <div id="section-jobs" class="section">
+        <div class="filters">
+          <input class="search-box" type="text" placeholder="Search roles, companies..." id="job-search" oninput="filterJobs()" />
+          <select class="filter-select" id="filter-type" onchange="filterJobs()">
+            <option value="">All Types</option>
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Onsite">Onsite</option>
+          </select>
+          <select class="filter-select" id="filter-level" onchange="filterJobs()">
+            <option value="">All Levels</option>
+            <option value="Senior">Senior</option>
+            <option value="Director">Director</option>
+            <option value="VP">VP / Principal</option>
+          </select>
+          <select class="filter-select" id="filter-salary" onchange="filterJobs()">
+            <option value="">Any Salary</option>
+            <option value="150">$150K+</option>
+            <option value="200">$200K+</option>
+            <option value="250">$250K+</option>
+          </select>
+        </div>
+
+        <div id="detail-panel" class="detail-panel"></div>
+        <div class="jobs-list" id="all-jobs"></div>
+      </div>
+
+      <!-- ── OUTREACH ── -->
+      <div id="section-outreach" class="section">
+        <div class="section-header">
+          <h2>Outreach Queue</h2>
+          <span>3 messages ready to send</span>
+        </div>
+        <div id="outreach-list"></div>
+      </div>
+
+      <!-- ── RESUME ── -->
+      <div id="section-resume" class="section">
+        <div class="section-header">
+          <h2>Resume Tailor</h2>
+          <span>AI-powered customization without fabrication</span>
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:6px;">Select job to tailor for:</label>
+          <select class="filter-select" id="resume-job-select" onchange="loadResumeForJob()" style="width:100%;max-width:400px;">
+            <option value="">— Choose a job —</option>
+          </select>
+        </div>
+        <div class="resume-row">
+          <div class="resume-box">
+            <div class="resume-box-header">
+              Your Base Resume
+              <button class="btn btn-ghost" style="font-size:12px;padding:4px 10px;">Upload</button>
+            </div>
+            <textarea class="resume-textarea" id="base-resume" placeholder="Paste your resume here...">SARAH JOHNSON
+Senior Product Manager
+sarah@email.com | linkedin.com/in/sarahjpm | San Francisco, CA
+
+EXPERIENCE
+
+Senior Product Manager — Stripe (2022–Present)
+• Led 0→1 launch of Stripe Treasury, now $2B+ ARR product
+• Managed cross-functional team of 18 (eng, design, data, legal)
+• Drove 40% reduction in onboarding drop-off through A/B testing
+• Defined and shipped 3 major API features used by 50K+ developers
+
+Product Manager — Airbnb (2019–2022)
+• Owned Host Tools roadmap; 2.1M hosts, 15% engagement increase
+• Launched Superhost certification redesign — 30% lift in renewals
+• Collaborated with ML team on dynamic pricing model
+
+EDUCATION
+B.S. Computer Science — UC Berkeley, 2019
+
+SKILLS
+Product strategy · Go-to-market · SQL · Python · Figma · A/B testing</textarea>
+          </div>
+          <div class="resume-box">
+            <div class="resume-box-header">
+              Tailored Version <span style="color:var(--accent);font-size:11px;margin-left:6px;">AI Generated</span>
+              <button class="btn btn-accent" style="font-size:12px;padding:4px 10px;" onclick="tailorResume()">✨ Tailor</button>
+            </div>
+            <textarea class="resume-textarea" id="tailored-resume" placeholder="Tailored resume will appear here after you click Tailor..."></textarea>
+          </div>
+        </div>
+        <div id="resume-suggestions" style="display:none" class="card">
+          <h3>💡 Tailoring Suggestions</h3>
+          <div id="suggestions-list"></div>
+        </div>
+      </div>
+
+      <!-- ── INTERVIEW ── -->
+      <div id="section-interview" class="section">
+        <div class="section-header">
+          <h2>Interview Prep</h2>
+          <span>Company-specific questions + frameworks</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <select class="filter-select" id="interview-job-select" onchange="loadInterviewPrep()" style="max-width:400px;">
+            <option value="">— Choose a job to prep for —</option>
+          </select>
+        </div>
+        <div id="interview-content"></div>
+      </div>
+
+      <!-- ── NEGOTIATION ── -->
+      <div id="section-negotiate" class="section">
+        <div class="section-header">
+          <h2>Offer Negotiation</h2>
+          <span>Calculate your leverage and script your counter</span>
+        </div>
+        <div class="nego-calc">
+          <h3>💰 Compensation Calculator</h3>
+          <div class="calc-row">
+            <div class="calc-label">Current base salary</div>
+            <input class="calc-input" type="number" id="current-sal" value="185000" oninput="calcNego()" placeholder="$185,000" />
+          </div>
+          <div class="calc-row">
+            <div class="calc-label">Offer base salary</div>
+            <input class="calc-input" type="number" id="offer-sal" value="220000" oninput="calcNego()" placeholder="$220,000" />
+          </div>
+          <div class="calc-row">
+            <div class="calc-label">Equity ($ value, 4yr)</div>
+            <input class="calc-input" type="number" id="offer-equity" value="400000" oninput="calcNego()" placeholder="$400,000" />
+          </div>
+          <div class="calc-row">
+            <div class="calc-label">Signing bonus</div>
+            <input class="calc-input" type="number" id="offer-sign" value="50000" oninput="calcNego()" placeholder="$50,000" />
+          </div>
+          <hr />
+          <div id="nego-result"></div>
+        </div>
+        <div class="card">
+          <h3>📝 Counter-offer Script</h3>
+          <div id="nego-script"></div>
+        </div>
+      </div>
+
+      <!-- ── TRACKER ── -->
+      <div id="section-tracker" class="section">
+        <div class="section-header">
+          <h2>Application Tracker</h2>
+          <button class="btn btn-accent" onclick="addTrackerRow()">+ Add Application</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="tracker-table">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Salary</th>
+                <th>Status</th>
+                <th>Applied</th>
+                <th>Next Step</th>
+                <th>Recruiter</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tracker-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── RECRUITER CRM ── -->
+      <div id="section-recruiters" class="section">
+        <div class="section-header">
+          <h2>Recruiter CRM</h2>
+          <span>All recruiter contacts from matched roles</span>
+        </div>
+        <div class="recruiter-grid" id="recruiter-grid"></div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <span id="toast-msg">Copied to clipboard</span>
+</div>
+
+<script>
+// ─────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────
+const JOBS = [
+  {
+    id: 1,
+    title: "Director of Product Management",
+    company: "OpenAI",
+    logo: "OA",
+    logoColor: "#10a37f",
+    salary: "$280K–$340K",
+    salaryMin: 280,
+    location: "San Francisco, CA",
+    type: "Hybrid",
+    level: "Director",
+    fit: 95,
+    posted: "2 hours ago",
+    tags: ["AI/ML", "Platform", "Hot 🔥"],
+    description: "Lead product vision for OpenAI's developer platform. Own the roadmap for API products used by 2M+ developers. Partner directly with Sam and Greg.",
+    requirements: ["8+ years PM experience", "AI/ML product background", "Platform or API product experience", "Track record of 0→1 products"],
+    recruiter: { name: "Jessica Park", title: "Senior Technical Recruiter", email: "jessica.park@openai.com", linkedin: "linkedin.com/in/jessicapark", phone: "+1 (415) 555-0182", avatar: "JP", color: "#10a37f" },
+    questions: [
+      "Tell me about a time you shipped an API product used by millions. What was the hardest tradeoff?",
+      "How do you think about pricing strategy for AI API products?",
+      "OpenAI is moving fast — how do you handle rapid roadmap shifts?",
+      "What's your framework for deciding what NOT to build?",
+      "How would you grow developer adoption of a new API endpoint by 10x in 6 months?"
+    ]
+  },
+  {
+    id: 2,
+    title: "Senior PM – Growth & Monetization",
+    company: "Anthropic",
+    logo: "AN",
+    logoColor: "#cc785c",
+    salary: "$240K–$290K",
+    salaryMin: 240,
+    location: "San Francisco, CA",
+    type: "Hybrid",
+    level: "Senior",
+    fit: 92,
+    posted: "5 hours ago",
+    tags: ["Growth", "B2B SaaS", "Monetization"],
+    description: "Own growth and monetization for Claude.ai and Claude API. Drive conversion from free to paid, optimize pricing tiers, and build self-serve acquisition funnels.",
+    requirements: ["6+ years PM", "Growth/monetization experience", "Strong data/SQL skills", "B2B SaaS background"],
+    recruiter: { name: "Marcus Chen", title: "Head of Talent", email: "marcus.chen@anthropic.com", linkedin: "linkedin.com/in/marcuschen", phone: "+1 (415) 555-0291", avatar: "MC", color: "#cc785c" },
+    questions: [
+      "Walk me through your biggest win in growth / monetization. What moved the needle most?",
+      "How would you design an ideal freemium → paid conversion funnel for Claude?",
+      "What metrics would you use to define success for a new pricing tier?",
+      "How do you balance short-term revenue with long-term user trust?",
+      "Tell me about a time A/B testing gave you a surprising or counterintuitive result."
+    ]
+  },
+  {
+    id: 3,
+    title: "Principal Product Manager, Payments",
+    company: "Stripe",
+    logo: "ST",
+    logoColor: "#635bff",
+    salary: "$250K–$310K",
+    salaryMin: 250,
+    location: "Remote (US)",
+    type: "Remote",
+    level: "Senior",
+    fit: 89,
+    posted: "1 day ago",
+    tags: ["Fintech", "API", "Remote"],
+    description: "Define the future of Stripe's payments infrastructure. Own the product roadmap for card processing, fraud detection, and developer tools.",
+    requirements: ["7+ years PM", "Payments or fintech experience preferred", "Strong engineering collaboration", "API product mindset"],
+    recruiter: { name: "Priya Nair", title: "Technical Recruiting Lead", email: "priya.nair@stripe.com", linkedin: "linkedin.com/in/priyanair", phone: "+1 (650) 555-0344", avatar: "PN", color: "#635bff" },
+    questions: [
+      "How would you improve Stripe's checkout conversion rate by 5%?",
+      "What's your approach to building for developers vs. business owners simultaneously?",
+      "Tell me about a technically complex product you shipped. How did you earn eng trust?",
+      "How do you think about regulatory risk in product decisions?",
+      "Stripe operates in 135+ countries — how do you prioritize localization?"
+    ]
+  },
+  {
+    id: 4,
+    title: "VP of Product – AI Platform",
+    company: "Scale AI",
+    logo: "SC",
+    logoColor: "#f59e0b",
+    salary: "$300K–$400K",
+    salaryMin: 300,
+    location: "San Francisco, CA",
+    type: "Onsite",
+    level: "VP",
+    fit: 84,
+    posted: "3 days ago",
+    tags: ["AI Infrastructure", "VP Level", "High Equity"],
+    description: "Lead Scale's AI Platform product organization. Own a team of 8 PMs. Define the product strategy for data labeling, RLHF pipelines, and enterprise AI tooling.",
+    requirements: ["10+ years PM, 3+ years managing PMs", "AI/ML infrastructure knowledge", "Enterprise product experience", "Strong people leadership"],
+    recruiter: { name: "Alex Torres", title: "Executive Recruiter", email: "alex.torres@scale.com", linkedin: "linkedin.com/in/alextorres", phone: "+1 (415) 555-0467", avatar: "AT", color: "#f59e0b" },
+    questions: [
+      "How have you built and scaled a PM team? What's your hiring philosophy?",
+      "What's the most important thing you've learned about leading other PMs?",
+      "How would you position Scale's platform against competitors in 2026?",
+      "Tell me about a time you had to kill a product your team was emotionally invested in.",
+      "What does world-class AI infrastructure product management look like to you?"
+    ]
+  },
+  {
+    id: 5,
+    title: "Senior PM – Developer Experience",
+    company: "Vercel",
+    logo: "VC",
+    logoColor: "#e2e8f0",
+    salary: "$210K–$260K",
+    salaryMin: 210,
+    location: "Remote (Global)",
+    type: "Remote",
+    level: "Senior",
+    fit: 81,
+    posted: "2 days ago",
+    tags: ["DevTools", "Remote", "Series E"],
+    description: "Own the developer experience for Vercel's deployment platform. Drive adoption of new features across 1M+ developers and 4M+ deployments/day.",
+    requirements: ["5+ years PM", "Developer tools background", "Strong technical empathy", "Data-driven decision making"],
+    recruiter: { name: "Sarah Kim", title: "People Partner – Product", email: "sarah.kim@vercel.com", linkedin: "linkedin.com/in/sarahkimvc", phone: "+1 (628) 555-0511", avatar: "SK", color: "#e2e8f0" },
+    questions: [
+      "What does great developer experience mean to you? Give an example you admire.",
+      "How do you measure developer satisfaction? What metrics matter?",
+      "Describe a time you had to ship something imperfect because of deadline pressure.",
+      "How would you onboard a new developer onto Vercel in under 5 minutes?",
+      "Tell me about a time you turned developer feedback into a shipped feature."
+    ]
+  },
+  {
+    id: 6,
+    title: "Product Lead – Enterprise AI",
+    company: "Cohere",
+    logo: "CO",
+    logoColor: "#6366f1",
+    salary: "$230K–$280K",
+    salaryMin: 230,
+    location: "New York, NY",
+    type: "Hybrid",
+    level: "Senior",
+    fit: 78,
+    posted: "4 days ago",
+    tags: ["Enterprise", "B2B", "NLP"],
+    description: "Drive the enterprise product strategy for Cohere's LLM platform. Work with Fortune 500 customers to shape product requirements and GTM.",
+    requirements: ["6+ years PM", "Enterprise SaaS", "NLP/LLM familiarity", "Customer-facing experience"],
+    recruiter: { name: "Daniel Wu", title: "Talent Lead – Product", email: "daniel.wu@cohere.ai", linkedin: "linkedin.com/in/danielwu", phone: "+1 (212) 555-0622", avatar: "DW", color: "#6366f1" },
+    questions: [
+      "How do you balance enterprise customer requests vs. product vision?",
+      "Tell me about your experience selling or working with Fortune 500 companies.",
+      "How would you differentiate Cohere from OpenAI and Anthropic to a CTO?",
+      "What's your approach to building an enterprise feedback loop?",
+      "Describe a time you turned a custom enterprise request into a platform feature."
+    ]
+  }
+];
+
+const TRACKER_DATA = [
+  { company: "OpenAI", role: "Director of PM", salary: "$280K–$340K", status: "interview", applied: "Mar 28", next: "Panel interview Apr 8", recruiter: "Jessica Park" },
+  { company: "Anthropic", role: "Senior PM – Growth", salary: "$240K–$290K", status: "applied", applied: "Apr 1", next: "Follow-up Apr 8", recruiter: "Marcus Chen" },
+  { company: "Stripe", role: "Principal PM", salary: "$250K–$310K", status: "outreach", applied: "Apr 2", next: "Send referral ask", recruiter: "Priya Nair" },
+  { company: "Figma", role: "Senior PM – Core Editor", salary: "$220K–$270K", status: "interview", applied: "Mar 25", next: "Take-home due Apr 6", recruiter: "Amy Zhao" },
+  { company: "Notion", role: "PM Lead – Enterprise", salary: "$200K–$240K", status: "offer", applied: "Mar 10", next: "Deadline Apr 10", recruiter: "Tom Rivera" },
+  { company: "Airtable", role: "Staff PM", salary: "$190K–$230K", status: "rejected", applied: "Mar 5", next: "—", recruiter: "Lisa Park" },
+];
+
+const ACTIONS = [
+  { icon: "📨", text: "Send referral ask to Priya at Stripe (use template ↗)", urgent: true },
+  { icon: "📝", text: "Complete Figma take-home exercise (due Apr 6)", urgent: true },
+  { icon: "🤝", text: "Follow up with Marcus at Anthropic — 3 days no reply", urgent: false },
+  { icon: "🎯", text: "Prep for OpenAI panel interview on Apr 8", urgent: false },
+  { icon: "💰", text: "Counter Notion offer before Apr 10 deadline", urgent: false },
+];
+
+// ─────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────
+
+function fitClass(f) {
+  if (f >= 90) return 'fit-high';
+  if (f >= 75) return 'fit-med';
+  return 'fit-low';
+}
+
+function renderJobCard(job, compact=false) {
+  const hotTag = job.tags.find(t => t.includes('🔥')) ? '<span class="tag hot">🔥 Hot</span>' : '';
+  const tags = job.tags.filter(t => !t.includes('🔥')).map(t => `<span class="tag">${t}</span>`).join('');
+  return `
+    <div class="job-card" id="jcard-${job.id}" onclick="openDetail(${job.id})">
+      <div class="job-top">
+        <div class="job-company-logo" style="background:${job.logoColor}22;color:${job.logoColor};border-color:${job.logoColor}44">${job.logo}</div>
+        <div class="job-meta">
+          <div class="job-title">${job.title}</div>
+          <div class="job-company">${job.company} · ${job.location} · ${job.type}</div>
+        </div>
+        <div class="job-right">
+          <div class="fit-score ${fitClass(job.fit)}">${job.fit}% fit</div>
+          <div class="job-salary">${job.salary}</div>
+        </div>
+      </div>
+      ${!compact ? `<div class="job-tags">${hotTag}${tags}</div>` : ''}
+      ${!compact ? `<p style="font-size:13px;color:var(--muted);margin:0 0 12px">${job.description.substring(0,120)}…</p>` : ''}
+      <div class="job-footer">
+        <span class="job-loc">🕐 ${job.posted}</span>
+        <div class="job-actions">
+          <button class="action-btn ab-blue" onclick="event.stopPropagation();showOutreachFor(${job.id})">📨 Outreach</button>
+          <button class="action-btn ab-ghost" onclick="event.stopPropagation();showInterviewFor(${job.id})">🎯 Prep</button>
+          <button class="action-btn ab-primary" onclick="event.stopPropagation();markApplied(${job.id})">Apply →</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderDetail(job) {
+  return `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+      <div class="job-company-logo" style="width:52px;height:52px;font-size:20px;background:${job.logoColor}22;color:${job.logoColor};border-color:${job.logoColor}44">${job.logo}</div>
+      <div>
+        <div style="font-size:19px;font-weight:700;">${job.title}</div>
+        <div style="font-size:14px;color:var(--muted)">${job.company} · ${job.salary} · ${job.location}</div>
+      </div>
+      <div style="margin-left:auto"><span class="fit-score ${fitClass(job.fit)} " style="font-size:16px;padding:6px 14px">${job.fit}% fit</span></div>
+    </div>
+    <div class="detail-tabs">
+      <div class="dtab active" onclick="switchDTab(this,'overview')">Overview</div>
+      <div class="dtab" onclick="switchDTab(this,'recruiter')">Recruiter</div>
+      <div class="dtab" onclick="switchDTab(this,'outreach')">Outreach</div>
+      <div class="dtab" onclick="switchDTab(this,'prepd')">Interview Prep</div>
+    </div>
+    <div id="dtab-overview" class="dtab-content active">
+      <p style="font-size:15px;line-height:1.7;margin-bottom:16px;">${job.description}</p>
+      <h4 style="font-size:13px;font-weight:700;margin-bottom:10px;">Requirements</h4>
+      <ul style="padding-left:20px;font-size:14px;color:var(--muted);line-height:2;">
+        ${job.requirements.map(r => `<li>${r}</li>`).join('')}
+      </ul>
+    </div>
+    <div id="dtab-recruiter" class="dtab-content">
+      ${renderRecruiterCard(job.recruiter)}
+    </div>
+    <div id="dtab-outreach" class="dtab-content">
+      ${renderOutreachTemplate(job)}
+    </div>
+    <div id="dtab-prepd" class="dtab-content">
+      ${renderInterviewQuestions(job)}
+    </div>
+  `;
+}
+
+function renderRecruiterCard(r) {
+  return `
+    <div class="recruiter-card" style="max-width:480px">
+      <div class="rec-header">
+        <div class="rec-avatar" style="background:${r.color}22;color:${r.color}">${r.avatar}</div>
+        <div>
+          <div class="rec-name">${r.name}</div>
+          <div class="rec-role">${r.title}</div>
+        </div>
+      </div>
+      <div class="rec-info">📧 <strong>${r.email}</strong>
+        <button class="copy-btn" onclick="copyText('${r.email}','Email copied!')">Copy</button>
+      </div>
+      <div class="rec-info">💼 <strong>${r.linkedin}</strong>
+        <button class="copy-btn" onclick="copyText('${r.linkedin}','LinkedIn copied!')">Copy</button>
+      </div>
+      <div class="rec-info">📱 <strong>${r.phone}</strong>
+        <button class="copy-btn" onclick="copyText('${r.phone}','Phone copied!')">Copy</button>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:8px;">
+        <button class="action-btn ab-primary" onclick="copyText(getLinkedInMsg(currentJob),'LinkedIn message copied!')">Copy LinkedIn Message</button>
+        <button class="action-btn ab-ghost" onclick="copyText(getEmailMsg(currentJob),'Email copied!')">Copy Email</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderOutreachTemplate(job) {
+  const li = getLinkedInMsg(job);
+  const em = getEmailMsg(job);
+  return `
+    <div class="template-box">
+      <div class="template-header">
+        <h4>💼 LinkedIn Connection Request</h4>
+        <button class="btn btn-ghost" style="font-size:12px;padding:5px 12px" onclick="copyText(\`${li.replace(/`/g,'\\`')}\`,'LinkedIn message copied!')">Copy</button>
+      </div>
+      <pre class="template-text">${li}</pre>
+    </div>
+    <div class="template-box">
+      <div class="template-header">
+        <h4>📧 Follow-up Email</h4>
+        <button class="btn btn-ghost" style="font-size:12px;padding:5px 12px" onclick="copyText(\`${em.replace(/`/g,'\\`')}\`,'Email copied!')">Copy</button>
+      </div>
+      <pre class="template-text">${em}</pre>
+    </div>
+  `;
+}
+
+function getLinkedInMsg(job) {
+  if(!job) return '';
+  return `Hi ${job.recruiter.name.split(' ')[0]},
+
+I came across the ${job.title} role at ${job.company} and I'm genuinely excited — the mission aligns closely with my background in AI/ML products and platform building.
+
+I've spent the last 4 years at Stripe launching developer-facing products, and I'd love to learn more about the team and what you're looking for.
+
+Open to a quick chat?
+
+Best,
+Sarah`;
+}
+
+function getEmailMsg(job) {
+  if(!job) return '';
+  return `Subject: ${job.title} role — Sarah Johnson
+
+Hi ${job.recruiter.name.split(' ')[0]},
+
+I hope you're well! I'm reaching out about the ${job.title} opening at ${job.company}.
+
+My background: 7 years in product, most recently at Stripe where I led developer platform products with 50K+ API users. Before that, I drove 15% engagement growth at Airbnb across 2M+ hosts.
+
+I'm particularly drawn to ${job.company}'s approach to [specific product/mission aspect], and I think my experience in [relevant area] would translate directly.
+
+Would you be open to a 20-minute call this week or next?
+
+Best,
+Sarah Johnson
+sarah@email.com | (415) 555-0100`;
+}
+
+function renderInterviewQuestions(job) {
+  return `
+    <div class="question-list">
+      ${job.questions.map((q,i) => `
+        <div class="question-item">
+          <div class="q-num">${i+1}</div>
+          <div>${q}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="margin-top:16px;" class="callout-mini">
+      <button class="btn btn-accent" onclick="showSection('interview', document.querySelector('.nav-item[onclick*=interview]'))">Open Full Prep Guide →</button>
+    </div>
+  `;
+}
+
+// ─────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────
+
+let currentJob = null;
+
+function init() {
+  // Briefing jobs (top 5)
+  const briefingEl = document.getElementById('briefing-jobs');
+  briefingEl.innerHTML = JOBS.slice(0,5).map(j => renderJobCard(j, true)).join('');
+
+  // All jobs
+  document.getElementById('all-jobs').innerHTML = JOBS.map(j => renderJobCard(j)).join('');
+
+  // Action items
+  document.getElementById('action-list').innerHTML = ACTIONS.map(a => `
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;">
+      <span style="font-size:16px;">${a.icon}</span>
+      <span style="${a.urgent ? 'color:var(--text)' : 'color:var(--muted)'}">${a.text}</span>
+      ${a.urgent ? '<span style="margin-left:auto;font-size:10px;background:rgba(239,68,68,.15);color:var(--red);padding:2px 8px;border-radius:10px;font-weight:700;white-space:nowrap;">Urgent</span>' : ''}
+    </div>
+  `).join('');
+
+  // Populate selects
+  const opts = JOBS.map(j => `<option value="${j.id}">${j.company} — ${j.title}</option>`).join('');
+  document.getElementById('resume-job-select').innerHTML = '<option value="">— Choose a job —</option>' + opts;
+  document.getElementById('interview-job-select').innerHTML = '<option value="">— Choose a job to prep for —</option>' + opts;
+
+  // Tracker
+  renderTracker();
+
+  // Recruiter grid
+  document.getElementById('recruiter-grid').innerHTML = JOBS.map(j => `
+    <div class="recruiter-card">
+      <div class="rec-header">
+        <div class="rec-avatar" style="background:${j.recruiter.color}22;color:${j.recruiter.color}">${j.recruiter.avatar}</div>
+        <div>
+          <div class="rec-name">${j.recruiter.name}</div>
+          <div class="rec-role">${j.recruiter.title} · ${j.company}</div>
+        </div>
+      </div>
+      <div class="rec-info">📧 <strong>${j.recruiter.email}</strong>
+        <button class="copy-btn" onclick="copyText('${j.recruiter.email}','Email copied!')">Copy</button>
+      </div>
+      <div class="rec-info">💼 <strong style="font-size:12px">${j.recruiter.linkedin}</strong>
+        <button class="copy-btn" onclick="copyText('${j.recruiter.linkedin}','Copied!')">Copy</button>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;">
+        <button class="action-btn ab-primary" style="font-size:11px;" onclick="copyText(getLinkedInMsgById(${j.id}),'Message copied!')">Copy Message</button>
+        <button class="action-btn ab-blue" style="font-size:11px;" onclick="showOutreachFor(${j.id})">Open Templates</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Outreach queue
+  renderOutreachQueue();
+
+  // Negotiation
+  calcNego();
+}
+
+function renderOutreachQueue() {
+  const queue = JOBS.slice(0,3);
+  document.getElementById('outreach-list').innerHTML = queue.map(j => `
+    <div class="card" style="margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        <div class="job-company-logo" style="background:${j.logoColor}22;color:${j.logoColor};border-color:${j.logoColor}44">${j.logo}</div>
+        <div>
+          <div style="font-weight:700">${j.company} — ${j.title}</div>
+          <div style="font-size:13px;color:var(--muted)">Recruiter: ${j.recruiter.name} · ${j.recruiter.email}</div>
+        </div>
+        <button class="btn btn-accent" style="margin-left:auto" onclick="copyText(getLinkedInMsg(JOBS.find(x=>x.id==${j.id})),'Message copied! ✓')">Copy & Send</button>
+      </div>
+      ${renderOutreachTemplate(j)}
+    </div>
+  `).join('');
+}
+
+function renderTracker() {
+  document.getElementById('tracker-body').innerHTML = TRACKER_DATA.map((r, i) => `
+    <tr>
+      <td style="font-weight:600">${r.company}</td>
+      <td>${r.role}</td>
+      <td style="color:var(--green);font-weight:600">${r.salary}</td>
+      <td><span class="status-pill s-${r.status}">${r.status.charAt(0).toUpperCase()+r.status.slice(1)}</span></td>
+      <td style="color:var(--muted)">${r.applied}</td>
+      <td style="font-size:13px">${r.next}</td>
+      <td style="font-size:13px;color:var(--muted)">${r.recruiter}</td>
+      <td><button class="action-btn ab-ghost" style="font-size:11px" onclick="removeTracker(${i})">✕</button></td>
+    </tr>
+  `).join('');
+}
+
+// ─────────────────────────────────────────
+// INTERACTIONS
+// ─────────────────────────────────────────
+
+function showSection(name, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+
+  const titles = {
+    briefing: ['Morning Briefing', '18 new matches found overnight'],
+    jobs: ['Job Feed', '18 matched roles ranked by fit score'],
+    outreach: ['Outreach Queue', '3 messages ready to send'],
+    resume: ['Resume Tailor', 'Customize without fabrication'],
+    interview: ['Interview Prep', 'Company-specific questions'],
+    negotiate: ['Offer Negotiation', 'Calculate leverage and counter-offer script'],
+    tracker: ['Application Tracker', `${TRACKER_DATA.length} applications tracked`],
+    recruiters: ['Recruiter CRM', `${JOBS.length} contacts from matched roles`],
+  };
+  const t = titles[name] || [name, ''];
+  document.getElementById('page-title').textContent = t[0];
+  document.getElementById('page-date').textContent = t[1];
+}
+
+function openDetail(id) {
+  const job = JOBS.find(j => j.id === id);
+  currentJob = job;
+  const panel = document.getElementById('detail-panel');
+  panel.innerHTML = renderDetail(job);
+  panel.classList.add('open');
+  document.querySelectorAll('#all-jobs .job-card').forEach(c => c.classList.remove('selected'));
+  const card = document.getElementById('jcard-'+id);
+  if(card) { card.classList.add('selected'); card.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+}
+
+function switchDTab(el, tab) {
+  el.closest('.detail-panel').querySelectorAll('.dtab').forEach(t => t.classList.remove('active'));
+  el.closest('.detail-panel').querySelectorAll('.dtab-content').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('dtab-'+tab).classList.add('active');
+}
+
+function filterJobs() {
+  const search = document.getElementById('job-search').value.toLowerCase();
+  const type = document.getElementById('filter-type').value;
+  const level = document.getElementById('filter-level').value;
+  const sal = parseInt(document.getElementById('filter-salary').value) || 0;
+
+  const filtered = JOBS.filter(j => {
+    const matchSearch = !search || j.title.toLowerCase().includes(search) || j.company.toLowerCase().includes(search) || j.tags.some(t => t.toLowerCase().includes(search));
+    const matchType = !type || j.type === type;
+    const matchLevel = !level || j.level === level || (level === 'VP' && (j.level === 'VP' || j.title.toLowerCase().includes('vp') || j.title.toLowerCase().includes('director')));
+    const matchSal = !sal || j.salaryMin >= sal;
+    return matchSearch && matchType && matchLevel && matchSal;
+  });
+
+  document.getElementById('all-jobs').innerHTML = filtered.length
+    ? filtered.map(j => renderJobCard(j)).join('')
+    : '<div style="text-align:center;padding:48px;color:var(--muted)">No roles match your filters</div>';
+}
+
+function showOutreachFor(id) {
+  showSection('outreach', document.querySelector('.nav-item[onclick*=outreach]'));
+}
+
+function showInterviewFor(id) {
+  showSection('interview', document.querySelector('.nav-item[onclick*=interview]'));
+  const sel = document.getElementById('interview-job-select');
+  sel.value = id;
+  loadInterviewPrep();
+}
+
+function markApplied(id) {
+  const job = JOBS.find(j => j.id === id);
+  showToast(`✅ Added ${job.company} to your tracker`);
+}
+
+function loadResumeForJob() {
+  const id = parseInt(document.getElementById('resume-job-select').value);
+  if(!id) return;
+  const job = JOBS.find(j => j.id === id);
+  document.getElementById('tailored-resume').value = '';
+  document.getElementById('resume-suggestions').style.display = 'none';
+}
+
+function tailorResume() {
+  const id = parseInt(document.getElementById('resume-job-select').value);
+  if(!id) { showToast('⚠️ Please select a job first', '⚠️'); return; }
+  const job = JOBS.find(j => j.id === id);
+  const base = document.getElementById('base-resume').value;
+
+  // Simulate tailoring
+  const tailored = base
+    .replace('Led 0→1 launch of Stripe Treasury', `Led 0→1 product launches with direct impact on ${job.company}-relevant metrics`)
+    .replace('Senior Product Manager', `Senior Product Manager | ${job.company} Application`)
+    + `\n\n[TAILORED FOR ${job.company.toUpperCase()}]\n• Emphasized: ${job.requirements[0]}\n• Highlighted: ${job.requirements[1]}\n• Keywords added: ${job.tags.join(', ')}`;
+
+  document.getElementById('tailored-resume').value = tailored;
+
+  const suggestions = [
+    `✅ Added "${job.tags[0]}" keyword — appears 3× in the JD`,
+    `✅ Reordered bullets to front-load "${job.requirements[0]}"`,
+    `⚠️ Consider adding a metric to your "${job.requirements[1]}" bullet`,
+    `✅ Removed unrelated bullet about Airbnb consumer features`,
+    `ℹ️ ${job.company} JD mentions "cross-functional" 4× — ensure it appears in your experience`,
+  ];
+
+  document.getElementById('suggestions-list').innerHTML = suggestions.map(s => `
+    <div style="font-size:13px;padding:8px 0;border-bottom:1px solid var(--border);line-height:1.5">${s}</div>
+  `).join('');
+  document.getElementById('resume-suggestions').style.display = 'block';
+  showToast(`✨ Resume tailored for ${job.company}`);
+}
+
+function loadInterviewPrep() {
+  const id = parseInt(document.getElementById('interview-job-select').value);
+  if(!id) { document.getElementById('interview-content').innerHTML = ''; return; }
+  const job = JOBS.find(j => j.id === id);
+  document.getElementById('interview-content').innerHTML = `
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <h3>🎯 Company-Specific Questions</h3>
+          <div class="question-list">
+            ${job.questions.map((q,i) => `
+              <div class="question-item">
+                <div class="q-num">${i+1}</div>
+                <div>${q}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>🏢 Company Research</h3>
+          <div style="font-size:13px;color:var(--muted);line-height:1.9">
+            <div>📌 <strong style="color:var(--text)">${job.company}</strong></div>
+            <div>📍 ${job.location}</div>
+            <div>💼 ${job.type}</div>
+            <div>💰 ${job.salary}</div>
+            <hr />
+            <div style="margin-top:8px"><strong style="color:var(--text)">Your interviewer:</strong></div>
+            <div>${job.recruiter.name} — ${job.recruiter.title}</div>
+            <div>${job.recruiter.linkedin}</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>📋 STAR Stories to Prepare</h3>
+          <div style="font-size:13px;line-height:2;color:var(--muted)">
+            <div>1. Your biggest 0→1 product launch</div>
+            <div>2. A time you handled stakeholder conflict</div>
+            <div>3. A data-driven decision that surprised you</div>
+            <div>4. A product you killed or descoped</div>
+            <div>5. Cross-functional leadership example</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function calcNego() {
+  const cur = parseFloat(document.getElementById('current-sal').value) || 0;
+  const offer = parseFloat(document.getElementById('offer-sal').value) || 0;
+  const equity = parseFloat(document.getElementById('offer-equity').value) || 0;
+  const sign = parseFloat(document.getElementById('offer-sign').value) || 0;
+
+  const total4yr = (offer * 4) + equity + sign;
+  const increase = cur > 0 ? (((offer - cur) / cur) * 100).toFixed(1) : 0;
+  const targetAsk = Math.round(offer * 1.12);
+  const equityAsk = Math.round(equity * 1.2);
+
+  document.getElementById('nego-result').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div>
+        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">4-Year Total Value</div>
+        <div class="calc-result">$${(total4yr/1000).toFixed(0)}K</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Base Increase</div>
+        <div class="calc-result" style="color:var(--accent)">+${increase}%</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">Suggested Ask</div>
+        <div class="calc-result" style="color:var(--blue)">$${(targetAsk/1000).toFixed(0)}K</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('nego-script').innerHTML = `
+    <div class="template-box">
+      <div class="template-header"><h4>Counter-offer Email</h4>
+        <button class="btn btn-ghost" style="font-size:12px;padding:5px 12px" onclick="copyText(document.getElementById('nego-email-text').textContent,'Counter-offer copied!')">Copy</button>
+      </div>
+      <pre class="template-text" id="nego-email-text">Hi [Recruiter Name],
+
+Thank you so much for the offer — I'm genuinely excited about joining [Company] and the opportunity to work on [specific product/mission].
+
+After careful consideration, I'd like to respectfully ask if there's flexibility on the compensation:
+
+• Base salary: $${targetAsk.toLocaleString()} (from $${offer.toLocaleString()})
+• Equity: $${equityAsk.toLocaleString()} over 4 years (from $${equity.toLocaleString()})
+• Signing bonus: $${sign.toLocaleString()} (unchanged)
+
+I've received competitive interest from other companies in the $${targetAsk.toLocaleString()}+ range, and I want to make sure I'm choosing [Company] with full enthusiasm rather than financial hesitation.
+
+I'm flexible on structure (accelerated vesting, additional equity, etc.) and would love to find something that works for both sides. Open to a quick call to discuss?
+
+Best,
+Sarah</pre>
+    </div>
+  `;
+}
+
+function addTrackerRow() {
+  TRACKER_DATA.push({ company: "New Company", role: "Product Manager", salary: "$—", status: "outreach", applied: "Today", next: "Send application", recruiter: "TBD" });
+  renderTracker();
+}
+
+function removeTracker(i) {
+  TRACKER_DATA.splice(i, 1);
+  renderTracker();
+}
+
+function getLinkedInMsgById(id) {
+  const job = JOBS.find(j => j.id === id);
+  return getLinkedInMsg(job);
+}
+
+function copyText(text, msg) {
+  navigator.clipboard.writeText(text).catch(() => {});
+  showToast(msg || 'Copied!');
+}
+
+function showToast(msg, icon='✅') {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-icon').textContent = icon;
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function refreshJobs() {
+  showToast('🔄 Scanning 12 job boards... 3 new matches found');
+}
+
+// ─────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
