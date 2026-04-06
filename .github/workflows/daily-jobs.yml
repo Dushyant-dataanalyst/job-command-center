@@ -33,6 +33,7 @@ jobs:
         run: |
           git config user.name "Job Refresh Bot"
           git config user.email "bot@dushyant-jobs"
-          git add jobs-update.json
+          git add jobs-update.json rejection_reasons.json 2>/dev/null || true
           git diff --staged --quiet || git commit -m "chore: daily job refresh $(date +'%d %b %Y %H:%M IST')"
-          git push
+          git pull --rebase origin master
+          git push origin master

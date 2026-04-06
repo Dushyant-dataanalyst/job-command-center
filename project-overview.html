@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Job Command Center — Project Map</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090f;--surface:#0f1117;--surface2:#161922;--surface3:#1d2130;
+  --border:#1e2235;--border2:#262d42;
+  --text:#eef0f6;--muted:#5a637a;
+  --accent:#4f8ef7;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+  --purple:#a78bfa;--cyan:#06b6d4;--orange:#f97316;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);padding:28px;min-height:100vh}
+h1{font-size:22px;font-weight:900;letter-spacing:-.02em;margin-bottom:4px}
+.sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:28px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.card.blue::before{background:var(--accent)}
+.card.green::before{background:var(--green)}
+.card.yellow::before{background:var(--yellow)}
+.card.purple::before{background:var(--purple)}
+.card.cyan::before{background:var(--cyan)}
+.card.red::before{background:var(--red)}
+.card.orange::before{background:var(--orange)}
+
+.card-icon{font-size:22px;margin-bottom:10px}
+.card-title{font-size:13px;font-weight:800;margin-bottom:4px}
+.card-desc{font-size:11px;color:var(--muted);line-height:1.65;margin-bottom:12px}
+.badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:4px;margin-bottom:4px}
+.b-green{background:rgba(34,197,94,.12);color:var(--green)}
+.b-blue{background:rgba(79,142,247,.12);color:var(--accent)}
+.b-yellow{background:rgba(245,158,11,.12);color:var(--yellow)}
+.b-red{background:rgba(239,68,68,.12);color:var(--red)}
+.b-purple{background:rgba(167,139,250,.12);color:var(--purple)}
+.b-cyan{background:rgba(6,182,212,.1);color:var(--cyan)}
+.b-orange{background:rgba(249,115,22,.1);color:var(--orange)}
+.b-muted{background:var(--surface3);color:var(--muted)}
+
+.file-link{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);font-size:11px;margin-bottom:5px;cursor:pointer;text-decoration:none;color:var(--text);transition:border-color .15s}
+.file-link:hover{border-color:var(--accent)}
+.file-link code{color:var(--accent);font-size:10px;flex:1}
+.file-link .fl-badge{font-size:9px;color:var(--muted)}
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-green{background:var(--green);box-shadow:0 0 5px var(--green)}
+.dot-yellow{background:var(--yellow)}
+.dot-red{background:var(--red)}
+
+/* FLOW */
+.flow{display:flex;align-items:center;gap:0;margin-bottom:28px;flex-wrap:wrap;gap:6px}
+.flow-step{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:10px 14px;font-size:11px;font-weight:700;text-align:center;min-width:100px}
+.flow-step span{display:block;font-size:9px;font-weight:400;color:var(--muted);margin-top:2px}
+.flow-arrow{color:var(--muted);font-size:16px;padding:0 4px}
+
+/* STATUS TABLE */
+.status-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:28px}
+.status-table th{text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--border)}
+.status-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.status-table tr:last-child td{border-bottom:none}
+.status-table tr:hover td{background:var(--surface2)}
+
+.section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:12px;margin-top:28px}
+
+/* LINKS */
+.big-link{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;margin-right:8px;margin-bottom:8px;transition:opacity .15s}
+.big-link:hover{opacity:.85}
+.bl-accent{background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff}
+.bl-green{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:var(--green)}
+.bl-surface{background:var(--surface);border:1px solid var(--border2);color:var(--text)}
+</style>
+</head>
+<body>
+
+<h1>🗺️ Job Command Center — Project Map</h1>
+<p class="sub">Dushyant Kapoor · Full system overview · Last updated: <span id="ts"></span></p>
+
+<!-- QUICK LINKS -->
+<div>
+  <a class="big-link bl-accent" href="dushyant-command-center.html" target="_blank">🚀 Open Dashboard</a>
+  <a class="big-link bl-green" href="https://job-command-center-nu.vercel.app/" target="_blank">🌐 Live on Vercel</a>
+  <a class="big-link bl-surface" href="https://github.com/Dushyant-dataanalyst/job-command-center/actions" target="_blank">⚙️ GitHub Actions</a>
+  <a class="big-link bl-surface" href="https://github.com/Dushyant-dataanalyst/job-command-center" target="_blank">📦 GitHub Repo</a>
+  <a class="big-link bl-surface" href="godmode-os.html" target="_blank">🎯 God Mode OS</a>
+</div>
+
+<!-- DATA FLOW -->
+<div class="section-title">How it works — Data Flow</div>
+<div class="flow">
+  <div class="flow-step">⏰ GitHub Actions<span>10am IST daily</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">🐍 fetch_jobs.py<span>Adzuna API search</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">🔍 Score + Filter<span>Fit scoring 1–10</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">📄 jobs-update.json<span>Written to repo</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">🌐 Vercel CDN<span>Serves the file</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-step">📊 Dashboard<span>Polls every 5 min</span></div>
+</div>
+
+<!-- FILE MAP -->
+<div class="section-title">Project Files</div>
+<div class="grid">
+
+  <div class="card blue">
+    <div class="card-icon">📊</div>
+    <div class="card-title">dushyant-command-center.html</div>
+    <div class="card-desc">Main job search dashboard. All sections: Daily Briefing, Jobs Feed, Tracker, Outreach, Recruiter CRM, Negotiation, Interview Prep, Market Intel.</div>
+    <span class="badge b-green">Live on Vercel</span>
+    <span class="badge b-blue">localStorage</span>
+    <span class="badge b-cyan">Auto-refresh</span>
+    <br><br>
+    <a class="file-link" href="dushyant-command-center.html" target="_blank">
+      <div class="status-dot dot-green"></div>
+      <code>dushyant-command-center.html</code>
+      <span class="fl-badge">1,500+ lines</span>
+    </a>
+  </div>
+
+  <div class="card purple">
+    <div class="card-icon">🎯</div>
+    <div class="card-title">godmode-os.html</div>
+    <div class="card-desc">1-Crore Blueprint OS. Goal tracker for AI-901, DP-600, PMP, IIT. Month-by-month roadmap Apr 2026→Apr 2028. Daily habits with streaks.</div>
+    <span class="badge b-yellow">AI-901 URGENT</span>
+    <span class="badge b-purple">₹1Cr target</span>
+    <br><br>
+    <a class="file-link" href="godmode-os.html" target="_blank">
+      <div class="status-dot dot-green"></div>
+      <code>godmode-os.html</code>
+      <span class="fl-badge">Cert tracker</span>
+    </a>
+  </div>
+
+  <div class="card green">
+    <div class="card-icon">🐍</div>
+    <div class="card-title">fetch_jobs.py</div>
+    <div class="card-desc">GitHub Actions job search script. Searches NL/SG/IN via Adzuna API. Scores jobs 1–10. Applies rejection filters. Writes jobs-update.json.</div>
+    <span class="badge b-green">Defensive rewrite</span>
+    <span class="badge b-blue">Rejection filters</span>
+    <span class="badge b-muted">Free tier: 250 calls/day</span>
+    <br><br>
+    <a class="file-link">
+      <div class="status-dot dot-green"></div>
+      <code>fetch_jobs.py</code>
+      <span class="fl-badge">~200 lines</span>
+    </a>
+  </div>
+
+  <div class="card yellow">
+    <div class="card-icon">⚙️</div>
+    <div class="card-title">.github/workflows/daily-jobs.yml</div>
+    <div class="card-desc">GitHub Actions workflow. Runs Mon–Sat at 10am IST (4:30 UTC). Installs deps, runs fetch_jobs.py, commits jobs-update.json, pulls before push to avoid conflicts.</div>
+    <span class="badge b-yellow">Cron: 30 4 * * 1-6</span>
+    <span class="badge b-blue">workflow_dispatch</span>
+    <br><br>
+    <a class="file-link" href="https://github.com/Dushyant-dataanalyst/job-command-center/actions" target="_blank">
+      <div class="status-dot dot-green"></div>
+      <code>.github/workflows/daily-jobs.yml</code>
+      <span class="fl-badge">View on GitHub</span>
+    </a>
+  </div>
+
+  <div class="card red">
+    <div class="card-icon">🚫</div>
+    <div class="card-title">rejection_reasons.json</div>
+    <div class="card-desc">Rejection log. Populated when you skip a job on the dashboard. fetch_jobs.py reads this to filter out bad companies and raise salary floors when patterns detected.</div>
+    <span class="badge b-red">Pattern detection</span>
+    <span class="badge b-yellow">3x = auto-filter</span>
+    <br><br>
+    <a class="file-link">
+      <div class="status-dot dot-yellow"></div>
+      <code>rejection_reasons.json</code>
+      <span class="fl-badge">Auto-updated</span>
+    </a>
+  </div>
+
+  <div class="card cyan">
+    <div class="card-icon">📄</div>
+    <div class="card-title">jobs-update.json</div>
+    <div class="card-desc">Bridge file between GitHub Actions and the dashboard. Written by fetch_jobs.py, served by Vercel with no-cache headers, polled by dashboard every 5 minutes.</div>
+    <span class="badge b-cyan">No-cache CDN</span>
+    <span class="badge b-muted">Top 10 jobs</span>
+    <br><br>
+    <a class="file-link" href="https://job-command-center-nu.vercel.app/jobs-update.json" target="_blank">
+      <div class="status-dot dot-green"></div>
+      <code>jobs-update.json</code>
+      <span class="fl-badge">Live on Vercel</span>
+    </a>
+  </div>
+
+  <div class="card orange">
+    <div class="card-icon">🌐</div>
+    <div class="card-title">vercel.json</div>
+    <div class="card-desc">Vercel routing config. Routes / to dashboard. Sets Cache-Control: no-store on jobs-update.json so fresh data always served. Auto-deploys on every push to master.</div>
+    <span class="badge b-orange">Auto-deploy</span>
+    <span class="badge b-muted">No-cache headers</span>
+    <br><br>
+    <a class="file-link" href="https://job-command-center-nu.vercel.app" target="_blank">
+      <div class="status-dot dot-green"></div>
+      <code>vercel.json</code>
+      <span class="fl-badge">job-command-center-nu.vercel.app</span>
+    </a>
+  </div>
+
+  <div class="card blue">
+    <div class="card-icon">📋</div>
+    <div class="card-title">requirements.txt</div>
+    <div class="card-desc">Python dependencies for fetch_jobs.py. Only needs: requests. Installed by GitHub Actions before running the job search script.</div>
+    <span class="badge b-muted">requests only</span>
+    <br><br>
+    <a class="file-link">
+      <div class="status-dot dot-green"></div>
+      <code>requirements.txt</code>
+      <span class="fl-badge">Minimal deps</span>
+    </a>
+  </div>
+
+</div>
+
+<!-- STATUS TABLE -->
+<div class="section-title">System Status Checklist</div>
+<table class="status-table">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Status</th>
+      <th>Notes</th>
+      <th>Action needed?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>GitHub Actions Workflow</strong></td>
+      <td><span class="badge b-green">✅ Active</span></td>
+      <td>Visible in Actions tab, runs Mon–Sat 10am IST</td>
+      <td>Trigger manually to test</td>
+    </tr>
+    <tr>
+      <td><strong>Adzuna API Keys</strong></td>
+      <td><span class="badge b-yellow" id="api-status">⚠️ Check</span></td>
+      <td>ADZUNA_APP_ID + ADZUNA_APP_KEY in GitHub Secrets</td>
+      <td>Add at repo → Settings → Secrets</td>
+    </tr>
+    <tr>
+      <td><strong>Vercel Deployment</strong></td>
+      <td><span class="badge b-green">✅ Live</span></td>
+      <td>job-command-center-nu.vercel.app</td>
+      <td>None — auto-deploys on push</td>
+    </tr>
+    <tr>
+      <td><strong>Dashboard Auto-refresh</strong></td>
+      <td><span class="badge b-green">✅ Active</span></td>
+      <td>Polls jobs-update.json every 5 min</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td><strong>Rejection System</strong></td>
+      <td><span class="badge b-green">✅ Live</span></td>
+      <td>Skip button, reason picker, pattern alerts</td>
+      <td>None — use 🚫 Skip on job cards</td>
+    </tr>
+    <tr>
+      <td><strong>Workflow Push Conflict Fix</strong></td>
+      <td><span class="badge b-green">✅ Fixed</span></td>
+      <td>git pull --rebase before push in workflow</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td><strong>AI-901 Certification</strong></td>
+      <td><span class="badge b-red">🔴 URGENT</span></td>
+      <td>Retires June 30 2026 — 85 days left</td>
+      <td>Book exam NOW at godmode-os.html</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECRETS NEEDED -->
+<div class="section-title">GitHub Secrets Required</div>
+<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin-bottom:0">
+  <div class="card yellow">
+    <div class="card-icon">🔑</div>
+    <div class="card-title">ADZUNA_APP_ID</div>
+    <div class="card-desc">Get from developer.adzuna.com → Create app → copy App ID</div>
+    <a class="big-link bl-accent" style="font-size:11px;padding:6px 12px;margin-top:8px;display:inline-flex" href="https://developer.adzuna.com" target="_blank">Get API Key →</a>
+  </div>
+  <div class="card yellow">
+    <div class="card-icon">🔐</div>
+    <div class="card-title">ADZUNA_APP_KEY</div>
+    <div class="card-desc">Same account — copy App Key. Add both at: GitHub repo → Settings → Secrets → Actions → New secret</div>
+    <a class="big-link bl-accent" style="font-size:11px;padding:6px 12px;margin-top:8px;display:inline-flex" href="https://github.com/Dushyant-dataanalyst/job-command-center/settings/secrets/actions" target="_blank">Add Secrets →</a>
+  </div>
+</div>
+
+<script>
+document.getElementById('ts').textContent = new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+// Check if jobs-update.json has real data
+fetch('jobs-update.json?t='+Date.now())
+  .then(r=>r.json())
+  .then(d=>{
+    const el = document.getElementById('api-status');
+    if(d.new_jobs && d.new_jobs.length > 0){
+      el.textContent = '✅ Working — '+d.new_jobs.length+' jobs fetched';
+      el.className='badge b-green';
+    } else if(d.alert && d.alert.includes('missing')){
+      el.textContent = '❌ Keys missing';
+      el.className='badge b-red';
+    } else {
+      el.textContent = '⚠️ 0 jobs returned';
+      el.className='badge b-yellow';
+    }
+  }).catch(()=>{});
+</script>
+</body>
+</html>
