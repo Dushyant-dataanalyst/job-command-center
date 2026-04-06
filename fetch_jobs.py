@@ -124,7 +124,10 @@ def format_salary(job, geo):
 def dedupe(jobs):
     seen, out = set(), []
     for j in jobs:
-        key = hashlib.md5((j["title"] + j["company"]).encode()).hexdigest()
+        title   = j.get("title") or ""
+        company = j.get("company") or {}
+        company_name = company.get("display_name", "") if isinstance(company, dict) else str(company)
+        key = hashlib.md5((title + company_name).encode()).hexdigest()
         if key not in seen:
             seen.add(key)
             out.append(j)
