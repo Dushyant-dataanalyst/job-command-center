@@ -33,8 +33,8 @@ jobs:
 
       - name: Commit updated jobs-update.json
         run: |
-          git config user.name "Job Refresh Bot"
-          git config user.email "bot@dushyant-jobs"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin
           git stash
           git rebase origin/master
