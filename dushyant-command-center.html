@@ -286,7 +286,27 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 
 /* POSITIONING REMINDER - if text drifts generic */
 .generic-warning{display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:12px}
+
+/* QUICK STATS PILLS */
+.qs-pill{font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;border:1px solid;display:inline-flex;align-items:center;gap:4px}
+.jobs-qs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+
+/* VELOCITY CHART CARD */
+.vel-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+.vel-card h3{font-size:12px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+
+/* DEADLINE STAT CARD */
+.stat.deadline{background:linear-gradient(135deg,rgba(79,142,247,.1),rgba(167,139,250,.04));border-color:rgba(79,142,247,.3)!important}
+
+/* FRESHNESS AGE BADGE */
+.age-fresh{color:var(--green)!important;background:rgba(34,197,94,.08)!important;border-color:rgba(34,197,94,.4)!important}
+.age-mid{color:var(--yellow)!important;background:rgba(245,158,11,.06)!important;border-color:rgba(245,158,11,.3)!important}
+.age-old{color:var(--red)!important;background:rgba(239,68,68,.06)!important;border-color:rgba(239,68,68,.25)!important}
+
+/* KEYBOARD HINT BADGE */
+.kbhint{font-size:9px;background:var(--surface3);border:1px solid var(--border2);border-radius:3px;padding:1px 5px;color:var(--muted);font-family:monospace;margin-left:5px}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -383,11 +403,12 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
         <button class="btn btn-a ab-btn" onclick="nav('checkin',document.querySelector('.nav-item[onclick*=checkin]'))">Log Activity</button>
       </div>
 
-      <div class="stats-row">
+      <div class="stats-row" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
         <div class="stat r"><div class="stat-label">Applications This Week</div><div class="stat-val" id="s-apps">0</div><div class="stat-sub">Target: 10–15</div></div>
         <div class="stat r"><div class="stat-label">Recruiter Msgs</div><div class="stat-val" id="s-rec">0</div><div class="stat-sub">Target: 10/week</div></div>
         <div class="stat r"><div class="stat-label">Interviews Booked</div><div class="stat-val" id="s-int">0</div><div class="stat-sub">Target: 2–3/month</div></div>
         <div class="stat b"><div class="stat-label">Roles in Pipeline</div><div class="stat-val" id="s-pipe">5</div><div class="stat-sub">Active applications</div></div>
+        <div class="stat deadline" id="stat-deadline"><div class="stat-label">Days to Offer</div><div class="stat-val" id="s-deadline">—</div><div class="stat-sub" id="s-deadline-sub">Target: Oct 2026</div></div>
       </div>
 
       <div class="two-col">
@@ -424,6 +445,12 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
         </div>
 
         <div>
+          <!-- Velocity Chart -->
+          <div class="vel-card">
+            <h3>📈 App Velocity <span style="font-size:10px;font-weight:400;color:var(--muted)">4-week view · dashed = target</span></h3>
+            <div style="height:130px"><canvas id="velocity-chart"></canvas></div>
+          </div>
+
           <!-- Pipeline funnel -->
           <div class="card">
             <h3>🏗️ Pipeline Funnel</h3>
@@ -462,11 +489,13 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
     <!-- ── JOBS ── -->
     <div id="s-jobs" class="section">
       <div class="filters">
-        <input class="search-box" type="text" placeholder="Search roles, companies..." id="jsearch" oninput="filterJobs()"/>
+        <input class="search-box" type="text" placeholder="Search roles, companies... <kbd>/</kbd>" id="jsearch" oninput="filterJobs()"/>
         <select class="fsel" id="f-geo" onchange="filterJobs()"><option value="">All Geographies</option><option value="NL">🇳🇱 Netherlands</option><option value="SG">🇸🇬 Singapore</option><option value="IN">🇮🇳 India</option></select>
-        <select class="fsel" id="f-fit" onchange="filterJobs()"><option value="">All Fit Scores</option><option value="9">9-10/10</option><option value="8">8+/10</option></select>
+        <select class="fsel" id="f-fit" onchange="filterJobs()"><option value="">All Fit Scores</option><option value="9">9-10/10</option><option value="8">8+/10</option><option value="7">7+/10</option><option value="6">6+/10</option></select>
         <button class="btn btn-g" style="font-size:11px" onclick="toggleRejected()">👁 <span id="rej-toggle-label">Show Rejected</span> <span id="rej-count-badge" style="margin-left:4px"></span></button>
+        <button class="btn btn-g" style="font-size:10px" onclick="showFitExplainer()" title="How is fit score calculated?">⭐ Fit Score?</button>
       </div>
+      <div class="jobs-qs" id="jobs-quickstats"></div>
       <div id="pattern-alerts"></div>
       <div id="job-detail-panel" class="dp"></div>
       <div id="all-jobs"></div>
@@ -482,7 +511,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 
     <!-- ── TRACKER ── -->
     <div id="s-tracker" class="section">
-      <div class="sh"><h2>📊 Application Log</h2><button class="btn btn-a" onclick="addApp()">+ Add Application</button></div>
+      <div class="sh"><h2>📊 Application Log</h2><div style="display:flex;gap:8px"><button class="btn btn-g" style="font-size:11px" onclick="exportTrackerCSV()">📥 Export CSV</button><button class="btn btn-a" onclick="addApp()">+ Add Application</button></div></div>
       <div style="overflow-x:auto">
         <table class="tbl">
           <thead><tr><th>Company</th><th>Role</th><th>Location</th><th>Date</th><th>Status</th><th>Next Action</th><th>Follow-up</th><th></th></tr></thead>
@@ -726,6 +755,9 @@ window.addEventListener('DOMContentLoaded',()=>{
   updateKPIBars();
   checkForRefresh();                        // check jobs-update.json on load
   setInterval(checkForRefresh, 5*60*1000); // re-check every 5 minutes
+  updateDeadlineStat();
+  renderJobsQuickStats();
+  renderVelocityChart();
 });
 
 // ═══════════════════════════════════════
@@ -758,7 +790,6 @@ function checkForRefresh(){
 
       // Prepend new jobs from Claude's search to JOBS array
       if(data.new_jobs && data.new_jobs.length){
-        const newIds = new Set(JOBS.map(j=>j.id));
         let added = 0;
         const newIds = new Set(JOBS.map(j=>String(j.id)));
         data.new_jobs.forEach(nj=>{
@@ -814,6 +845,7 @@ function renderJobCard(j,compact=false){
   const applyUrl = j.url && j.url!=='#' ? j.url : null;
   const srcBadge = j._source==='email'?'<span class="tag" style="background:rgba(167,139,250,.12);color:var(--purple);border-color:rgba(167,139,250,.3)">📧 Email</span>'
                  : j._source==='api'?'<span class="tag" style="background:rgba(34,197,94,.08);color:var(--green)">🔄 Auto</span>':'';
+  const ageBadge = freshnessBadge(j.posted);
   return`<div class="job-card${rejected?' rejected':''}" id="jc-${sid}" onclick="openJob('${sid}')">
     ${rejected?`<div style="font-size:10px;color:var(--red);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px">🚫 Skipped — ${rejLabel}<button class="abt abt-b" style="font-size:9px;padding:2px 7px;margin-left:auto" onclick="event.stopPropagation();undoRejectByJobId('${sid}')">Undo</button></div>`:''}
     <div class="jt">
@@ -827,7 +859,7 @@ function renderJobCard(j,compact=false){
         <div style="font-size:11px;color:var(--green);font-weight:700;margin-top:2px">${j.sal}</div>
       </div>
     </div>
-    ${!compact?`<div class="jtags">${hot?`<span class="tag hot">${hot}</span>`:''}${srcBadge}${cleanTags}</div><p style="font-size:11px;color:var(--muted);margin:0 0 9px;line-height:1.6">${(j.desc||'').substring(0,110)}…</p>`:''}
+    ${!compact?`<div class="jtags">${hot?`<span class="tag hot">${hot}</span>`:''}${ageBadge}${srcBadge}${cleanTags}</div><p style="font-size:11px;color:var(--muted);margin:0 0 9px;line-height:1.6">${(j.desc||'').substring(0,110)}…</p>`:''}
     <div class="jfoot">
       <span class="jloc">🕐 ${j.posted}</span>
       <div class="jabts">
@@ -842,21 +874,24 @@ function renderJobCard(j,compact=false){
 }
 function renderBriefJobs(){document.getElementById('brief-jobs').innerHTML=JOBS.slice(0,3).map(j=>renderJobCard(j,true)).join('')}
 function renderAllJobs(){
-  const list = showRejectedJobs ? JOBS : JOBS.filter(j=>!isRejected(j.id));
+  // always hide fit < 6 (below minimum threshold)
+  const list = (showRejectedJobs ? JOBS : JOBS.filter(j=>!isRejected(j.id))).filter(j=>j.fit>=6);
   document.getElementById('all-jobs').innerHTML=list.length?list.map(j=>renderJobCard(j)).join(''):'<div style="padding:30px;text-align:center;color:var(--muted)">No active roles. <button class="abt abt-b" onclick="toggleRejected()">Show skipped</button></div>';
+  renderJobsQuickStats();
 }
 function filterJobs(){
   const q=document.getElementById('jsearch').value.toLowerCase();
   const geo=document.getElementById('f-geo').value;
-  const fit=parseInt(document.getElementById('f-fit').value)||0;
-  const base = showRejectedJobs ? JOBS : JOBS.filter(j=>!isRejected(j.id));
+  const fit=parseInt(document.getElementById('f-fit').value)||6; // default min = 6
+  const base = (showRejectedJobs ? JOBS : JOBS.filter(j=>!isRejected(j.id))).filter(j=>j.fit>=6);
   const res=base.filter(j=>{
     const mq=!q||j.title.toLowerCase().includes(q)||j.company.toLowerCase().includes(q);
     const mg=!geo||j.geo===geo;
-    const mf=!fit||j.fit>=fit;
+    const mf=j.fit>=fit;
     return mq&&mg&&mf;
   });
   document.getElementById('all-jobs').innerHTML=res.length?res.map(j=>renderJobCard(j)).join(''):'<div style="padding:30px;text-align:center;color:var(--muted)">No matches</div>';
+  renderJobsQuickStats();
 }
 function undoRejectByJobId(jobId){
   const entry = rejections.find(r=>r.job_id===jobId);
@@ -1366,13 +1401,13 @@ function selectReason(code, el){
 
 function confirmReject(){
   const modal = document.getElementById('reject-modal');
-  const id = parseInt(modal.dataset.jobId);
-  const j = JOBS.find(x=>x.id===id);
+  const id = modal.dataset.jobId; // keep as string — supports email-mc-001 style IDs
+  const j = JOBS.find(x=>String(x.id)===String(id));
   if(!j || !selectedReasonCode){ showToast('Pick a reason first','⚠️'); return; }
   const detail = document.getElementById('rmodal-detail').value.trim();
   const entry = {
     id: Date.now(),
-    job_id: id,
+    job_id: String(id),
     company: j.company,
     role: j.title,
     geo: j.geo,
@@ -1502,6 +1537,175 @@ function showToast(msg,icon='✅'){
 (function initRejectSystem(){
   updateRejBadge();
   checkPatterns();
+})();
+
+// ═══════════════════════════════════════
+// JOB FRESHNESS / AGE BADGES
+// ═══════════════════════════════════════
+function jobAgeDays(postedStr){
+  if(!postedStr||postedStr.includes('Email')||postedStr==='Today') return 0;
+  try{
+    // handle "Apr 4, 2026" and "Mar 31, 2026" formats
+    const d=new Date(postedStr);
+    if(isNaN(d.getTime())) return null;
+    return Math.floor((Date.now()-d.getTime())/86400000);
+  }catch(e){return null;}
+}
+function freshnessBadge(postedStr){
+  const age=jobAgeDays(postedStr);
+  if(age===null) return '';
+  if(age<=1) return `<span class="tag age-fresh">🆕 Fresh</span>`;
+  if(age<=4) return `<span class="tag age-mid">⏰ ${age}d ago</span>`;
+  if(age<=10) return `<span class="tag age-mid" style="opacity:.8">⚠️ ${age}d old</span>`;
+  return `<span class="tag age-old">⚠️ ${age}d old — act fast</span>`;
+}
+
+// ═══════════════════════════════════════
+// OFFER DEADLINE COUNTDOWN
+// ═══════════════════════════════════════
+function daysToOffer(){
+  return Math.max(0,Math.ceil((new Date('2026-10-31')-new Date())/86400000));
+}
+function updateDeadlineStat(){
+  const el=document.getElementById('s-deadline');
+  const sub=document.getElementById('s-deadline-sub');
+  if(!el) return;
+  const d=daysToOffer();
+  el.textContent=d;
+  const color=d<90?'var(--red)':d<150?'var(--yellow)':'var(--accent)';
+  el.style.color=color;
+  if(sub) sub.textContent=`Oct 31 · ${d<60?'🚨 URGENT':d<120?'⚠️ Getting close':'On track ✓'}`;
+}
+
+// ═══════════════════════════════════════
+// QUICK STATS ABOVE JOB FEED
+// ═══════════════════════════════════════
+function renderJobsQuickStats(){
+  const el=document.getElementById('jobs-quickstats');
+  if(!el) return;
+  const active=JOBS.filter(j=>!isRejected(j.id)&&j.fit>=6);
+  const nl=active.filter(j=>j.geo==='NL').length;
+  const sg=active.filter(j=>j.geo==='SG').length;
+  const ind=active.filter(j=>j.geo==='IN').length;
+  const avgFit=active.length?(active.reduce((s,j)=>s+j.fit,0)/active.length).toFixed(1):'—';
+  const pills=[
+    {l:`${active.length} Active`,c:'var(--accent)'},
+    {l:`🇳🇱 ${nl} NL`,c:'#f97316'},
+    {l:`🇸🇬 ${sg} SG`,c:'#ec4899'},
+    {l:`🇮🇳 ${ind} India`,c:'var(--green)'},
+    {l:`⭐ ${avgFit} avg fit`,c:'var(--yellow)'},
+    {l:`🚫 ${rejections.length} skipped`,c:'var(--muted)'},
+  ];
+  el.innerHTML=pills.map(p=>`<span class="qs-pill" style="color:${p.c};background:${p.c}18;border-color:${p.c}30">${p.l}</span>`).join('');
+}
+
+// ═══════════════════════════════════════
+// FIT SCORE EXPLAINER
+// ═══════════════════════════════════════
+function showFitExplainer(){
+  const html=`<div style="position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center" onclick="this.remove()">
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:24px;width:420px;max-width:95vw;box-shadow:0 20px 60px rgba(0,0,0,.5)" onclick="event.stopPropagation()">
+      <div style="font-size:16px;font-weight:800;margin-bottom:4px">⭐ How Fit Score Is Calculated</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px">Each job is scored 1–10 against your profile</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:12px">
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:9px;background:var(--surface2);border-radius:8px">
+          <span style="font-size:16px">🎯</span><div><strong>Role match (3pts)</strong><br/><span style="color:var(--muted)">Is it PM/Programme Manager/Analytics Manager? Does it have AI/Data component?</span></div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:9px;background:var(--surface2);border-radius:8px">
+          <span style="font-size:16px">🌍</span><div><strong>Geography (2pts)</strong><br/><span style="color:var(--muted)">NL = top priority (+2), SG = strong (+2), India ₹50L+ = valid (+1). UAE = excluded (0).</span></div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:9px;background:var(--surface2);border-radius:8px">
+          <span style="font-size:16px">💰</span><div><strong>Salary floor (2pts)</strong><br/><span style="color:var(--muted)">NL €70K+ · SG SGD 100K+ · India ₹45L+. Below floor = automatic -2.</span></div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:9px;background:var(--surface2);border-radius:8px">
+          <span style="font-size:16px">🛠️</span><div><strong>Skills overlap (2pts)</strong><br/><span style="color:var(--muted)">Power BI, Alteryx, SQL, Azure, Python, Databricks, Snowflake, JIRA. 3+ matches = +2.</span></div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;padding:9px;background:var(--surface2);border-radius:8px">
+          <span style="font-size:16px">🏢</span><div><strong>Company tier (1pt)</strong><br/><span style="color:var(--muted)">Target companies (Booking, Adyen, ASML, FAANG, MBB) = +1. Series A startup = -1.</span></div>
+        </div>
+        <div style="padding:10px;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.2);border-radius:8px;font-size:11px;color:var(--accent)">
+          <strong>Score guide:</strong> 9–10 = Apply today · 7–8 = Strong match · 6 = Worth reviewing · &lt;6 = Hidden from feed
+        </div>
+      </div>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="margin-top:14px;width:100%;padding:8px;background:var(--surface3);border:1px solid var(--border2);color:var(--text);border-radius:8px;cursor:pointer;font-size:12px;font-weight:700">Close</button>
+    </div>
+  </div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+// ═══════════════════════════════════════
+// EXPORT CSV
+// ═══════════════════════════════════════
+function exportTrackerCSV(){
+  const rows=[...TRACKER_DATA,...appLog];
+  if(!rows.length){showToast('No applications to export','⚠️');return;}
+  const hdrs=['Company','Role','Location','Date Applied','Status','Next Action','Follow-up Date'];
+  const lines=[hdrs.join(','),...rows.map(r=>
+    [r.company,r.role,r.location,r.date,r.status,r.next,r.followup]
+    .map(v=>`"${(v||'').replace(/"/g,'""')}"`)
+    .join(',')
+  )];
+  const blob=new Blob([lines.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`dk_applications_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  showToast('Exported as CSV ✓','📥');
+}
+
+// ═══════════════════════════════════════
+// VELOCITY CHART
+// ═══════════════════════════════════════
+function renderVelocityChart(){
+  const canvas=document.getElementById('velocity-chart');
+  if(!canvas||!window.Chart) return;
+  const now=new Date();
+  const soy=new Date(now.getFullYear(),0,1);
+  const wk=Math.ceil(((now-soy)/86400000+soy.getDay()+1)/7);
+  const labels=[`Wk ${wk-3}`,`Wk ${wk-2}`,`Wk ${wk-1}`,`Wk ${wk} ▶`];
+  const cur=weekActivity.apps||0;
+  if(window._velChart){window._velChart.destroy();window._velChart=null;}
+  window._velChart=new Chart(canvas,{
+    type:'bar',
+    data:{
+      labels,
+      datasets:[
+        {label:'Applications',data:[0,0,0,cur],
+          backgroundColor:['rgba(79,142,247,.25)','rgba(79,142,247,.25)','rgba(79,142,247,.25)','rgba(79,142,247,.75)'],
+          borderColor:'rgba(79,142,247,.9)',borderWidth:1,borderRadius:4},
+        {label:'Target',data:[10,10,10,10],type:'line',
+          borderColor:'rgba(245,158,11,.55)',borderDash:[5,3],
+          backgroundColor:'transparent',pointRadius:0,borderWidth:1.5,tension:0}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:(c)=>`${c.dataset.label}: ${c.parsed.y}`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#5a637a',font:{size:10}}},
+        y:{beginAtZero:true,max:15,grid:{color:'rgba(255,255,255,.04)'},
+           ticks:{color:'#5a637a',font:{size:10},stepSize:5}}
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD SHORTCUTS  b/j/t/c/r/n/i  / = search
+// ═══════════════════════════════════════
+(function initKeyboardShortcuts(){
+  document.addEventListener('keydown',e=>{
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT') return;
+    if(e.ctrlKey||e.altKey||e.metaKey) return;
+    const map={b:'briefing',j:'jobs',t:'tracker',c:'checkin',r:'recruiters',n:'negotiate',i:'interview',m:'news',p:'positioning'};
+    const k=e.key.toLowerCase();
+    if(map[k]){nav(map[k],document.querySelector(`.nav-item[onclick*="${map[k]}"]`));}
+    if(k==='/'){
+      e.preventDefault();
+      nav('jobs',document.querySelector('.nav-item[onclick*="jobs"]'));
+      setTimeout(()=>document.getElementById('jsearch')?.focus(),80);
+    }
+  });
 })();
 </script>
 
