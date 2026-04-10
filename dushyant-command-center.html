@@ -630,13 +630,30 @@ Azure · Data Transformation · Stakeholder Management · Six Sigma</textarea>
 // ═══════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════
-const JOBS = [
+// ── Persistent Jobs Database ──────────────────────────────────
+const JOBS_DB_KEY = 'dk_jobs_db';
+function saveJobsDB(){ try{ localStorage.setItem(JOBS_DB_KEY, JSON.stringify(JOBS)); }catch(e){} }
+function loadJobsDB(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(JOBS_DB_KEY)||'[]');
+    if(saved.length){
+      const existingIds = new Set(JOBS.map(j=>String(j.id)));
+      saved.forEach(j=>{ if(!existingIds.has(String(j.id))){ JOBS.push(j); existingIds.add(String(j.id)); } });
+    }
+  }catch(e){}
+}
+// ──────────────────────────────────────────────────────────────
+let JOBS = [
   {id:1,title:"Senior Data/AI Program Manager",company:"ConSol Partners",logo:"CP",lc:"#4f8ef7",geo:"NL",geoLabel:"🇳🇱 Eindhoven, Netherlands",type:"Contract",fit:10,posted:"Apr 1, 2026",sal:"Negotiable (Contract)",tags:["AI/ML","Program Management","🔥 Apply Now"],desc:"12-month contract, 40hrs/week, ASAP start. Requires 10+ years data experience, Gen AI & Agentic AI knowledge, senior stakeholder management, consulting background.",req:["10+ years data/AI programme experience","Gen AI & Agentic AI knowledge","Complex stakeholder management","Consulting background preferred","Agile/Scrum delivery"],url:"https://nl.linkedin.com/jobs/view/senior-data-ai-program-manager-eindhoven-long-term-contract-at-consol-partners-4392874346",rec:{name:"ConSol Partners Team",title:"Technical Staffing",email:"info@consolpartners.nl",li:"linkedin.com/company/consol-partners",av:"CP",col:"#4f8ef7"},qs:["Describe your experience leading AI/data transformation programmes at enterprise scale.","How do you manage 200+ stakeholders across matrix organisations?","Walk me through a programme where you implemented Gen AI tooling.","How do you govern delivery risk on a 12-month data programme?","What's your experience with Agentic AI systems?"]},
   {id:2,title:"AI Programme Manager",company:"microTECH Global",logo:"mT",lc:"#a78bfa",geo:"NL",geoLabel:"🇳🇱 Eindhoven Area, Netherlands",type:"Contract",fit:9,posted:"Mar 31, 2026",sal:"Negotiable",tags:["GenAI","Change Management","Eindhoven"],desc:"Contract role requiring Master's degree, 10+ years data experience, Gen/Agentic AI knowledge, complex stakeholder management, and change management.",req:["Master's degree","10+ yrs data experience","Gen/Agentic AI knowledge","Change management expertise","Senior stakeholder engagement"],url:"https://nl.linkedin.com/jobs/view/ai-programme-manager-eindhoven-at-microtech-global-ltd-4393520181",rec:{name:"microTECH Recruitment",title:"Technical Recruiter",email:"recruitment@microtechglobal.com",li:"linkedin.com/company/microtech-global",av:"mT",col:"#a78bfa"},qs:["How have you led change management for AI transformation programmes?","Describe your experience with Agentic AI implementation.","How do you handle programme scope creep in fast-moving data environments?","Walk me through stakeholder alignment across a complex matrix org.","What's your approach to programme governance and risk management?"]},
   {id:3,title:"Data & Privacy Program Manager",company:"Airwallex",logo:"AW",lc:"#06b6d4",geo:"NL",geoLabel:"🇳🇱 Amsterdam, Netherlands",type:"Full-time",fit:8,posted:"Apr 4, 2026",sal:"€80–100K",tags:["Fintech","Data Governance","HSM Eligible","🆕 Today"],desc:"Cross-functional programme management, data governance, AI-assisted workflow design in a high-growth global fintech. Amsterdam preferred.",req:["Programme/project management","Data governance experience","Cross-functional leadership","Fintech environment a plus"],url:"https://nl.linkedin.com/jobs/view/data-privacy-program-manager-at-airwallex-4383178491",rec:{name:"Airwallex Talent",title:"Talent Acquisition",email:"talent@airwallex.com",li:"linkedin.com/company/airwallex",av:"AW",col:"#06b6d4"},qs:["How do you manage data governance programmes across multiple regulatory environments?","Walk me through a cross-functional programme you led end-to-end.","How have you used AI to improve workflow efficiency?","Describe your experience in fintech or financial services programme delivery.","How do you balance privacy compliance with operational speed?"]},
   {id:4,title:"T&T Senior Manager – AI & Data (FSI)",company:"Deloitte Singapore",logo:"DE",lc:"#86bc25",geo:"SG",geoLabel:"🇸🇬 Singapore",type:"Full-time",fit:10,posted:"Apr 3, 2026",sal:"SGD 180–250K",tags:["Deloitte","FSI","Internal Track","High Value"],desc:"8–10 years consulting + FSI, AI/ML delivery, data governance, team leadership. Strong internal mobility pathway from Deloitte USI.",req:["8-10 yrs consulting","FSI/financial services experience","AI/ML delivery background","Team leadership","Deloitte network preferred"],url:"https://sg.linkedin.com/jobs/view/t-t-senior-manager-artificial-intelligence-data-fsi-sg-at-deloitte-4384223879",rec:{name:"Deloitte SG Talent",title:"Senior Talent Partner",email:"sgtalent@deloitte.com",li:"linkedin.com/company/deloitte",av:"DE",col:"#86bc25"},qs:["How would you leverage your Deloitte USI experience for our Singapore FSI practice?","Walk me through your largest AI/data transformation delivery.","How do you develop and retain consulting talent?","Describe your experience with financial services clients in the region.","What's your approach to building AI practice capabilities?"]},
   {id:5,title:"Senior Consultant/Manager – AI Solution Architect",company:"Capgemini Invent",logo:"CG",lc:"#0070ad",geo:"SG",geoLabel:"🇸🇬 Singapore",type:"Full-time",fit:8,posted:"Mar 20, 2026",sal:"SGD 140–180K",tags:["GenAI","Azure","Databricks","Consulting"],desc:"GenAI/Agentic AI architecture, client-facing consulting, C-level presentation, Python + cloud platforms (Azure/Databricks). Building Singapore data & AI practice.",req:["6+ yrs consulting or data engineering","GenAI architecture experience","Azure/Databricks","Client-facing presentation","Python proficiency"],url:"https://careers.capgemini.com/job/Singapore-Senior-Consultant-Manager-AI-Solution-Architect/1265644101/",rec:{name:"Charlie Bowsher",title:"MCG Talent — Singapore/HK",email:"charlie.bowsher@mcgtalent.com",li:"linkedin.com/in/charliebowsher",av:"CB",col:"#0070ad"},qs:["How would you design a GenAI solution architecture for a Fortune 500 manufacturing client?","Walk me through your experience with Azure + Databricks on an enterprise project.","How do you present AI strategy to a C-suite audience unfamiliar with technology?","Describe a time you led an AI proof-of-concept through to production deployment.","How do you differentiate Capgemini Invent's AI practice to a client evaluating 3 firms?"]},
   {id:6,title:"Business Analytics Manager – RBS Defect Reduction",company:"Amazon",logo:"AM",lc:"#ff9900",geo:"IN",geoLabel:"🇮🇳 Bengaluru, India",type:"Full-time",fit:9,posted:"Mar 31, 2026",sal:"₹55–90 LPA total comp",tags:["Six Sigma BB Required","Python","Leadership","Early Applicant"],desc:"Six Sigma/Lean required (SSBB). Python/SQL, stakeholder management, AI/ML-driven analytics, multi-million dollar programme accountability. Apply via Amazon Jobs directly.",req:["Six Sigma Black Belt (REQUIRED)","Python + SQL","5+ yrs analytics leadership","Stakeholder management at scale","AI/ML analytics background"],url:"https://in.linkedin.com/jobs/view/business-analytics-manager-rbs-defect-reduction-at-amazon-4381783399",rec:{name:"Amazon India Talent",title:"Technical Recruiting",email:"amazon-jobs@amazon.com",li:"linkedin.com/company/amazon",av:"AM",col:"#ff9900"},qs:["How have you applied Six Sigma DMAIC to a large-scale analytics problem?","Walk me through your biggest Python/SQL analytics project and the business impact.","How do you manage an analytics team and maintain quality at scale?","Describe a time you used data to influence a multi-million dollar operational decision.","How do you handle ambiguous problem statements typical of Amazon's environment?"]}
+,
+// ── From Gmail inbox — Apr 10 2026 ─────────────────────────────
+{id:'email-mc-001',title:'Senior Managing Consultant, Strategy & Transformation',company:'Mastercard',logo:'MC',lc:'#f59e0b',geo:'IN',geoLabel:'🇮🇳 Gurugram, India',type:'Full-time',fit:8,posted:'Apr 09 (Email)',sal:'₹45L–₹65L',tags:['Target Co','Strategy','Analytics'],desc:'Senior Managing Consultant role in Advisors & Consulting Services, Strategy & Transformation division. Fast-growing team at Mastercard India HQ Gurugram.',req:['8+ years strategy/consulting experience','Analytics & data-driven decision making','Client-facing consulting delivery','Programme management'],url:'https://www.linkedin.com/jobs/view/4398477174/',_source:'email',rec:{name:'Mastercard Recruiting',title:'Talent Acquisition',email:'careers@mastercard.com',li:'linkedin.com/company/mastercard',av:'MC',col:'#f59e0b'},qs:['Walk me through a transformation programme you led end-to-end.','How do you manage senior stakeholders who disagree with your recommendation?','Give an example where data analytics changed a strategic direction.']},
+{id:'email-bain-001',title:'Project Leader - TMT',company:'Bain & Company',logo:'BC',lc:'#ef4444',geo:'IN',geoLabel:'🇮🇳 India',type:'Full-time',fit:7,posted:'Apr 10 (Email)',sal:'₹55L–₹80L',tags:['Target Co','Strategy','TMT'],desc:'Project Leader in Technology, Media & Telecom practice. Bain direct outreach via globalrecruiting.noreply@bain.com.',req:['5+ years consulting experience','TMT sector knowledge','Client leadership','Data-driven problem solving'],url:'https://bain.avature.net/careers',_source:'email',rec:{name:'Global Recruiting at Bain',title:'Talent Acquisition',email:'globalrecruiting.noreply@bain.com',li:'linkedin.com/company/bain-and-company',av:'BC',col:'#ef4444'},qs:['Why Bain over McKinsey or BCG?','Describe a project where you changed the client\'s mind with analysis.','How do you manage a team of analysts under pressure?']}
 ];
 
 const TRACKER_DATA = [];
@@ -674,6 +691,7 @@ const NEWS = {
 // INIT
 // ═══════════════════════════════════════
 window.addEventListener('DOMContentLoaded',()=>{
+  loadJobsDB(); // restore persisted jobs before any render
   // ── Live date / week injection ──
   const now = new Date();
   const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -742,10 +760,11 @@ function checkForRefresh(){
       if(data.new_jobs && data.new_jobs.length){
         const newIds = new Set(JOBS.map(j=>j.id));
         let added = 0;
+        const newIds = new Set(JOBS.map(j=>String(j.id)));
         data.new_jobs.forEach(nj=>{
-          if(!newIds.has(nj.id)){
+          if(!newIds.has(String(nj.id))){
             JOBS.unshift({
-              id: nj.id,
+              id: String(nj.id),
               title: nj.title,
               company: nj.company,
               logo: nj.company.substring(0,2).toUpperCase(),
@@ -754,12 +773,13 @@ function checkForRefresh(){
               geoLabel: (nj.geo==='NL'?'🇳🇱 ':nj.geo==='SG'?'🇸🇬 ':'🇮🇳 ') + nj.location,
               type: 'Full-time',
               fit: nj.fit||8,
-              posted: 'Today (10am refresh)',
+              posted: data.refresh_date||'Today',
               sal: nj.salary||'Negotiable',
               tags: nj.tags||[],
               desc: nj.why_fit||'New role from daily refresh.',
               req: [],
               url: nj.url||'#',
+              _source: 'api',
               rec:{name:'Recruiter',title:'',email:'',li:'',av:'?',col:'#4f8ef7'},
               qs:[]
             });
@@ -767,11 +787,12 @@ function checkForRefresh(){
           }
         });
         if(added > 0){
+          saveJobsDB(); // persist to localStorage so jobs survive page reload
           renderBriefJobs();
           renderAllJobs();
           renderResumeSelect();
           renderInterviewSelect();
-          showToast(`✨ ${added} new job${added>1?'s':''} added from 10am refresh!`, '🔔');
+          showToast(`✨ ${added} new job${added>1?'s':''} added from daily refresh!`, '🔔');
         }
       }
     })
@@ -784,13 +805,17 @@ function checkForRefresh(){
 function geoClass(g){return g==='NL'?'geo-nl':g==='SG'?'geo-sg':'geo-in'}
 function fitCls(f){return f>=9?'fh':f>=7?'fm':'fl'}
 function renderJobCard(j,compact=false){
+  const sid = String(j.id); // always string — fixes onclick for alphanumeric IDs
   const hot=j.tags.find(t=>t.includes('🔥')||t.includes('🆕'));
   const cleanTags=j.tags.filter(t=>!t.includes('🔥')&&!t.includes('🆕')).map(t=>`<span class="tag">${t}</span>`).join('');
-  const rejected=isRejected(j.id);
-  const rejEntry=rejections.find(r=>r.job_id===j.id);
+  const rejected=isRejected(sid);
+  const rejEntry=rejections.find(r=>String(r.job_id)===sid);
   const rejLabel=rejEntry?REASON_CODES.find(x=>x.code===rejEntry.reason_code)?.label:'';
-  return`<div class="job-card${rejected?' rejected':''}" id="jc-${j.id}" onclick="openJob(${j.id})">
-    ${rejected?`<div style="font-size:10px;color:var(--red);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px">🚫 Skipped — ${rejLabel}<button class="abt abt-b" style="font-size:9px;padding:2px 7px;margin-left:auto" onclick="event.stopPropagation();undoRejectByJobId(${j.id})">Undo</button></div>`:''}
+  const applyUrl = j.url && j.url!=='#' ? j.url : null;
+  const srcBadge = j._source==='email'?'<span class="tag" style="background:rgba(167,139,250,.12);color:var(--purple);border-color:rgba(167,139,250,.3)">📧 Email</span>'
+                 : j._source==='api'?'<span class="tag" style="background:rgba(34,197,94,.08);color:var(--green)">🔄 Auto</span>':'';
+  return`<div class="job-card${rejected?' rejected':''}" id="jc-${sid}" onclick="openJob('${sid}')">
+    ${rejected?`<div style="font-size:10px;color:var(--red);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px">🚫 Skipped — ${rejLabel}<button class="abt abt-b" style="font-size:9px;padding:2px 7px;margin-left:auto" onclick="event.stopPropagation();undoRejectByJobId('${sid}')">Undo</button></div>`:''}
     <div class="jt">
       <div class="jlogo" style="background:${j.lc}18;color:${j.lc};border-color:${j.lc}33">${j.logo}</div>
       <div class="jmeta">
@@ -802,14 +827,15 @@ function renderJobCard(j,compact=false){
         <div style="font-size:11px;color:var(--green);font-weight:700;margin-top:2px">${j.sal}</div>
       </div>
     </div>
-    ${!compact?`<div class="jtags">${hot?`<span class="tag hot">${hot}</span>`:''}${cleanTags}</div><p style="font-size:11px;color:var(--muted);margin:0 0 9px;line-height:1.6">${j.desc.substring(0,100)}…</p>`:''}
+    ${!compact?`<div class="jtags">${hot?`<span class="tag hot">${hot}</span>`:''}${srcBadge}${cleanTags}</div><p style="font-size:11px;color:var(--muted);margin:0 0 9px;line-height:1.6">${(j.desc||'').substring(0,110)}…</p>`:''}
     <div class="jfoot">
       <span class="jloc">🕐 ${j.posted}</span>
       <div class="jabts">
-        ${!rejected?`<button class="abt abt-r" onclick="event.stopPropagation();rejectJob(${j.id})">🚫 Skip</button>`:''}
+        ${applyUrl?`<a class="abt abt-a" href="${applyUrl}" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none">🔗 Apply</a>`:''}
+        ${!rejected?`<button class="abt abt-r" onclick="event.stopPropagation();rejectJob('${sid}')">🚫 Skip</button>`:''}
         <button class="abt abt-c" onclick="event.stopPropagation();nav('outreach',document.querySelector('.nav-item[onclick*=outreach]'))">📨 Outreach</button>
-        <button class="abt abt-b" onclick="event.stopPropagation();goInterview(${j.id})">🎙️ Prep</button>
-        ${!rejected?`<button class="abt abt-a" onclick="event.stopPropagation();logApply(${j.id})">✓ Log Apply</button>`:''}
+        <button class="abt abt-b" onclick="event.stopPropagation();goInterview('${sid}')">🎙️ Prep</button>
+        ${!rejected?`<button class="abt abt-g" onclick="event.stopPropagation();logApply('${sid}')">✓ Applied</button>`:''}
       </div>
     </div>
   </div>`;
@@ -837,7 +863,7 @@ function undoRejectByJobId(jobId){
   if(entry) undoReject(entry.id);
 }
 function openJob(id){
-  const j=JOBS.find(x=>x.id===id);
+  const j=JOBS.find(x=>String(x.id)===String(id));
   const dp=document.getElementById('job-detail-panel');
   dp.innerHTML=`
     <div style="display:flex;align-items:center;gap:13px;margin-bottom:16px">
@@ -941,7 +967,7 @@ function renderTracker(){
   `).join(''):`<tr><td colspan="8" style="text-align:center;padding:28px;color:var(--muted)">No applications logged yet. Click 'Log Apply' on a job card or paste a screenshot.</td></tr>`;
 }
 function logApply(id){
-  const j=JOBS.find(x=>x.id===id);
+  const j=JOBS.find(x=>String(x.id)===String(id));
   const today=new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
   const followup=new Date(Date.now()+5*86400000).toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
   appLog.push({company:j.company,role:j.title,location:j.geoLabel,geoClass:geoClass(j.geo),date:today,status:'applied',next:'Send follow-up or recruiter message',followup});
@@ -1320,7 +1346,7 @@ const REASON_CODES = [
 ];
 
 function rejectJob(id){
-  const j = JOBS.find(x=>x.id===id);
+  const j = JOBS.find(x=>String(x.id)===String(id));
   if(!j) return;
   selectedReasonCode = '';
   const modal = document.getElementById('reject-modal');
@@ -1374,7 +1400,7 @@ function cancelReject(){
 }
 
 function isRejected(id){
-  return rejections.some(r=>r.job_id===id);
+  return rejections.some(r=>String(r.job_id)===String(id));
 }
 
 function toggleRejected(){
