@@ -403,6 +403,57 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .sal-step.target .sal-amt{color:var(--gold)}
 
 hr{border:none;border-top:1px solid var(--border);margin:16px 0}
+
+/* ═══════════════════════════════════════════
+   MOBILE NAV & RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════════ */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border2);z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.4);padding-bottom:env(safe-area-inset-bottom,0)}
+.mn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;cursor:pointer;color:var(--muted);gap:3px;border-top:2px solid transparent;transition:all .15s;min-height:56px;-webkit-tap-highlight-color:transparent;user-select:none}
+.mn-item.active,.mn-item:active{color:var(--accent);border-top-color:var(--accent)}
+.mn-icon{font-size:20px;line-height:1}
+.mn-label{font-size:9px;text-transform:uppercase;letter-spacing:.03em;font-weight:600}
+.mm-overlay{display:none;position:fixed;inset:0;z-index:198;background:rgba(0,0,0,.55)}
+.mm-overlay.open{display:block}
+.mm-drawer{position:fixed;left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom,0));background:var(--surface);border:1px solid var(--border2);border-radius:18px 18px 0 0;z-index:199;padding:16px 12px;display:none;flex-wrap:wrap;gap:8px;box-shadow:0 -12px 40px rgba(0,0,0,.6)}
+.mm-drawer.open{display:flex}
+.mm-item{flex:1;min-width:calc(50% - 4px);padding:13px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;transition:all .15s;-webkit-tap-highlight-color:transparent;min-height:44px;font-weight:600}
+.mm-item:active{color:var(--text);border-color:var(--accent);background:rgba(255,107,53,.07)}
+
+@media(max-width:800px){
+  .mobile-nav{display:flex}
+  body{padding-bottom:calc(56px + env(safe-area-inset-bottom,0))}
+  .topbar{padding:10px 14px}
+  .tb-title{font-size:15px!important}
+  .tb-sub{font-size:10px}
+  .tb-right{gap:5px}
+  .tb-right .btn{padding:5px 10px;font-size:11px}
+  .tb-right .btn:last-child{display:none}
+  .content{padding:16px 12px}
+  .stats-row{grid-template-columns:1fr 1fr!important}
+  .stat{padding:14px}
+  .stat-val{font-size:22px!important}
+  .hero{padding:20px 18px;margin-bottom:18px}
+  .hero-title{font-size:20px}
+  .hero-stats{gap:16px}
+  .hs-num{font-size:22px}
+  .card{padding:14px}
+  .jfoot{flex-direction:column;align-items:flex-start;gap:7px}
+  .jabts{flex-wrap:wrap;gap:4px}
+  .abt{min-height:38px;padding:7px 10px}
+  .jtitle{font-size:13px}
+  .jcomp{white-space:normal}
+  .rec-grid{grid-template-columns:1fr!important}
+  .btn{min-height:36px}
+  .toast{left:12px;right:12px;bottom:calc(70px + env(safe-area-inset-bottom,0));width:auto}
+  .sh h2{font-size:14px}
+  .goal-card{padding:16px}
+  .goal-title{font-size:13px}
+  .gtask{padding:8px 10px;font-size:12px}
+  .timeline{padding-left:20px}
+  .tm-dot{left:-18px}
+  .crore-progress{padding:12px 14px}
+  .cp-val{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -1430,6 +1481,8 @@ function nav(name,el){
   const t=TITLES[name]||[name,''];
   document.getElementById('tb-title').textContent=t[0];
   document.getElementById('tb-sub').textContent=t[1];
+  syncMobileNav(name);
+  closeMobileMore();
 }
 
 // ═══════════════════════════════════════
@@ -1443,6 +1496,45 @@ function showToast(msg,icon='✅'){
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
 }
+
+// ─── MOBILE NAV ───────────────────────────────────────────
+function mnav(name){nav(name,document.querySelector(`.nav-item[onclick*="${name}"]`))}
+function syncMobileNav(name){
+  document.querySelectorAll('.mn-item[data-sec]').forEach(i=>i.classList.toggle('active',i.dataset.sec===name));
+  if(!['briefing','jobs','goals','tracker'].includes(name))
+    document.getElementById('mn-more-btn')?.classList.remove('active');
+}
+function toggleMobileMore(){
+  const d=document.getElementById('mm-drawer'),o=document.getElementById('mm-overlay'),b=document.getElementById('mn-more-btn');
+  const open=d.classList.contains('open');
+  d.classList.toggle('open',!open);o.classList.toggle('open',!open);b.classList.toggle('active',!open);
+}
+function closeMobileMore(){
+  document.getElementById('mm-drawer')?.classList.remove('open');
+  document.getElementById('mm-overlay')?.classList.remove('open');
+  document.getElementById('mn-more-btn')?.classList.remove('active');
+}
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobile-nav">
+  <div class="mn-item active" data-sec="briefing" onclick="mnav('briefing')"><span class="mn-icon">🏠</span><span class="mn-label">Briefing</span></div>
+  <div class="mn-item" data-sec="goals" onclick="mnav('goals')"><span class="mn-icon">🎯</span><span class="mn-label">Goals</span></div>
+  <div class="mn-item" data-sec="jobs" onclick="mnav('jobs')"><span class="mn-icon">💼</span><span class="mn-label">Jobs</span></div>
+  <div class="mn-item" data-sec="tracker" onclick="mnav('tracker')"><span class="mn-icon">📊</span><span class="mn-label">Track</span></div>
+  <div class="mn-item" id="mn-more-btn" onclick="toggleMobileMore()"><span class="mn-icon">☰</span><span class="mn-label">More</span></div>
+</nav>
+<div class="mm-overlay" id="mm-overlay" onclick="closeMobileMore()"></div>
+<div class="mm-drawer" id="mm-drawer">
+  <div class="mm-item" onclick="mnav('roadmap')">🗺️ Roadmap</div>
+  <div class="mm-item" onclick="mnav('habits')">⚡ Daily Habits</div>
+  <div class="mm-item" onclick="mnav('outreach')">📨 Outreach</div>
+  <div class="mm-item" onclick="mnav('resume')">📄 Resume</div>
+  <div class="mm-item" onclick="mnav('negotiate')">💰 Negotiate</div>
+  <div class="mm-item" onclick="mnav('recruiters')">🤝 Recruiters</div>
+  <div class="mm-item" onclick="mnav('news')">📡 News</div>
+  <div class="mm-item" onclick="mnav('interview')">🎙️ Interview</div>
+  <div class="mm-item" onclick="mnav('profile')">👤 Profile</div>
+</div>
 </body>
 </html>

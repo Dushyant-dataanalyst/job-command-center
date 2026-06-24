@@ -326,6 +326,47 @@
   .card h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
 
   hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* ═══════════════════════════════════════════
+     MOBILE NAV & RESPONSIVE OVERRIDES
+     ═══════════════════════════════════════════ */
+  .mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.4);padding-bottom:env(safe-area-inset-bottom,0)}
+  .mn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;cursor:pointer;color:var(--muted);gap:3px;border-top:2px solid transparent;transition:all .15s;min-height:56px;-webkit-tap-highlight-color:transparent;user-select:none}
+  .mn-item.active,.mn-item:active{color:var(--accent);border-top-color:var(--accent)}
+  .mn-icon{font-size:20px;line-height:1}
+  .mn-label{font-size:9px;text-transform:uppercase;letter-spacing:.03em;font-weight:600}
+  .mm-overlay{display:none;position:fixed;inset:0;z-index:198;background:rgba(0,0,0,.55)}
+  .mm-overlay.open{display:block}
+  .mm-drawer{position:fixed;left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom,0));background:var(--surface);border:1px solid var(--border);border-radius:18px 18px 0 0;z-index:199;padding:16px 12px;display:none;flex-wrap:wrap;gap:8px;box-shadow:0 -12px 40px rgba(0,0,0,.6)}
+  .mm-drawer.open{display:flex}
+  .mm-item{flex:1;min-width:calc(50% - 4px);padding:13px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;transition:all .15s;-webkit-tap-highlight-color:transparent;min-height:44px;font-weight:600}
+  .mm-item:active{color:var(--text);border-color:var(--accent);background:rgba(255,107,53,.08)}
+
+  @media(max-width:768px){
+    .mobile-nav{display:flex}
+    body{padding-bottom:calc(56px + env(safe-area-inset-bottom,0))}
+    .topbar{padding:10px 14px}
+    .topbar-left h1{font-size:15px}
+    .topbar-left p{font-size:10px}
+    .topbar-right{gap:6px}
+    .topbar-right .btn{padding:5px 10px;font-size:11px}
+    .topbar-right .btn:last-child{display:none}
+    .content{padding:16px 12px}
+    .stats-row{grid-template-columns:1fr 1fr!important}
+    .stat-card{padding:14px}
+    .stat-val{font-size:24px}
+    .job-footer{flex-direction:column;align-items:flex-start;gap:8px}
+    .job-actions{flex-wrap:wrap;gap:4px}
+    .action-btn{min-height:36px;padding:6px 10px}
+    .job-title{font-size:14px}
+    .job-company{white-space:normal}
+    .filters{flex-direction:column}
+    .search-box{width:100%;min-width:unset}
+    .filter-select{width:100%}
+    .card{padding:14px}
+    .btn{min-height:36px}
+    .toast{left:12px;right:12px;bottom:calc(70px + env(safe-area-inset-bottom,0));width:auto}
+  }
 </style>
 </head>
 <body>
@@ -1101,6 +1142,8 @@ function showSection(name, el) {
   const t = titles[name] || [name, ''];
   document.getElementById('page-title').textContent = t[0];
   document.getElementById('page-date').textContent = t[1];
+  syncMobileNav(name);
+  closeMobileMore();
 }
 
 function openDetail(id) {
@@ -1328,6 +1371,40 @@ function refreshJobs() {
 
 // ─────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', init);
+
+// ─── MOBILE NAV ───────────────────────────────────────────
+function mnav(name){showSection(name,document.querySelector(`.nav-item[onclick*="${name}"]`))}
+function syncMobileNav(name){
+  document.querySelectorAll('.mn-item[data-sec]').forEach(i=>i.classList.toggle('active',i.dataset.sec===name));
+  if(!['briefing','jobs','tracker','outreach'].includes(name))
+    document.getElementById('mn-more-btn')?.classList.remove('active');
+}
+function toggleMobileMore(){
+  const d=document.getElementById('mm-drawer'),o=document.getElementById('mm-overlay'),b=document.getElementById('mn-more-btn');
+  const open=d.classList.contains('open');
+  d.classList.toggle('open',!open);o.classList.toggle('open',!open);b.classList.toggle('active',!open);
+}
+function closeMobileMore(){
+  document.getElementById('mm-drawer')?.classList.remove('open');
+  document.getElementById('mm-overlay')?.classList.remove('open');
+  document.getElementById('mn-more-btn')?.classList.remove('active');
+}
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobile-nav">
+  <div class="mn-item active" data-sec="briefing" onclick="mnav('briefing')"><span class="mn-icon">☀️</span><span class="mn-label">Briefing</span></div>
+  <div class="mn-item" data-sec="jobs" onclick="mnav('jobs')"><span class="mn-icon">💼</span><span class="mn-label">Jobs</span></div>
+  <div class="mn-item" data-sec="tracker" onclick="mnav('tracker')"><span class="mn-icon">📊</span><span class="mn-label">Track</span></div>
+  <div class="mn-item" data-sec="outreach" onclick="mnav('outreach')"><span class="mn-icon">📨</span><span class="mn-label">Outreach</span></div>
+  <div class="mn-item" id="mn-more-btn" onclick="toggleMobileMore()"><span class="mn-icon">☰</span><span class="mn-label">More</span></div>
+</nav>
+<div class="mm-overlay" id="mm-overlay" onclick="closeMobileMore()"></div>
+<div class="mm-drawer" id="mm-drawer">
+  <div class="mm-item" onclick="mnav('resume')">📄 Resume Tailor</div>
+  <div class="mm-item" onclick="mnav('interview')">🎯 Interview Prep</div>
+  <div class="mm-item" onclick="mnav('negotiate')">💰 Negotiation</div>
+  <div class="mm-item" onclick="mnav('recruiters')">🤝 Recruiter CRM</div>
+</div>
 </body>
 </html>

@@ -305,6 +305,79 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
 
 /* KEYBOARD HINT BADGE */
 .kbhint{font-size:9px;background:var(--surface3);border:1px solid var(--border2);border-radius:3px;padding:1px 5px;color:var(--muted);font-family:monospace;margin-left:5px}
+
+/* ═══════════════════════════════════════════
+   MOBILE BOTTOM NAV & RESPONSIVE OVERRIDES
+   ═══════════════════════════════════════════ */
+.mobile-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border2);z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.4);padding-bottom:env(safe-area-inset-bottom,0)}
+.mn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 4px 8px;cursor:pointer;color:var(--muted);gap:3px;border-top:2px solid transparent;transition:all .15s;min-height:56px;-webkit-tap-highlight-color:transparent;user-select:none}
+.mn-item.active,.mn-item:active{color:var(--accent);border-top-color:var(--accent)}
+.mn-icon{font-size:20px;line-height:1}
+.mn-label{font-size:9px;text-transform:uppercase;letter-spacing:.03em;font-weight:600}
+.mm-overlay{display:none;position:fixed;inset:0;z-index:198;background:rgba(0,0,0,.55)}
+.mm-overlay.open{display:block}
+.mm-drawer{position:fixed;left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom,0));background:var(--surface);border:1px solid var(--border2);border-radius:18px 18px 0 0;z-index:199;padding:16px 12px;display:none;flex-wrap:wrap;gap:8px;box-shadow:0 -12px 40px rgba(0,0,0,.6)}
+.mm-drawer.open{display:flex}
+.mm-item{flex:1;min-width:calc(50% - 4px);padding:13px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px;transition:all .15s;-webkit-tap-highlight-color:transparent;min-height:44px;font-weight:600}
+.mm-item:active{color:var(--text);border-color:var(--accent);background:rgba(79,142,247,.07)}
+
+@media(max-width:800px){
+  .mobile-nav{display:flex}
+  body{padding-bottom:calc(56px + env(safe-area-inset-bottom,0))}
+  .sidebar{display:none}
+  .topbar{padding:10px 14px}
+  .tb-left h1{font-size:14px!important}
+  .tb-left p{font-size:10px}
+  .tb-right{gap:5px}
+  .tb-right .btn{padding:5px 10px;font-size:11px}
+  .tb-right .btn:last-child{display:none}
+  #refresh-badge{display:none!important}
+  .content{padding:14px 12px}
+  .stats-row{grid-template-columns:1fr 1fr!important}
+  .stat{padding:12px 10px}
+  .stat-val{font-size:20px!important}
+  .two-col{grid-template-columns:1fr!important}
+  .news-3col{grid-template-columns:1fr!important}
+  .resume-2col{grid-template-columns:1fr!important}
+  .rtextarea{min-height:180px}
+  .pos-2col{grid-template-columns:1fr!important}
+  .score-row{grid-template-columns:1fr 1fr!important}
+  .rec-grid{grid-template-columns:1fr!important}
+  .alert-banner{flex-wrap:wrap;padding:11px 13px}
+  .ab-btn{width:100%;order:4;margin-left:0!important;margin-top:6px}
+  .filters{flex-direction:column}
+  .search-box{width:100%;min-width:unset}
+  .fsel{width:100%}
+  .jfoot{flex-direction:column;align-items:flex-start;gap:7px}
+  .jabts{flex-wrap:wrap;gap:4px}
+  .abt{min-height:38px;padding:7px 10px;font-size:11px}
+  .jtitle{font-size:13px}
+  .jcomp{white-space:normal}
+  .pos-bullets{font-size:11px;line-height:1.8}
+  .pos-card{padding:14px 15px}
+  .card{padding:14px}
+  .na-text strong{font-size:12px}
+  .na-text span{font-size:11px}
+  .funnel-label{width:60px;font-size:10px}
+  .rmodal{width:96vw!important;max-width:96vw!important}
+  .reason-grid{grid-template-columns:1fr 1fr!important}
+  .ci-row{flex-direction:column;gap:4px}
+  .ci-label{width:auto;font-size:12px;font-weight:700;color:var(--text)}
+  .ci-input{width:100%}
+  .calc-row{flex-direction:column;gap:4px}
+  .calc-label{width:auto;font-size:12px;font-weight:700;color:var(--text)}
+  .calc-input{width:100%}
+  .btn{min-height:36px}
+  .toast{left:12px;right:12px;bottom:calc(70px + env(safe-area-inset-bottom,0));width:auto}
+  .qs-pill{font-size:10px;padding:3px 8px}
+  .tbl th:nth-child(3),.tbl td:nth-child(3),.tbl th:nth-child(7),.tbl td:nth-child(7){display:none}
+  .dp{padding:14px}
+  .vel-card{padding:13px}
+  .next-actions{padding:14px}
+  .na-num{width:20px;height:20px;font-size:10px}
+  .sh h2{font-size:13px}
+  .brand{padding:16px 14px}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
 </head>
@@ -541,7 +614,7 @@ hr{border:none;border-top:1px solid var(--border);margin:14px 0}
           <option value="">— Select a job to tailor for —</option>
         </select>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="resume-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px">
           <div style="padding:11px 15px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;display:flex;justify-content:space-between">Base CV (Europe) <button class="btn btn-g" style="font-size:10px;padding:3px 9px">Upload</button></div>
           <textarea class="rtextarea" id="base-cv" placeholder="Paste your Europe/NL CV here...">DUSHYANT KAPOOR
@@ -610,7 +683,7 @@ Azure · Data Transformation · Stakeholder Management · Six Sigma</textarea>
     <!-- ── NEWS ── -->
     <div id="s-news" class="section">
       <div class="sh"><h2>📡 Market Intelligence</h2><span id="intel-date"></span></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div class="news-3col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
         <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--purple);font-weight:700;margin-bottom:10px">🤖 AI & Data</div><div id="news-ai"></div></div>
         <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);font-weight:700;margin-bottom:10px">💼 NL/SG Jobs</div><div id="news-jobs"></div></div>
         <div><div style="font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:var(--yellow);font-weight:700;margin-bottom:10px">📜 Certs & Salary</div><div id="news-certs"></div></div>
@@ -628,7 +701,7 @@ Azure · Data Transformation · Stakeholder Management · Six Sigma</textarea>
           You are an <strong style="color:var(--text)">AI & Data Transformation Program Manager</strong> with proven delivery at Bain + Deloitte + EXL.
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="pos-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
         <div class="card">
           <h3>💪 Power Statements (use these verbatim)</h3>
           <div id="power-statements"></div>
@@ -1355,6 +1428,8 @@ function nav(name,el){
   document.getElementById('tb-title').textContent = t[0];
   const sub = getLiveSubtitle(name) || t[1] || '';
   document.getElementById('tb-sub').textContent = sub;
+  syncMobileNav(name);
+  closeMobileMore();
 }
 function refreshAll(){showToast('Pipeline refreshed ↺','🔄');updateKPIBars()}
 
@@ -1706,8 +1781,45 @@ function renderVelocityChart(){
       setTimeout(()=>document.getElementById('jsearch')?.focus(),80);
     }
   });
+
+  // ─── MOBILE NAV ───────────────────────────────────────────
+  window.mnav=function(name){nav(name,document.querySelector(`.nav-item[onclick*="${name}"]`))};
+  window.syncMobileNav=function(name){
+    document.querySelectorAll('.mn-item[data-sec]').forEach(i=>i.classList.toggle('active',i.dataset.sec===name));
+    if(!['briefing','jobs','tracker','outreach'].includes(name))
+      document.getElementById('mn-more-btn')?.classList.remove('active');
+  };
+  window.toggleMobileMore=function(){
+    const d=document.getElementById('mm-drawer'),o=document.getElementById('mm-overlay'),b=document.getElementById('mn-more-btn');
+    const open=d.classList.contains('open');
+    d.classList.toggle('open',!open);o.classList.toggle('open',!open);b.classList.toggle('active',!open);
+  };
+  window.closeMobileMore=function(){
+    document.getElementById('mm-drawer')?.classList.remove('open');
+    document.getElementById('mm-overlay')?.classList.remove('open');
+    document.getElementById('mn-more-btn')?.classList.remove('active');
+  };
 })();
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobile-nav">
+  <div class="mn-item active" data-sec="briefing" onclick="mnav('briefing')"><span class="mn-icon">🎯</span><span class="mn-label">Briefing</span></div>
+  <div class="mn-item" data-sec="jobs" onclick="mnav('jobs')"><span class="mn-icon">💼</span><span class="mn-label">Jobs</span></div>
+  <div class="mn-item" data-sec="tracker" onclick="mnav('tracker')"><span class="mn-icon">📊</span><span class="mn-label">Track</span></div>
+  <div class="mn-item" data-sec="outreach" onclick="mnav('outreach')"><span class="mn-icon">📨</span><span class="mn-label">Outreach</span></div>
+  <div class="mn-item" id="mn-more-btn" onclick="toggleMobileMore()"><span class="mn-icon">☰</span><span class="mn-label">More</span></div>
+</nav>
+<div class="mm-overlay" id="mm-overlay" onclick="closeMobileMore()"></div>
+<div class="mm-drawer" id="mm-drawer">
+  <div class="mm-item" onclick="mnav('resume')">📄 CV Tailor</div>
+  <div class="mm-item" onclick="mnav('interview')">🎙️ Interview Prep</div>
+  <div class="mm-item" onclick="mnav('negotiate')">💰 Negotiation</div>
+  <div class="mm-item" onclick="mnav('news')">📡 Market Intel</div>
+  <div class="mm-item" onclick="mnav('positioning')">🧠 Positioning</div>
+  <div class="mm-item" onclick="mnav('recruiters')">🤝 Recruiters</div>
+  <div class="mm-item" onclick="mnav('checkin')">📋 Weekly Check-in</div>
+</div>
 
 <!-- REJECT MODAL -->
 <div class="rmodal-bg" id="reject-modal" onclick="if(event.target===this)cancelReject()">
