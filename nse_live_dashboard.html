@@ -143,7 +143,7 @@ tr:last-child td{border-bottom:none}
     <h1><em>NSE 4-Strategy</em> Dashboard</h1>
     <div class="hdr-sub">
       <span class="live-pill"><span class="live-dot"></span>Live</span>
-      24 Jun 2026, 09:12 PM IST &nbsp;·&nbsp; Entry: <strong>25 Jun</strong> &nbsp;·&nbsp; 43 stocks
+      24 Jun 2026, 10:14 PM IST &nbsp;·&nbsp; Entry: <strong>25 Jun</strong> &nbsp;·&nbsp; 43 stocks
       <span class="sebi-pill">⚠ Manual orders only — SEBI</span>
     </div>
   </div>
@@ -162,7 +162,8 @@ tr:last-child td{border-bottom:none}
 <!-- MOBILE IP BAR -->
 <div class="mobile-ip-bar" id="mobileIpBar">
   📱 <strong>Viewing on phone?</strong> Use your laptop's WiFi IP instead of localhost.<br>
-  Your laptop IP: <strong id="laptopIp">loading…</strong> → open <code id="phoneUrl">http://…:7788/nse_live_dashboard.html</code> on phone (same WiFi only)
+  Your laptop IP: <strong id="laptopIp">loading…</strong> → open <code id="phoneUrl">http://…:7788/nse_live_dashboard.html</code> on phone (same WiFi only)<br>
+  🌐 <strong>From anywhere:</strong> <a href="https://job-command-center-nu.vercel.app/nse_live_dashboard.html" style="color:#92400e">https://job-command-center-nu.vercel.app/nse_live_dashboard.html</a>
 </div>
 
 <!-- AUTO-REFRESH BAR -->
@@ -176,11 +177,11 @@ tr:last-child td{border-bottom:none}
 <!-- KPI CARDS -->
 <div class="kpis">
   <div class="kpi" style="--c:#16a34a"><div class="kpi-label">Strong Buy</div><div class="kpi-val">16</div><div class="kpi-sub">3–4 strategies agree</div></div>
-  <div class="kpi" style="--c:#2563eb"><div class="kpi-label">Buy Signal</div><div class="kpi-val">4</div><div class="kpi-sub">2 strategies agree</div></div>
-  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Watch List</div><div class="kpi-val">19</div><div class="kpi-sub">Setup forming</div></div>
-  <div class="kpi" style="--c:#7c3aed"><div class="kpi-label">Action Today</div><div class="kpi-val">20</div><div class="kpi-sub">BUY candidates</div></div>
+  <div class="kpi" style="--c:#2563eb"><div class="kpi-label">Buy Signal</div><div class="kpi-val">5</div><div class="kpi-sub">2 strategies agree</div></div>
+  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Watch List</div><div class="kpi-val">18</div><div class="kpi-sub">Setup forming</div></div>
+  <div class="kpi" style="--c:#7c3aed"><div class="kpi-label">Action Today</div><div class="kpi-val">21</div><div class="kpi-sub">BUY candidates</div></div>
   <div class="kpi" style="--c:#0891b2"><div class="kpi-label">Avg Days T1</div><div class="kpi-val">5</div><div class="kpi-sub">First profit target</div></div>
-  <div class="kpi" style="--c:#dc2626"><div class="kpi-label">Avg T1 Gain</div><div class="kpi-val" style="font-size:22px">3.8%</div><div class="kpi-sub">Expected first exit</div></div>
+  <div class="kpi" style="--c:#dc2626"><div class="kpi-label">Avg T1 Gain</div><div class="kpi-val" style="font-size:22px">3.9%</div><div class="kpi-sub">Expected first exit</div></div>
 </div>
 
 <!-- CHARTS -->
@@ -191,9 +192,9 @@ tr:last-child td{border-bottom:none}
 
 <!-- TABS -->
 <div class="tabs">
-  <div class="tab active" onclick="showTab('eq',this)">📈 Equity BUY (20)</div>
+  <div class="tab active" onclick="showTab('eq',this)">📈 Equity BUY (21)</div>
   <div class="tab" onclick="showTab('fo',this)">⚡ Futures & Options</div>
-  <div class="tab" onclick="showTab('wl',this)">👁 Watch List (19)</div>
+  <div class="tab" onclick="showTab('wl',this)">👁 Watch List (18)</div>
   <div class="tab" onclick="showTab('ipo',this)">🚀 IPO Tracker</div>
   <div class="tab" onclick="showTab('guide',this)">📋 Strategy Guide</div>
 </div>
@@ -203,11 +204,11 @@ tr:last-child td{border-bottom:none}
 <div class="sec">
   <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#16a34a"></span>BUY Signals — Entry, Targets &amp; Exit Timeline <span style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400">I=Inna P=Pham C=Cianni U=Unger</span></div>
   <div class="filter-bar">
-    <button class="fb active" onclick="filterEq('all',this)">All (20)</button>
+    <button class="fb active" onclick="filterEq('all',this)">All (21)</button>
     <button class="fb" onclick="filterEq('STRONG_BUY',this)">🔥 Strong Buy (16)</button>
-    <button class="fb" onclick="filterEq('BUY',this)">↑ Buy (4)</button>
+    <button class="fb" onclick="filterEq('BUY',this)">↑ Buy (5)</button>
     <div style="flex:1"></div>
-    <span class="count-badge" id="eq-count">20 shown</span>
+    <span class="count-badge" id="eq-count">21 shown</span>
   </div>
   <table><thead><tr>
     <th onclick="sortEq(0)">Stock</th><th>Signal</th><th>Strategies</th>
@@ -594,6 +595,27 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#7c3aed;font-size:10px">T3 ~16d (16 Jul)</span>
               </td>
             </tr><tr class="dr" data-sig="BUY">
+              <td><div style="font-weight:700;font-size:13px;color:#0f172a">WIPRO</div>
+                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">IT</div></td>
+              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
+              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹174.48</td>
+              <td style="color:#dc2626;font-weight:600">₹167.77</td>
+              <td><div style="color:#059669;font-weight:700">₹182.86</div>
+                  <div style="color:#6ee7b7;font-size:10px">+4.8%</div></td>
+              <td><div style="color:#2563eb;font-weight:700">₹191.25</div>
+                  <div style="color:#93c5fd;font-size:10px">+9.6%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹199.63</div>
+                  <div style="color:#c4b5fd;font-size:10px">+14.4%</div></td>
+              <td style="color:#d97706;font-weight:700">1.25x</td>
+              <td style="font-size:11px;line-height:1.6">
+                <span style="color:#059669;font-weight:700">T1 ~5d</span>
+                <span style="color:#94a3b8"> (01 Jul)</span><br>
+                <span style="color:#2563eb">T2 ~9d</span>
+                <span style="color:#94a3b8;font-size:10px"> (07 Jul)</span><br>
+                <span style="color:#7c3aed;font-size:10px">T3 ~14d (14 Jul)</span>
+              </td>
+            </tr><tr class="dr" data-sig="BUY">
               <td><div style="font-weight:700;font-size:13px;color:#0f172a">COFORGE</div>
                   <div style="color:#94a3b8;font-size:10px;margin-top:1px">IT</div></td>
               <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
@@ -687,7 +709,7 @@ tr:last-child td{border-bottom:none}
                       <div style="font-family:monospace;font-size:16px;font-weight:900;color:#1d4ed8;letter-spacing:.5px;word-break:break-all">BANKNIFTY01JUL58200CE</div>
                       <div style="font-size:10px;color:#94a3b8;margin-top:3px">Type this EXACTLY in Kite search bar → select NFO result</div>
                     </div>
-                    <div style="font-size:12px;color:#374151">Expiry: <strong>01 Jul 2026</strong> &nbsp;·&nbsp; 7 days left &nbsp;·&nbsp; Lot size: 15 units</div>
+                    <div style="font-size:12px;color:#374151">Expiry: <strong>01 Jul 2026</strong> &nbsp;·&nbsp; 7 days left &nbsp;·&nbsp; Lot size: 30 units</div>
                   </div>
                   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
                     <div style="background:#f8fafc;border-radius:8px;padding:10px;text-align:center">
@@ -708,23 +730,41 @@ tr:last-child td{border-bottom:none}
                   </div>
               
                   <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:12px 14px;margin-bottom:10px">
-                    <div style="font-size:11px;font-weight:800;color:#1d4ed8;margin-bottom:8px">💰 ₹10,000 PLAN</div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-bottom:8px">
-                      <div><span style="color:#64748b">Buy:</span> <strong style="color:#0f172a">1 lot × 15 = 15 qty</strong></div>
-                      <div><span style="color:#64748b">Invest:</span> <strong style="color:#0f172a">₹8,265</strong></div>
-                      <div><span style="color:#dc2626">Max loss:</span> <strong style="color:#dc2626">₹3,720</strong></div>
-                      <div><span style="color:#15803d">Max profit:</span> <strong style="color:#15803d">₹16,530</strong></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+                      <div style="font-size:11px;font-weight:800;color:#1d4ed8">💰 COST PLAN (1 lot = ₹16,530)</div>
+                      <div style="font-size:10px;color:#64748b">Lot size: 30 units &nbsp;·&nbsp; R:R = 0:1</div>
                     </div>
-                    <div style="font-size:11px;color:#374151;border-top:1px solid #bfdbfe;padding-top:8px">
-                      R:R = <strong>4.4:1</strong> &nbsp;·&nbsp; Cost per lot: ₹8,265
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+                      
+                    <div style="background:#eff6ff;border:1.5px solid #2563eb;border-radius:8px;padding:10px 10px;text-align:center">
+                      <div style="font-size:10px;font-weight:800;color:#1d4ed8;margin-bottom:6px">1 LOT<span style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-left:4px">REC</span></div>
+                      <div style="font-size:13px;font-weight:900;color:#0f172a">₹16,530</div>
+                      <div style="font-size:10px;color:#64748b;margin-top:4px">30 qty</div>
+                      <div style="font-size:10px;color:#dc2626;margin-top:2px">SL: −₹7,440</div>
+                      <div style="font-size:10px;color:#15803d">Tgt: +₹33,060</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px 10px;text-align:center">
+                      <div style="font-size:10px;font-weight:800;color:#1d4ed8;margin-bottom:6px">2 LOT</div>
+                      <div style="font-size:13px;font-weight:900;color:#0f172a">₹33,060</div>
+                      <div style="font-size:10px;color:#64748b;margin-top:4px">60 qty</div>
+                      <div style="font-size:10px;color:#dc2626;margin-top:2px">SL: −₹14,880</div>
+                      <div style="font-size:10px;color:#15803d">Tgt: +₹66,120</div>
+                    </div>
+                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px 10px;text-align:center">
+                      <div style="font-size:10px;font-weight:800;color:#1d4ed8;margin-bottom:6px">3 LOT</div>
+                      <div style="font-size:13px;font-weight:900;color:#0f172a">₹49,590</div>
+                      <div style="font-size:10px;color:#64748b;margin-top:4px">90 qty</div>
+                      <div style="font-size:10px;color:#dc2626;margin-top:2px">SL: −₹22,320</div>
+                      <div style="font-size:10px;color:#15803d">Tgt: +₹99,180</div>
+                    </div>
                     </div>
                   </div>
                   <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:11px;line-height:2">
-                    <div style="font-weight:800;color:#15803d;margin-bottom:4px">📱 Steps in Zerodha Kite</div>
+                    <div style="font-weight:800;color:#15803d;margin-bottom:4px">📱 Steps in Zerodha Kite (1 lot)</div>
                     <div style="color:#374151">
                       1️⃣ Search: <code style="background:#dcfce7;padding:2px 6px;border-radius:4px;font-weight:900;color:#15803d">BANKNIFTY01JUL58200CE</code><br>
                       2️⃣ Select NFO result → Click <strong>B (Buy)</strong><br>
-                      3️⃣ Product: <strong>NRML</strong> &nbsp;·&nbsp; Qty: <strong>15</strong> &nbsp;·&nbsp; Price: <strong>₹551.0</strong> (Limit)<br>
+                      3️⃣ Product: <strong>NRML</strong> &nbsp;·&nbsp; Qty: <strong>30</strong> &nbsp;·&nbsp; Price: <strong>₹551.0</strong> (Limit)<br>
                       4️⃣ After fill → place SL order at <strong>₹248.0</strong><br>
                       5️⃣ Book profit at <strong>₹1102.0</strong> or exit by <strong>3:15 PM</strong>
                     </div>
@@ -1085,27 +1125,21 @@ tr:last-child td{border-bottom:none}
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">LT</td>
               <td style="color:#64748b;font-size:11px">Infra</td>
-              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
               <td style="font-weight:600;color:#0f172a">₹4,181.70</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">MARUTI</td>
               <td style="color:#64748b;font-size:11px">Auto</td>
-              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
               <td style="font-weight:600;color:#0f172a">₹13,248.00</td>
-              <td style="color:#64748b;font-size:11px">—</td>
+              <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">SUNPHARMA</td>
               <td style="color:#64748b;font-size:11px">Pharma</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
               <td style="font-weight:600;color:#0f172a">₹1,874.40</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">WIPRO</td>
-              <td style="color:#64748b;font-size:11px">IT</td>
-              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹174.48</td>
-              <td style="color:#64748b;font-size:11px">Inna</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">ULTRACEMCO</td>
               <td style="color:#64748b;font-size:11px">Cement</td>
@@ -1198,236 +1232,10 @@ tr:last-child td{border-bottom:none}
 
         <!-- Live IPO Scan -->
         <div class="sec">
-          <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#dc2626"></span>Live IPO Scan — APPLY / SKIP Verdict</div>
-          <div style="display:flex;flex-wrap:wrap;gap:10px">
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Knack Packaging</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹170</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+8.82%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹185</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">1-3 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">Mainboard</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Seemax Resources</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹141</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+0.0%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹0</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">30-2 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Kratikal Tech</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹135</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#d97706">+10.37%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#d97706">₹149</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">30-2 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Sampark India Logistics</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹84</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+0.0%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹0</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">30-2 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Atharva Polyplast</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹60</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#d97706">+16.67%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#d97706">₹70</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">30-2 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Adon Agro Commodities</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹70</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+0.0%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹0</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">29-1 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Twinkle Papers</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹69</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+8.7%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹75</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">29-1 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Aastha Spintex</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹136</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+0.0%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹0</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">29-1 July</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">Mainboard</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Crazy Snacks</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹42</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+0.0%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹0</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">25-30 June</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Upcoming</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Sri Priyanka Geo Commex</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹212</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+0.0%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹0</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">24-29 June</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">NSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Open</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">CSM Technologies</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹113</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+3.54%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹117</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">24-29 June</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">Mainboard</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Open</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div>
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;
-                 border-radius:12px;padding:14px 16px;min-width:220px;flex:1;max-width:260px">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-                <div style="font-weight:800;font-size:13px;color:#0f172a">Jivial Industries</div>
-                <span style="background:#f1f5f9;color:#94a3b8;
-                      border-radius:6px;padding:2px 8px;font-size:10px;font-weight:800">❌ SKIP</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:11px;margin-bottom:8px">
-                <div style="color:#64748b">Price Band:</div><div style="font-weight:700">₹196</div>
-                <div style="color:#64748b">GMP:</div><div style="font-weight:800;color:#94a3b8">+0.0%</div>
-                <div style="color:#64748b">Est. Listing:</div><div style="font-weight:700;color:#94a3b8">₹0</div>
-                <div style="color:#64748b">Open Date:</div><div style="font-weight:600">23-25 June</div>
-                <div style="color:#64748b">Type:</div><div style="color:#64748b">BSE SME</div>
-                <div style="color:#64748b">Status:</div><div style="font-weight:600">Open</div>
-              </div>
-              <div style="font-size:10px;color:#64748b;margin-bottom:6px">5-Filter Check:</div>
-              <div style="margin-bottom:6px"><span title="QIB > 20x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Overall > 30x" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="GMP > 25% rising" style="width:8px;height:8px;border-radius:50%;background:#dc2626;display:inline-block;margin:1px"></span><span title="Rev/PAT CAGR > 15%" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span><span title="Valuation ≤30% above peers" style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin:1px"></span></div>
-              <div style="font-size:10px;color:#94a3b8;font-weight:700">Score 0/100 — too many weak signals</div>
-            </div></div>
+          <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#dc2626"></span>Upcoming IPOs — Should You Apply?
+            <span style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400">Showing APPLY &amp; WATCHLIST only · SKIP hidden · Mainboard &amp; SME</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px"><div style="color:#94a3b8;padding:30px;font-size:13px;text-align:center;width:100%">No APPLY/WATCHLIST IPOs right now.<br><span style="font-size:11px">All current IPOs are either SKIP or already listed. Check back when new IPOs open.</span></div></div>
           <div style="margin-top:10px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 14px;font-size:11px;color:#9a3412">
             ⚠️ <strong>GMP is unofficial</strong> and can be manipulated. Filters 1 & 2 (QIB + Overall subscription) need manual check on NSE/BSE website on Day 3 of bidding.
             Filters 4 & 5 need DRHP verification. Subscription data auto-fetched where available.
@@ -1632,9 +1440,9 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-const EQ_DATA   = [{"name": "ICICIBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 1373.6, "sl": 1342.57, "t1": 1412.39, "t2": 1451.18, "t3": 1489.97, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 2.8, "pct_t2": 5.6, "pct_t3": 8.5, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "AXISBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 1384.5, "sl": 1355.5, "t1": 1420.76, "t2": 1457.01, "t3": 1493.27, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 2.6, "pct_t2": 5.2, "pct_t3": 7.9, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "BAJFINANCE", "sector": "NBFC", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 990.95, "sl": 962.05, "t1": 1027.07, "t2": 1063.19, "t3": 1099.31, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.6, "pct_t2": 7.3, "pct_t3": 10.9, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "PAGEIND", "sector": "Apparel", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "STRONG_BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 40885.0, "sl": 39681.15, "t1": 42389.82, "t2": 43894.63, "t3": 45399.44, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.7, "pct_t2": 7.4, "pct_t3": 11.0, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "HDFCBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "WATCH", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Cianni, Unger", "entry": 793.2, "sl": 769.22, "t1": 817.19, "t2": 841.17, "t3": 865.16, "rr": 1.0, "days_t1": 5, "days_t2": 10, "days_t3": 14, "pct_t1": 3.0, "pct_t2": 6.0, "pct_t3": 9.1, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "14 Jul"}, {"name": "BHARTIARTL", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 1877.3, "sl": 1835.25, "t1": 1929.86, "t2": 1982.42, "t3": 2034.98, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 2.8, "pct_t2": 5.6, "pct_t3": 8.4, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "POLYCAB", "sector": "Cable", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 9692.5, "sl": 9435.06, "t1": 10014.3, "t2": 10336.09, "t3": 10657.89, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.3, "pct_t2": 6.6, "pct_t3": 10.0, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "HONAUT", "sector": "Auto", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 39015.0, "sl": 37650.0, "t1": 40721.25, "t2": 42427.5, "t3": 44133.75, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 4.4, "pct_t2": 8.7, "pct_t3": 13.1, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "TATACOMM", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 2028.5, "sl": 1934.58, "t1": 2145.91, "t2": 2263.31, "t3": 2380.72, "rr": 1.25, "days_t1": 6, "days_t2": 12, "days_t3": 17, "pct_t1": 5.8, "pct_t2": 11.6, "pct_t3": 17.4, "date_t1": "02 Jul", "date_t2": "10 Jul", "date_t3": "17 Jul"}, {"name": "CLEAN", "sector": "Energy", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 788.6, "sl": 755.43, "t1": 830.06, "t2": 871.52, "t3": 912.98, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 14, "pct_t1": 5.3, "pct_t2": 10.5, "pct_t3": 15.8, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "14 Jul"}, {"name": "ASIANPAINT", "sector": "Paint", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 2667.5, "sl": 2606.37, "t1": 2743.91, "t2": 2820.32, "t3": 2896.73, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 17, "pct_t1": 2.9, "pct_t2": 5.7, "pct_t3": 8.6, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "17 Jul"}, {"name": "TITAN", "sector": "Consumer", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 4323.8, "sl": 4211.44, "t1": 4464.24, "t2": 4604.69, "t3": 4745.14, "rr": 1.25, "days_t1": 4, "days_t2": 8, "days_t3": 14, "pct_t1": 3.2, "pct_t2": 6.5, "pct_t3": 9.7, "date_t1": "30 Jun", "date_t2": "06 Jul", "date_t3": "14 Jul"}, {"name": "DIXON", "sector": "Electronics", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 12086.0, "sl": 11622.37, "t1": 12665.54, "t2": 13245.08, "t3": 13824.62, "rr": 1.25, "days_t1": 4, "days_t2": 8, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.6, "pct_t3": 14.4, "date_t1": "30 Jun", "date_t2": "06 Jul", "date_t3": "14 Jul"}, {"name": "GRANULES", "sector": "Pharma", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 770.85, "sl": 740.05, "t1": 809.36, "t2": 847.86, "t3": 886.37, "rr": 1.25, "days_t1": 7, "days_t2": 13, "days_t3": 19, "pct_t1": 5.0, "pct_t2": 10.0, "pct_t3": 15.0, "date_t1": "03 Jul", "date_t2": "13 Jul", "date_t3": "21 Jul"}, {"name": "ROUTE", "sector": "Logistics", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 533.35, "sl": 512.93, "t1": 558.88, "t2": 584.41, "t3": 609.94, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.6, "pct_t3": 14.4, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "GPPL", "sector": "Ports", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 156.26, "sl": 151.58, "t1": 162.11, "t2": 167.96, "t3": 173.81, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.7, "pct_t2": 7.5, "pct_t3": 11.2, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "RELIANCE", "sector": "Energy", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "NO_SIGNAL"}, "agreeing": "Inna, Pham", "entry": 1313.6, "sl": 1281.07, "t1": 1354.26, "t2": 1394.93, "t3": 1435.59, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.1, "pct_t2": 6.2, "pct_t3": 9.3, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "NESTLEIND", "sector": "FMCG", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1382.6, "sl": 1345.48, "t1": 1428.99, "t2": 1475.39, "t3": 1521.78, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 3.4, "pct_t2": 6.7, "pct_t3": 10.1, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "COFORGE", "sector": "IT", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1497.9, "sl": 1440.83, "t1": 1569.24, "t2": 1640.58, "t3": 1711.92, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.5, "pct_t3": 14.3, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "DMART", "sector": "Retail", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 4336.0, "sl": 4206.22, "t1": 4498.23, "t2": 4660.45, "t3": 4822.68, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.7, "pct_t2": 7.5, "pct_t3": 11.2, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}];
-const SEC_DATA  = {"labels": ["Banking", "NBFC", "Apparel", "Telecom", "Cable", "Auto", "Energy", "Paint", "Consumer", "Electronics", "Pharma", "Logistics", "Ports", "FMCG", "IT", "Retail"], "data": [3, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1]};
-const HIST_DATA = {"labels": ["2026-06-24"], "sb": [16], "b": [4], "w": [19]};
+const EQ_DATA   = [{"name": "ICICIBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 1373.6, "sl": 1342.57, "t1": 1412.39, "t2": 1451.18, "t3": 1489.97, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 2.8, "pct_t2": 5.6, "pct_t3": 8.5, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "AXISBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 1384.5, "sl": 1355.5, "t1": 1420.76, "t2": 1457.01, "t3": 1493.27, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 2.6, "pct_t2": 5.2, "pct_t3": 7.9, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "BAJFINANCE", "sector": "NBFC", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 990.95, "sl": 962.05, "t1": 1027.07, "t2": 1063.19, "t3": 1099.31, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.6, "pct_t2": 7.3, "pct_t3": 10.9, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "PAGEIND", "sector": "Apparel", "signal": "STRONG_BUY", "buy_votes": 4, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "STRONG_BUY"}, "agreeing": "Inna, Pham, Cianni, Unger", "entry": 40885.0, "sl": 39681.15, "t1": 42389.82, "t2": 43894.63, "t3": 45399.44, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.7, "pct_t2": 7.4, "pct_t3": 11.0, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "HDFCBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "WATCH", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Inna, Cianni, Unger", "entry": 793.2, "sl": 769.22, "t1": 817.19, "t2": 841.17, "t3": 865.16, "rr": 1.0, "days_t1": 5, "days_t2": 10, "days_t3": 14, "pct_t1": 3.0, "pct_t2": 6.0, "pct_t3": 9.1, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "14 Jul"}, {"name": "BHARTIARTL", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 1877.3, "sl": 1835.25, "t1": 1929.86, "t2": 1982.42, "t3": 2034.98, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 2.8, "pct_t2": 5.6, "pct_t3": 8.4, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "POLYCAB", "sector": "Cable", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 9692.5, "sl": 9435.06, "t1": 10014.3, "t2": 10336.09, "t3": 10657.89, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.3, "pct_t2": 6.6, "pct_t3": 10.0, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "HONAUT", "sector": "Auto", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 39015.0, "sl": 37650.0, "t1": 40721.25, "t2": 42427.5, "t3": 44133.75, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 4.4, "pct_t2": 8.7, "pct_t3": 13.1, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "TATACOMM", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 2028.5, "sl": 1934.58, "t1": 2145.91, "t2": 2263.31, "t3": 2380.72, "rr": 1.25, "days_t1": 6, "days_t2": 12, "days_t3": 17, "pct_t1": 5.8, "pct_t2": 11.6, "pct_t3": 17.4, "date_t1": "02 Jul", "date_t2": "10 Jul", "date_t3": "17 Jul"}, {"name": "CLEAN", "sector": "Energy", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 788.6, "sl": 755.43, "t1": 830.06, "t2": 871.52, "t3": 912.98, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 14, "pct_t1": 5.3, "pct_t2": 10.5, "pct_t3": 15.8, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "14 Jul"}, {"name": "ASIANPAINT", "sector": "Paint", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 2667.5, "sl": 2606.37, "t1": 2743.91, "t2": 2820.32, "t3": 2896.73, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 17, "pct_t1": 2.9, "pct_t2": 5.7, "pct_t3": 8.6, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "17 Jul"}, {"name": "TITAN", "sector": "Consumer", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 4323.8, "sl": 4211.44, "t1": 4464.24, "t2": 4604.69, "t3": 4745.14, "rr": 1.25, "days_t1": 4, "days_t2": 8, "days_t3": 14, "pct_t1": 3.2, "pct_t2": 6.5, "pct_t3": 9.7, "date_t1": "30 Jun", "date_t2": "06 Jul", "date_t3": "14 Jul"}, {"name": "DIXON", "sector": "Electronics", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 12086.0, "sl": 11622.37, "t1": 12665.54, "t2": 13245.08, "t3": 13824.62, "rr": 1.25, "days_t1": 4, "days_t2": 8, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.6, "pct_t3": 14.4, "date_t1": "30 Jun", "date_t2": "06 Jul", "date_t3": "14 Jul"}, {"name": "GRANULES", "sector": "Pharma", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 770.85, "sl": 740.05, "t1": 809.36, "t2": 847.86, "t3": 886.37, "rr": 1.25, "days_t1": 7, "days_t2": 13, "days_t3": 19, "pct_t1": 5.0, "pct_t2": 10.0, "pct_t3": 15.0, "date_t1": "03 Jul", "date_t2": "13 Jul", "date_t3": "21 Jul"}, {"name": "ROUTE", "sector": "Logistics", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 533.35, "sl": 512.93, "t1": 558.88, "t2": 584.41, "t3": 609.94, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.6, "pct_t3": 14.4, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "GPPL", "sector": "Ports", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 156.26, "sl": 151.58, "t1": 162.11, "t2": 167.96, "t3": 173.81, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.7, "pct_t2": 7.5, "pct_t3": 11.2, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "RELIANCE", "sector": "Energy", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "NO_SIGNAL"}, "agreeing": "Inna, Pham", "entry": 1313.6, "sl": 1281.07, "t1": 1354.26, "t2": 1394.93, "t3": 1435.59, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.1, "pct_t2": 6.2, "pct_t3": 9.3, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "NESTLEIND", "sector": "FMCG", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1382.6, "sl": 1345.48, "t1": 1428.99, "t2": 1475.39, "t3": 1521.78, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 3.4, "pct_t2": 6.7, "pct_t3": 10.1, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "WIPRO", "sector": "IT", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "NO_SIGNAL"}, "agreeing": "Inna, Pham", "entry": 174.48, "sl": 167.77, "t1": 182.86, "t2": 191.25, "t3": 199.63, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.6, "pct_t3": 14.4, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "COFORGE", "sector": "IT", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1497.9, "sl": 1440.83, "t1": 1569.24, "t2": 1640.58, "t3": 1711.92, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.5, "pct_t3": 14.3, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "14 Jul"}, {"name": "DMART", "sector": "Retail", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 4336.0, "sl": 4206.22, "t1": 4498.23, "t2": 4660.45, "t3": 4822.68, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.7, "pct_t2": 7.5, "pct_t3": 11.2, "date_t1": "01 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}];
+const SEC_DATA  = {"labels": ["Banking", "NBFC", "Apparel", "Telecom", "Cable", "Auto", "Energy", "Paint", "Consumer", "Electronics", "Pharma", "Logistics", "Ports", "FMCG", "IT", "Retail"], "data": [3, 1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1]};
+const HIST_DATA = {"labels": ["2026-06-24"], "sb": [16], "b": [5], "w": [18]};
 
 /* ─── Charts ─── */
 Chart.defaults.color = '#94a3b8';
