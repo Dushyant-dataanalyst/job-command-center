@@ -40,13 +40,19 @@ jobs:
         run: |
           git config user.name "NSE Bot"
           git config user.email "nse-bot@github-actions"
+
+          # Fetch latest — reset HEAD to origin without touching working tree
+          # This avoids rebase conflicts when laptop also pushes simultaneously
+          git fetch origin master
+          git reset --mixed origin/master
+
           git add nse_live_dashboard.html fo_latest.json nse-trading-bot/results/nse_live_dashboard.html
+
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
             NOW=$(TZ='Asia/Kolkata' date '+%d %b %H:%M IST')
             git commit -m "chore: fo refresh ${NOW}"
-            git pull --rebase origin master
             git push origin master
-            echo "Pushed to GitHub - Vercel will auto-deploy"
+            echo "Deployed to Vercel"
           fi
