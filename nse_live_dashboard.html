@@ -165,9 +165,9 @@ tr:last-child td{border-bottom:none}
     <h1><em>NSE 4-Strategy</em> Dashboard</h1>
     <div class="hdr-sub">
       <span class="live-pill"><span class="live-dot"></span>Live</span>
-      25 Jun 2026, 01:11 PM IST &nbsp;·&nbsp; Entry: <strong>26 Jun</strong> &nbsp;·&nbsp; 43 stocks
+      25 Jun 2026, 01:17 PM IST &nbsp;·&nbsp; Entry: <strong>26 Jun</strong> &nbsp;·&nbsp; 43 stocks
       <span class="sebi-pill">⚠ Manual orders only — SEBI</span>
-      &nbsp;<!-- FO_REFRESH_TS_START --><span style="background:#0f172a;color:#38bdf8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block">⚡ F&amp;O refreshed: 25 Jun 2026 13:11 IST</span><!-- FO_REFRESH_TS_END -->
+      &nbsp;<!-- FO_REFRESH_TS_START --><span style="background:#0f172a;color:#38bdf8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block">⚡ F&amp;O refreshed: 25 Jun 2026 13:17 IST</span><!-- FO_REFRESH_TS_END -->
     </div>
   </div>
   <div class="hdr-btns">
@@ -246,11 +246,11 @@ tr:last-child td{border-bottom:none}
 <!-- KPI CARDS -->
 <div class="kpis">
   <div class="kpi" style="--c:#16a34a"><div class="kpi-label">Strong Buy</div><div class="kpi-val">14</div><div class="kpi-sub">3–4 strategies agree</div></div>
-  <div class="kpi" style="--c:#2563eb"><div class="kpi-label">Buy Signal</div><div class="kpi-val">5</div><div class="kpi-sub">2 strategies agree</div></div>
-  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Watch List</div><div class="kpi-val">20</div><div class="kpi-sub">Setup forming</div></div>
-  <div class="kpi" style="--c:#7c3aed"><div class="kpi-label">Action Today</div><div class="kpi-val">19</div><div class="kpi-sub">BUY candidates</div></div>
+  <div class="kpi" style="--c:#2563eb"><div class="kpi-label">Buy Signal</div><div class="kpi-val">6</div><div class="kpi-sub">2 strategies agree</div></div>
+  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Watch List</div><div class="kpi-val">19</div><div class="kpi-sub">Setup forming</div></div>
+  <div class="kpi" style="--c:#7c3aed"><div class="kpi-label">Action Today</div><div class="kpi-val">20</div><div class="kpi-sub">BUY candidates</div></div>
   <div class="kpi" style="--c:#0891b2"><div class="kpi-label">Avg Days T1</div><div class="kpi-val">5</div><div class="kpi-sub">First profit target</div></div>
-  <div class="kpi" style="--c:#dc2626"><div class="kpi-label">Avg T1 Gain</div><div class="kpi-val" style="font-size:22px">4.2%</div><div class="kpi-sub">Expected first exit</div></div>
+  <div class="kpi" style="--c:#dc2626"><div class="kpi-label">Avg T1 Gain</div><div class="kpi-val" style="font-size:22px">4.1%</div><div class="kpi-sub">Expected first exit</div></div>
 </div>
 
 <!-- CHARTS -->
@@ -261,11 +261,26 @@ tr:last-child td{border-bottom:none}
 
 <!-- TABS -->
 <div class="tabs">
-  <div class="tab active" onclick="showTab('eq',this)">📈 Equity BUY (19)</div>
+  <div class="tab active" onclick="showTab('eq',this)">📈 Equity BUY (20)</div>
   <div class="tab" onclick="showTab('fo',this)">⚡ Futures & Options</div>
-  <div class="tab" onclick="showTab('wl',this)">👁 Watch List (20)</div>
+  <div class="tab" onclick="showTab('wl',this)">👁 Watch List (19)</div>
   <div class="tab" onclick="showTab('ipo',this)">🚀 IPO Tracker</div>
   <div class="tab" onclick="showTab('guide',this)">📋 Strategy Guide</div>
+</div>
+
+<!-- SCAN DATA FOR POSITION TRACKER -->
+<script>
+const SCAN_DATA = {"ICICIBANK": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 1397.9, "sl": 1365.55, "t1": 1446.43, "t2": 1494.96, "t3": 1543.48, "pct_t1": 3.5, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "BUY"}, "sector": "Banking"}, "SBIN": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 1049.9, "sl": 1027.57, "t1": 1083.4, "t2": 1116.9, "t3": 1150.39, "pct_t1": 3.2, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "sector": "Banking"}, "KOTAKBANK": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 412.35, "sl": 403.4, "t1": 425.78, "t2": 439.21, "t3": 452.63, "pct_t1": 3.3, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "BUY"}, "sector": "Banking"}, "MARUTI": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 13868.0, "sl": 13529.37, "t1": 14297.54, "t2": 14727.08, "t3": 15156.62, "pct_t1": 3.1, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "STRONG_BUY"}, "sector": "Auto"}, "PAGEIND": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 40810.0, "sl": 39558.57, "t1": 42374.29, "t2": 43938.58, "t3": 45502.87, "pct_t1": 3.8, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "sector": "Apparel"}, "GRANULES": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 760.55, "sl": 729.67, "t1": 799.14, "t2": 837.74, "t3": 876.33, "pct_t1": 5.1, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "sector": "Pharma"}, "STLTECH": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 613.35, "sl": 569.31, "t1": 668.4, "t2": 723.45, "t3": 778.5, "pct_t1": 9.0, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "sector": "Telecom"}, "CLEAN": {"signal": "STRONG_BUY", "buy_votes": 3, "entry": 789.45, "sl": 756.33, "t1": 830.85, "t2": 872.25, "t3": 913.65, "pct_t1": 5.2, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "NO_SIGNAL", "Unger": "BUY"}, "sector": "Energy"}, "ASIANPAINT": {"signal": "STRONG_BUY", "buy_votes": 2, "entry": 2662.6, "sl": 2601.12, "t1": 2739.2, "t2": 2815.81, "t3": 2892.41, "pct_t1": 2.9, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Paint"}, "TITAN": {"signal": "STRONG_BUY", "buy_votes": 2, "entry": 4259.4, "sl": 4143.25, "t1": 4433.62, "t2": 4607.84, "t3": 4782.07, "pct_t1": 4.1, "strategies": {"Inna": "WATCH", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "sector": "Consumer"}, "DIXON": {"signal": "STRONG_BUY", "buy_votes": 2, "entry": 12182.0, "sl": 11725.4, "t1": 12752.75, "t2": 13323.5, "t3": 13894.25, "pct_t1": 4.7, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Electronics"}, "POLYCAB": {"signal": "STRONG_BUY", "buy_votes": 2, "entry": 9582.5, "sl": 9324.06, "t1": 9905.56, "t2": 10228.61, "t3": 10551.67, "pct_t1": 3.4, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Cable"}, "COFORGE": {"signal": "STRONG_BUY", "buy_votes": 2, "entry": 1495.6, "sl": 1439.6, "t1": 1565.61, "t2": 1635.61, "t3": 1705.62, "pct_t1": 4.7, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "IT"}, "TATACOMM": {"signal": "STRONG_BUY", "buy_votes": 2, "entry": 1997.2, "sl": 1903.95, "t1": 2113.76, "t2": 2230.33, "t3": 2346.89, "pct_t1": 5.8, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Telecom"}, "RELIANCE": {"signal": "BUY", "buy_votes": 2, "entry": 1320.5, "sl": 1288.27, "t1": 1360.79, "t2": 1401.08, "t3": 1441.37, "pct_t1": 3.1, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "Energy"}, "BHARTIARTL": {"signal": "BUY", "buy_votes": 2, "entry": 1864.1, "sl": 1822.63, "t1": 1915.94, "t2": 1967.78, "t3": 2019.62, "pct_t1": 2.8, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Telecom"}, "LT": {"signal": "BUY", "buy_votes": 2, "entry": 4237.7, "sl": 4140.87, "t1": 4382.94, "t2": 4528.18, "t3": 4673.43, "pct_t1": 3.4, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "sector": "Infra"}, "ATUL": {"signal": "BUY", "buy_votes": 2, "entry": 6609.0, "sl": 6446.87, "t1": 6811.66, "t2": 7014.33, "t3": 7216.99, "pct_t1": 3.1, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "NO_SIGNAL"}, "sector": "Chemicals"}, "DMART": {"signal": "BUY", "buy_votes": 2, "entry": 4306.9, "sl": 4181.79, "t1": 4463.29, "t2": 4619.68, "t3": 4776.07, "pct_t1": 3.6, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Retail"}, "ROUTE": {"signal": "BUY", "buy_votes": 2, "entry": 529.35, "sl": 508.85, "t1": 554.97, "t2": 580.59, "t3": 606.21, "pct_t1": 4.8, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "WATCH"}, "sector": "Logistics"}, "TCS": {"signal": "WATCH", "buy_votes": 1, "entry": 2122.9, "sl": 2061.47, "t1": 2215.04, "t2": 2307.18, "t3": 2399.33, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "IT"}, "HDFCBANK": {"signal": "WATCH", "buy_votes": 1, "entry": 801.5, "sl": 777.8, "t1": 825.2, "t2": 848.9, "t3": 872.6, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "WATCH", "Cianni": "WATCH", "Unger": "BUY"}, "sector": "Banking"}, "INFY": {"signal": "WATCH", "buy_votes": 1, "entry": 1046.4, "sl": 1006.28, "t1": 1106.57, "t2": 1166.75, "t3": 1226.92, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "IT"}, "HINDUNILVR": {"signal": "WATCH", "buy_votes": 1, "entry": 2181.6, "sl": 2123.67, "t1": 2239.53, "t2": 2297.46, "t3": 2355.39, "pct_t1": 0, "strategies": {"Inna": "STRONG_BUY", "Pham": "WATCH", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "FMCG"}, "ITC": {"signal": "WATCH", "buy_votes": 0, "entry": 290.55, "sl": "", "t1": "", "t2": "", "t3": "", "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "NO_SIGNAL", "Cianni": "WATCH", "Unger": "NO_SIGNAL"}, "sector": "FMCG"}, "AXISBANK": {"signal": "WATCH", "buy_votes": 1, "entry": 1381.2, "sl": 1352.6, "t1": 1424.09, "t2": 1466.99, "t3": 1509.88, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Banking"}, "SUNPHARMA": {"signal": "WATCH", "buy_votes": 1, "entry": 1865.9, "sl": 1836.01, "t1": 1910.74, "t2": 1955.58, "t3": 2000.41, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Pharma"}, "BAJFINANCE": {"signal": "WATCH", "buy_votes": 1, "entry": 985.9, "sl": 958.59, "t1": 1026.87, "t2": 1067.84, "t3": 1108.8, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "NBFC"}, "NESTLEIND": {"signal": "WATCH", "buy_votes": 1, "entry": 1396.5, "sl": 1349.55, "t1": 1443.45, "t2": 1490.4, "t3": 1537.35, "pct_t1": 0, "strategies": {"Inna": "BUY", "Pham": "WATCH", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "FMCG"}, "WIPRO": {"signal": "WATCH", "buy_votes": 0, "entry": 174.32, "sl": "", "t1": "", "t2": "", "t3": "", "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "WATCH", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "IT"}, "ULTRACEMCO": {"signal": "WATCH", "buy_votes": 1, "entry": 11573.0, "sl": 11264.65, "t1": 11881.35, "t2": 12189.71, "t3": 12498.07, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "WATCH", "Cianni": "WATCH", "Unger": "BUY"}, "sector": "Cement"}, "HONAUT": {"signal": "WATCH", "buy_votes": 1, "entry": 39475.0, "sl": 38116.85, "t1": 41512.22, "t2": 43549.44, "t3": 45586.67, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Auto"}, "BOSCHLTD": {"signal": "WATCH", "buy_votes": 1, "entry": 40715.0, "sl": 39650.85, "t1": 42311.22, "t2": 43907.44, "t3": 45503.67, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Auto"}, "ASTRAL": {"signal": "WATCH", "buy_votes": 0, "entry": 1495.7, "sl": "", "t1": "", "t2": "", "t3": "", "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "WATCH", "Cianni": "WATCH", "Unger": "WATCH"}, "sector": "Other"}, "PIIND": {"signal": "WATCH", "buy_votes": 0, "entry": 2720.0, "sl": "", "t1": "", "t2": "", "t3": "", "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "WATCH", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "Agrochem"}, "PERSISTENT": {"signal": "WATCH", "buy_votes": 1, "entry": 4877.0, "sl": 4689.33, "t1": 5158.5, "t2": 5440.0, "t3": 5721.51, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "IT"}, "NAUKRI": {"signal": "WATCH", "buy_votes": 1, "entry": 986.75, "sl": 949.93, "t1": 1041.97, "t2": 1097.2, "t3": 1152.42, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "Other"}, "TATACONSUM": {"signal": "WATCH", "buy_votes": 1, "entry": 1122.7, "sl": 1088.82, "t1": 1156.59, "t2": 1190.47, "t3": 1224.36, "pct_t1": 0, "strategies": {"Inna": "BUY", "Pham": "WATCH", "Cianni": "WATCH", "Unger": "NO_SIGNAL"}, "sector": "FMCG"}, "GPPL": {"signal": "WATCH", "buy_votes": 1, "entry": 153.6, "sl": 148.84, "t1": 160.75, "t2": 167.89, "t3": 175.04, "pct_t1": 0, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "sector": "Ports"}};
+</script>
+
+<!-- MY POSITIONS PANEL -->
+<div id="positionsPanel" style="display:none;background:#0f172a;border-radius:14px;padding:16px 20px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+    <span style="font-size:14px;font-weight:900;color:#fff">📊 MY ACTIVE POSITIONS</span>
+    <span style="font-size:11px;color:#64748b">Updates every 5 min · Compares today's signals to when you bought</span>
+    <button onclick="clearAllPositions()" style="margin-left:auto;background:#1e293b;color:#94a3b8;border:1px solid #334155;border-radius:6px;padding:4px 12px;font-size:10px;font-weight:700;cursor:pointer">Clear All</button>
+  </div>
+  <div id="positionCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px"></div>
 </div>
 
 <!-- EQUITY TAB -->
@@ -273,11 +288,11 @@ tr:last-child td{border-bottom:none}
 <div class="sec">
   <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#16a34a"></span>BUY Signals — Entry, Targets &amp; Exit Timeline <span style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400">I=Inna P=Pham C=Cianni U=Unger</span></div>
   <div class="filter-bar">
-    <button class="fb active" onclick="filterEq('all',this)">All (19)</button>
+    <button class="fb active" onclick="filterEq('all',this)">All (20)</button>
     <button class="fb" onclick="filterEq('STRONG_BUY',this)">🔥 Strong Buy (14)</button>
-    <button class="fb" onclick="filterEq('BUY',this)">↑ Buy (5)</button>
+    <button class="fb" onclick="filterEq('BUY',this)">↑ Buy (6)</button>
     <div style="flex:1"></div>
-    <span class="count-badge" id="eq-count">19 shown</span>
+    <span class="count-badge" id="eq-count">20 shown</span>
   </div>
   <table><thead><tr>
     <th onclick="sortEq(0)">Stock</th><th>Signal</th><th>Strategies</th>
@@ -285,18 +300,25 @@ tr:last-child td{border-bottom:none}
     <th onclick="sortEq(5)">T1 ₹ / %</th><th onclick="sortEq(6)">T2 ₹ / %</th><th onclick="sortEq(7)">T3 ₹ / %</th>
     <th onclick="sortEq(8)">R:R</th><th>Exit Timeline</th>
   </tr></thead>
-  <tbody id="eq-body"><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">ICICIBANK</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Banking</div></td>
+  <tbody id="eq-body"><tr class="dr" data-sig="STRONG_BUY" data-name="ICICIBANK">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">ICICIBANK</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Banking</div>
+                <button onclick="markBought('ICICIBANK','1397.9','1365.55','1446.43','1494.96',3)"
+                  id="btn-ICICIBANK"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹1,400.90</td>
-              <td style="color:#dc2626;font-weight:600">₹1,368.55</td>
-              <td><div style="color:#059669;font-weight:700">₹1,449.43</div>
+              <td style="font-weight:700;color:#0f172a">₹1,397.90</td>
+              <td style="color:#dc2626;font-weight:600">₹1,365.55</td>
+              <td><div style="color:#059669;font-weight:700">₹1,446.43</div>
                   <div style="color:#6ee7b7;font-size:10px">+3.5%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹1,497.96</div>
+              <td><div style="color:#2563eb;font-weight:700">₹1,494.96</div>
                   <div style="color:#93c5fd;font-size:10px">+6.9%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹1,546.48</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹1,543.48</div>
                   <div style="color:#c4b5fd;font-size:10px">+10.4%</div></td>
               <td style="color:#d97706;font-weight:700">1.5x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -304,20 +326,27 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8"> (02 Jul)</span><br>
                 <span style="color:#2563eb">T2 ~10d</span>
                 <span style="color:#94a3b8;font-size:10px"> (09 Jul)</span><br>
-                <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
+                <span style="color:#7c3aed;font-size:10px">T3 ~15d (16 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">SBIN</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Banking</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="SBIN">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">SBIN</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Banking</div>
+                <button onclick="markBought('SBIN','1049.9','1027.57','1083.4','1116.9',3)"
+                  id="btn-SBIN"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
-              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹1,051.10</td>
-              <td style="color:#dc2626;font-weight:600">₹1,028.77</td>
-              <td><div style="color:#059669;font-weight:700">₹1,084.60</div>
+              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹1,049.90</td>
+              <td style="color:#dc2626;font-weight:600">₹1,027.57</td>
+              <td><div style="color:#059669;font-weight:700">₹1,083.40</div>
                   <div style="color:#6ee7b7;font-size:10px">+3.2%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹1,118.10</div>
+              <td><div style="color:#2563eb;font-weight:700">₹1,116.90</div>
                   <div style="color:#93c5fd;font-size:10px">+6.4%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹1,151.59</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹1,150.39</div>
                   <div style="color:#c4b5fd;font-size:10px">+9.6%</div></td>
               <td style="color:#d97706;font-weight:700">1.5x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -327,18 +356,25 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (10 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~17d (20 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">KOTAKBANK</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Banking</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="KOTAKBANK">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">KOTAKBANK</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Banking</div>
+                <button onclick="markBought('KOTAKBANK','412.35','403.4','425.78','439.21',3)"
+                  id="btn-KOTAKBANK"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹412.40</td>
-              <td style="color:#dc2626;font-weight:600">₹403.45</td>
-              <td><div style="color:#059669;font-weight:700">₹425.83</div>
+              <td style="font-weight:700;color:#0f172a">₹412.35</td>
+              <td style="color:#dc2626;font-weight:600">₹403.40</td>
+              <td><div style="color:#059669;font-weight:700">₹425.78</div>
                   <div style="color:#6ee7b7;font-size:10px">+3.3%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹439.26</div>
+              <td><div style="color:#2563eb;font-weight:700">₹439.21</div>
                   <div style="color:#93c5fd;font-size:10px">+6.5%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹452.68</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹452.63</div>
                   <div style="color:#c4b5fd;font-size:10px">+9.8%</div></td>
               <td style="color:#d97706;font-weight:700">1.5x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -348,41 +384,27 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (10 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~16d (17 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">LT</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Infra</div></td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
-              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹4,253.70</td>
-              <td style="color:#dc2626;font-weight:600">₹4,156.87</td>
-              <td><div style="color:#059669;font-weight:700">₹4,398.94</div>
-                  <div style="color:#6ee7b7;font-size:10px">+3.4%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹4,544.18</div>
-                  <div style="color:#93c5fd;font-size:10px">+6.8%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹4,689.43</div>
-                  <div style="color:#c4b5fd;font-size:10px">+10.2%</div></td>
-              <td style="color:#d97706;font-weight:700">1.5x</td>
-              <td style="font-size:11px;line-height:1.6">
-                <span style="color:#059669;font-weight:700">T1 ~5d</span>
-                <span style="color:#94a3b8"> (02 Jul)</span><br>
-                <span style="color:#2563eb">T2 ~10d</span>
-                <span style="color:#94a3b8;font-size:10px"> (09 Jul)</span><br>
-                <span style="color:#7c3aed;font-size:10px">T3 ~15d (16 Jul)</span>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="MARUTI">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">MARUTI</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Auto</div>
+                <button onclick="markBought('MARUTI','13868.0','13529.37','14297.54','14727.08',3)"
+                  id="btn-MARUTI"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">MARUTI</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Auto</div></td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
               <td><span title="Inna:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹13,876.00</td>
-              <td style="color:#dc2626;font-weight:600">₹13,532.37</td>
-              <td><div style="color:#059669;font-weight:700">₹14,305.54</div>
+              <td style="font-weight:700;color:#0f172a">₹13,868.00</td>
+              <td style="color:#dc2626;font-weight:600">₹13,529.37</td>
+              <td><div style="color:#059669;font-weight:700">₹14,297.54</div>
                   <div style="color:#6ee7b7;font-size:10px">+3.1%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹14,735.08</div>
+              <td><div style="color:#2563eb;font-weight:700">₹14,727.08</div>
                   <div style="color:#93c5fd;font-size:10px">+6.2%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹15,164.62</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹15,156.62</div>
                   <div style="color:#c4b5fd;font-size:10px">+9.3%</div></td>
-              <td style="color:#d97706;font-weight:700">1.25x</td>
+              <td style="color:#d97706;font-weight:700">1.27x</td>
               <td style="font-size:11px;line-height:1.6">
                 <span style="color:#059669;font-weight:700">T1 ~5d</span>
                 <span style="color:#94a3b8"> (02 Jul)</span><br>
@@ -390,18 +412,25 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">PAGEIND</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Apparel</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="PAGEIND">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">PAGEIND</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Apparel</div>
+                <button onclick="markBought('PAGEIND','40810.0','39558.57','42374.29','43938.58',3)"
+                  id="btn-PAGEIND"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹40,800.00</td>
-              <td style="color:#dc2626;font-weight:600">₹39,548.57</td>
-              <td><div style="color:#059669;font-weight:700">₹42,364.29</div>
+              <td style="font-weight:700;color:#0f172a">₹40,810.00</td>
+              <td style="color:#dc2626;font-weight:600">₹39,558.57</td>
+              <td><div style="color:#059669;font-weight:700">₹42,374.29</div>
                   <div style="color:#6ee7b7;font-size:10px">+3.8%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹43,928.58</div>
+              <td><div style="color:#2563eb;font-weight:700">₹43,938.58</div>
                   <div style="color:#93c5fd;font-size:10px">+7.7%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹45,492.87</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹45,502.87</div>
                   <div style="color:#c4b5fd;font-size:10px">+11.5%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -411,9 +440,44 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">STLTECH</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Telecom</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="GRANULES">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">GRANULES</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Pharma</div>
+                <button onclick="markBought('GRANULES','760.55','729.67','799.14','837.74',3)"
+                  id="btn-GRANULES"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
+              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
+              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹760.55</td>
+              <td style="color:#dc2626;font-weight:600">₹729.67</td>
+              <td><div style="color:#059669;font-weight:700">₹799.14</div>
+                  <div style="color:#6ee7b7;font-size:10px">+5.1%</div></td>
+              <td><div style="color:#2563eb;font-weight:700">₹837.74</div>
+                  <div style="color:#93c5fd;font-size:10px">+10.1%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹876.33</div>
+                  <div style="color:#c4b5fd;font-size:10px">+15.2%</div></td>
+              <td style="color:#d97706;font-weight:700">1.25x</td>
+              <td style="font-size:11px;line-height:1.6">
+                <span style="color:#059669;font-weight:700">T1 ~6d</span>
+                <span style="color:#94a3b8"> (03 Jul)</span><br>
+                <span style="color:#2563eb">T2 ~12d</span>
+                <span style="color:#94a3b8;font-size:10px"> (13 Jul)</span><br>
+                <span style="color:#7c3aed;font-size:10px">T3 ~18d (21 Jul)</span>
+              </td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="STLTECH">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">STLTECH</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Telecom</div>
+                <button onclick="markBought('STLTECH','613.35','569.31','668.4','723.45',3)"
+                  id="btn-STLTECH"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
               <td><span title="Inna:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
               <td style="font-weight:700;color:#0f172a">₹613.35</td>
@@ -432,18 +496,25 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (06 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">CLEAN</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Energy</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="CLEAN">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">CLEAN</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Energy</div>
+                <button onclick="markBought('CLEAN','789.45','756.33','830.85','872.25',3)"
+                  id="btn-CLEAN"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 3/4</span></td>
               <td><span title="Inna:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹789.50</td>
-              <td style="color:#dc2626;font-weight:600">₹756.38</td>
-              <td><div style="color:#059669;font-weight:700">₹830.90</div>
+              <td style="font-weight:700;color:#0f172a">₹789.45</td>
+              <td style="color:#dc2626;font-weight:600">₹756.33</td>
+              <td><div style="color:#059669;font-weight:700">₹830.85</div>
                   <div style="color:#6ee7b7;font-size:10px">+5.2%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹872.30</div>
+              <td><div style="color:#2563eb;font-weight:700">₹872.25</div>
                   <div style="color:#93c5fd;font-size:10px">+10.5%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹913.70</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹913.65</div>
                   <div style="color:#c4b5fd;font-size:10px">+15.7%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -453,18 +524,25 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">ASIANPAINT</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Paint</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="ASIANPAINT">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">ASIANPAINT</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Paint</div>
+                <button onclick="markBought('ASIANPAINT','2662.6','2601.12','2739.2','2815.81',2)"
+                  id="btn-ASIANPAINT"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 2/4</span></td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹2,663.90</td>
-              <td style="color:#dc2626;font-weight:600">₹2,602.62</td>
-              <td><div style="color:#059669;font-weight:700">₹2,740.51</div>
+              <td style="font-weight:700;color:#0f172a">₹2,662.60</td>
+              <td style="color:#dc2626;font-weight:600">₹2,601.12</td>
+              <td><div style="color:#059669;font-weight:700">₹2,739.20</div>
                   <div style="color:#6ee7b7;font-size:10px">+2.9%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹2,817.11</div>
+              <td><div style="color:#2563eb;font-weight:700">₹2,815.81</div>
                   <div style="color:#93c5fd;font-size:10px">+5.8%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹2,893.72</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹2,892.41</div>
                   <div style="color:#c4b5fd;font-size:10px">+8.6%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -474,18 +552,25 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (10 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~17d (20 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">TITAN</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Consumer</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="TITAN">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">TITAN</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Consumer</div>
+                <button onclick="markBought('TITAN','4259.4','4143.25','4433.62','4607.84',2)"
+                  id="btn-TITAN"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 2/4</span></td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹4,260.60</td>
-              <td style="color:#dc2626;font-weight:600">₹4,144.45</td>
-              <td><div style="color:#059669;font-weight:700">₹4,434.82</div>
+              <td style="font-weight:700;color:#0f172a">₹4,259.40</td>
+              <td style="color:#dc2626;font-weight:600">₹4,143.25</td>
+              <td><div style="color:#059669;font-weight:700">₹4,433.62</div>
                   <div style="color:#6ee7b7;font-size:10px">+4.1%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹4,609.04</div>
+              <td><div style="color:#2563eb;font-weight:700">₹4,607.84</div>
                   <div style="color:#93c5fd;font-size:10px">+8.2%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹4,783.27</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹4,782.07</div>
                   <div style="color:#c4b5fd;font-size:10px">+12.3%</div></td>
               <td style="color:#d97706;font-weight:700">1.5x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -495,19 +580,26 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">DIXON</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Electronics</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="DIXON">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">DIXON</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Electronics</div>
+                <button onclick="markBought('DIXON','12182.0','11725.4','12752.75','13323.5',2)"
+                  id="btn-DIXON"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 2/4</span></td>
               <td><span title="Inna:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹12,208.00</td>
-              <td style="color:#dc2626;font-weight:600">₹11,751.40</td>
-              <td><div style="color:#059669;font-weight:700">₹12,778.75</div>
+              <td style="font-weight:700;color:#0f172a">₹12,182.00</td>
+              <td style="color:#dc2626;font-weight:600">₹11,725.40</td>
+              <td><div style="color:#059669;font-weight:700">₹12,752.75</div>
                   <div style="color:#6ee7b7;font-size:10px">+4.7%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹13,349.50</div>
+              <td><div style="color:#2563eb;font-weight:700">₹13,323.50</div>
                   <div style="color:#93c5fd;font-size:10px">+9.4%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹13,920.25</div>
-                  <div style="color:#c4b5fd;font-size:10px">+14.0%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹13,894.25</div>
+                  <div style="color:#c4b5fd;font-size:10px">+14.1%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
                 <span style="color:#059669;font-weight:700">T1 ~4d</span>
@@ -516,18 +608,25 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (07 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">POLYCAB</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Cable</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="POLYCAB">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">POLYCAB</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Cable</div>
+                <button onclick="markBought('POLYCAB','9582.5','9324.06','9905.56','10228.61',2)"
+                  id="btn-POLYCAB"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 2/4</span></td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹9,596.50</td>
-              <td style="color:#dc2626;font-weight:600">₹9,338.06</td>
-              <td><div style="color:#059669;font-weight:700">₹9,919.56</div>
+              <td style="font-weight:700;color:#0f172a">₹9,582.50</td>
+              <td style="color:#dc2626;font-weight:600">₹9,324.06</td>
+              <td><div style="color:#059669;font-weight:700">₹9,905.56</div>
                   <div style="color:#6ee7b7;font-size:10px">+3.4%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹10,242.61</div>
+              <td><div style="color:#2563eb;font-weight:700">₹10,228.61</div>
                   <div style="color:#93c5fd;font-size:10px">+6.7%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹10,565.67</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹10,551.67</div>
                   <div style="color:#c4b5fd;font-size:10px">+10.1%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -537,103 +636,26 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">TATACOMM</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Telecom</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="COFORGE">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">COFORGE</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">IT</div>
+                <button onclick="markBought('COFORGE','1495.6','1439.6','1565.61','1635.61',2)"
+                  id="btn-COFORGE"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 2/4</span></td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹1,997.60</td>
-              <td style="color:#dc2626;font-weight:600">₹1,904.35</td>
-              <td><div style="color:#059669;font-weight:700">₹2,114.16</div>
-                  <div style="color:#6ee7b7;font-size:10px">+5.8%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹2,230.73</div>
-                  <div style="color:#93c5fd;font-size:10px">+11.7%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹2,347.30</div>
-                  <div style="color:#c4b5fd;font-size:10px">+17.5%</div></td>
-              <td style="color:#d97706;font-weight:700">1.25x</td>
-              <td style="font-size:11px;line-height:1.6">
-                <span style="color:#059669;font-weight:700">T1 ~6d</span>
-                <span style="color:#94a3b8"> (03 Jul)</span><br>
-                <span style="color:#2563eb">T2 ~11d</span>
-                <span style="color:#94a3b8;font-size:10px"> (10 Jul)</span><br>
-                <span style="color:#7c3aed;font-size:10px">T3 ~17d (20 Jul)</span>
-              </td>
-            </tr><tr class="dr" data-sig="STRONG_BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">GRANULES</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Pharma</div></td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 2/4</span></td>
-              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹765.10</td>
-              <td style="color:#dc2626;font-weight:600">₹734.46</td>
-              <td><div style="color:#059669;font-weight:700">₹803.39</div>
-                  <div style="color:#6ee7b7;font-size:10px">+5.0%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹841.69</div>
-                  <div style="color:#93c5fd;font-size:10px">+10.0%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹879.99</div>
-                  <div style="color:#c4b5fd;font-size:10px">+15.0%</div></td>
-              <td style="color:#d97706;font-weight:700">1.25x</td>
-              <td style="font-size:11px;line-height:1.6">
-                <span style="color:#059669;font-weight:700">T1 ~7d</span>
-                <span style="color:#94a3b8"> (06 Jul)</span><br>
-                <span style="color:#2563eb">T2 ~13d</span>
-                <span style="color:#94a3b8;font-size:10px"> (14 Jul)</span><br>
-                <span style="color:#7c3aed;font-size:10px">T3 ~19d (22 Jul)</span>
-              </td>
-            </tr><tr class="dr" data-sig="BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">RELIANCE</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Energy</div></td>
-              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
-              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹1,321.80</td>
-              <td style="color:#dc2626;font-weight:600">₹1,289.57</td>
-              <td><div style="color:#059669;font-weight:700">₹1,362.09</div>
-                  <div style="color:#6ee7b7;font-size:10px">+3.0%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹1,402.38</div>
-                  <div style="color:#93c5fd;font-size:10px">+6.1%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹1,442.67</div>
-                  <div style="color:#c4b5fd;font-size:10px">+9.1%</div></td>
-              <td style="color:#d97706;font-weight:700">1.25x</td>
-              <td style="font-size:11px;line-height:1.6">
-                <span style="color:#059669;font-weight:700">T1 ~5d</span>
-                <span style="color:#94a3b8"> (02 Jul)</span><br>
-                <span style="color:#2563eb">T2 ~10d</span>
-                <span style="color:#94a3b8;font-size:10px"> (09 Jul)</span><br>
-                <span style="color:#7c3aed;font-size:10px">T3 ~15d (16 Jul)</span>
-              </td>
-            </tr><tr class="dr" data-sig="BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">BHARTIARTL</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Telecom</div></td>
-              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
-              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹1,864.20</td>
-              <td style="color:#dc2626;font-weight:600">₹1,822.73</td>
-              <td><div style="color:#059669;font-weight:700">₹1,916.04</div>
-                  <div style="color:#6ee7b7;font-size:10px">+2.8%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹1,967.88</div>
-                  <div style="color:#93c5fd;font-size:10px">+5.6%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹2,019.72</div>
-                  <div style="color:#c4b5fd;font-size:10px">+8.3%</div></td>
-              <td style="color:#d97706;font-weight:700">1.25x</td>
-              <td style="font-size:11px;line-height:1.6">
-                <span style="color:#059669;font-weight:700">T1 ~5d</span>
-                <span style="color:#94a3b8"> (02 Jul)</span><br>
-                <span style="color:#2563eb">T2 ~10d</span>
-                <span style="color:#94a3b8;font-size:10px"> (09 Jul)</span><br>
-                <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
-              </td>
-            </tr><tr class="dr" data-sig="BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">COFORGE</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">IT</div></td>
-              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
-              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹1,494.00</td>
-              <td style="color:#dc2626;font-weight:600">₹1,438.00</td>
-              <td><div style="color:#059669;font-weight:700">₹1,564.01</div>
+              <td style="font-weight:700;color:#0f172a">₹1,495.60</td>
+              <td style="color:#dc2626;font-weight:600">₹1,439.60</td>
+              <td><div style="color:#059669;font-weight:700">₹1,565.61</div>
                   <div style="color:#6ee7b7;font-size:10px">+4.7%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹1,634.01</div>
+              <td><div style="color:#2563eb;font-weight:700">₹1,635.61</div>
                   <div style="color:#93c5fd;font-size:10px">+9.4%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹1,704.02</div>
-                  <div style="color:#c4b5fd;font-size:10px">+14.1%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹1,705.62</div>
+                  <div style="color:#c4b5fd;font-size:10px">+14.0%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
                 <span style="color:#059669;font-weight:700">T1 ~5d</span>
@@ -642,18 +664,165 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">DMART</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Retail</div></td>
+            </tr><tr class="dr" data-sig="STRONG_BUY" data-name="TATACOMM">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">TATACOMM</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Telecom</div>
+                <button onclick="markBought('TATACOMM','1997.2','1903.95','2113.76','2230.33',2)"
+                  id="btn-TATACOMM"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
+              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">🔥 Strong Buy 2/4</span></td>
+              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹1,997.20</td>
+              <td style="color:#dc2626;font-weight:600">₹1,903.95</td>
+              <td><div style="color:#059669;font-weight:700">₹2,113.76</div>
+                  <div style="color:#6ee7b7;font-size:10px">+5.8%</div></td>
+              <td><div style="color:#2563eb;font-weight:700">₹2,230.33</div>
+                  <div style="color:#93c5fd;font-size:10px">+11.7%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹2,346.89</div>
+                  <div style="color:#c4b5fd;font-size:10px">+17.5%</div></td>
+              <td style="color:#d97706;font-weight:700">1.25x</td>
+              <td style="font-size:11px;line-height:1.6">
+                <span style="color:#059669;font-weight:700">T1 ~6d</span>
+                <span style="color:#94a3b8"> (03 Jul)</span><br>
+                <span style="color:#2563eb">T2 ~11d</span>
+                <span style="color:#94a3b8;font-size:10px"> (10 Jul)</span><br>
+                <span style="color:#7c3aed;font-size:10px">T3 ~16d (17 Jul)</span>
+              </td>
+            </tr><tr class="dr" data-sig="BUY" data-name="RELIANCE">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">RELIANCE</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Energy</div>
+                <button onclick="markBought('RELIANCE','1320.5','1288.27','1360.79','1401.08',2)"
+                  id="btn-RELIANCE"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
+              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
+              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹1,320.50</td>
+              <td style="color:#dc2626;font-weight:600">₹1,288.27</td>
+              <td><div style="color:#059669;font-weight:700">₹1,360.79</div>
+                  <div style="color:#6ee7b7;font-size:10px">+3.1%</div></td>
+              <td><div style="color:#2563eb;font-weight:700">₹1,401.08</div>
+                  <div style="color:#93c5fd;font-size:10px">+6.1%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹1,441.37</div>
+                  <div style="color:#c4b5fd;font-size:10px">+9.2%</div></td>
+              <td style="color:#d97706;font-weight:700">1.25x</td>
+              <td style="font-size:11px;line-height:1.6">
+                <span style="color:#059669;font-weight:700">T1 ~5d</span>
+                <span style="color:#94a3b8"> (02 Jul)</span><br>
+                <span style="color:#2563eb">T2 ~10d</span>
+                <span style="color:#94a3b8;font-size:10px"> (09 Jul)</span><br>
+                <span style="color:#7c3aed;font-size:10px">T3 ~15d (16 Jul)</span>
+              </td>
+            </tr><tr class="dr" data-sig="BUY" data-name="BHARTIARTL">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">BHARTIARTL</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Telecom</div>
+                <button onclick="markBought('BHARTIARTL','1864.1','1822.63','1915.94','1967.78',2)"
+                  id="btn-BHARTIARTL"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹4,306.00</td>
-              <td style="color:#dc2626;font-weight:600">₹4,180.89</td>
-              <td><div style="color:#059669;font-weight:700">₹4,462.39</div>
+              <td style="font-weight:700;color:#0f172a">₹1,864.10</td>
+              <td style="color:#dc2626;font-weight:600">₹1,822.63</td>
+              <td><div style="color:#059669;font-weight:700">₹1,915.94</div>
+                  <div style="color:#6ee7b7;font-size:10px">+2.8%</div></td>
+              <td><div style="color:#2563eb;font-weight:700">₹1,967.78</div>
+                  <div style="color:#93c5fd;font-size:10px">+5.6%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹2,019.62</div>
+                  <div style="color:#c4b5fd;font-size:10px">+8.3%</div></td>
+              <td style="color:#d97706;font-weight:700">1.25x</td>
+              <td style="font-size:11px;line-height:1.6">
+                <span style="color:#059669;font-weight:700">T1 ~5d</span>
+                <span style="color:#94a3b8"> (02 Jul)</span><br>
+                <span style="color:#2563eb">T2 ~9d</span>
+                <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
+                <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
+              </td>
+            </tr><tr class="dr" data-sig="BUY" data-name="LT">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">LT</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Infra</div>
+                <button onclick="markBought('LT','4237.7','4140.87','4382.94','4528.18',2)"
+                  id="btn-LT"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
+              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
+              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹4,237.70</td>
+              <td style="color:#dc2626;font-weight:600">₹4,140.87</td>
+              <td><div style="color:#059669;font-weight:700">₹4,382.94</div>
+                  <div style="color:#6ee7b7;font-size:10px">+3.4%</div></td>
+              <td><div style="color:#2563eb;font-weight:700">₹4,528.18</div>
+                  <div style="color:#93c5fd;font-size:10px">+6.9%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹4,673.43</div>
+                  <div style="color:#c4b5fd;font-size:10px">+10.3%</div></td>
+              <td style="color:#d97706;font-weight:700">1.5x</td>
+              <td style="font-size:11px;line-height:1.6">
+                <span style="color:#059669;font-weight:700">T1 ~6d</span>
+                <span style="color:#94a3b8"> (03 Jul)</span><br>
+                <span style="color:#2563eb">T2 ~11d</span>
+                <span style="color:#94a3b8;font-size:10px"> (10 Jul)</span><br>
+                <span style="color:#7c3aed;font-size:10px">T3 ~16d (17 Jul)</span>
+              </td>
+            </tr><tr class="dr" data-sig="BUY" data-name="ATUL">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">ATUL</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Chemicals</div>
+                <button onclick="markBought('ATUL','6609.0','6446.87','6811.66','7014.33',2)"
+                  id="btn-ATUL"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
+              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
+              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹6,609.00</td>
+              <td style="color:#dc2626;font-weight:600">₹6,446.87</td>
+              <td><div style="color:#059669;font-weight:700">₹6,811.66</div>
+                  <div style="color:#6ee7b7;font-size:10px">+3.1%</div></td>
+              <td><div style="color:#2563eb;font-weight:700">₹7,014.33</div>
+                  <div style="color:#93c5fd;font-size:10px">+6.1%</div></td>
+              <td><div style="color:#7c3aed;font-weight:700">₹7,216.99</div>
+                  <div style="color:#c4b5fd;font-size:10px">+9.2%</div></td>
+              <td style="color:#d97706;font-weight:700">1.25x</td>
+              <td style="font-size:11px;line-height:1.6">
+                <span style="color:#059669;font-weight:700">T1 ~5d</span>
+                <span style="color:#94a3b8"> (02 Jul)</span><br>
+                <span style="color:#2563eb">T2 ~9d</span>
+                <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
+                <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
+              </td>
+            </tr><tr class="dr" data-sig="BUY" data-name="DMART">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">DMART</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Retail</div>
+                <button onclick="markBought('DMART','4306.9','4181.79','4463.29','4619.68',2)"
+                  id="btn-DMART"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
+              <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
+              <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:700;color:#0f172a">₹4,306.90</td>
+              <td style="color:#dc2626;font-weight:600">₹4,181.79</td>
+              <td><div style="color:#059669;font-weight:700">₹4,463.29</div>
                   <div style="color:#6ee7b7;font-size:10px">+3.6%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹4,618.78</div>
+              <td><div style="color:#2563eb;font-weight:700">₹4,619.68</div>
                   <div style="color:#93c5fd;font-size:10px">+7.3%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹4,775.17</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹4,776.07</div>
                   <div style="color:#c4b5fd;font-size:10px">+10.9%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -663,18 +832,25 @@ tr:last-child td{border-bottom:none}
                 <span style="color:#94a3b8;font-size:10px"> (08 Jul)</span><br>
                 <span style="color:#7c3aed;font-size:10px">T3 ~14d (15 Jul)</span>
               </td>
-            </tr><tr class="dr" data-sig="BUY">
-              <td><div style="font-weight:700;font-size:13px;color:#0f172a">ROUTE</div>
-                  <div style="color:#94a3b8;font-size:10px;margin-top:1px">Logistics</div></td>
+            </tr><tr class="dr" data-sig="BUY" data-name="ROUTE">
+              <td>
+                <div style="font-weight:700;font-size:13px;color:#0f172a">ROUTE</div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:1px">Logistics</div>
+                <button onclick="markBought('ROUTE','529.35','508.85','554.97','580.59',2)"
+                  id="btn-ROUTE"
+                  style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
+                  📌 I BOUGHT
+                </button>
+              </td>
               <td><span style="background:#dbeafe;color:#1d4ed8;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">↑ Buy 2/4</span></td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:700;color:#0f172a">₹529.70</td>
-              <td style="color:#dc2626;font-weight:600">₹509.20</td>
-              <td><div style="color:#059669;font-weight:700">₹555.32</div>
+              <td style="font-weight:700;color:#0f172a">₹529.35</td>
+              <td style="color:#dc2626;font-weight:600">₹508.85</td>
+              <td><div style="color:#059669;font-weight:700">₹554.97</div>
                   <div style="color:#6ee7b7;font-size:10px">+4.8%</div></td>
-              <td><div style="color:#2563eb;font-weight:700">₹580.94</div>
+              <td><div style="color:#2563eb;font-weight:700">₹580.59</div>
                   <div style="color:#93c5fd;font-size:10px">+9.7%</div></td>
-              <td><div style="color:#7c3aed;font-weight:700">₹606.56</div>
+              <td><div style="color:#7c3aed;font-weight:700">₹606.21</div>
                   <div style="color:#c4b5fd;font-size:10px">+14.5%</div></td>
               <td style="color:#d97706;font-weight:700">1.25x</td>
               <td style="font-size:11px;line-height:1.6">
@@ -690,7 +866,7 @@ tr:last-child td{border-bottom:none}
 
 <!-- F&O TAB -->
 <div id="fo" class="panel">
-  <script>/* FO_EXACT_DATA_START */ const FO_EXACT = {"NIFTY50": {"instrument": "NIFTY50", "spot": 24199.0, "consensus": "WAIT", "ce_votes": 1, "pe_votes": 0, "neutral_votes": 4, "agreeing_traders": [], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 13:11 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "WAIT \u2014 No Trade", "zerodha_symbol": "\u2014", "zerodha_search": "\u2014", "kite_steps": "No trade today \u2014 wait for clearer signal", "strike": 0, "option_type": "\u2014", "expiry": "30 Jul 2026", "days_to_exp": 35, "lot_size": 75, "entry_premium": 0, "sl_premium": 0, "target1_premium": 0, "target_premium": 0, "cost_1_lot": 0, "lots_for_10k": 0, "total_invest": 0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {}, "trade_logic": "No clear direction. 3 out of 5 strategies don't agree. Stay out today.", "entry_timing": "Do not trade \u2014 wait for clearer signal tomorrow", "exit_rule": "\u2014"}, "indicators": {"spot": 24199.0, "ema9": 23959.89, "ema18": 23836.71, "ema20": 23823.15, "ema50": 23851.29, "atr": 256.55, "rsi": 67.7, "macd": 104.96, "macd_signal": 34.06, "ann_vol": 0.1191, "pivot": 23966.98, "r1": 24144.72, "s1": 23843.92, "roc5": 0.13, "roc3": 0.4, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD bullish"]}, {"strategy": "Tanmay", "direction": "BUY_CE", "score": 4, "reasons": ["Breakout above R1=24145 \u2014 Tanmay BUY CE trigger", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "NEUTRAL", "score": 0, "reasons": ["Market not decisive \u2014 Nikhil would prefer Bull Put Spread (sell premium)", "Skip plain CE/PE buy \u2014 wait for clearer trend or sell OTM spread"]}, {"strategy": "Sivakumar", "direction": "NEUTRAL", "score": 0, "reasons": ["Above pivot 23967 \u2014 bullish bias", "Medium-term downtrend (EMA20<EMA50)"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}, "BANKNIFTY": {"instrument": "BANKNIFTY", "spot": 58566.45, "consensus": "BUY_CE", "ce_votes": 3, "pe_votes": 0, "neutral_votes": 2, "agreeing_traders": ["Inna", "Nikhil", "Sivakumar"], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 13:11 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "BUY BANKNIFTY 58600 CE (Call)", "zerodha_symbol": "BANKNIFTY26JUL58600CE", "zerodha_search": "BANKNIFTY JUL 58600 CE", "kite_steps": "1. Open Kite \u2192 Search: BANKNIFTY26JUL58600CE\n   (Monthly contract \u2014 Expiry 29 Jul 2026 \u2014 34 days)\n2. Click NFO result \u2192 Click BUY \u2192 Product: NRML\n3. Qty: 30 (= 1 lot) \u2192 Limit price: \u20b91163.0\n4. After order fills \u2192 IMMEDIATELY place SL order at \u20b9872.0 (lose max 30%)\n5. T1 target \u20b91744.0: sell HALF position (+40%)\n6. T2 target \u20b92326.0: sell remaining (+100%) \u2014 hold max till July 15", "strike": 58600, "option_type": "CE (Call)", "expiry": "29 Jul 2026", "days_to_exp": 34, "lot_size": 30, "entry_premium": 1163.0, "sl_premium": 872.0, "target1_premium": 1744.0, "target_premium": 2326.0, "cost_1_lot": 34890.0, "lots_for_10k": 0, "total_invest": 0.0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {"type": "Bull Call Spread", "buy_strike": 58600, "sell_strike": 58800, "buy_premium": 1163.0, "sell_premium": 1125.0, "net_debit": 38.0, "max_loss_unit": 38.0, "max_profit_unit": 162.0, "rr_ratio": 4.3, "cost_per_lot": 1140.0, "profit_per_lot": 4860.0, "buy_symbol": "BANKNIFTY26JUL58600CE", "sell_symbol": "BANKNIFTY26JUL58800CE", "kite_steps": "SAFE STRATEGY \u2014 Bull Call Spread\nLeg 1 BUY:  BANKNIFTY26JUL58600CE  @ \u20b91163.0 (pay)\nLeg 2 SELL: BANKNIFTY26JUL58800CE @ \u20b91125.0 (receive)\nNet cost per lot: \u20b91140.0 (MAX LOSS locked)\nMax profit per lot: \u20b94860.0 at expiry\nR:R = 1:4.3  \u2705 Qualifies 1:2\nNo separate SL needed \u2014 loss is capped at net debit paid.", "qualifies_1_2": true}, "trade_logic": "Buy when market going UP \u2014 Call option profits when NIFTY/BANKNIFTY rises", "entry_timing": "Buy at 9:20 AM if market opens above yesterday's close. Hold up to 3\u20135 days.", "exit_rule": "Exit at 2\u00d7 premium OR stop loss OR by expiry week Thursday"}, "indicators": {"spot": 58566.45, "ema9": 57530.97, "ema18": 56703.33, "ema20": 56571.38, "ema50": 55881.89, "atr": 757.27, "rsi": 78.3, "macd": 944.97, "macd_signal": 691.51, "ann_vol": 0.1626, "pivot": 57827.2, "r1": 58579.5, "s1": 57398.05, "roc5": 1.04, "roc3": 1.09, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "BUY_CE", "score": 3, "reasons": ["Uptrend: spot > EMA18 > EMA50", "MACD bullish", "RSI=78.3 overbought \u2014 wait for pullback"]}, {"strategy": "Tanmay", "direction": "NEUTRAL", "score": 2, "reasons": ["Spot in S1-R1 range (57398\u201358580) \u2014 wait for breakout", "3d upswing +1.09%", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["Full EMA bullish alignment", "RSI=78.3 overbought \u2014 no CE buy", "MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "BUY_CE", "score": 5, "reasons": ["Strong bullish consensus \u2014 Nikhil approves CE buy", "RSI=78.3, ROC5=+1.04%, MACD bullish, above EMA20+50"]}, {"strategy": "Sivakumar", "direction": "BUY_CE", "score": 5, "reasons": ["Above pivot 57827 \u2014 bullish bias", "Medium-term uptrend (EMA20>EMA50)", "Positive 5d momentum +1.04%"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}}; /* FO_EXACT_DATA_END */</script>
+  <script>/* FO_EXACT_DATA_START */ const FO_EXACT = {"NIFTY50": {"instrument": "NIFTY50", "spot": 24177.15, "consensus": "WAIT", "ce_votes": 1, "pe_votes": 0, "neutral_votes": 4, "agreeing_traders": [], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 13:17 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "WAIT \u2014 No Trade", "zerodha_symbol": "\u2014", "zerodha_search": "\u2014", "kite_steps": "No trade today \u2014 wait for clearer signal", "strike": 0, "option_type": "\u2014", "expiry": "30 Jul 2026", "days_to_exp": 35, "lot_size": 75, "entry_premium": 0, "sl_premium": 0, "target1_premium": 0, "target_premium": 0, "cost_1_lot": 0, "lots_for_10k": 0, "total_invest": 0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {}, "trade_logic": "No clear direction. 3 out of 5 strategies don't agree. Stay out today.", "entry_timing": "Do not trade \u2014 wait for clearer signal tomorrow", "exit_rule": "\u2014"}, "indicators": {"spot": 24177.15, "ema9": 23955.52, "ema18": 23834.41, "ema20": 23821.07, "ema50": 23850.44, "atr": 256.55, "rsi": 67.4, "macd": 103.21, "macd_signal": 33.71, "ann_vol": 0.1187, "pivot": 23966.98, "r1": 24144.72, "s1": 23843.92, "roc5": 0.04, "roc3": 0.31, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD bullish"]}, {"strategy": "Tanmay", "direction": "BUY_CE", "score": 4, "reasons": ["Breakout above R1=24145 \u2014 Tanmay BUY CE trigger", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "NEUTRAL", "score": 0, "reasons": ["Market not decisive \u2014 Nikhil would prefer Bull Put Spread (sell premium)", "Skip plain CE/PE buy \u2014 wait for clearer trend or sell OTM spread"]}, {"strategy": "Sivakumar", "direction": "NEUTRAL", "score": 0, "reasons": ["Above pivot 23967 \u2014 bullish bias", "Medium-term downtrend (EMA20<EMA50)"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}, "BANKNIFTY": {"instrument": "BANKNIFTY", "spot": 58487.65, "consensus": "WAIT", "ce_votes": 2, "pe_votes": 0, "neutral_votes": 3, "agreeing_traders": [], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 13:17 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "WAIT \u2014 No Trade", "zerodha_symbol": "\u2014", "zerodha_search": "\u2014", "kite_steps": "No trade today \u2014 wait for clearer signal", "strike": 0, "option_type": "\u2014", "expiry": "29 Jul 2026", "days_to_exp": 34, "lot_size": 30, "entry_premium": 0, "sl_premium": 0, "target1_premium": 0, "target_premium": 0, "cost_1_lot": 0, "lots_for_10k": 0, "total_invest": 0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {}, "trade_logic": "No clear direction. 3 out of 5 strategies don't agree. Stay out today.", "entry_timing": "Do not trade \u2014 wait for clearer signal tomorrow", "exit_rule": "\u2014"}, "indicators": {"spot": 58487.65, "ema9": 57515.21, "ema18": 56695.03, "ema20": 56563.88, "ema50": 55878.8, "atr": 757.27, "rsi": 78.1, "macd": 938.68, "macd_signal": 690.26, "ann_vol": 0.1624, "pivot": 57827.2, "r1": 58579.5, "s1": 57398.05, "roc5": 0.9, "roc3": 0.95, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "BUY_CE", "score": 3, "reasons": ["Uptrend: spot > EMA18 > EMA50", "MACD bullish", "RSI=78.1 overbought \u2014 wait for pullback"]}, {"strategy": "Tanmay", "direction": "NEUTRAL", "score": 2, "reasons": ["Spot in S1-R1 range (57398\u201358580) \u2014 wait for breakout", "3d upswing +0.95%", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["Full EMA bullish alignment", "RSI=78.1 overbought \u2014 no CE buy", "MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "NEUTRAL", "score": 0, "reasons": ["Market not decisive \u2014 Nikhil would prefer Bull Put Spread (sell premium)", "Skip plain CE/PE buy \u2014 wait for clearer trend or sell OTM spread"]}, {"strategy": "Sivakumar", "direction": "BUY_CE", "score": 5, "reasons": ["Above pivot 57827 \u2014 bullish bias", "Medium-term uptrend (EMA20>EMA50)", "Positive 5d momentum +0.9%"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}}; /* FO_EXACT_DATA_END */</script>
   <!-- EXACT TRADE CARD -->
   
         <div class="sec">
@@ -731,11 +907,11 @@ tr:last-child td{border-bottom:none}
                 </div>
               </div>
             </div>
-            <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:14px;padding:18px;flex:1;min-width:280px">
+            <div style="background:#f8fafc;border:2px solid #e2e8f0;border-radius:14px;padding:18px;flex:1;min-width:280px">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
                 <div style="font-size:15px;font-weight:900;color:#0f172a">BANKNIFTY</div>
-                <div style="background:#dcfce7;
-                     color:#15803d;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:800">↑ BUY CE</div>
+                <div style="background:#f1f5f9;
+                     color:#64748b;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:800">⏸ WAIT</div>
               </div>
               <div style="display:flex;gap:6px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
                 <span style="background:#fef9c3;border:1px solid #fde047;border-radius:6px;padding:2px 8px;font-size:10px;color:#854d0e;font-weight:700">
@@ -747,179 +923,18 @@ tr:last-child td{border-bottom:none}
                 </span>
               </div>
               
-                  <div style="background:#dcfce7;border:2px solid #86efac;border-radius:10px;padding:14px 16px;margin-bottom:12px">
-                    <div style="font-size:10px;font-weight:700;color:#166534;margin-bottom:6px;letter-spacing:.5px">✅ EXACT TRADE — COPY THIS INTO ZERODHA</div>
-                    <div style="font-size:20px;font-weight:900;color:#15803d;margin-bottom:8px">BUY BANKNIFTY 58600 CE (Call)</div>
-                    <div style="background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:8px">
-                      <div style="font-size:10px;color:#64748b;font-weight:700;margin-bottom:4px">🔍 SEARCH THIS IN ZERODHA KITE</div>
-                      <div style="font-family:monospace;font-size:16px;font-weight:900;color:#1d4ed8;letter-spacing:.5px;word-break:break-all">BANKNIFTY26JUL58600CE</div>
-                      <div style="font-size:10px;color:#94a3b8;margin-top:3px">Type this EXACTLY in Kite search bar → select NFO result</div>
-                    </div>
-                    <div style="font-size:12px;color:#374151">Expiry: <strong>29 Jul 2026</strong> &nbsp;·&nbsp; 34 days left &nbsp;·&nbsp; Lot size: 30 units</div>
-                  </div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:12px">
-                    <div style="background:#f8fafc;border-radius:8px;padding:10px;text-align:center">
-                      <div style="font-size:9px;color:#64748b;font-weight:700">ENTRY ₹</div>
-                      <div style="font-size:18px;font-weight:900;color:#0f172a">1163.0</div>
-                      <div style="font-size:9px;color:#94a3b8">per unit</div>
-                    </div>
-                    <div style="background:#fff1f2;border-radius:8px;padding:10px;text-align:center">
-                      <div style="font-size:9px;color:#dc2626;font-weight:700">SL ₹ (EXIT)</div>
-                      <div style="font-size:18px;font-weight:900;color:#dc2626">872.0</div>
-                      <div style="font-size:9px;color:#dc2626">-30% loss</div>
-                    </div>
-                    <div style="background:#f0fdf4;border-radius:8px;padding:10px;text-align:center">
-                      <div style="font-size:9px;color:#15803d;font-weight:700">T1 ₹ (HALF)</div>
-                      <div style="font-size:18px;font-weight:900;color:#15803d">1744.0</div>
-                      <div style="font-size:9px;color:#15803d">+40% sell 15u</div>
-                    </div>
-                    <div style="background:#dcfce7;border-radius:8px;padding:10px;text-align:center">
-                      <div style="font-size:9px;color:#14532d;font-weight:700">T2 ₹ (ALL)</div>
-                      <div style="font-size:18px;font-weight:900;color:#14532d">2326.0</div>
-                      <div style="font-size:9px;color:#14532d">+100% exit all</div>
-                    </div>
+                  <div style="text-align:center;padding:16px 0">
+                    <div style="font-size:28px;margin-bottom:8px">⏸</div>
+                    <div style="font-weight:800;color:#374151;font-size:15px">WAIT — No Trade Today</div>
+                    <div style="color:#64748b;font-size:12px;margin-top:6px">2/5 agree on CE · 0/5 agree on PE</div>
+                    <div style="color:#94a3b8;font-size:11px;margin-top:4px">Need 3/5 traders to agree. Cash is a position.</div>
                   </div>
               
-                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-                    <span style="background:#b45309;color:#fff;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:800">🟡 ESTIMATED — verify in Kite before buying</span>
-                    <span style="font-size:11px;color:#64748b">Price as of: 25 Jun 2026 13:11 IST</span>
-                  </div>
-                  <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#78350f;line-height:1.8">
-                    <strong>📌 Before you trade — read this once:</strong><br>
-                    • The price you see here (₹1163.0) is what you pay Zerodha per unit. Multiply by lot size (30) = total cost.<br>
-                    • The ₹40k–₹97k shown in Zerodha is a <strong>SELL margin</strong>. You are BUYING, so ignore that big number.<br>
-                    • Options have an expiry date (<strong>29 Jul 2026</strong>). After that, unsold options can go to zero. Exit before that date.
-                  </div>
-                  
-                  <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:14px 16px;margin-bottom:12px">
-                    <div style="font-size:13px;font-weight:900;color:#15803d;margin-bottom:4px">🛡 SAFER OPTION — Bull Call Spread</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:12px;line-height:1.7">
-                      You place <strong>2 orders at the same time</strong>. One buys, one sells.<br>
-                      Your <strong>maximum loss is fixed the moment you enter</strong> — it can never go higher.<br>
-                      No stop-loss order needed. Risk is automatic.
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-                      <div style="background:#fff;border:1.5px solid #2563eb;border-radius:10px;padding:12px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#1d4ed8;margin-bottom:6px">ORDER 1 — BUY this</div>
-                        <div style="font-family:monospace;font-size:13px;font-weight:900;color:#1d4ed8;margin-bottom:6px">BANKNIFTY26JUL58600CE</div>
-                        <div style="font-size:11px;color:#64748b">Pay ≈ <strong style="color:#0f172a;font-size:15px">₹1163.0</strong> per unit</div>
-                        <div style="font-size:10px;color:#94a3b8;margin-top:3px">This is your main bet</div>
-                      </div>
-                      <div style="background:#fff;border:1.5px solid #dc2626;border-radius:10px;padding:12px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#dc2626;margin-bottom:6px">ORDER 2 — SELL this (same time)</div>
-                        <div style="font-family:monospace;font-size:13px;font-weight:900;color:#dc2626;margin-bottom:6px">BANKNIFTY26JUL58800CE</div>
-                        <div style="font-size:11px;color:#64748b">Get ≈ <strong style="color:#0f172a;font-size:15px">₹1125.0</strong> per unit</div>
-                        <div style="font-size:10px;color:#94a3b8;margin-top:3px">This reduces your cost</div>
-                      </div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-                      <div style="background:#fff1f2;border:1px solid #fca5a5;border-radius:8px;padding:10px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#dc2626;margin-bottom:4px">YOU PAY (total)</div>
-                        <div style="font-size:18px;font-weight:900;color:#dc2626">₹1,140</div>
-                        <div style="font-size:9px;color:#94a3b8;margin-top:3px">per lot · this is your max loss ever</div>
-                      </div>
-                      <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:10px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#15803d;margin-bottom:4px">YOU CAN MAKE</div>
-                        <div style="font-size:18px;font-weight:900;color:#15803d">₹4,860</div>
-                        <div style="font-size:9px;color:#94a3b8;margin-top:3px">per lot · at best case</div>
-                      </div>
-                      <div style="background:#fff;border:2px solid #15803d;border-radius:8px;padding:10px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#15803d;margin-bottom:4px">RISK : REWARD</div>
-                        <div style="font-size:18px;font-weight:900;color:#15803d">1 : 4.3</div>
-                        <div style="font-size:9px;color:#94a3b8;margin-top:3px">✅ Risk:Reward = 1:4.3</div>
-                      </div>
-                    </div>
-                    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px">
-                      <div style="font-size:11px;font-weight:800;color:#0f172a;margin-bottom:8px">📱 How to place in Zerodha Kite (step by step)</div>
-                      <div style="font-size:11px;color:#374151;line-height:2">
-                        <span style="background:#1d4ed8;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">1</span>
-                        Open Kite → tap search bar → type <code style="background:#dbeafe;padding:2px 6px;border-radius:4px;font-weight:900;color:#1d4ed8">BANKNIFTY26JUL58600CE</code> → tap the NFO result<br>
-                        <span style="background:#1d4ed8;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">2</span>
-                        Tap <strong>B (Buy)</strong> → set Product to <strong>NRML</strong> → Qty: <strong>30</strong> (= 1 lot) → tap <strong>Buy</strong><br>
-                        <span style="background:#dc2626;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">3</span>
-                        Immediately search <code style="background:#fee2e2;padding:2px 6px;border-radius:4px;font-weight:900;color:#dc2626">BANKNIFTY26JUL58800CE</code> → tap <strong>S (Sell)</strong> → NRML → Qty: <strong>30</strong> → tap <strong>Sell</strong><br>
-                        <span style="background:#15803d;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">4</span>
-                        Done! You have entered a spread. <strong>No stop loss needed</strong> — your risk is already locked.<br>
-                        <span style="background:#64748b;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">5</span>
-                        Exit both legs together before <strong>29 Jul 2026</strong>. When to exit: profit looks good, OR market turns against you.
-                      </div>
-                    </div>
-                  </div>
-                  <div style="background:#eff6ff;border:1.5px solid #93c5fd;border-radius:12px;padding:14px 16px;margin-bottom:12px">
-                    <div style="font-size:13px;font-weight:900;color:#1d4ed8;margin-bottom:4px">⚡ AGGRESSIVE OPTION — Single Buy (higher risk, higher reward)</div>
-                    <div style="font-size:11px;color:#475569;margin-bottom:12px;line-height:1.7">
-                      You place <strong>1 order only</strong>. Simpler, but you must set a stop-loss yourself immediately after buying.<br>
-                      If price falls 25% from your entry → exit (stop loss). If it rises 50% → sell half and book profit.
-                    </div>
-                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
-                      <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#64748b;margin-bottom:4px">BUY AT</div>
-                        <div style="font-size:20px;font-weight:900;color:#0f172a">₹1163.0</div>
-                        <div style="font-size:9px;color:#94a3b8">your entry price</div>
-                      </div>
-                      <div style="background:#fff1f2;border:1.5px solid #fca5a5;border-radius:8px;padding:10px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#dc2626;margin-bottom:4px">EXIT IF FALLS TO</div>
-                        <div style="font-size:20px;font-weight:900;color:#dc2626">₹872.0</div>
-                        <div style="font-size:9px;color:#dc2626">stop loss — exit immediately</div>
-                      </div>
-                      <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:10px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#15803d;margin-bottom:4px">SELL HALF WHEN</div>
-                        <div style="font-size:20px;font-weight:900;color:#15803d">₹1744.0</div>
-                        <div style="font-size:9px;color:#15803d">first target (+50%)</div>
-                      </div>
-                      <div style="background:#dcfce7;border:1.5px solid #4ade80;border-radius:8px;padding:10px;text-align:center">
-                        <div style="font-size:10px;font-weight:800;color:#14532d;margin-bottom:4px">SELL ALL WHEN</div>
-                        <div style="font-size:20px;font-weight:900;color:#14532d">₹2326.0</div>
-                        <div style="font-size:9px;color:#14532d">final target (+100%)</div>
-                      </div>
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-                      
-                    <div style="background:#eff6ff;border:1.5px solid #2563eb;border-radius:8px;padding:10px 10px;text-align:center">
-                      <div style="font-size:10px;font-weight:800;color:#1d4ed8;margin-bottom:6px">1 LOT<span style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-left:4px">REC</span></div>
-                      <div style="font-size:13px;font-weight:900;color:#0f172a">₹34,890</div>
-                      <div style="font-size:10px;color:#64748b;margin-top:4px">30 qty</div>
-                      <div style="font-size:10px;color:#dc2626;margin-top:2px">SL: −₹26,160</div>
-                      <div style="font-size:10px;color:#15803d">Tgt: +₹69,780</div>
-                    </div>
-                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px 10px;text-align:center">
-                      <div style="font-size:10px;font-weight:800;color:#1d4ed8;margin-bottom:6px">2 LOT</div>
-                      <div style="font-size:13px;font-weight:900;color:#0f172a">₹69,780</div>
-                      <div style="font-size:10px;color:#64748b;margin-top:4px">60 qty</div>
-                      <div style="font-size:10px;color:#dc2626;margin-top:2px">SL: −₹52,320</div>
-                      <div style="font-size:10px;color:#15803d">Tgt: +₹139,560</div>
-                    </div>
-                    <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:10px 10px;text-align:center">
-                      <div style="font-size:10px;font-weight:800;color:#1d4ed8;margin-bottom:6px">3 LOT</div>
-                      <div style="font-size:13px;font-weight:900;color:#0f172a">₹104,670</div>
-                      <div style="font-size:10px;color:#64748b;margin-top:4px">90 qty</div>
-                      <div style="font-size:10px;color:#dc2626;margin-top:2px">SL: −₹78,480</div>
-                      <div style="font-size:10px;color:#15803d">Tgt: +₹209,340</div>
-                    </div>
-                    </div>
-                    <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px">
-                      <div style="font-size:11px;font-weight:800;color:#0f172a;margin-bottom:8px">📱 How to place in Zerodha Kite (step by step)</div>
-                      <div style="font-size:11px;color:#374151;line-height:2">
-                        <span style="background:#1d4ed8;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">1</span>
-                        Open Kite app → tap the search bar at top → type exactly: <code style="background:#dbeafe;padding:2px 6px;border-radius:4px;font-weight:900;color:#1d4ed8">BANKNIFTY26JUL58600CE</code><br>
-                        <span style="background:#1d4ed8;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">2</span>
-                        Tap the result that says <strong>NFO</strong> (not NSE). Tap the <strong>B</strong> (Buy) button.<br>
-                        <span style="background:#1d4ed8;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">3</span>
-                        Set: Product = <strong>NRML</strong> &nbsp;·&nbsp; Qty = <strong>30</strong> &nbsp;·&nbsp; Price = <strong>₹1163.0</strong> (change order type to Limit) → tap Buy<br>
-                        <span style="background:#dc2626;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">4</span>
-                        <strong>Right after it buys</strong> → go to Positions → tap the trade → tap <strong>Exit/SL</strong> → set SL-M at ₹872.0. This is your safety net.<br>
-                        <span style="background:#15803d;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">5</span>
-                        When price hits ₹1744.0 → sell half your quantity to lock in profit.<br>
-                        <span style="background:#15803d;color:#fff;border-radius:50%;padding:1px 6px;font-size:10px;font-weight:900;margin-right:4px">6</span>
-                        When price hits ₹2326.0 → sell everything. Or exit before 29 Jul 2026.
-                      </div>
-                    </div>
-                  </div>
               <div style="border-top:1px solid #e2e8f0;padding-top:10px">
                 <div style="font-size:10px;color:#64748b;font-weight:700;margin-bottom:6px">WHO AGREES (5 TRADERS VOTE)</div>
-                <div style="margin-bottom:2px"><span title="Inna" style="background:#15803d;color:#fff;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:800;margin:2px;display:inline-block">Inna</span><span title="Nikhil" style="background:#d97706;color:#fff;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:800;margin:2px;display:inline-block">Nikhil</span><span title="Sivakumar" style="background:#0891b2;color:#fff;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:800;margin:2px;display:inline-block">Sivakumar</span></div>
+                <div style="margin-bottom:2px"><span style="color:#94a3b8;font-size:11px">None agreed yet</span></div>
                 <div style="font-size:10px;color:#94a3b8;margin-top:4px">
-                  3 buy CE · 0 buy PE · 2 neutral/wait
+                  2 buy CE · 0 buy PE · 3 neutral/wait
                 </div>
               </div>
             </div></div>
@@ -936,19 +951,19 @@ tr:last-child td{border-bottom:none}
               <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
                 <div>
                   <div style="font-size:16px;font-weight:800;color:#0f172a">NIFTY 50</div>
-                  <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:2px">₹24,197.95</div>
+                  <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:2px">₹24,177.30</div>
                 </div>
                 <span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;margin-bottom:12px">
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">RSI</div><div style="font-weight:700;color:#0f172a">67.7</div></div>
+                  <div style="color:#64748b;font-size:10px">RSI</div><div style="font-weight:700;color:#0f172a">67.4</div></div>
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
                   <div style="color:#64748b;font-size:10px">ATR</div><div style="font-weight:700;color:#0f172a">256.55</div></div>
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">EMA50</div><div style="font-weight:700;color:#0f172a">₹23,851</div></div>
+                  <div style="color:#64748b;font-size:10px">EMA50</div><div style="font-weight:700;color:#0f172a">₹23,850</div></div>
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">5d ROC</div><div style="font-weight:700;color:#15803d">+0.1%</div></div>
+                  <div style="color:#64748b;font-size:10px">5d ROC</div><div style="font-weight:700;color:#15803d">+0.0%</div></div>
               </div>
               <div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:11px">
                 <div style="display:flex;justify-content:space-between;color:#64748b">
@@ -966,19 +981,19 @@ tr:last-child td{border-bottom:none}
               <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
                 <div>
                   <div style="font-size:16px;font-weight:800;color:#0f172a">BANKNIFTY</div>
-                  <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:2px">₹58,569.15</div>
+                  <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:2px">₹58,481.35</div>
                 </div>
                 <span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;margin-bottom:12px">
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">RSI</div><div style="font-weight:700;color:#0f172a">78.3</div></div>
+                  <div style="color:#64748b;font-size:10px">RSI</div><div style="font-weight:700;color:#0f172a">78.1</div></div>
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
                   <div style="color:#64748b;font-size:10px">ATR</div><div style="font-weight:700;color:#0f172a">757.27</div></div>
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">EMA50</div><div style="font-weight:700;color:#0f172a">₹55,882</div></div>
+                  <div style="color:#64748b;font-size:10px">EMA50</div><div style="font-weight:700;color:#0f172a">₹55,879</div></div>
                 <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">5d ROC</div><div style="font-weight:700;color:#15803d">+1.0%</div></div>
+                  <div style="color:#64748b;font-size:10px">5d ROC</div><div style="font-weight:700;color:#15803d">+0.9%</div></div>
               </div>
               <div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:11px">
                 <div style="display:flex;justify-content:space-between;color:#64748b">
@@ -1043,154 +1058,154 @@ tr:last-child td{border-bottom:none}
     <tbody><tr>
               <td style="font-weight:700;color:#0f172a">ICICIBANK</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,401.00</td>
+              <td style="font-weight:600;color:#0f172a">₹1,397.50</td>
               <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">82.0</td>
-              <td style="color:#059669;font-weight:600">+4.4%</td>
+              <td style="color:#0f172a">81.7</td>
+              <td style="color:#059669;font-weight:600">+4.1%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹1,361 &nbsp;
-                Tgt: ₹1,455
+                SL: ₹1,357 &nbsp;
+                Tgt: ₹1,451
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">AXISBANK</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,385.10</td>
+              <td style="font-weight:600;color:#0f172a">₹1,380.60</td>
               <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">85.2</td>
-              <td style="color:#059669;font-weight:600">+1.8%</td>
+              <td style="color:#0f172a">83.1</td>
+              <td style="color:#059669;font-weight:600">+1.5%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹1,349 &nbsp;
-                Tgt: ₹1,433
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">BHARTIARTL</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,864.80</td>
-              <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">63.4</td>
-              <td style="color:#dc2626;font-weight:600">-0.5%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,813 &nbsp;
-                Tgt: ₹1,934
+                SL: ₹1,345 &nbsp;
+                Tgt: ₹1,428
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">LT</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹4,253.40</td>
+              <td style="font-weight:600;color:#0f172a">₹4,239.60</td>
               <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">72.7</td>
-              <td style="color:#059669;font-weight:600">+1.5%</td>
+              <td style="color:#0f172a">72.1</td>
+              <td style="color:#059669;font-weight:600">+1.2%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹4,132 &nbsp;
-                Tgt: ₹4,415
+                SL: ₹4,119 &nbsp;
+                Tgt: ₹4,401
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">SUNPHARMA</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,867.80</td>
+              <td style="font-weight:600;color:#0f172a">₹1,866.20</td>
               <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">82.3</td>
-              <td style="color:#059669;font-weight:600">+2.4%</td>
+              <td style="color:#0f172a">81.3</td>
+              <td style="color:#059669;font-weight:600">+2.3%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹1,830 &nbsp;
-                Tgt: ₹1,918
+                SL: ₹1,829 &nbsp;
+                Tgt: ₹1,916
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">BAJFINANCE</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹987.40</td>
+              <td style="font-weight:600;color:#0f172a">₹985.80</td>
               <td style="color:#15803d;font-weight:700">+7</td>
-              <td style="color:#0f172a">76.0</td>
-              <td style="color:#059669;font-weight:600">+3.0%</td>
+              <td style="color:#0f172a">75.3</td>
+              <td style="color:#059669;font-weight:600">+2.8%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹953 &nbsp;
-                Tgt: ₹1,033
+                SL: ₹952 &nbsp;
+                Tgt: ₹1,031
+              </td>
+            </tr><tr>
+              <td style="font-weight:700;color:#0f172a">BHARTIARTL</td>
+              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
+              <td style="font-weight:600;color:#0f172a">₹1,863.90</td>
+              <td style="color:#15803d;font-weight:700">+7</td>
+              <td style="color:#0f172a">63.2</td>
+              <td style="color:#dc2626;font-weight:600">-0.6%</td>
+              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
+              <td style="font-size:11px;color:#64748b">
+                SL: ₹1,812 &nbsp;
+                Tgt: ₹1,933
+              </td>
+            </tr><tr>
+              <td style="font-weight:700;color:#0f172a">TITAN</td>
+              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
+              <td style="font-weight:600;color:#0f172a">₹4,263.00</td>
+              <td style="color:#15803d;font-weight:700">+7</td>
+              <td style="color:#0f172a">50.2</td>
+              <td style="color:#dc2626;font-weight:600">-2.8%</td>
+              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
+              <td style="font-size:11px;color:#64748b">
+                SL: ₹4,118 &nbsp;
+                Tgt: ₹4,457
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">KOTAKBANK</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹412.55</td>
+              <td style="font-weight:600;color:#0f172a">₹412.30</td>
               <td style="color:#15803d;font-weight:700">+7</td>
-              <td style="color:#0f172a">82.5</td>
-              <td style="color:#059669;font-weight:600">+2.4%</td>
+              <td style="color:#0f172a">82.4</td>
+              <td style="color:#059669;font-weight:600">+2.3%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
               <td style="font-size:11px;color:#64748b">
                 SL: ₹401 &nbsp;
                 Tgt: ₹427
               </td>
             </tr><tr>
-              <td style="font-weight:700;color:#0f172a">TITAN</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹4,260.30</td>
-              <td style="color:#15803d;font-weight:700">+6</td>
-              <td style="color:#0f172a">50.0</td>
-              <td style="color:#dc2626;font-weight:600">-2.9%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹4,115 &nbsp;
-                Tgt: ₹4,454
-              </td>
-            </tr><tr>
               <td style="font-weight:700;color:#0f172a">SBIN</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,050.95</td>
+              <td style="font-weight:600;color:#0f172a">₹1,050.05</td>
               <td style="color:#15803d;font-weight:700">+6</td>
-              <td style="color:#0f172a">76.6</td>
-              <td style="color:#059669;font-weight:600">+0.8%</td>
+              <td style="color:#0f172a">76.4</td>
+              <td style="color:#059669;font-weight:600">+0.7%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹1,023 &nbsp;
-                Tgt: ₹1,088
+                SL: ₹1,022 &nbsp;
+                Tgt: ₹1,087
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">MARUTI</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹13,881.00</td>
+              <td style="font-weight:600;color:#0f172a">₹13,874.00</td>
               <td style="color:#15803d;font-weight:700">+6</td>
-              <td style="color:#0f172a">67.1</td>
+              <td style="color:#0f172a">67.0</td>
               <td style="color:#059669;font-weight:600">+2.9%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹13,451 &nbsp;
-                Tgt: ₹14,454
+                SL: ₹13,444 &nbsp;
+                Tgt: ₹14,447
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">HDFCBANK</td>
               <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹802.20</td>
+              <td style="font-weight:600;color:#0f172a">₹801.50</td>
               <td style="color:#15803d;font-weight:700">+3</td>
-              <td style="color:#0f172a">77.0</td>
-              <td style="color:#059669;font-weight:600">+2.1%</td>
+              <td style="color:#0f172a">76.8</td>
+              <td style="color:#059669;font-weight:600">+2.0%</td>
               <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
               <td style="font-size:11px;color:#64748b">
                 SL: ₹778 &nbsp;
-                Tgt: ₹834
+                Tgt: ₹833
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">RELIANCE</td>
-              <td><span style="background:#f1f5f9;color:#64748b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">→ Sideways</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,321.90</td>
-              <td style="color:#64748b;font-weight:700">-2</td>
-              <td style="color:#0f172a">58.2</td>
-              <td style="color:#dc2626;font-weight:600">-0.5%</td>
-              <td style="font-size:11px;font-weight:700;color:#64748b">SELL STRADDLE / IRON CONDOR</td>
+              <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
+              <td style="font-weight:600;color:#0f172a">₹1,320.40</td>
+              <td style="color:#991b1b;font-weight:700">-3</td>
+              <td style="color:#0f172a">57.9</td>
+              <td style="color:#dc2626;font-weight:600">-0.6%</td>
+              <td style="font-size:11px;font-weight:700;color:#991b1b">BEAR PUT SPREAD</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹1,362 &nbsp;
-                Tgt: ₹1,268
+                SL: ₹1,361 &nbsp;
+                Tgt: ₹1,267
               </td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">INFY</td>
               <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,046.50</td>
+              <td style="font-weight:600;color:#0f172a">₹1,046.90</td>
               <td style="color:#991b1b;font-weight:700">-8</td>
               <td style="color:#0f172a">28.7</td>
-              <td style="color:#dc2626;font-weight:600">-7.2%</td>
+              <td style="color:#dc2626;font-weight:600">-7.1%</td>
               <td style="font-size:11px;font-weight:700;color:#991b1b">BUY ATM PUT (PE)</td>
               <td style="font-size:11px;color:#64748b">
                 SL: ₹1,097 &nbsp;
@@ -1199,7 +1214,7 @@ tr:last-child td{border-bottom:none}
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">WIPRO</td>
               <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹174.50</td>
+              <td style="font-weight:600;color:#0f172a">₹174.51</td>
               <td style="color:#991b1b;font-weight:700">-8</td>
               <td style="color:#0f172a">18.7</td>
               <td style="color:#dc2626;font-weight:600">-4.6%</td>
@@ -1211,14 +1226,14 @@ tr:last-child td{border-bottom:none}
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">TCS</td>
               <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹2,122.90</td>
+              <td style="font-weight:600;color:#0f172a">₹2,125.20</td>
               <td style="color:#991b1b;font-weight:700">-11</td>
-              <td style="color:#0f172a">40.2</td>
-              <td style="color:#dc2626;font-weight:600">-3.6%</td>
+              <td style="color:#0f172a">40.6</td>
+              <td style="color:#dc2626;font-weight:600">-3.5%</td>
               <td style="font-size:11px;font-weight:700;color:#991b1b">BUY ATM PUT (PE)</td>
               <td style="font-size:11px;color:#64748b">
-                SL: ₹2,200 &nbsp;
-                Tgt: ₹2,021
+                SL: ₹2,202 &nbsp;
+                Tgt: ₹2,023
               </td>
             </tr></tbody></table>
   </div>
@@ -1233,13 +1248,13 @@ tr:last-child td{border-bottom:none}
               <td style="font-weight:700;color:#0f172a">TCS</td>
               <td style="color:#64748b;font-size:11px">IT</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹2,123.30</td>
+              <td style="font-weight:600;color:#0f172a">₹2,122.90</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">HDFCBANK</td>
               <td style="color:#64748b;font-size:11px">Banking</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹802.10</td>
+              <td style="font-weight:600;color:#0f172a">₹801.50</td>
               <td style="color:#64748b;font-size:11px">Unger</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">INFY</td>
@@ -1251,103 +1266,97 @@ tr:last-child td{border-bottom:none}
               <td style="font-weight:700;color:#0f172a">HINDUNILVR</td>
               <td style="color:#64748b;font-size:11px">FMCG</td>
               <td><span title="Inna:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹2,182.20</td>
+              <td style="font-weight:600;color:#0f172a">₹2,181.60</td>
               <td style="color:#64748b;font-size:11px">Inna</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">ITC</td>
               <td style="color:#64748b;font-size:11px">FMCG</td>
-              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹290.40</td>
+              <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
+              <td style="font-weight:600;color:#0f172a">₹290.55</td>
               <td style="color:#64748b;font-size:11px">—</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">AXISBANK</td>
               <td style="color:#64748b;font-size:11px">Banking</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,384.90</td>
+              <td style="font-weight:600;color:#0f172a">₹1,381.20</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">SUNPHARMA</td>
               <td style="color:#64748b;font-size:11px">Pharma</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,867.80</td>
+              <td style="font-weight:600;color:#0f172a">₹1,865.90</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">BAJFINANCE</td>
               <td style="color:#64748b;font-size:11px">NBFC</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹987.15</td>
+              <td style="font-weight:600;color:#0f172a">₹985.90</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">NESTLEIND</td>
               <td style="color:#64748b;font-size:11px">FMCG</td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,395.00</td>
+              <td style="font-weight:600;color:#0f172a">₹1,396.50</td>
               <td style="color:#64748b;font-size:11px">Inna</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">WIPRO</td>
               <td style="color:#64748b;font-size:11px">IT</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹174.45</td>
+              <td style="font-weight:600;color:#0f172a">₹174.32</td>
               <td style="color:#64748b;font-size:11px">—</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">ULTRACEMCO</td>
               <td style="color:#64748b;font-size:11px">Cement</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹11,570.00</td>
+              <td style="font-weight:600;color:#0f172a">₹11,573.00</td>
               <td style="color:#64748b;font-size:11px">Unger</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">HONAUT</td>
               <td style="color:#64748b;font-size:11px">Auto</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹39,485.00</td>
+              <td style="font-weight:600;color:#0f172a">₹39,475.00</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">BOSCHLTD</td>
               <td style="color:#64748b;font-size:11px">Auto</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹40,725.00</td>
+              <td style="font-weight:600;color:#0f172a">₹40,715.00</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">ATUL</td>
-              <td style="color:#64748b;font-size:11px">Chemicals</td>
-              <td><span title="Inna:STRONG_BUY" style="background:#0d9488;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹6,614.00</td>
-              <td style="color:#64748b;font-size:11px">Inna</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">ASTRAL</td>
               <td style="color:#64748b;font-size:11px">Other</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,497.70</td>
+              <td style="font-weight:600;color:#0f172a">₹1,495.70</td>
               <td style="color:#64748b;font-size:11px">—</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">PIIND</td>
               <td style="color:#64748b;font-size:11px">Agrochem</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹2,724.40</td>
+              <td style="font-weight:600;color:#0f172a">₹2,720.00</td>
               <td style="color:#64748b;font-size:11px">—</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">PERSISTENT</td>
               <td style="color:#64748b;font-size:11px">IT</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹4,872.50</td>
+              <td style="font-weight:600;color:#0f172a">₹4,877.00</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">NAUKRI</td>
               <td style="color:#64748b;font-size:11px">Other</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹986.95</td>
+              <td style="font-weight:600;color:#0f172a">₹986.75</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">TATACONSUM</td>
               <td style="color:#64748b;font-size:11px">FMCG</td>
               <td><span title="Inna:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,119.70</td>
+              <td style="font-weight:600;color:#0f172a">₹1,122.70</td>
               <td style="color:#64748b;font-size:11px">Inna</td>
             </tr><tr>
               <td style="font-weight:700;color:#0f172a">GPPL</td>
               <td style="color:#64748b;font-size:11px">Ports</td>
               <td><span title="Inna:WATCH" style="background:#d97706;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">I</span><span title="Pham:BUY" style="background:#2563eb;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">P</span><span title="Cianni:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">C</span><span title="Unger:NO_SIGNAL" style="background:#cbd5e1;color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">U</span></td>
-              <td style="font-weight:600;color:#0f172a">₹153.74</td>
+              <td style="font-weight:600;color:#0f172a">₹153.60</td>
               <td style="color:#64748b;font-size:11px">Pham</td>
             </tr></tbody></table>
 </div>
@@ -1407,8 +1416,8 @@ tr:last-child td{border-bottom:none}
             <tr>
               <td><div style="font-weight:800;color:#0f172a">DATAPATTNS</div>
                   <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹585</div></td>
-              <td style="font-weight:700;color:#0f172a">₹4,523</td>
-              <td style="font-weight:800;color:#15803d">+673.2%</td>
+              <td style="font-weight:700;color:#0f172a">₹4,519</td>
+              <td style="font-weight:800;color:#15803d">+672.5%</td>
               <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
                   <span style="color:#94a3b8;font-size:10px;font-weight:400">₹4,412</span></td>
               <td><span style="background:#dcfce7;
@@ -1418,10 +1427,10 @@ tr:last-child td{border-bottom:none}
             <tr>
               <td><div style="font-weight:800;color:#0f172a">KAYNES</div>
                   <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹587</div></td>
-              <td style="font-weight:700;color:#0f172a">₹3,294</td>
-              <td style="font-weight:800;color:#15803d">+461.2%</td>
+              <td style="font-weight:700;color:#0f172a">₹3,289</td>
+              <td style="font-weight:800;color:#15803d">+460.4%</td>
               <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹3,168</span></td>
+                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹3,167</span></td>
               <td><span style="background:#dcfce7;
                    color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">HOLD</span>
                   </td>
@@ -1430,7 +1439,7 @@ tr:last-child td{border-bottom:none}
               <td><div style="font-weight:800;color:#0f172a">IREDA</div>
                   <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹32</div></td>
               <td style="font-weight:700;color:#0f172a">₹129</td>
-              <td style="font-weight:800;color:#15803d">+302.6%</td>
+              <td style="font-weight:800;color:#15803d">+301.8%</td>
               <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
                   <span style="color:#94a3b8;font-size:10px;font-weight:400">₹125</span></td>
               <td><span style="background:#dcfce7;
@@ -1441,7 +1450,7 @@ tr:last-child td{border-bottom:none}
               <td><div style="font-weight:800;color:#0f172a">DOMS</div>
                   <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹790</div></td>
               <td style="font-weight:700;color:#0f172a">₹2,252</td>
-              <td style="font-weight:800;color:#15803d">+185.0%</td>
+              <td style="font-weight:800;color:#15803d">+185.1%</td>
               <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
                   <span style="color:#94a3b8;font-size:10px;font-weight:400">₹2,220</span></td>
               <td><span style="background:#dcfce7;
@@ -1462,8 +1471,8 @@ tr:last-child td{border-bottom:none}
             <tr>
               <td><div style="font-weight:800;color:#0f172a">WAAREEENER</div>
                   <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹1503</div></td>
-              <td style="font-weight:700;color:#0f172a">₹3,039</td>
-              <td style="font-weight:800;color:#15803d">+102.2%</td>
+              <td style="font-weight:700;color:#0f172a">₹3,036</td>
+              <td style="font-weight:800;color:#15803d">+102.0%</td>
               <td style="font-size:11px;color:#dc2626;font-weight:700">↓ Below 20DMA<br>
                   <span style="color:#94a3b8;font-size:10px;font-weight:400">₹3,060</span></td>
               <td><span style="background:#fef9c3;
@@ -1473,8 +1482,8 @@ tr:last-child td{border-bottom:none}
             <tr>
               <td><div style="font-weight:800;color:#0f172a">TATATECH</div>
                   <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹500</div></td>
-              <td style="font-weight:700;color:#0f172a">₹752</td>
-              <td style="font-weight:800;color:#15803d">+50.3%</td>
+              <td style="font-weight:700;color:#0f172a">₹751</td>
+              <td style="font-weight:800;color:#15803d">+50.2%</td>
               <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
                   <span style="color:#94a3b8;font-size:10px;font-weight:400">₹742</span></td>
               <td><span style="background:#dcfce7;
@@ -1606,9 +1615,9 @@ tr:last-child td{border-bottom:none}
 </div>
 
 <script>
-const EQ_DATA   = [{"name": "ICICIBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "BUY"}, "agreeing": "Pham, Cianni, Unger", "entry": 1400.9, "sl": 1368.55, "t1": 1449.43, "t2": 1497.96, "t3": 1546.48, "rr": 1.5, "days_t1": 5, "days_t2": 10, "days_t3": 14, "pct_t1": 3.5, "pct_t2": 6.9, "pct_t3": 10.4, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "15 Jul"}, {"name": "SBIN", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "WATCH", "Pham": "STRONG_BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Pham, Cianni, Unger", "entry": 1051.1, "sl": 1028.77, "t1": 1084.6, "t2": 1118.1, "t3": 1151.59, "rr": 1.5, "days_t1": 6, "days_t2": 11, "days_t3": 17, "pct_t1": 3.2, "pct_t2": 6.4, "pct_t3": 9.6, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "20 Jul"}, {"name": "KOTAKBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "BUY"}, "agreeing": "Pham, Cianni, Unger", "entry": 412.4, "sl": 403.45, "t1": 425.83, "t2": 439.26, "t3": 452.68, "rr": 1.5, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 3.3, "pct_t2": 6.5, "pct_t3": 9.8, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "17 Jul"}, {"name": "LT", "sector": "Infra", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "WATCH", "Pham": "STRONG_BUY", "Cianni": "STRONG_BUY", "Unger": "BUY"}, "agreeing": "Pham, Cianni, Unger", "entry": 4253.7, "sl": 4156.87, "t1": 4398.94, "t2": 4544.18, "t3": 4689.43, "rr": 1.5, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.4, "pct_t2": 6.8, "pct_t3": 10.2, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "MARUTI", "sector": "Auto", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "STRONG_BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 13876.0, "sl": 13532.37, "t1": 14305.54, "t2": 14735.08, "t3": 15164.62, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.1, "pct_t2": 6.2, "pct_t3": 9.3, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "PAGEIND", "sector": "Apparel", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 40800.0, "sl": 39548.57, "t1": 42364.29, "t2": 43928.58, "t3": 45492.87, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.8, "pct_t2": 7.7, "pct_t3": 11.5, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "STLTECH", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 613.35, "sl": 569.31, "t1": 668.4, "t2": 723.45, "t3": 778.5, "rr": 1.25, "days_t1": 4, "days_t2": 7, "days_t3": 14, "pct_t1": 9.0, "pct_t2": 18.0, "pct_t3": 26.9, "date_t1": "01 Jul", "date_t2": "06 Jul", "date_t3": "15 Jul"}, {"name": "CLEAN", "sector": "Energy", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "NO_SIGNAL", "Unger": "BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 789.5, "sl": 756.38, "t1": 830.9, "t2": 872.3, "t3": 913.7, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 5.2, "pct_t2": 10.5, "pct_t3": 15.7, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "ASIANPAINT", "sector": "Paint", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 2663.9, "sl": 2602.62, "t1": 2740.51, "t2": 2817.11, "t3": 2893.72, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 17, "pct_t1": 2.9, "pct_t2": 5.8, "pct_t3": 8.6, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "20 Jul"}, {"name": "TITAN", "sector": "Consumer", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "WATCH", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "agreeing": "Pham, Unger", "entry": 4260.6, "sl": 4144.45, "t1": 4434.82, "t2": 4609.04, "t3": 4783.27, "rr": 1.5, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.1, "pct_t2": 8.2, "pct_t3": 12.3, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "DIXON", "sector": "Electronics", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 12208.0, "sl": 11751.4, "t1": 12778.75, "t2": 13349.5, "t3": 13920.25, "rr": 1.25, "days_t1": 4, "days_t2": 8, "days_t3": 14, "pct_t1": 4.7, "pct_t2": 9.4, "pct_t3": 14.0, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "15 Jul"}, {"name": "POLYCAB", "sector": "Cable", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 9596.5, "sl": 9338.06, "t1": 9919.56, "t2": 10242.61, "t3": 10565.67, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.4, "pct_t2": 6.7, "pct_t3": 10.1, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "TATACOMM", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1997.6, "sl": 1904.35, "t1": 2114.16, "t2": 2230.73, "t3": 2347.3, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 17, "pct_t1": 5.8, "pct_t2": 11.7, "pct_t3": 17.5, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "20 Jul"}, {"name": "GRANULES", "sector": "Pharma", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 765.1, "sl": 734.46, "t1": 803.39, "t2": 841.69, "t3": 879.99, "rr": 1.25, "days_t1": 7, "days_t2": 13, "days_t3": 19, "pct_t1": 5.0, "pct_t2": 10.0, "pct_t3": 15.0, "date_t1": "06 Jul", "date_t2": "14 Jul", "date_t3": "22 Jul"}, {"name": "RELIANCE", "sector": "Energy", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "agreeing": "Inna, Pham", "entry": 1321.8, "sl": 1289.57, "t1": 1362.09, "t2": 1402.38, "t3": 1442.67, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.0, "pct_t2": 6.1, "pct_t3": 9.1, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "BHARTIARTL", "sector": "Telecom", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1864.2, "sl": 1822.73, "t1": 1916.04, "t2": 1967.88, "t3": 2019.72, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 14, "pct_t1": 2.8, "pct_t2": 5.6, "pct_t3": 8.3, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "15 Jul"}, {"name": "COFORGE", "sector": "IT", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1494.0, "sl": 1438.0, "t1": 1564.01, "t2": 1634.01, "t3": 1704.02, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.7, "pct_t2": 9.4, "pct_t3": 14.1, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "DMART", "sector": "Retail", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 4306.0, "sl": 4180.89, "t1": 4462.39, "t2": 4618.78, "t3": 4775.17, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.6, "pct_t2": 7.3, "pct_t3": 10.9, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "ROUTE", "sector": "Logistics", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 529.7, "sl": 509.2, "t1": 555.32, "t2": 580.94, "t3": 606.56, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.7, "pct_t3": 14.5, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}];
-const SEC_DATA  = {"labels": ["Banking", "Infra", "Auto", "Apparel", "Telecom", "Energy", "Paint", "Consumer", "Electronics", "Cable", "Pharma", "IT", "Retail", "Logistics"], "data": [3, 1, 1, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1]};
-const HIST_DATA = {"labels": ["2026-06-24", "2026-06-25"], "sb": [15, 14], "b": [3, 5], "w": [21, 20]};
+const EQ_DATA   = [{"name": "ICICIBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "BUY"}, "agreeing": "Pham, Cianni, Unger", "entry": 1397.9, "sl": 1365.55, "t1": 1446.43, "t2": 1494.96, "t3": 1543.48, "rr": 1.5, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.5, "pct_t2": 6.9, "pct_t3": 10.4, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "SBIN", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "BUY", "Unger": "BUY"}, "agreeing": "Pham, Cianni, Unger", "entry": 1049.9, "sl": 1027.57, "t1": 1083.4, "t2": 1116.9, "t3": 1150.39, "rr": 1.5, "days_t1": 6, "days_t2": 11, "days_t3": 17, "pct_t1": 3.2, "pct_t2": 6.4, "pct_t3": 9.6, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "20 Jul"}, {"name": "KOTAKBANK", "sector": "Banking", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "STRONG_BUY", "Unger": "BUY"}, "agreeing": "Pham, Cianni, Unger", "entry": 412.35, "sl": 403.4, "t1": 425.78, "t2": 439.21, "t3": 452.63, "rr": 1.5, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 3.3, "pct_t2": 6.5, "pct_t3": 9.8, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "17 Jul"}, {"name": "MARUTI", "sector": "Auto", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "STRONG_BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 13868.0, "sl": 13529.37, "t1": 14297.54, "t2": 14727.08, "t3": 15156.62, "rr": 1.27, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.1, "pct_t2": 6.2, "pct_t3": 9.3, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "PAGEIND", "sector": "Apparel", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Inna, Pham, Cianni", "entry": 40810.0, "sl": 39558.57, "t1": 42374.29, "t2": 43938.58, "t3": 45502.87, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.8, "pct_t2": 7.7, "pct_t3": 11.5, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "GRANULES", "sector": "Pharma", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 760.55, "sl": 729.67, "t1": 799.14, "t2": 837.74, "t3": 876.33, "rr": 1.25, "days_t1": 6, "days_t2": 12, "days_t3": 18, "pct_t1": 5.1, "pct_t2": 10.1, "pct_t3": 15.2, "date_t1": "03 Jul", "date_t2": "13 Jul", "date_t3": "21 Jul"}, {"name": "STLTECH", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 613.35, "sl": 569.31, "t1": 668.4, "t2": 723.45, "t3": 778.5, "rr": 1.25, "days_t1": 4, "days_t2": 7, "days_t3": 14, "pct_t1": 9.0, "pct_t2": 18.0, "pct_t3": 26.9, "date_t1": "01 Jul", "date_t2": "06 Jul", "date_t3": "15 Jul"}, {"name": "CLEAN", "sector": "Energy", "signal": "STRONG_BUY", "buy_votes": 3, "strategies": {"Inna": "STRONG_BUY", "Pham": "STRONG_BUY", "Cianni": "NO_SIGNAL", "Unger": "BUY"}, "agreeing": "Inna, Pham, Unger", "entry": 789.45, "sl": 756.33, "t1": 830.85, "t2": 872.25, "t3": 913.65, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 5.2, "pct_t2": 10.5, "pct_t3": 15.7, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "ASIANPAINT", "sector": "Paint", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 2662.6, "sl": 2601.12, "t1": 2739.2, "t2": 2815.81, "t3": 2892.41, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 17, "pct_t1": 2.9, "pct_t2": 5.8, "pct_t3": 8.6, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "20 Jul"}, {"name": "TITAN", "sector": "Consumer", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "WATCH", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "BUY"}, "agreeing": "Pham, Unger", "entry": 4259.4, "sl": 4143.25, "t1": 4433.62, "t2": 4607.84, "t3": 4782.07, "rr": 1.5, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.1, "pct_t2": 8.2, "pct_t3": 12.3, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "DIXON", "sector": "Electronics", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "STRONG_BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 12182.0, "sl": 11725.4, "t1": 12752.75, "t2": 13323.5, "t3": 13894.25, "rr": 1.25, "days_t1": 4, "days_t2": 8, "days_t3": 14, "pct_t1": 4.7, "pct_t2": 9.4, "pct_t3": 14.1, "date_t1": "01 Jul", "date_t2": "07 Jul", "date_t3": "15 Jul"}, {"name": "POLYCAB", "sector": "Cable", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 9582.5, "sl": 9324.06, "t1": 9905.56, "t2": 10228.61, "t3": 10551.67, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.4, "pct_t2": 6.7, "pct_t3": 10.1, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "COFORGE", "sector": "IT", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1495.6, "sl": 1439.6, "t1": 1565.61, "t2": 1635.61, "t3": 1705.62, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.7, "pct_t2": 9.4, "pct_t3": 14.0, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "TATACOMM", "sector": "Telecom", "signal": "STRONG_BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "STRONG_BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1997.2, "sl": 1903.95, "t1": 2113.76, "t2": 2230.33, "t3": 2346.89, "rr": 1.25, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 5.8, "pct_t2": 11.7, "pct_t3": 17.5, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "17 Jul"}, {"name": "RELIANCE", "sector": "Energy", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "NO_SIGNAL"}, "agreeing": "Inna, Pham", "entry": 1320.5, "sl": 1288.27, "t1": 1360.79, "t2": 1401.08, "t3": 1441.37, "rr": 1.25, "days_t1": 5, "days_t2": 10, "days_t3": 15, "pct_t1": 3.1, "pct_t2": 6.1, "pct_t3": 9.2, "date_t1": "02 Jul", "date_t2": "09 Jul", "date_t3": "16 Jul"}, {"name": "BHARTIARTL", "sector": "Telecom", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 1864.1, "sl": 1822.63, "t1": 1915.94, "t2": 1967.78, "t3": 2019.62, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 2.8, "pct_t2": 5.6, "pct_t3": 8.3, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "LT", "sector": "Infra", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "WATCH", "Pham": "BUY", "Cianni": "BUY", "Unger": "WATCH"}, "agreeing": "Pham, Cianni", "entry": 4237.7, "sl": 4140.87, "t1": 4382.94, "t2": 4528.18, "t3": 4673.43, "rr": 1.5, "days_t1": 6, "days_t2": 11, "days_t3": 16, "pct_t1": 3.4, "pct_t2": 6.9, "pct_t3": 10.3, "date_t1": "03 Jul", "date_t2": "10 Jul", "date_t3": "17 Jul"}, {"name": "ATUL", "sector": "Chemicals", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "NO_SIGNAL"}, "agreeing": "Inna, Pham", "entry": 6609.0, "sl": 6446.87, "t1": 6811.66, "t2": 7014.33, "t3": 7216.99, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.1, "pct_t2": 6.1, "pct_t3": 9.2, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "DMART", "sector": "Retail", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "WATCH", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 4306.9, "sl": 4181.79, "t1": 4463.29, "t2": 4619.68, "t3": 4776.07, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 3.6, "pct_t2": 7.3, "pct_t3": 10.9, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}, {"name": "ROUTE", "sector": "Logistics", "signal": "BUY", "buy_votes": 2, "strategies": {"Inna": "BUY", "Pham": "BUY", "Cianni": "NO_SIGNAL", "Unger": "WATCH"}, "agreeing": "Inna, Pham", "entry": 529.35, "sl": 508.85, "t1": 554.97, "t2": 580.59, "t3": 606.21, "rr": 1.25, "days_t1": 5, "days_t2": 9, "days_t3": 14, "pct_t1": 4.8, "pct_t2": 9.7, "pct_t3": 14.5, "date_t1": "02 Jul", "date_t2": "08 Jul", "date_t3": "15 Jul"}];
+const SEC_DATA  = {"labels": ["Banking", "Auto", "Apparel", "Pharma", "Telecom", "Energy", "Paint", "Consumer", "Electronics", "Cable", "IT", "Infra", "Chemicals", "Retail", "Logistics"], "data": [3, 1, 1, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1]};
+const HIST_DATA = {"labels": ["2026-06-24", "2026-06-25"], "sb": [15, 14], "b": [3, 6], "w": [21, 19]};
 
 /* ─── Charts ─── */
 Chart.defaults.color = '#94a3b8';
@@ -1763,6 +1772,114 @@ document.getElementById('goalModal').addEventListener('click', function(e){
 });
 
 renderGoal();
+
+/* ─── Position Tracker ─── */
+let positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
+
+function savePositions(){
+  localStorage.setItem('nse_positions', JSON.stringify(positions));
+}
+
+function markBought(name, entry, sl, t1, t2, votes){
+  if(positions.find(p=>p.name===name)){
+    toast('Already tracking '+name, 2000);
+    return;
+  }
+  positions.push({
+    name, entry:parseFloat(entry), sl:parseFloat(sl),
+    t1:parseFloat(t1), t2:parseFloat(t2),
+    votes_at_buy: votes,
+    bought_at: new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})
+  });
+  savePositions();
+  renderPositions();
+  toast('✅ '+name+' added to My Positions', 3000);
+  const btn = document.getElementById('btn-'+name);
+  if(btn){ btn.textContent='✅ TRACKING'; btn.style.background='#15803d'; }
+}
+
+function removePosition(name){
+  positions = positions.filter(p=>p.name!==name);
+  savePositions();
+  renderPositions();
+  const btn = document.getElementById('btn-'+name);
+  if(btn){ btn.textContent='📌 I BOUGHT'; btn.style.background='#4f46e5'; }
+}
+
+function clearAllPositions(){
+  if(!confirm('Remove all tracked positions?')) return;
+  positions=[];
+  savePositions();
+  renderPositions();
+}
+
+function renderPositions(){
+  const panel = document.getElementById('positionsPanel');
+  const box   = document.getElementById('positionCards');
+  if(!positions.length){ panel.style.display='none'; return; }
+  panel.style.display='block';
+
+  box.innerHTML = positions.map(p=>{
+    const cur = SCAN_DATA[p.name] || {};
+    const curSig   = cur.signal || 'NO_SIGNAL';
+    const curVotes = cur.buy_votes || 0;
+    const curSl    = cur.sl   || p.sl;
+    const curT1    = cur.t1   || p.t1;
+
+    // Decision logic based on all MCP signals
+    let verdict, vcolor, vbg, vicon;
+    if(curVotes >= 3 && (curSig==='STRONG_BUY'||curSig==='BUY')){
+      verdict='HOLD — Signal still strong. Stick to your plan.';
+      vcolor='#15803d'; vbg='#f0fdf4'; vicon='✅';
+    } else if(curVotes===2){
+      verdict='MONITOR — 2 of 4 agree. Watch closely. Keep SL tight.';
+      vcolor='#b45309'; vbg='#fffbeb'; vicon='⚠️';
+    } else if(curVotes<=1 || curSig==='NO_SIGNAL'){
+      verdict='CONSIDER EXITING — Signal has weakened. Most MCPs no longer agree.';
+      vcolor='#dc2626'; vbg='#fff1f2'; vicon='🔴';
+    } else {
+      verdict='HOLD — Watching.';
+      vcolor='#2563eb'; vbg='#eff6ff'; vicon='🔵';
+    }
+
+    const slPct = p.entry>0 ? Math.round((p.sl - p.entry)/p.entry*100) : 0;
+
+    return `<div style="background:#1e293b;border-radius:12px;padding:14px;position:relative">
+      <button onclick="removePosition('${p.name}')" style="position:absolute;top:10px;right:10px;background:transparent;border:none;color:#475569;cursor:pointer;font-size:14px">✕</button>
+      <div style="font-size:15px;font-weight:900;color:#fff;margin-bottom:2px">${p.name}</div>
+      <div style="font-size:10px;color:#64748b;margin-bottom:10px">Bought ${p.bought_at} · ${p.votes_at_buy}/4 agreed at entry</div>
+
+      <div style="background:${vbg};border-radius:8px;padding:8px 12px;margin-bottom:10px">
+        <div style="font-size:12px;font-weight:900;color:${vcolor}">${vicon} ${verdict}</div>
+        <div style="font-size:10px;color:${vcolor};margin-top:3px;opacity:.8">Current signal: ${curSig.replace('_',' ')} (${curVotes}/4 MCPs agree)</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+        <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+          <div style="font-size:9px;color:#64748b;font-weight:700">YOUR ENTRY</div>
+          <div style="font-size:14px;font-weight:900;color:#fff">₹${p.entry}</div>
+        </div>
+        <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+          <div style="font-size:9px;color:#dc2626;font-weight:700">STOP LOSS</div>
+          <div style="font-size:14px;font-weight:900;color:#dc2626">₹${p.sl}</div>
+          <div style="font-size:9px;color:#475569">${slPct}%</div>
+        </div>
+        <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+          <div style="font-size:9px;color:#15803d;font-weight:700">TARGET 1</div>
+          <div style="font-size:14px;font-weight:900;color:#15803d">₹${p.t1}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Update buy buttons for tracked stocks
+  positions.forEach(p=>{
+    const btn = document.getElementById('btn-'+p.name);
+    if(btn){ btn.textContent='✅ TRACKING'; btn.style.background='#15803d'; }
+  });
+}
+
+renderPositions();
 
 /* ─── Refresh ─── */
 function doRefresh(btn){
