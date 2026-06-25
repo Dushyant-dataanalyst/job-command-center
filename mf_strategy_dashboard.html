@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MF Strategy Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0f1e;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px}
+.wrap{max-width:1500px;margin:0 auto;padding:16px}
+.hdr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+     background:linear-gradient(135deg,#1e2d4a 0%,#0f1929 100%);
+     border:1px solid #2d3f5e;border-radius:14px;padding:16px 22px;margin-bottom:14px;
+     box-shadow:0 4px 24px rgba(0,0,0,.4)}
+.hdr h1{font-size:19px;font-weight:900;color:#f1f5f9;letter-spacing:-.4px}
+.hdr h1 em{font-style:normal;color:#38bdf8}
+.hdr-sub{font-size:11px;color:#94a3b8;margin-top:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.live-pill{display:inline-flex;align-items:center;gap:5px;background:#0d2d1f;border:1px solid #166534;
+           border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;color:#4ade80}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hdr-btns{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all .15s}
+.btn-primary{background:linear-gradient(135deg,#38bdf8,#0ea5e9);color:#0a0f1e}
+.btn-primary:hover{box-shadow:0 4px 16px rgba(56,189,248,.4);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:#94a3b8;border:1px solid #2d3f5e}
+.btn-outline:hover{border-color:#38bdf8;color:#38bdf8}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:14px}
+.kpi{background:#111827;border:1px solid #1f2d45;border-radius:12px;padding:14px 16px;border-top:3px solid var(--c,#38bdf8)}
+.kpi-label{font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.kpi-val{font-size:24px;font-weight:900;color:var(--c,#f1f5f9);line-height:1}
+.kpi-sub{font-size:10px;color:#475569;margin-top:5px}
+.charts{display:grid;grid-template-columns:1.5fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:900px){.charts{grid-template-columns:1fr}}
+.chart-card{background:#111827;border:1px solid #1f2d45;border-radius:12px;padding:16px}
+.chart-ttl{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.chart-ttl::before{content:'';width:3px;height:12px;border-radius:2px;background:var(--a,#38bdf8);display:block}
+canvas{max-height:210px}
+.tabs{display:flex;gap:0;margin-bottom:14px;background:#111827;border:1px solid #1f2d45;border-radius:10px;overflow:hidden;width:fit-content;max-width:100%;overflow-x:auto}
+.tab{padding:9px 16px;cursor:pointer;font-size:12px;font-weight:700;color:#64748b;border-right:1px solid #1f2d45;transition:all .12s;white-space:nowrap;flex-shrink:0}
+.tab:last-child{border-right:none}
+.tab.active{background:linear-gradient(135deg,#0ea5e9,#38bdf8);color:#0a0f1e}
+.tab:not(.active):hover{background:#1a2540;color:#e2e8f0}
+.panel{display:none}.panel.active{display:block}
+.sec{background:#111827;border:1px solid #1f2d45;border-radius:12px;padding:16px;margin-bottom:14px;overflow-x:auto}
+.sec-ttl{font-size:13px;font-weight:800;color:#f1f5f9;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.sec-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th{padding:9px 10px;text-align:left;font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #1f2d45;white-space:nowrap;background:#111827;cursor:pointer;user-select:none}
+th:hover{color:#94a3b8}
+td{padding:10px 10px;border-bottom:1px solid #1a2540;vertical-align:middle}
+tr:hover td{background:#141d2e}
+tr:last-child td{border-bottom:none}
+.sig-sacc{background:#0c2d1a;color:#4ade80;border:1px solid #166534;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700;white-space:nowrap;display:inline-block}
+.sig-acc{background:#0a1f30;color:#38bdf8;border:1px solid #0369a1;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700;white-space:nowrap;display:inline-block}
+.sig-hold{background:#1c1a08;color:#fbbf24;border:1px solid #92400e;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700;white-space:nowrap;display:inline-block}
+.sig-review{background:#2d0d0d;color:#f87171;border:1px solid #7f1d1d;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700;white-space:nowrap;display:inline-block}
+.lens{border-radius:4px;padding:2px 6px;font-size:10px;font-weight:800;margin:1px;display:inline-block}
+.ly{background:#166534;color:#4ade80}.ln{background:#7f1d1d;color:#f87171}.lw{background:#78350f;color:#fbbf24}
+.ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px}
+.ic{background:#0f1929;border:1px solid #1f2d45;border-radius:10px;padding:14px}
+.ic h3{font-size:12px;font-weight:800;color:#38bdf8;margin-bottom:8px}
+.ic p,.ic li{font-size:11px;color:#94a3b8;line-height:1.7}
+.ic ul{padding-left:14px;margin-top:6px}
+.ic li{margin-bottom:3px}
+.tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:10px;font-weight:700;margin-right:4px}
+.tg{background:#0c2d1a;color:#4ade80}.tr{background:#2d0d0d;color:#f87171}.tb{background:#0a1f30;color:#38bdf8}.ty{background:#1c1a08;color:#fbbf24}
+.ab{height:8px;border-radius:4px;margin-bottom:6px;overflow:hidden;display:flex;background:#1f2d45}
+.abs{height:100%}
+.toast{position:fixed;bottom:20px;right:20px;background:#0f172a;color:#e2e8f0;border:1px solid #2d3f5e;
+       border-radius:10px;padding:12px 18px;font-size:12px;font-weight:600;
+       box-shadow:0 4px 20px rgba(0,0,0,.5);transform:translateY(60px);opacity:0;transition:all .3s;z-index:999}
+.toast.show{transform:translateY(0);opacity:1}
+.footer{text-align:center;color:#1e3a5f;font-size:10px;padding:16px 0;line-height:2}
+@media(max-width:640px){
+  .wrap{padding:8px}.hdr{flex-direction:column;align-items:flex-start}
+  .kpis{grid-template-columns:repeat(2,1fr)}.kpi-val{font-size:18px}
+  .charts{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hdr">
+  <div>
+    <h1><em>MF Strategy</em> Dashboard</h1>
+    <div class="hdr-sub">
+      <span class="live-pill"><span class="live-dot"></span>NAV: 02 Jun 2026</span>
+      &nbsp;·&nbsp; Client <strong>TC0390</strong> &nbsp;·&nbsp; 10 Funds
+      &nbsp;·&nbsp; <span style="color:#fbbf24;font-weight:700">⚡ Personal analysis only — not SEBI advice</span>
+    </div>
+  </div>
+  <div class="hdr-btns">
+    <button class="btn btn-outline" onclick="window.print()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print
+    </button>
+    <button class="btn btn-primary" onclick="showToast('NAV data from Zerodha · 02 Jun 2026')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Refresh NAV
+    </button>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="kpi" style="--c:#38bdf8"><div class="kpi-label">Total Invested</div><div class="kpi-val">₹9.25L</div><div class="kpi-sub">Across 10 funds</div></div>
+  <div class="kpi" style="--c:#4ade80"><div class="kpi-label">Current Value</div><div class="kpi-val">₹10.44L</div><div class="kpi-sub">As on 02 Jun 2026</div></div>
+  <div class="kpi" style="--c:#a78bfa"><div class="kpi-label">Unrealized P&amp;L</div><div class="kpi-val">+₹1.19L</div><div class="kpi-sub">Absolute gain</div></div>
+  <div class="kpi" style="--c:#4ade80"><div class="kpi-label">Overall Return</div><div class="kpi-val">+12.84%</div><div class="kpi-sub">Absolute (not XIRR)</div></div>
+  <div class="kpi" style="--c:#f472b6"><div class="kpi-label">ELSS Invested</div><div class="kpi-val">₹4.39L</div><div class="kpi-sub">80C tax shield</div></div>
+  <div class="kpi" style="--c:#fbbf24"><div class="kpi-label">Best Performer</div><div class="kpi-val" style="font-size:15px">Nippon ELSS</div><div class="kpi-sub">+62.9% return</div></div>
+</div>
+
+<div class="charts">
+  <div class="chart-card" style="--a:#38bdf8">
+    <div class="chart-ttl">Fund Performance — Unrealized Return %</div>
+    <canvas id="perfChart"></canvas>
+  </div>
+  <div class="chart-card" style="--a:#a78bfa">
+    <div class="chart-ttl">Category Allocation — Invested Value</div>
+    <canvas id="allocChart"></canvas>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('all',this)">📊 All Funds (10)</div>
+  <div class="tab" onclick="showTab('acc',this)">🚀 Accumulate (4)</div>
+  <div class="tab" onclick="showTab('hold',this)">✅ Hold (4)</div>
+  <div class="tab" onclick="showTab('review',this)">⚠ Review (2)</div>
+  <div class="tab" onclick="showTab('rebalance',this)">⚖ Rebalance</div>
+  <div class="tab" onclick="showTab('tax',this)">🧾 Tax Harvest</div>
+  <div class="tab" onclick="showTab('returns',this)">📈 Returns & Intl</div>
+</div>
+
+<!-- ALL FUNDS -->
+<div id="all" class="panel active">
+<div class="sec">
+  <div class="sec-ttl"><span class="sec-dot" style="background:#38bdf8"></span>Holdings — Strategy Signals
+    <span style="margin-left:auto;font-size:10px;color:#475569;font-weight:400">M=Momentum · V=Valuation · Q=Quality · R=Risk-Reward</span>
+  </div>
+  <table>
+    <thead><tr>
+      <th>Fund</th><th>Category</th><th>Signal</th><th>M V Q R</th>
+      <th>Invested</th><th>Current</th><th>P&amp;L ₹</th><th>Return%</th><th>Next Action</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">HDFC Mid Cap Fund</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#0a1f30;color:#38bdf8;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">Mid Cap</span></td>
+      <td><span class="sig-sacc">🚀 Strong Acc 4/4</span></td>
+      <td><span class="lens ly" title="Momentum +30%">M</span><span class="lens ly" title="Mid cap fair value">V</span><span class="lens ly" title="HDFC top AMC">Q</span><span class="lens ly" title="Beats Motilal by 35pp">R</span></td>
+      <td style="color:#94a3b8">₹27,499</td><td style="color:#4ade80;font-weight:700">₹35,744</td>
+      <td style="color:#4ade80;font-weight:700">+₹8,245</td><td style="color:#4ade80;font-weight:800">+30.0%</td>
+      <td style="font-size:11px;color:#38bdf8;font-weight:700">↑ Increase SIP</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">Parag Parikh Flexi Cap</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#0c2d1a;color:#4ade80;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">Flexi Cap</span></td>
+      <td><span class="sig-acc">↑ Accumulate 3/4</span></td>
+      <td><span class="lens ln" title="NAV slightly negative">M</span><span class="lens ly" title="Global value play">V</span><span class="lens ly" title="Best-in-class manager">Q</span><span class="lens ly" title="Tiny position — must build">R</span></td>
+      <td style="color:#94a3b8">₹1,000</td><td style="color:#f87171;font-weight:700">₹977</td>
+      <td style="color:#f87171;font-weight:700">-₹23</td><td style="color:#f87171;font-weight:800">-2.28%</td>
+      <td style="font-size:11px;color:#38bdf8;font-weight:700">↑ Start ₹10K SIP</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">UTI Nifty200 Momentum 30</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#1c1a08;color:#fbbf24;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">Index/Momentum</span></td>
+      <td><span class="sig-acc">↑ Accumulate 3/4</span></td>
+      <td><span class="lens ly" title="Momentum factor works long-term">M</span><span class="lens ly" title="Low cost passive">V</span><span class="lens ly" title="UTI solid AMC">Q</span><span class="lens lw" title="Higher volatility than plain Nifty">R</span></td>
+      <td style="color:#94a3b8">₹1,86,985</td><td style="color:#4ade80;font-weight:700">₹1,89,745</td>
+      <td style="color:#4ade80;font-weight:700">+₹2,755</td><td style="color:#4ade80;font-weight:800">+1.47%</td>
+      <td style="font-size:11px;color:#38bdf8;font-weight:700">↑ Continue SIP</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">Nippon India Nifty 50</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#1c1a08;color:#fbbf24;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">Index Fund</span></td>
+      <td><span class="sig-acc">↑ Accumulate 3/4</span></td>
+      <td><span class="lens ln" title="Below cost — dip">M</span><span class="lens ly" title="Nifty at fair value zone">V</span><span class="lens ly" title="Nippon low tracking error">Q</span><span class="lens ly" title="Best SIP target — buy dip">R</span></td>
+      <td style="color:#94a3b8">₹50,097</td><td style="color:#f87171;font-weight:700">₹47,500</td>
+      <td style="color:#f87171;font-weight:700">-₹2,597</td><td style="color:#f87171;font-weight:800">-5.18%</td>
+      <td style="font-size:11px;color:#38bdf8;font-weight:700">↑ Add lump sum</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">Tata ELSS Tax Saver</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#2d0a1f;color:#f472b6;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">ELSS</span></td>
+      <td><span class="sig-hold">✅ Hold 4/4</span></td>
+      <td><span class="lens ly">M</span><span class="lens ly">V</span><span class="lens ly">Q</span><span class="lens ly">R</span></td>
+      <td style="color:#94a3b8">₹3,82,446</td><td style="color:#4ade80;font-weight:700">₹4,64,417</td>
+      <td style="color:#4ade80;font-weight:700">+₹81,972</td><td style="color:#4ade80;font-weight:800">+21.43%</td>
+      <td style="font-size:11px;color:#fbbf24;font-weight:700">⊙ Hold · check lock-in</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">Bandhan ELSS Tax Saver</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#2d0a1f;color:#f472b6;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">ELSS</span></td>
+      <td><span class="sig-hold">✅ Hold 3/4</span></td>
+      <td><span class="lens ly">M</span><span class="lens ly">V</span><span class="lens lw" title="Mid-tier AMC">Q</span><span class="lens ly">R</span></td>
+      <td style="color:#94a3b8">₹48,096</td><td style="color:#4ade80;font-weight:700">₹66,746</td>
+      <td style="color:#4ade80;font-weight:700">+₹18,649</td><td style="color:#4ade80;font-weight:800">+38.77%</td>
+      <td style="font-size:11px;color:#fbbf24;font-weight:700">⊙ Hold · post lock-in switch</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">Nippon India ELSS</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#2d0a1f;color:#f472b6;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">ELSS</span></td>
+      <td><span class="sig-hold">✅ Hold 4/4</span></td>
+      <td><span class="lens ly">M</span><span class="lens ly">V</span><span class="lens ly">Q</span><span class="lens ly">R</span></td>
+      <td style="color:#94a3b8">₹8,018</td><td style="color:#4ade80;font-weight:700">₹13,060</td>
+      <td style="color:#4ade80;font-weight:700">+₹5,043</td><td style="color:#4ade80;font-weight:800">+62.90%</td>
+      <td style="font-size:11px;color:#fbbf24;font-weight:700">⊙ Hold · ELSS star</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">Quant Small Cap Fund</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#0a1f30;color:#38bdf8;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">Small Cap</span></td>
+      <td><span class="sig-hold">✅ Hold 3/4</span></td>
+      <td><span class="lens ly">M</span><span class="lens lw" title="Small caps volatile">V</span><span class="lens ly">Q</span><span class="lens ly">R</span></td>
+      <td style="color:#94a3b8">₹97,496</td><td style="color:#4ade80;font-weight:700">₹1,06,466</td>
+      <td style="color:#4ade80;font-weight:700">+₹8,969</td><td style="color:#4ade80;font-weight:800">+9.20%</td>
+      <td style="font-size:11px;color:#fbbf24;font-weight:700">⊙ Hold · watch SEBI</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">Motilal Oswal Midcap</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#0a1f30;color:#38bdf8;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">Mid Cap</span></td>
+      <td><span class="sig-review">⚠ Review 2/4</span></td>
+      <td><span class="lens ln">M</span><span class="lens lw">V</span><span class="lens ly">Q</span><span class="lens ln" title="HDFC Midcap +35pp ahead">R</span></td>
+      <td style="color:#94a3b8">₹53,297</td><td style="color:#f87171;font-weight:700">₹50,739</td>
+      <td style="color:#f87171;font-weight:700">-₹2,554</td><td style="color:#f87171;font-weight:800">-4.79%</td>
+      <td style="font-size:11px;color:#f87171;font-weight:700">⚠ STP → HDFC MidCap</td>
+    </tr>
+    <tr>
+      <td><div style="font-weight:700;color:#f1f5f9">HDFC Flexi Cap Fund</div><div style="color:#475569;font-size:10px">Direct</div></td>
+      <td><span style="background:#0c2d1a;color:#4ade80;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:700">Flexi Cap</span></td>
+      <td><span class="sig-review">⚠ Review 2/4</span></td>
+      <td><span class="lens ln">M</span><span class="lens lw">V</span><span class="lens ly">Q</span><span class="lens ln" title="PP Flexi Cap is superior">R</span></td>
+      <td style="color:#94a3b8">₹70,496</td><td style="color:#f87171;font-weight:700">₹68,831</td>
+      <td style="color:#f87171;font-weight:700">-₹1,666</td><td style="color:#f87171;font-weight:800">-2.36%</td>
+      <td style="font-size:11px;color:#f87171;font-weight:700">⚠ STP → Parag Parikh</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- ACCUMULATE -->
+<div id="acc" class="panel">
+<div class="ig">
+  <div class="ic">
+    <h3>🚀 HDFC Mid Cap — Strong Accumulate</h3>
+    <p><span class="tag tg">+30.0%</span> Best performing active fund in your portfolio. HDFC Mid Cap has beaten your other mid-cap (Motilal) by 35 percentage points in the same category. Mid-cap India tailwind intact with improving earnings cycle.</p>
+    <ul>
+      <li>Increase SIP by ₹3,000–₹5,000/month now</li>
+      <li>Add lump sum on any 5%+ Nifty Midcap 150 dip</li>
+      <li>Target allocation: 15% of portfolio (currently only 3.4%)</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>↑ Parag Parikh Flexi Cap — Must Build</h3>
+    <p><span class="tag tr">₹1,000 invested</span> Criminally underfunded. Parag Parikh is among India's best fund managers with global diversification, value discipline, and zero commission conflict. Your position is a rounding error — target 15% of portfolio.</p>
+    <ul>
+      <li>Start ₹10,000/month SIP immediately</li>
+      <li>Consider ₹50,000 lump sum — the -2.3% dip is a gift</li>
+      <li>This should become your primary flexi cap holding</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>↑ UTI Nifty200 Momentum 30 — Continue</h3>
+    <p><span class="tag tb">₹1.87L invested</span> Momentum factor delivers 3–5% alpha over plain index over 5+ year periods. Only +1.47% now but this is a long-term strategy — short-term underperformance is normal. Your second-largest holding, rightly so.</p>
+    <ul>
+      <li>Continue existing SIP — do not stop on short-term lag</li>
+      <li>Minimum 5-year horizon for momentum factor to play out</li>
+      <li>Pair with Nifty 50 index for core-satellite balance</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>↑ Nippon Nifty 50 — Buy the Dip</h3>
+    <p><span class="tag tr">-5.18% vs cost</span> Your only index fund in loss — which makes it the best SIP target right now. You are buying units cheaper than your average cost. Index dips build long-term wealth.</p>
+    <ul>
+      <li>Add lump sum ₹25,000–₹50,000 now</li>
+      <li>Set NAV alert: if it drops another 3%, add more</li>
+      <li>Target 10–15% portfolio allocation (currently 6.1%)</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- HOLD -->
+<div id="hold" class="panel">
+<div class="ig">
+  <div class="ic">
+    <h3>✅ Tata ELSS — Core Holding</h3>
+    <p><span class="tag tg">+21.4%</span> Your largest holding at ₹3.82L invested (46.6% of portfolio). Performing well. But single-fund concentration this high is a risk — don't add more new money here. Let it compound.</p>
+    <ul>
+      <li>Check 3-year lock-in dates of each SIP instalment in Zerodha Console</li>
+      <li>After lock-in: redirect new ELSS SIPs to Nippon ELSS (better performer)</li>
+      <li>Hold — do not exit. Long-term compounder.</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>✅ Nippon ELSS — Portfolio Star</h3>
+    <p><span class="tag tg">+62.9%</span> Highest return in entire portfolio. Tiny position (₹8K invested) but massive alpha proof. ELSS lock-in means you can't exit anyway — this is a happy problem.</p>
+    <ul>
+      <li>Hold until 3-year ELSS lock-in expires on each unit</li>
+      <li>After lock-in: hold or switch gains into Parag Parikh for diversification</li>
+      <li>Use this as benchmark — any new ELSS must beat this fund</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>✅ Bandhan ELSS — Hold, Then Evaluate</h3>
+    <p><span class="tag tg">+38.77%</span> Excellent return. Bandhan is a mid-tier AMC — good but not the strongest franchise. After your 3-year lock-in expires, compare performance vs Nippon ELSS and Tata ELSS before renewing SIP here.</p>
+    <ul>
+      <li>Hold existing units — great gain, lock-in likely still active</li>
+      <li>Do not start new SIP here — redirect to Nippon ELSS</li>
+      <li>Post lock-in consider switching to stronger AMC ELSS</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>✅ Quant Small Cap — Hold with Eyes Open</h3>
+    <p><span class="tag tg">+9.2%</span> Decent return. Quant AMC faced SEBI front-running inquiry in 2024. The quantitative model still works but AMC-level risk is elevated. Hold, but don't increase allocation beyond current 11.8%.</p>
+    <ul>
+      <li>Hold existing units</li>
+      <li>Cap at current level — do not add more until SEBI matter resolves</li>
+      <li>If new SEBI action announced: start STP to HDFC Mid Cap or Parag Parikh</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- REVIEW -->
+<div id="review" class="panel">
+<div class="ig">
+  <div class="ic">
+    <h3>⚠ Motilal Oswal Midcap — Switch to HDFC Mid Cap</h3>
+    <p><span class="tag tr">-4.79%</span> You hold two mid-cap funds. HDFC Mid Cap is +30% while Motilal is -4.79% — a 35pp gap in the same category. Holding both is redundant overlap with no diversification benefit.</p>
+    <ul>
+      <li><strong style="color:#f1f5f9">Step 1:</strong> Stop SIP in Motilal Oswal Midcap immediately</li>
+      <li><strong style="color:#f1f5f9">Step 2:</strong> Initiate STP to HDFC Mid Cap — ₹10,000/month</li>
+      <li><strong style="color:#f1f5f9">Timeline:</strong> ₹50K balance switches in ~5 months</li>
+      <li><strong style="color:#f1f5f9">Tax note:</strong> Currently in loss — switching now harvests a tax loss to offset your ELSS gains</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>⚠ HDFC Flexi Cap — Switch to Parag Parikh</h3>
+    <p><span class="tag tr">-2.36%</span> You hold two flexi cap funds. Parag Parikh is the gold standard of Indian flexi cap — global diversification, low turnover, value discipline. HDFC Flexi Cap has underperformed its category average.</p>
+    <ul>
+      <li><strong style="color:#f1f5f9">Step 1:</strong> Stop SIP in HDFC Flexi Cap</li>
+      <li><strong style="color:#f1f5f9">Step 2:</strong> Initiate STP to Parag Parikh — ₹10,000/month</li>
+      <li><strong style="color:#f1f5f9">Timeline:</strong> ₹70K balance switches in ~7 months</li>
+      <li><strong style="color:#f1f5f9">Tax note:</strong> -₹1,666 current loss → tax-efficient switch (STCL offset)</li>
+      <li><strong style="color:#f1f5f9">Net result:</strong> Consolidate all flexi cap under Parag Parikh</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- REBALANCE -->
+<div id="rebalance" class="panel">
+<div class="sec">
+  <div class="sec-ttl"><span class="sec-dot" style="background:#a78bfa"></span>Portfolio Rebalancing Blueprint</div>
+
+  <div style="margin-bottom:18px">
+    <div style="font-size:10px;color:#64748b;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Current Allocation (Invested)</div>
+    <div class="ab">
+      <div class="abs" style="width:47.4%;background:#f472b6"></div>
+      <div class="abs" style="width:25.6%;background:#a78bfa"></div>
+      <div class="abs" style="width:10.5%;background:#fbbf24"></div>
+      <div class="abs" style="width:8.7%;background:#38bdf8"></div>
+      <div class="abs" style="width:7.7%;background:#4ade80"></div>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:10px;color:#64748b;margin-top:4px">
+      <span><span style="color:#f472b6">■</span> ELSS 47.4%</span>
+      <span><span style="color:#a78bfa">■</span> Index 25.6%</span>
+      <span><span style="color:#fbbf24">■</span> Small Cap 10.5%</span>
+      <span><span style="color:#38bdf8">■</span> Mid Cap 8.7%</span>
+      <span><span style="color:#4ade80">■</span> Flexi Cap 7.7%</span>
+    </div>
+  </div>
+
+  <div style="margin-bottom:18px">
+    <div style="font-size:10px;color:#64748b;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Target Allocation (Recommended)</div>
+    <div class="ab">
+      <div class="abs" style="width:30%;background:#f472b6"></div>
+      <div class="abs" style="width:25%;background:#a78bfa"></div>
+      <div class="abs" style="width:20%;background:#4ade80"></div>
+      <div class="abs" style="width:15%;background:#38bdf8"></div>
+      <div class="abs" style="width:10%;background:#fbbf24"></div>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:10px;color:#64748b;margin-top:4px">
+      <span><span style="color:#f472b6">■</span> ELSS 30%</span>
+      <span><span style="color:#a78bfa">■</span> Index 25%</span>
+      <span><span style="color:#4ade80">■</span> Flexi Cap 20%</span>
+      <span><span style="color:#38bdf8">■</span> Mid Cap 15%</span>
+      <span><span style="color:#fbbf24">■</span> Small Cap 10%</span>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr>
+      <th>Action</th><th>Exit</th><th>Enter</th><th>Amount</th><th>Method</th><th>Priority</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+      <td><span class="tag tr">Stop + STP</span></td>
+      <td style="color:#f87171">Motilal Midcap</td><td style="color:#4ade80">HDFC Mid Cap</td>
+      <td>₹53,297 over 6M</td><td>STP ₹10K/mo</td>
+      <td style="color:#f87171;font-weight:700">🔴 HIGH</td>
+    </tr>
+    <tr>
+      <td><span class="tag tr">Stop + STP</span></td>
+      <td style="color:#f87171">HDFC Flexi Cap</td><td style="color:#4ade80">Parag Parikh</td>
+      <td>₹70,496 over 7M</td><td>STP ₹10K/mo</td>
+      <td style="color:#f87171;font-weight:700">🔴 HIGH</td>
+    </tr>
+    <tr>
+      <td><span class="tag tg">New SIP</span></td>
+      <td>—</td><td style="color:#4ade80">Parag Parikh</td>
+      <td>₹10,000/month</td><td>Start now</td>
+      <td style="color:#fbbf24;font-weight:700">🟡 MEDIUM</td>
+    </tr>
+    <tr>
+      <td><span class="tag tg">Increase SIP</span></td>
+      <td>—</td><td style="color:#4ade80">HDFC Mid Cap</td>
+      <td>+₹5,000/month</td><td>Modify SIP</td>
+      <td style="color:#fbbf24;font-weight:700">🟡 MEDIUM</td>
+    </tr>
+    <tr>
+      <td><span class="tag tb">Lump Sum</span></td>
+      <td>—</td><td style="color:#4ade80">Nippon Nifty 50</td>
+      <td>₹25,000–₹50,000</td><td>One-time buy</td>
+      <td style="color:#38bdf8;font-weight:700">🔵 LOW</td>
+    </tr>
+    <tr>
+      <td><span class="tag ty">Long Term</span></td>
+      <td style="color:#f87171">Tata ELSS (overweight)</td><td style="color:#4ade80">Nippon ELSS</td>
+      <td>Redirect new ELSS SIP</td><td>After lock-in</td>
+      <td style="color:#94a3b8;font-weight:700">⚪ LONG TERM</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- TAX HARVEST -->
+<div id="tax" class="panel">
+<div class="ig">
+  <div class="ic">
+    <h3>🧾 Tax Loss Harvesting — 3 Opportunities</h3>
+    <p>Three funds currently in loss. Redeeming these books a capital loss that offsets gains elsewhere:</p>
+    <ul>
+      <li><span class="tag tr">-₹2,597</span> Nippon Nifty 50 — STCL or LTCL based on holding period</li>
+      <li><span class="tag tr">-₹2,554</span> Motilal Midcap — Redeem + switch to HDFC Mid Cap = tax harvest + rebalance in one move</li>
+      <li><span class="tag tr">-₹1,666</span> HDFC Flexi Cap — Switch to Parag Parikh = smart harvest</li>
+      <li style="margin-top:4px"><strong style="color:#f1f5f9">Total harvestable loss: -₹6,817</strong> — offsets equivalent gains from ELSS winners</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>💡 LTCG Threshold — Don't Book Gains Yet</h3>
+    <p>Equity LTCG above ₹1.25L/year is taxed at 12.5%. Your total unrealized gain is ₹1,18,793 — just below the free threshold.</p>
+    <ul>
+      <li>FY2026-27 LTCG exemption: ₹1.25L</li>
+      <li>Your gains: ~₹1.19L — just under the limit</li>
+      <li><strong style="color:#f87171">Do NOT redeem winners this FY</strong> — you'd lose the exemption</li>
+      <li>From Apr 2027: book ₹1.25L tax-free, then restart the clock</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>🔒 ELSS Lock-in — Check Zerodha Console</h3>
+    <p>Each ELSS SIP instalment has its own 3-year lock-in date. Go to: Zerodha Console → Reports → Tax P&L → Mutual Funds</p>
+    <ul>
+      <li><span class="tag ty">Bandhan ELSS</span> Avg NAV ₹124.88 — likely purchased ~2022, units unlocking now</li>
+      <li><span class="tag tg">Nippon ELSS</span> Avg NAV ₹87.25 — likely oldest, may be unlocked</li>
+      <li><span class="tag tg">Tata ELSS</span> Avg NAV ₹42.85 — oldest, largely unlocked</li>
+      <li>After unlock: switch to Parag Parikh or plain equity fund if 80C limit met elsewhere</li>
+    </ul>
+  </div>
+  <div class="ic">
+    <h3>📅 Action Calendar Jun–Dec 2026</h3>
+    <ul>
+      <li><span class="tag tr">Jul 2026</span> Stop SIP: Motilal Midcap + HDFC Flexi Cap</li>
+      <li><span class="tag tb">Jul 2026</span> Start STP: Motilal → HDFC Mid Cap (₹10K/mo)</li>
+      <li><span class="tag tb">Jul 2026</span> Start STP: HDFC Flexi → Parag Parikh (₹10K/mo)</li>
+      <li><span class="tag tg">Aug 2026</span> New SIP: Parag Parikh ₹10K/mo + HDFC Mid Cap ₹5K/mo</li>
+      <li><span class="tag ty">Mar 2027</span> ELSS top-up if 80C still needed</li>
+      <li><span class="tag tg">Apr 2027</span> Book ₹1.25L LTCG tax-free from Tata ELSS</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- RETURNS & INTERNATIONAL TAB -->
+<div id="returns" class="panel">
+
+<!-- New Regime Alert -->
+<div style="background:#1c1208;border:1px solid #92400e;border-radius:10px;padding:14px 16px;margin-bottom:14px;display:flex;gap:12px;align-items:flex-start">
+  <div style="font-size:22px;flex-shrink:0">⚡</div>
+  <div>
+    <div style="font-size:13px;font-weight:800;color:#fbbf24;margin-bottom:4px">New Tax Regime Impact on Your Portfolio</div>
+    <div style="font-size:11px;color:#d97706;line-height:1.7">
+      <strong>80C benefit is gone</strong> — no deduction on new ELSS purchases. But your existing ELSS units still grow as <strong>equity funds</strong> (12.5% LTCG after 1yr, not slab rate). You lose the entry benefit, not the exit benefit.
+      &nbsp;·&nbsp; <strong>Redirect freed-up ELSS SIP budget → international + mid-cap funds</strong> instead of locking it in ELSS with no tax reward.
+      &nbsp;·&nbsp; For international FoFs (S&P 500, Nasdaq 100): gains taxed at <strong>income slab rate</strong> — but still worth it for diversification if horizon is 5yr+.
+    </div>
+  </div>
+</div>
+
+<!-- Active vs Benchmark -->
+<div class="sec" style="margin-bottom:14px">
+  <div class="sec-ttl"><span class="sec-dot" style="background:#f472b6"></span>Active vs Benchmark — Are You Really Underperforming?</div>
+  <table>
+    <thead><tr>
+      <th>Fund</th><th>Category</th><th>Your Return</th><th>Category Benchmark</th><th>Alpha Generated</th><th>Verdict</th>
+    </tr></thead>
+    <tbody>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">Nippon India ELSS</td>
+      <td style="color:#94a3b8;font-size:11px">ELSS</td>
+      <td style="color:#4ade80;font-weight:800">+62.90%</td>
+      <td style="color:#64748b">Nifty 50 ~+12%</td>
+      <td style="color:#4ade80;font-weight:800">+50.9pp 🔥</td>
+      <td><span style="color:#4ade80;font-weight:700;font-size:11px">Crushing benchmark</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">Bandhan ELSS</td>
+      <td style="color:#94a3b8;font-size:11px">ELSS</td>
+      <td style="color:#4ade80;font-weight:800">+38.77%</td>
+      <td style="color:#64748b">Nifty 50 ~+12%</td>
+      <td style="color:#4ade80;font-weight:800">+26.8pp 🔥</td>
+      <td><span style="color:#4ade80;font-weight:700;font-size:11px">Crushing benchmark</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">HDFC Mid Cap</td>
+      <td style="color:#94a3b8;font-size:11px">Mid Cap</td>
+      <td style="color:#4ade80;font-weight:800">+30.0%</td>
+      <td style="color:#64748b">Nifty Midcap 150 ~+18%</td>
+      <td style="color:#4ade80;font-weight:800">+12.0pp ✅</td>
+      <td><span style="color:#4ade80;font-weight:700;font-size:11px">Beating benchmark</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">Tata ELSS</td>
+      <td style="color:#94a3b8;font-size:11px">ELSS</td>
+      <td style="color:#4ade80;font-weight:800">+21.43%</td>
+      <td style="color:#64748b">Nifty 50 ~+12%</td>
+      <td style="color:#4ade80;font-weight:800">+9.4pp ✅</td>
+      <td><span style="color:#4ade80;font-weight:700;font-size:11px">Beating benchmark</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">Quant Small Cap</td>
+      <td style="color:#94a3b8;font-size:11px">Small Cap</td>
+      <td style="color:#4ade80;font-weight:800">+9.2%</td>
+      <td style="color:#64748b">Nifty Smallcap 250 ~+15%</td>
+      <td style="color:#f87171;font-weight:800">-5.8pp ⚠</td>
+      <td><span style="color:#fbbf24;font-weight:700;font-size:11px">Lagging — watch</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">UTI Momentum 30</td>
+      <td style="color:#94a3b8;font-size:11px">Index/Factor</td>
+      <td style="color:#4ade80;font-weight:800">+1.47%</td>
+      <td style="color:#64748b">Nifty 200 ~+12%</td>
+      <td style="color:#f87171;font-weight:800">-10.5pp ⚠</td>
+      <td><span style="color:#fbbf24;font-weight:700;font-size:11px">Needs 5yr horizon</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">Parag Parikh</td>
+      <td style="color:#94a3b8;font-size:11px">Flexi Cap</td>
+      <td style="color:#f87171;font-weight:800">-2.28%</td>
+      <td style="color:#64748b">Nifty 500 ~+11%</td>
+      <td style="color:#f87171;font-weight:800">-13.3pp ⚠</td>
+      <td><span style="color:#fbbf24;font-weight:700;font-size:11px">Short-term lag only</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">HDFC Flexi Cap</td>
+      <td style="color:#94a3b8;font-size:11px">Flexi Cap</td>
+      <td style="color:#f87171;font-weight:800">-2.36%</td>
+      <td style="color:#64748b">Nifty 500 ~+11%</td>
+      <td style="color:#f87171;font-weight:800">-13.4pp ❌</td>
+      <td><span style="color:#f87171;font-weight:700;font-size:11px">Exit → Parag Parikh</span></td>
+    </tr>
+    <tr>
+      <td style="font-weight:700;color:#f1f5f9">Motilal Midcap</td>
+      <td style="color:#94a3b8;font-size:11px">Mid Cap</td>
+      <td style="color:#f87171;font-weight:800">-4.79%</td>
+      <td style="color:#64748b">Nifty Midcap 150 ~+18%</td>
+      <td style="color:#f87171;font-weight:800">-22.8pp ❌</td>
+      <td><span style="color:#f87171;font-weight:700;font-size:11px">Exit → HDFC Mid Cap</span></td>
+    </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px;padding:10px 14px;background:#0a0f1e;border-radius:8px;font-size:11px;color:#64748b;line-height:1.7">
+    <strong style="color:#38bdf8">Verdict:</strong> You're NOT underperforming overall. Your ELSS funds are generating exceptional alpha (+9 to +51pp above Nifty 50). The underperformers are Motilal Midcap and HDFC Flexi Cap — which are already flagged for STP. Net portfolio alpha is positive.
+    Benchmarks above are approximate 1-yr returns as of Jun 2026.
+  </div>
+</div>
+
+<!-- Expected Returns -->
+<div class="sec" style="margin-bottom:14px">
+  <div class="sec-ttl"><span class="sec-dot" style="background:#4ade80"></span>Expected Corpus — Current Portfolio + ₹15K/Month SIP</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+    <canvas id="projChart" style="max-height:220px"></canvas>
+    <div>
+      <table style="min-width:unset">
+        <thead><tr>
+          <th>Horizon</th><th>Current Portfolio</th><th>+ ₹15K/mo SIP</th><th>Optimised + Intl</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td style="font-weight:700;color:#94a3b8">3 Years</td>
+          <td style="color:#4ade80;font-weight:700">₹15.1L</td>
+          <td style="color:#38bdf8;font-weight:700">₹21.8L</td>
+          <td style="color:#a78bfa;font-weight:700">₹22.3L</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#94a3b8">5 Years</td>
+          <td style="color:#4ade80;font-weight:700">₹19.2L</td>
+          <td style="color:#38bdf8;font-weight:700">₹31.7L</td>
+          <td style="color:#a78bfa;font-weight:700">₹33.1L</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#94a3b8">10 Years</td>
+          <td style="color:#4ade80;font-weight:700">₹35.4L</td>
+          <td style="color:#38bdf8;font-weight:700">₹71.6L</td>
+          <td style="color:#a78bfa;font-weight:700">₹77.8L</td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;color:#94a3b8">20 Years</td>
+          <td style="color:#4ade80;font-weight:700">₹1.20Cr</td>
+          <td style="color:#38bdf8;font-weight:700">₹2.87Cr</td>
+          <td style="color:#a78bfa;font-weight:700">₹3.40Cr</td>
+        </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;font-size:10px;color:#475569;line-height:1.7;padding:8px 10px;background:#0a0f1e;border-radius:6px">
+        Assumptions: Current ₹10.44L at 13% CAGR · Optimised + Intl at 14% CAGR · SIP at same rate · No inflation adjustment · Projections are illustrative
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- International Fund Recommendations -->
+<div class="sec">
+  <div class="sec-ttl"><span class="sec-dot" style="background:#a78bfa"></span>International Fund Recommendations — New Regime Strategy</div>
+  <table>
+    <thead><tr>
+      <th>Fund</th><th>Exposure</th><th>Tax Treatment</th><th>Exp CAGR</th><th>Min SIP</th><th>Recommended Allocation</th>
+    </tr></thead>
+    <tbody>
+    <tr style="border-left:3px solid #4ade80">
+      <td>
+        <div style="font-weight:700;color:#f1f5f9">Parag Parikh Flexi Cap</div>
+        <div style="color:#475569;font-size:10px">Already hold — massively underweight</div>
+      </td>
+      <td style="font-size:11px;color:#94a3b8">India 65% + US/global 35%<br>Apple, Alphabet, Amazon</td>
+      <td><span class="tag tg">Equity (12.5% LTCG)</span></td>
+      <td style="color:#4ade80;font-weight:700">13–14%</td>
+      <td>₹1,000</td>
+      <td style="font-size:11px"><strong style="color:#4ade80">Primary choice — ₹10K/month SIP</strong><br><span style="color:#64748b">Most tax-efficient intl exposure in India</span></td>
+    </tr>
+    <tr>
+      <td>
+        <div style="font-weight:700;color:#f1f5f9">Motilal Oswal S&amp;P 500 Index Fund</div>
+        <div style="color:#475569;font-size:10px">Direct Plan FoF</div>
+      </td>
+      <td style="font-size:11px;color:#94a3b8">100% US large-cap passive<br>Top 500 US companies</td>
+      <td><span class="tag ty">Slab rate (FoF)</span></td>
+      <td style="color:#4ade80;font-weight:700">12–14%</td>
+      <td>₹500</td>
+      <td style="font-size:11px"><strong style="color:#38bdf8">₹5K/month SIP</strong><br><span style="color:#64748b">USD hedge, pure US exposure</span></td>
+    </tr>
+    <tr>
+      <td>
+        <div style="font-weight:700;color:#f1f5f9">Mirae Asset NYSE FANG+ ETF FoF</div>
+        <div style="color:#475569;font-size:10px">High risk, high reward</div>
+      </td>
+      <td style="font-size:11px;color:#94a3b8">Meta, Apple, Nvidia, Amazon,<br>Netflix, Google, Microsoft</td>
+      <td><span class="tag ty">Slab rate (FoF)</span></td>
+      <td style="color:#4ade80;font-weight:700">15–20%*</td>
+      <td>₹1,000</td>
+      <td style="font-size:11px"><strong style="color:#fbbf24">₹3K/month — satellite only</strong><br><span style="color:#64748b">High volatility — only 3–5% allocation</span></td>
+    </tr>
+    <tr>
+      <td>
+        <div style="font-weight:700;color:#f1f5f9">Kotak Nasdaq 100 FOF</div>
+        <div style="color:#475569;font-size:10px">US tech broad</div>
+      </td>
+      <td style="font-size:11px;color:#94a3b8">Top 100 Nasdaq companies<br>AI / tech concentrated</td>
+      <td><span class="tag ty">Slab rate (FoF)</span></td>
+      <td style="color:#4ade80;font-weight:700">13–16%*</td>
+      <td>₹1,000</td>
+      <td style="font-size:11px"><strong style="color:#fbbf24">Optional — if bullish on US tech</strong><br><span style="color:#64748b">Skip if holding FANG+</span></td>
+    </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:12px;padding:10px 14px;background:#0a0f1e;border-radius:8px;font-size:11px;color:#64748b;line-height:1.7">
+    <strong style="color:#f87171">Tax note (critical):</strong> Pure international FoFs (investing >35% abroad) are taxed at your <strong>income slab rate</strong> regardless of holding period since Apr 2023 Budget.
+    If you're in 30% tax slab, a 15% return becomes ~10.5% post-tax. Parag Parikh avoids this as it holds 65%+ domestic equity.
+    &nbsp;·&nbsp; <strong>* Annualised estimates — international returns depend heavily on INR/USD movement.</strong>
+  </div>
+</div>
+
+<!-- Suggested New SIP Allocation -->
+<div class="ig" style="margin-top:14px">
+  <div class="ic">
+    <h3>📋 Revised SIP Plan — New Regime</h3>
+    <p style="margin-bottom:8px"><span class="tag tr">Stop</span> All new ELSS SIPs (no 80C benefit)</p>
+    <p style="margin-bottom:8px"><span class="tag tr">Stop</span> Motilal Midcap SIP · <span class="tag tr">Stop</span> HDFC Flexi Cap SIP</p>
+    <p style="margin-bottom:8px"><span class="tag tg">₹10K/mo</span> Parag Parikh Flexi Cap (core intl + India)</p>
+    <p style="margin-bottom:8px"><span class="tag tg">₹5K/mo</span> Motilal S&P 500 Index (USD diversification)</p>
+    <p style="margin-bottom:8px"><span class="tag tg">₹5K/mo</span> HDFC Mid Cap Fund (best active mid-cap)</p>
+    <p style="margin-bottom:8px"><span class="tag tb">₹3K/mo</span> Nippon Nifty 50 (index core — buy the dip)</p>
+    <p style="margin-bottom:8px"><span class="tag ty">₹3K/mo</span> Mirae FANG+ (satellite, high risk)</p>
+    <p style="color:#64748b;font-size:10px;margin-top:6px">Total new SIP: ₹26K/month · Redirect freed ELSS budget</p>
+  </div>
+  <div class="ic">
+    <h3>🌍 Why International Now?</h3>
+    <ul>
+      <li>Your portfolio is <strong style="color:#f1f5f9">100% India-only</strong> — zero USD hedge</li>
+      <li>S&P 500 has delivered ~14% USD CAGR over 20 years</li>
+      <li>INR has depreciated ~3% vs USD annually — your real international return = 14% + 3% = ~17% in INR terms historically</li>
+      <li>US markets (AI, semiconductors, cloud) are in a structural bull run</li>
+      <li>Parag Parikh gives you Apple, Alphabet, Amazon <em>inside an equity fund</em> — best of both worlds</li>
+      <li>Diversification reduces drawdown risk if Indian market corrects 20–30%</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- end returns panel -->
+
+<div class="footer">
+  MF Strategy Dashboard · Client TC0390 · NAV data: Zerodha 02 Jun 2026<br>
+  Personal analysis only — not SEBI registered investment advice · Built with Claude Code
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#1f2d45';
+
+// Performance horizontal bar
+new Chart(document.getElementById('perfChart').getContext('2d'), {
+  type: 'bar',
+  data: {
+    labels: ['Nippon ELSS','Bandhan ELSS','HDFC Mid Cap','Tata ELSS','Quant Small Cap',
+             'UTI Momentum 30','Parag Parikh','HDFC Flexi Cap','Motilal Midcap','Nippon Nifty 50'],
+    datasets: [{
+      data: [62.90, 38.77, 29.99, 21.43, 9.20, 1.47, -2.28, -2.36, -4.79, -5.18],
+      backgroundColor: [
+        '#4ade80','#4ade80','#4ade80','#4ade80','#4ade80',
+        '#4ade80','#f87171','#f87171','#f87171','#f87171'
+      ],
+      borderRadius: 4,
+      borderSkipped: false
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: c => ` ${c.raw > 0 ? '+' : ''}${c.raw}%` } }
+    },
+    scales: {
+      x: { grid: { color: '#1f2d45' }, ticks: { callback: v => v + '%', font: { size: 10 } } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// Allocation donut
+new Chart(document.getElementById('allocChart').getContext('2d'), {
+  type: 'doughnut',
+  data: {
+    labels: ['ELSS (Tax Saving)','Index Funds','Small Cap','Mid Cap','Flexi Cap'],
+    datasets: [{
+      data: [438560, 237082, 97496, 80796, 71496],
+      backgroundColor: ['#f472b6','#a78bfa','#fbbf24','#38bdf8','#4ade80'],
+      borderColor: '#0a0f1e',
+      borderWidth: 3,
+      hoverOffset: 8
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '62%',
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 10 }, padding: 10, boxWidth: 10 } },
+      tooltip: { callbacks: { label: c => ` ₹${(c.raw/1000).toFixed(0)}K (${(c.raw/925430*100).toFixed(1)}%)` } }
+    }
+  }
+});
+
+// Projection chart — only init when tab is opened
+let projChartInit = false;
+function initProjChart() {
+  if (projChartInit) return;
+  projChartInit = true;
+  new Chart(document.getElementById('projChart').getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: ['3 Years', '5 Years', '10 Years', '20 Years'],
+      datasets: [
+        { label: 'Current Portfolio', data: [15.1, 19.2, 35.4, 120], backgroundColor: '#4ade8066', borderColor: '#4ade80', borderWidth: 2, borderRadius: 4 },
+        { label: '+ ₹15K/mo SIP', data: [21.8, 31.7, 71.6, 287], backgroundColor: '#38bdf866', borderColor: '#38bdf8', borderWidth: 2, borderRadius: 4 },
+        { label: 'Optimised + Intl', data: [22.3, 33.1, 77.8, 340], backgroundColor: '#a78bfa66', borderColor: '#a78bfa', borderWidth: 2, borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', labels: { font: { size: 10 }, padding: 8, boxWidth: 10 } },
+        tooltip: { callbacks: { label: c => ` ₹${c.raw}L` } }
+      },
+      scales: {
+        x: { grid: { color: '#1f2d45' }, ticks: { font: { size: 10 } } },
+        y: { grid: { color: '#1f2d45' }, ticks: { callback: v => '₹' + v + 'L', font: { size: 10 } } }
+      }
+    }
+  });
+}
+
+function showTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'returns') initProjChart();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+</script>
+</body>
+</html>
