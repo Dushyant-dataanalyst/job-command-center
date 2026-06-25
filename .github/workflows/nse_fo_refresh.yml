@@ -2,7 +2,8 @@ name: NSE FO Refresh Every 5 Min
 
 on:
   schedule:
-    - cron: '*/5 3-10 * * 1-5'
+    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 8:00 AM - 4:00 PM IST (2:30-10:30 UTC)
+    - cron: '30 15 * * 1-5'       # Once at 9:00 PM IST (15:30 UTC) — next-day prep
   workflow_dispatch:
 
 jobs:
