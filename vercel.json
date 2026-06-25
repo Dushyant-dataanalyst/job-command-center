@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "name": "dushyant-job-command-center",
+  "name": "nse-trading-dashboard",
   "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.json", "use": "@vercel/static" }
+    { "src": "nse_live_dashboard.html", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/", "dest": "/dushyant-command-center.html" },
-    { "src": "/(.*\\.html)", "headers": { "Cache-Control": "no-store, no-cache, must-revalidate" }, "dest": "/$1" },
-    { "src": "/(.*\\.json)", "headers": { "Cache-Control": "no-store, no-cache, must-revalidate" }, "dest": "/$1" }
+    { "src": "/", "dest": "/nse_live_dashboard.html" },
+    { "src": "/nse_live_dashboard.html", "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0" }, "dest": "/nse_live_dashboard.html" },
+    { "src": "/(.*)", "dest": "/nse_live_dashboard.html" }
   ]
 }

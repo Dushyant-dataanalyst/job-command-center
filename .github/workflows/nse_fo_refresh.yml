@@ -1,0 +1,52 @@
+name: NSE FO Refresh Every 5 Min
+
+on:
+  schedule:
+    - cron: '*/5 3-10 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  fo-refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install --quiet yfinance pandas numpy requests
+
+      - name: Run F&O refresh
+        run: |
+          cd nse-trading-bot
+          python refresh_fo_cloud.py
+
+      - name: Copy dashboard to repo root
+        run: |
+          cp nse-trading-bot/results/nse_live_dashboard.html nse_live_dashboard.html
+          cp nse-trading-bot/results/fo_latest.json fo_latest.json 2>/dev/null || true
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "NSE Bot"
+          git config user.email "nse-bot@github-actions"
+          git add nse_live_dashboard.html fo_latest.json nse-trading-bot/results/nse_live_dashboard.html
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            NOW=$(TZ='Asia/Kolkata' date '+%d %b %H:%M IST')
+            git commit -m "chore: fo refresh ${NOW}"
+            git pull --rebase origin master
+            git push origin master
+            echo "Pushed to GitHub - Vercel will auto-deploy"
+          fi
