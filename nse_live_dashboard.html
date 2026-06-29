@@ -167,7 +167,7 @@ tr:last-child td{border-bottom:none}
       <span class="live-pill"><span class="live-dot"></span>Live</span>
       25 Jun 2026, 03:56 PM IST &nbsp;·&nbsp; Entry: <strong>26 Jun</strong> &nbsp;·&nbsp; 43 stocks
       <span class="sebi-pill">⚠ Manual orders only — SEBI</span>
-      &nbsp;<!-- FO_REFRESH_TS_START --><span style="background:#0f172a;color:#38bdf8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block">⚡ F&amp;O refreshed: 25 Jun 2026 15:56 IST</span><!-- FO_REFRESH_TS_END -->
+      &nbsp;<!-- FO_REFRESH_TS_START --><span id="fo-refresh-ts" style="background:#0f172a;color:#38bdf8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block">⚡ F&amp;O refreshed: 25 Jun 2026 15:56 IST</span><!-- FO_REFRESH_TS_END -->
     </div>
   </div>
   <div class="hdr-btns">
@@ -2102,32 +2102,9 @@ function doRefresh(btn){
     var meta = d._meta || {};
     var ts   = meta.generated_at || '';
 
-    // ── Update timestamp badge ──
-    var badgeHtml = '<span id="fo-live-badge" style="background:#0f172a;color:#38bdf8;' +
-      'font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block">' +
-      '⚡ F&O data: ' + (ts || 'refreshed') + '</span>';
-
-    // Replace between the TS markers in the DOM
-    document.querySelectorAll('*').forEach(function(el) {
-      if (el.childNodes.length === 0) return;
-      el.childNodes.forEach(function(n) {
-        if (n.nodeType === 8 && n.data.trim() === 'FO_REFRESH_TS_START') {
-          // Find the sibling span between the two comments and replace it
-          var next = n.nextSibling;
-          while (next && !(next.nodeType === 8 && next.data.trim() === 'FO_REFRESH_TS_END')) {
-            var remove = next;
-            next = next.nextSibling;
-            el.removeChild(remove);
-          }
-          var span = document.createElement('span');
-          span.id = 'fo-live-badge';
-          span.setAttribute('style', 'background:#0f172a;color:#38bdf8;font-size:11px;' +
-            'font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block');
-          span.textContent = '⚡ F&O data: ' + (ts || 'live');
-          el.insertBefore(span, next);
-        }
-      });
-    });
+    // ── Update timestamp badge by ID (simple and reliable) ──
+    var badge = document.getElementById('fo-refresh-ts');
+    if (badge && ts) badge.textContent = '⚡ F&O data: ' + ts;
 
     // ── Show live price strip ──
     var strip = document.getElementById('fo-live-strip');
