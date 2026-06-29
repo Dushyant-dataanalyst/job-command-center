@@ -165,7 +165,7 @@ tr:last-child td{border-bottom:none}
     <h1><em>NSE 4-Strategy</em> Dashboard</h1>
     <div class="hdr-sub">
       <span class="live-pill"><span class="live-dot"></span>Live</span>
-      25 Jun 2026, 03:56 PM IST &nbsp;·&nbsp; Entry: <strong>26 Jun</strong> &nbsp;·&nbsp; 43 stocks
+      <span id="header-scan-date">25 Jun 2026, 03:56 PM IST</span> &nbsp;·&nbsp; Entry: <strong>26 Jun</strong> &nbsp;·&nbsp; 43 stocks
       <span class="sebi-pill">⚠ Manual orders only — SEBI</span>
       &nbsp;<!-- FO_REFRESH_TS_START --><span id="fo-refresh-ts" style="background:#0f172a;color:#38bdf8;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block">⚡ F&amp;O refreshed: 25 Jun 2026 15:56 IST</span><!-- FO_REFRESH_TS_END -->
     </div>
@@ -262,6 +262,7 @@ tr:last-child td{border-bottom:none}
 <!-- TABS -->
 <div class="tabs">
   <div class="tab active" onclick="showTab('eq',this)">📈 Equity BUY (25)</div>
+  <div class="tab" onclick="showTab('pos',this)">📌 My Positions</div>
   <div class="tab" onclick="showTab('fo',this)">⚡ Futures & Options</div>
   <div class="tab" onclick="showTab('wl',this)">👁 Watch List (14)</div>
   <div class="tab" onclick="showTab('ipo',this)">🚀 IPO Tracker</div>
@@ -1002,6 +1003,211 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
               </td>
             </tr></tbody></table>
 </div>
+</div>
+
+<!-- MY POSITIONS TAB -->
+<div id="pos" class="panel">
+<div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <div>
+    <div style="font-size:16px;font-weight:900;color:#0f172a">📌 My Active Positions</div>
+    <div style="font-size:11px;color:#64748b;margin-top:2px">Auto-checks current MCP signal vs your entry signal every page load</div>
+  </div>
+  <button onclick="addPositionPrompt()" style="background:#4f46e5;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer">+ Add Position</button>
+</div>
+
+<!-- Summary bar -->
+<div id="pos-summary" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px"></div>
+
+<!-- Position cards -->
+<div id="pos-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px"></div>
+
+<div id="pos-empty" style="display:none;text-align:center;padding:40px;color:#94a3b8;font-size:13px">
+  No positions yet. Click <b>📌 I BOUGHT</b> on any stock in the Equity tab, or use <b>+ Add Position</b> above.
+</div>
+
+<script>
+// ── Default positions (Dushyant's confirmed buys, 25 Jun 2026) ──
+var DEFAULT_POSITIONS = [
+  {name:'HDFCBANK', entry:796.30, sl:777.34, t1:820.00, t2:843.70, votes_at_buy:4, bought_on:'25 Jun 2026'},
+  {name:'ICICIBANK',entry:1387.50,sl:1355.15,t1:1427.94,t2:1468.38,votes_at_buy:4, bought_on:'25 Jun 2026'},
+  {name:'KOTAKBANK',entry:409.00, sl:400.01, t1:420.24, t2:431.47, votes_at_buy:4, bought_on:'25 Jun 2026'},
+  {name:'SBIN',     entry:1045.40,sl:1023.07,t1:1073.32,t2:1101.23,votes_at_buy:3, bought_on:'25 Jun 2026'},
+];
+
+function getPositions() {
+  var stored = JSON.parse(localStorage.getItem('nse_positions') || '[]');
+  // Merge defaults: add any default not already in stored (match by name)
+  var names = stored.map(function(p){ return p.name; });
+  DEFAULT_POSITIONS.forEach(function(d){
+    if (names.indexOf(d.name) === -1) stored.unshift(d);
+  });
+  return stored;
+}
+
+function savePositions(positions) {
+  // Only save non-default positions to localStorage (defaults are always injected)
+  var defaults = DEFAULT_POSITIONS.map(function(d){ return d.name; });
+  var toSave = positions.filter(function(p){ return defaults.indexOf(p.name) === -1; });
+  // Also save defaults if user has edited them
+  var edited = positions.filter(function(p){
+    return defaults.indexOf(p.name) !== -1 && p._edited;
+  });
+  localStorage.setItem('nse_positions', JSON.stringify(toSave.concat(edited)));
+}
+
+function getCurrentSignal(symbol) {
+  // Read from the equity table — each row has data-sig and data-name
+  var rows = document.querySelectorAll('#eq-body .dr');
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].dataset.name === symbol) {
+      return rows[i].dataset.sig || 'UNKNOWN';
+    }
+  }
+  return 'UNKNOWN';
+}
+
+function getVotesFromSig(sig) {
+  var map = {'STRONG_BUY':4,'BUY':3,'WEAK_BUY':2,'NEUTRAL':1,'SELL':0,'STRONG_SELL':0};
+  return map[sig] !== undefined ? map[sig] : 1;
+}
+
+function getVerdict(currentSig, entryVotes) {
+  var v = getVotesFromSig(currentSig);
+  if (currentSig === 'SELL' || currentSig === 'STRONG_SELL')
+    return {label:'⚠ CONSIDER EXITING', bg:'#fef2f2', border:'#fca5a5', color:'#dc2626', icon:'🔴'};
+  if (v >= 3)
+    return {label:'✅ HOLD', bg:'#f0fdf4', border:'#86efac', color:'#15803d', icon:'🟢'};
+  if (v === 2)
+    return {label:'👀 MONITOR CLOSELY', bg:'#fffbeb', border:'#fcd34d', color:'#b45309', icon:'🟡'};
+  return {label:'⚠ CONSIDER EXITING', bg:'#fef2f2', border:'#fca5a5', color:'#dc2626', icon:'🔴'};
+}
+
+function sigLabel(sig) {
+  var map = {
+    'STRONG_BUY':'🔥 Strong Buy','BUY':'✅ Buy','WEAK_BUY':'🟡 Weak Buy',
+    'NEUTRAL':'⏸ Neutral','SELL':'🔴 Sell','STRONG_SELL':'🔴 Strong Sell','UNKNOWN':'— Unknown'
+  };
+  return map[sig] || sig;
+}
+
+function removePosition(name) {
+  var positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
+  positions = positions.filter(function(p){ return p.name !== name; });
+  // Also mark default as removed
+  var removed = JSON.parse(localStorage.getItem('nse_removed') || '[]');
+  if (removed.indexOf(name) === -1) removed.push(name);
+  localStorage.setItem('nse_removed', JSON.stringify(removed));
+  localStorage.setItem('nse_positions', JSON.stringify(positions));
+  renderPositions();
+}
+
+function addPositionPrompt() {
+  var sym = prompt('Enter stock symbol (e.g. RELIANCE):');
+  if (!sym) return;
+  sym = sym.toUpperCase().trim();
+  var entry = parseFloat(prompt('Entry price (₹):') || '0');
+  var sl    = parseFloat(prompt('Stop Loss price (₹):') || '0');
+  var t1    = parseFloat(prompt('Target 1 price (₹):') || '0');
+  if (!sym || !entry) return;
+  var positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
+  positions.push({name:sym, entry:entry, sl:sl, t1:t1, t2:0, votes_at_buy:0, bought_on:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})});
+  localStorage.setItem('nse_positions', JSON.stringify(positions));
+  renderPositions();
+}
+
+function renderPositions() {
+  var removed  = JSON.parse(localStorage.getItem('nse_removed') || '[]');
+  var positions = getPositions().filter(function(p){ return removed.indexOf(p.name) === -1; });
+
+  var cards   = document.getElementById('pos-cards');
+  var empty   = document.getElementById('pos-empty');
+  var summary = document.getElementById('pos-summary');
+
+  if (!positions.length) {
+    cards.style.display   = 'none';
+    empty.style.display   = 'block';
+    summary.innerHTML     = '';
+    return;
+  }
+  cards.style.display = 'grid';
+  empty.style.display = 'none';
+
+  var holdCount = 0, monCount = 0, exitCount = 0;
+
+  cards.innerHTML = positions.map(function(p) {
+    var sig     = getCurrentSignal(p.name);
+    var verdict = getVerdict(sig, p.votes_at_buy);
+    var entryN  = parseFloat(p.entry) || 0;
+    var slN     = parseFloat(p.sl)    || 0;
+    var t1N     = parseFloat(p.t1)    || 0;
+    var t2N     = parseFloat(p.t2)    || 0;
+    var slPct   = entryN ? (((slN - entryN) / entryN) * 100).toFixed(1) : '—';
+    var t1Pct   = entryN ? (((t1N - entryN) / entryN) * 100).toFixed(1) : '—';
+    var t2Pct   = entryN ? (((t2N - entryN) / entryN) * 100).toFixed(1) : '—';
+
+    if (verdict.label.includes('HOLD')) holdCount++;
+    else if (verdict.label.includes('MONITOR')) monCount++;
+    else exitCount++;
+
+    var isDefault = DEFAULT_POSITIONS.some(function(d){ return d.name === p.name; });
+
+    return '<div style="background:#fff;border:2px solid ' + verdict.border + ';border-radius:14px;padding:16px;position:relative">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">' +
+        '<div>' +
+          '<div style="font-size:16px;font-weight:900;color:#0f172a">' + p.name + '</div>' +
+          '<div style="font-size:10px;color:#94a3b8;margin-top:1px">Bought ' + (p.bought_on || '—') + ' · ' + (p.votes_at_buy || '?') + '/5 votes at entry</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">' +
+          '<div style="background:' + verdict.bg + ';color:' + verdict.color + ';border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800">' + verdict.label + '</div>' +
+          (!isDefault ? '<button onclick="removePosition(\'' + p.name + '\')" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:10px">✕ remove</button>' : '') +
+        '</div>' +
+      '</div>' +
+
+      '<div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:10px">' +
+        '<div style="font-size:10px;color:#64748b;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Current MCP Signal</div>' +
+        '<div style="font-size:13px;font-weight:800;color:#0f172a">' + sigLabel(sig) + '</div>' +
+        '<div style="font-size:10px;color:#94a3b8;margin-top:2px">Signal at entry: ' + (p.votes_at_buy || '?') + '/5 bullish</div>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px">' +
+        '<div style="background:#fef2f2;border-radius:6px;padding:6px 8px">' +
+          '<div style="color:#94a3b8;font-size:9px;font-weight:700">SL</div>' +
+          '<div style="color:#dc2626;font-weight:800">₹' + slN.toFixed(0) + '</div>' +
+          '<div style="color:#fca5a5;font-size:9px">' + slPct + '%</div>' +
+        '</div>' +
+        '<div style="background:#f0fdf4;border-radius:6px;padding:6px 8px">' +
+          '<div style="color:#94a3b8;font-size:9px;font-weight:700">T1</div>' +
+          '<div style="color:#15803d;font-weight:800">₹' + t1N.toFixed(0) + '</div>' +
+          '<div style="color:#86efac;font-size:9px">+' + t1Pct + '%</div>' +
+        '</div>' +
+        '<div style="background:#eff6ff;border-radius:6px;padding:6px 8px">' +
+          '<div style="color:#94a3b8;font-size:9px;font-weight:700">T2</div>' +
+          '<div style="color:#2563eb;font-weight:800">' + (t2N ? '₹' + t2N.toFixed(0) : '—') + '</div>' +
+          '<div style="color:#93c5fd;font-size:9px">' + (t2N ? '+' + t2Pct + '%' : '') + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">' +
+        '<div style="font-size:10px;color:#64748b">Entry: <b style="color:#0f172a">₹' + entryN.toFixed(2) + '</b></div>' +
+        (isDefault ? '<button onclick="removePosition(\'' + p.name + '\')" style="background:#fef2f2;color:#dc2626;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:700;cursor:pointer">Exit / Remove</button>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Summary chips
+  var chips = [];
+  if (holdCount) chips.push('<div style="background:#f0fdf4;color:#15803d;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🟢 HOLD: ' + holdCount + '</div>');
+  if (monCount)  chips.push('<div style="background:#fffbeb;color:#b45309;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🟡 MONITOR: ' + monCount + '</div>');
+  if (exitCount) chips.push('<div style="background:#fef2f2;color:#dc2626;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🔴 REVIEW EXIT: ' + exitCount + '</div>');
+  chips.push('<div style="color:#94a3b8;font-size:11px;padding:5px 0">Signals checked from live equity scan</div>');
+  summary.innerHTML = chips.join('');
+}
+
+// Auto-render when tab is opened
+document.querySelector('[onclick*="showTab(\'pos\'"]').addEventListener('click', function(){
+  setTimeout(renderPositions, 50);
+});
+</script>
 </div>
 
 <!-- F&O TAB -->
@@ -2102,9 +2308,13 @@ function doRefresh(btn){
     var meta = d._meta || {};
     var ts   = meta.generated_at || '';
 
-    // ── Update timestamp badge by ID (simple and reliable) ──
+    // ── Update timestamp badge and header date ──
     var badge = document.getElementById('fo-refresh-ts');
     if (badge && ts) badge.textContent = '⚡ F&O data: ' + ts;
+
+    // Update the "25 Jun 2026" header date to show when data was last fetched
+    var hd = document.getElementById('header-scan-date');
+    if (hd && ts) hd.textContent = ts.replace(' IST','') + ' IST';
 
     // ── Show live price strip ──
     var strip = document.getElementById('fo-live-strip');
