@@ -286,12 +286,106 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 
 <!-- EQUITY TAB -->
 <div id="eq" class="panel active">
+<!-- BREAKOUT SCANNER: top picks cards (dynamic from SCAN_DATA) -->
+<div id="breakout-picks" style="margin-bottom:14px"></div>
+<script>
+(function buildBreakout(){
+  /* ── Breakout: top 4 stocks by buy_votes ── */
+  const top = Object.entries(SCAN_DATA)
+    .filter(([,v])=>v.buy_votes>=3)
+    .sort(([,a],[,b])=>b.buy_votes-a.buy_votes)
+    .slice(0,4);
+
+  /* ── Sector breakdown ── */
+  const sectors={};
+  Object.values(SCAN_DATA).forEach(s=>{
+    const sec=s.sector||'Other';
+    if(!sectors[sec]) sectors[sec]={buy:0,total:0};
+    if(s.buy_votes>=3) sectors[sec].buy++;
+    sectors[sec].total++;
+  });
+  const topSectors=Object.entries(sectors).sort((a,b)=>b[1].buy-a[1].buy).slice(0,5);
+
+  /* ── Signal totals ── */
+  const totalStocks=Object.keys(SCAN_DATA).length;
+  const strongBuys=Object.values(SCAN_DATA).filter(s=>s.buy_votes>=4).length;
+  const buys=Object.values(SCAN_DATA).filter(s=>s.buy_votes===3).length;
+  const watches=Object.values(SCAN_DATA).filter(s=>s.buy_votes<=2&&s.buy_votes>=1).length;
+
+  /* ── Stats bar ── */
+  let html=`<div style="background:#f8fafc;border-radius:12px;padding:12px 16px;margin-bottom:12px">
+    <div style="font-size:11px;font-weight:700;color:#475569;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">📊 Scan Universe — ${totalStocks} stocks · 4 MCP traders voting</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <div style="display:flex;align-items:center;gap:6px;background:#dcfce7;border-radius:8px;padding:6px 12px">
+        <span style="font-size:16px;font-weight:900;color:#15803d">${strongBuys}</span>
+        <span style="font-size:10px;color:#15803d;font-weight:700">🔥 Strong Buy<br>(4/4 agree)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;background:#dbeafe;border-radius:8px;padding:6px 12px">
+        <span style="font-size:16px;font-weight:900;color:#2563eb">${buys}</span>
+        <span style="font-size:10px;color:#2563eb;font-weight:700">✅ Buy<br>(3/4 agree)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;background:#fef9c3;border-radius:8px;padding:6px 12px">
+        <span style="font-size:16px;font-weight:900;color:#b45309">${watches}</span>
+        <span style="font-size:10px;color:#b45309;font-weight:700">👀 Watch<br>(1-2 agree)</span>
+      </div>
+      <div style="flex:1;display:flex;gap:6px;flex-wrap:wrap;align-items:center;justify-content:flex-end">
+        ${topSectors.map(([s,c])=>`<span style="background:#f1f5f9;border-radius:6px;padding:3px 8px;font-size:10px;color:#475569;font-weight:600">${s}: ${c.buy}/${c.total}</span>`).join('')}
+      </div>
+    </div>
+  </div>`;
+
+  /* ── Top picks cards ── */
+  html+=`<div style="font-size:11px;font-weight:800;color:#0f172a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">⚡ Top Breakout Picks — Highest Consensus</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px">`;
+
+  top.forEach(([name,s])=>{
+    const pct=s.pct_t1||0;
+    const isTracked=positions.find(p=>p.name===name);
+    const btnHtml=isTracked
+      ?`<span style="background:#15803d;color:#fff;border-radius:5px;padding:3px 8px;font-size:9px;font-weight:700">✅ TRACKING</span>`
+      :`<button onclick="markBought('${name}','${s.entry}','${s.sl}','${s.t1}','${s.t2}',${s.buy_votes})" style="background:#4f46e5;color:#fff;border:none;border-radius:5px;padding:3px 8px;font-size:9px;font-weight:700;cursor:pointer">📌 I BOUGHT</button>`;
+    html+=`<div style="background:#fff;border:2px solid #dcfce7;border-radius:10px;padding:12px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div>
+          <div style="font-size:13px;font-weight:900;color:#0f172a">${name}</div>
+          <div style="font-size:9px;color:#94a3b8">${s.sector||''}</div>
+        </div>
+        <span style="background:#dcfce7;color:#15803d;border-radius:5px;padding:2px 6px;font-size:10px;font-weight:800">${s.buy_votes}/4</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;margin-bottom:8px">
+        <div><span style="color:#64748b">Entry</span> <b style="color:#0f172a">₹${s.entry}</b></div>
+        <div><span style="color:#64748b">T1</span> <b style="color:#15803d">₹${s.t1} <span style="font-size:9px;color:#6ee7b7">+${pct}%</span></b></div>
+        <div><span style="color:#64748b">SL</span> <b style="color:#dc2626">₹${s.sl}</b></div>
+        <div><span style="color:#64748b">T2</span> <b style="color:#2563eb">₹${s.t2}</b></div>
+      </div>
+      ${btnHtml}
+    </div>`;
+  });
+  html+='</div>';
+
+  /* ── Sector filter chips (dynamic) ── */
+  const uniqueSectors=[...new Set(Object.values(SCAN_DATA).map(s=>s.sector||'Other'))].sort();
+  html+=`<div id="sector-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+    <button class="sc active" onclick="filterSector('all',this)" style="background:#0f172a;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer">All Sectors</button>
+    ${uniqueSectors.map(sec=>`<button class="sc" onclick="filterSector('${sec}',this)" style="background:#f1f5f9;color:#475569;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer">${sec}</button>`).join('')}
+  </div>`;
+
+  document.getElementById('breakout-picks').innerHTML=html;
+
+  /* ── Wire sector data into table rows ── */
+  document.querySelectorAll('#eq-body .dr').forEach(row=>{
+    const name=row.dataset.name;
+    if(name&&SCAN_DATA[name]) row.dataset.sector=SCAN_DATA[name].sector||'Other';
+  });
+})();
+</script>
+
 <div class="sec">
-  <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#16a34a"></span>BUY Signals — Entry, Targets &amp; Exit Timeline <span style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400">I=Inna P=Pham C=Cianni U=Unger</span></div>
+  <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#16a34a"></span>Full Scan Table — Entry, Targets &amp; Exit Timeline <span style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400">I=Inna P=Pham C=Cianni U=Unger</span></div>
   <div class="filter-bar">
     <button class="fb active" onclick="filterEq('all',this)">All (25)</button>
     <button class="fb" onclick="filterEq('STRONG_BUY',this)">🔥 Strong Buy (22)</button>
-    <button class="fb" onclick="filterEq('BUY',this)">↑ Buy (3)</button>
+    <button class="fb" onclick="filterEq('BUY',this)">✅ Buy (3)</button>
     <div style="flex:1"></div>
     <span class="count-badge" id="eq-count">25 shown</span>
   </div>
@@ -1032,6 +1126,100 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 <!-- F&O TAB -->
 <div id="fo" class="panel">
   <script>/* FO_EXACT_DATA_START */ const FO_EXACT = {"NIFTY50": {"instrument": "NIFTY50", "spot": 24056.0, "consensus": "WAIT", "ce_votes": 0, "pe_votes": 0, "neutral_votes": 5, "agreeing_traders": [], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 15:56 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "WAIT \u2014 No Trade", "zerodha_symbol": "\u2014", "zerodha_search": "\u2014", "kite_steps": "No trade today \u2014 wait for clearer signal", "strike": 0, "option_type": "\u2014", "expiry": "30 Jul 2026", "days_to_exp": 35, "lot_size": 75, "entry_premium": 0, "sl_premium": 0, "target1_premium": 0, "target_premium": 0, "cost_1_lot": 0, "lots_for_10k": 0, "total_invest": 0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {}, "trade_logic": "No clear direction. 3 out of 5 strategies don't agree. Stay out today.", "entry_timing": "Do not trade \u2014 wait for clearer signal tomorrow", "exit_rule": "\u2014"}, "indicators": {"spot": 24056.0, "ema9": 23931.29, "ema18": 23821.65, "ema20": 23809.53, "ema50": 23845.68, "atr": 256.55, "rsi": 65.6, "macd": 93.55, "macd_signal": 31.78, "ann_vol": 0.1176, "pivot": 23966.98, "r1": 24144.72, "s1": 23843.92, "roc5": -0.46, "roc3": -0.19, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD bullish"]}, {"strategy": "Tanmay", "direction": "NEUTRAL", "score": 1, "reasons": ["Spot in S1-R1 range (23844\u201324145) \u2014 wait for breakout", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "NEUTRAL", "score": 0, "reasons": ["Market not decisive \u2014 Nikhil would prefer Bull Put Spread (sell premium)", "Skip plain CE/PE buy \u2014 wait for clearer trend or sell OTM spread"]}, {"strategy": "Sivakumar", "direction": "NEUTRAL", "score": 0, "reasons": ["Above pivot 23967 \u2014 bullish bias", "Medium-term downtrend (EMA20<EMA50)"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}, "BANKNIFTY": {"instrument": "BANKNIFTY", "spot": 58177.05, "consensus": "WAIT", "ce_votes": 2, "pe_votes": 0, "neutral_votes": 3, "agreeing_traders": [], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 15:56 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "WAIT \u2014 No Trade", "zerodha_symbol": "\u2014", "zerodha_search": "\u2014", "kite_steps": "No trade today \u2014 wait for clearer signal", "strike": 0, "option_type": "\u2014", "expiry": "29 Jul 2026", "days_to_exp": 34, "lot_size": 30, "entry_premium": 0, "sl_premium": 0, "target1_premium": 0, "target_premium": 0, "cost_1_lot": 0, "lots_for_10k": 0, "total_invest": 0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {}, "trade_logic": "No clear direction. 3 out of 5 strategies don't agree. Stay out today.", "entry_timing": "Do not trade \u2014 wait for clearer signal tomorrow", "exit_rule": "\u2014"}, "indicators": {"spot": 58177.05, "ema9": 57453.09, "ema18": 56662.34, "ema20": 56534.3, "ema50": 55866.62, "atr": 760.16, "rsi": 77.1, "macd": 913.9, "macd_signal": 685.3, "ann_vol": 0.1623, "pivot": 57827.2, "r1": 58579.5, "s1": 57398.05, "roc5": 0.37, "roc3": 0.42, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "BUY_CE", "score": 3, "reasons": ["Uptrend: spot > EMA18 > EMA50", "MACD bullish", "RSI=77.1 overbought \u2014 wait for pullback"]}, {"strategy": "Tanmay", "direction": "NEUTRAL", "score": 1, "reasons": ["Spot in S1-R1 range (57398\u201358580) \u2014 wait for breakout", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["Full EMA bullish alignment", "RSI=77.1 overbought \u2014 no CE buy", "MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "NEUTRAL", "score": 0, "reasons": ["Market not decisive \u2014 Nikhil would prefer Bull Put Spread (sell premium)", "Skip plain CE/PE buy \u2014 wait for clearer trend or sell OTM spread"]}, {"strategy": "Sivakumar", "direction": "BUY_CE", "score": 6, "reasons": ["Above pivot 57827 \u2014 bullish bias", "Medium-term uptrend (EMA20>EMA50)", "Near pivot support \u2014 Siva CE entry zone"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}}; /* FO_EXACT_DATA_END */</script>
+  <!-- MARKET INTELLIGENCE STRIP -->
+  <div id="fo-intel-strip" style="margin-bottom:14px"></div>
+  <script>
+  (function buildFOIntel(){
+    const INR=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+
+    /* ── Black-Scholes helpers ── */
+    function erf(x){
+      const a=[0.254829592,-0.284496736,1.421413741,-1.453152027,1.061405429],p=0.3275911;
+      const s=x<0?-1:1; x=Math.abs(x);
+      const t=1/(1+p*x);
+      return s*(1-((((a[4]*t+a[3])*t+a[2])*t+a[1])*t+a[0])*t*Math.exp(-x*x));
+    }
+    const Ncdf=x=>0.5*(1+erf(x/Math.SQRT2));
+    function bsDelta(S,K,T,sig,isCall){
+      if(T<=0||sig<=0||K<=0) return isCall?1:0;
+      const r=0.065, d1=(Math.log(S/K)+(r+0.5*sig*sig)*T)/(sig*Math.sqrt(T));
+      return isCall?Ncdf(d1):Ncdf(d1)-1;
+    }
+
+    let html='<div class="sec-ttl" style="margin-bottom:10px"><span class="sec-ttl-dot" style="background:#7c3aed;box-shadow:0 0 0 3px #ede9fe"></span>MARKET INTELLIGENCE — Greeks · Expiry Countdown · PCR · Max Pain</div><div style="display:flex;gap:12px;flex-wrap:wrap">';
+
+    [{sym:'NIFTY50',label:'NIFTY',step:50},{sym:'BANKNIFTY',label:'BANKNIFTY',step:100}].forEach(({sym,label,step})=>{
+      const d=FO_EXACT[sym]; if(!d) return;
+      const tr=d.trade||{}, ind=d.indicators||{};
+
+      /* expiry */
+      const dte=tr.days_to_exp||0;
+      const dteC=dte<=5?'#dc2626':dte<=10?'#d97706':'#15803d';
+      const dteBg=dte<=5?'#fef2f2':dte<=10?'#fffbeb':'#f0fdf4';
+      const thetaBadge=dte<=5?'<span style="display:inline-block;background:#dc2626;color:#fff;border-radius:5px;padding:1px 5px;font-size:9px;font-weight:900;margin-top:3px">⚡ THETA ZONE</span>':'';
+
+      /* delta */
+      const S=d.spot||0, K=tr.strike||0, sig=ind.ann_vol||0.15, T=dte/365;
+      const optT=(tr.option_type||'').toUpperCase();
+      const deltaRaw=(K>0&&T>0)?bsDelta(S,K,T,sig,optT==='CE'):null;
+      const deltaStr=deltaRaw!==null?Math.abs(deltaRaw).toFixed(2):'—';
+      const deltaHint=K>0?optT+' '+INR(K):'WAIT — no trade';
+
+      /* PCR proxy */
+      const ce=d.ce_votes||0, pe=d.pe_votes||0, tot=ce+pe;
+      const pcrVal=tot>0?(pe/tot).toFixed(2):'—';
+      const pcrN=tot>0?pe/tot:0.5;
+      const pcrLabel=pcrN>0.55?'Put-heavy → Bullish':pcrN<0.45?'Call-heavy → Bearish':'Balanced';
+      const pcrC=pcrN>0.55?'#15803d':pcrN<0.45?'#dc2626':'#d97706';
+
+      /* max pain zone */
+      const atr=ind.atr||0;
+      const atm=K>0?K:Math.round(S/step)*step;
+      const mpL=Math.round((atm-0.5*atr)/step)*step;
+      const mpH=Math.round((atm+0.5*atr)/step)*step;
+
+      html+=`<div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;padding:14px 16px;flex:1;min-width:270px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <span style="font-size:13px;font-weight:900;color:#0f172a">${label}</span>
+          <span style="background:#f1f5f9;color:#475569;border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700">Spot ${INR(S)}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+
+          <div style="background:${dteBg};border-radius:8px;padding:9px 11px">
+            <div style="font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.4px">Expiry Countdown</div>
+            <div style="font-size:22px;font-weight:900;color:${dteC};line-height:1.1">${dte}d</div>
+            <div style="font-size:9px;color:${dteC}">${tr.expiry||'—'}${thetaBadge}</div>
+          </div>
+
+          <div style="background:#eff6ff;border-radius:8px;padding:9px 11px">
+            <div style="font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.4px">ATM Delta (B-S est.)</div>
+            <div style="font-size:22px;font-weight:900;color:#2563eb;line-height:1.1">${deltaStr}</div>
+            <div style="font-size:9px;color:#64748b">${deltaHint}</div>
+          </div>
+
+          <div style="background:#f0fdf4;border-radius:8px;padding:9px 11px">
+            <div style="font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.4px">PCR Proxy (MCP votes)</div>
+            <div style="font-size:22px;font-weight:900;color:${pcrC};line-height:1.1">${pcrVal}</div>
+            <div style="font-size:9px;color:${pcrC}">${tot>0?pcrLabel+' (CE '+ce+' / PE '+pe+')':'No directional signal yet'}</div>
+          </div>
+
+          <div style="background:#fdf4ff;border-radius:8px;padding:9px 11px">
+            <div style="font-size:9px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.4px">Max Pain Zone (est.)</div>
+            <div style="font-size:15px;font-weight:900;color:#7c3aed;line-height:1.2">${INR(mpL)}–${INR(mpH)}</div>
+            <div style="font-size:9px;color:#94a3b8">ATM ± ½ATR · ATR≈${Math.round(atr)}</div>
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:9px;color:#94a3b8;border-top:1px solid #f1f5f9;padding-top:6px">
+          ⚠ Delta &amp; Max Pain are statistical estimates. PCR proxy uses MCP votes, not real NSE OI data. Always verify in Sensibull/Kite.
+        </div>
+      </div>`;
+    });
+
+    html+='</div>';
+    document.getElementById('fo-intel-strip').innerHTML=html;
+  })();
+  </script>
+
   <!-- SAFE MODE BANNER -->
   <div style="background:#052e16;border-radius:12px;padding:12px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
     <span style="font-size:18px">🛡</span>
@@ -1806,16 +1994,36 @@ function showTab(id,el){
   el.classList.add('active');
 }
 
-/* ─── Equity filter ─── */
+/* ─── Equity filter (signal + sector, composable) ─── */
+let _eqSig='all', _eqSec='all';
+
+function _applyEqFilters(){
+  let n=0;
+  document.querySelectorAll('#eq-body .dr').forEach(r=>{
+    const sigOk=_eqSig==='all'||r.dataset.sig===_eqSig;
+    const secOk=_eqSec==='all'||r.dataset.sector===_eqSec;
+    const ok=sigOk&&secOk;
+    r.style.display=ok?'':'none';
+    if(ok) n++;
+  });
+  const el=document.getElementById('eq-count');
+  if(el) el.textContent=n+' shown';
+}
+
 function filterEq(type,el){
   document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  let n=0;
-  document.querySelectorAll('#eq-body .dr').forEach(r=>{
-    const ok=type==='all'||r.dataset.sig===type;
-    r.style.display=ok?'':'none'; if(ok) n++;
+  _eqSig=type;
+  _applyEqFilters();
+}
+
+function filterSector(sector,el){
+  document.querySelectorAll('.sc').forEach(b=>{
+    b.style.background='#f1f5f9'; b.style.color='#475569';
   });
-  document.getElementById('eq-count').textContent=n+' shown';
+  el.style.background='#0f172a'; el.style.color='#fff';
+  _eqSec=sector;
+  _applyEqFilters();
 }
 
 /* ─── Sort equity ─── */
