@@ -1025,189 +1025,8 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
   No positions yet. Click <b>📌 I BOUGHT</b> on any stock in the Equity tab, or use <b>+ Add Position</b> above.
 </div>
 
-<script>
-// ── Default positions (Dushyant's confirmed buys, 25 Jun 2026) ──
-var DEFAULT_POSITIONS = [
-  {name:'HDFCBANK', entry:796.30, sl:777.34, t1:820.00, t2:843.70, votes_at_buy:4, bought_on:'25 Jun 2026'},
-  {name:'ICICIBANK',entry:1387.50,sl:1355.15,t1:1427.94,t2:1468.38,votes_at_buy:4, bought_on:'25 Jun 2026'},
-  {name:'KOTAKBANK',entry:409.00, sl:400.01, t1:420.24, t2:431.47, votes_at_buy:4, bought_on:'25 Jun 2026'},
-  {name:'SBIN',     entry:1045.40,sl:1023.07,t1:1073.32,t2:1101.23,votes_at_buy:3, bought_on:'25 Jun 2026'},
-];
+<!-- positions rendered by outer renderPositions() -->
 
-function getPositions() {
-  var stored = JSON.parse(localStorage.getItem('nse_positions') || '[]');
-  // Merge defaults: add any default not already in stored (match by name)
-  var names = stored.map(function(p){ return p.name; });
-  DEFAULT_POSITIONS.forEach(function(d){
-    if (names.indexOf(d.name) === -1) stored.unshift(d);
-  });
-  return stored;
-}
-
-function savePositions(positions) {
-  // Only save non-default positions to localStorage (defaults are always injected)
-  var defaults = DEFAULT_POSITIONS.map(function(d){ return d.name; });
-  var toSave = positions.filter(function(p){ return defaults.indexOf(p.name) === -1; });
-  // Also save defaults if user has edited them
-  var edited = positions.filter(function(p){
-    return defaults.indexOf(p.name) !== -1 && p._edited;
-  });
-  localStorage.setItem('nse_positions', JSON.stringify(toSave.concat(edited)));
-}
-
-function getCurrentSignal(symbol) {
-  // Read from the equity table — each row has data-sig and data-name
-  var rows = document.querySelectorAll('#eq-body .dr');
-  for (var i = 0; i < rows.length; i++) {
-    if (rows[i].dataset.name === symbol) {
-      return rows[i].dataset.sig || 'UNKNOWN';
-    }
-  }
-  return 'UNKNOWN';
-}
-
-function getVotesFromSig(sig) {
-  var map = {'STRONG_BUY':4,'BUY':3,'WEAK_BUY':2,'NEUTRAL':1,'SELL':0,'STRONG_SELL':0};
-  return map[sig] !== undefined ? map[sig] : 1;
-}
-
-function getVerdict(currentSig, entryVotes) {
-  var v = getVotesFromSig(currentSig);
-  if (currentSig === 'SELL' || currentSig === 'STRONG_SELL')
-    return {label:'⚠ CONSIDER EXITING', bg:'#fef2f2', border:'#fca5a5', color:'#dc2626', icon:'🔴'};
-  if (v >= 3)
-    return {label:'✅ HOLD', bg:'#f0fdf4', border:'#86efac', color:'#15803d', icon:'🟢'};
-  if (v === 2)
-    return {label:'👀 MONITOR CLOSELY', bg:'#fffbeb', border:'#fcd34d', color:'#b45309', icon:'🟡'};
-  return {label:'⚠ CONSIDER EXITING', bg:'#fef2f2', border:'#fca5a5', color:'#dc2626', icon:'🔴'};
-}
-
-function sigLabel(sig) {
-  var map = {
-    'STRONG_BUY':'🔥 Strong Buy','BUY':'✅ Buy','WEAK_BUY':'🟡 Weak Buy',
-    'NEUTRAL':'⏸ Neutral','SELL':'🔴 Sell','STRONG_SELL':'🔴 Strong Sell','UNKNOWN':'— Unknown'
-  };
-  return map[sig] || sig;
-}
-
-function removePosition(name) {
-  var positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
-  positions = positions.filter(function(p){ return p.name !== name; });
-  // Also mark default as removed
-  var removed = JSON.parse(localStorage.getItem('nse_removed') || '[]');
-  if (removed.indexOf(name) === -1) removed.push(name);
-  localStorage.setItem('nse_removed', JSON.stringify(removed));
-  localStorage.setItem('nse_positions', JSON.stringify(positions));
-  renderPositions();
-}
-
-function addPositionPrompt() {
-  var sym = prompt('Enter stock symbol (e.g. RELIANCE):');
-  if (!sym) return;
-  sym = sym.toUpperCase().trim();
-  var entry = parseFloat(prompt('Entry price (₹):') || '0');
-  var sl    = parseFloat(prompt('Stop Loss price (₹):') || '0');
-  var t1    = parseFloat(prompt('Target 1 price (₹):') || '0');
-  if (!sym || !entry) return;
-  var positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
-  positions.push({name:sym, entry:entry, sl:sl, t1:t1, t2:0, votes_at_buy:0, bought_on:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})});
-  localStorage.setItem('nse_positions', JSON.stringify(positions));
-  renderPositions();
-}
-
-function renderPositions() {
-  var removed  = JSON.parse(localStorage.getItem('nse_removed') || '[]');
-  var positions = getPositions().filter(function(p){ return removed.indexOf(p.name) === -1; });
-
-  var cards   = document.getElementById('pos-cards');
-  var empty   = document.getElementById('pos-empty');
-  var summary = document.getElementById('pos-summary');
-
-  if (!positions.length) {
-    cards.style.display   = 'none';
-    empty.style.display   = 'block';
-    summary.innerHTML     = '';
-    return;
-  }
-  cards.style.display = 'grid';
-  empty.style.display = 'none';
-
-  var holdCount = 0, monCount = 0, exitCount = 0;
-
-  cards.innerHTML = positions.map(function(p) {
-    var sig     = getCurrentSignal(p.name);
-    var verdict = getVerdict(sig, p.votes_at_buy);
-    var entryN  = parseFloat(p.entry) || 0;
-    var slN     = parseFloat(p.sl)    || 0;
-    var t1N     = parseFloat(p.t1)    || 0;
-    var t2N     = parseFloat(p.t2)    || 0;
-    var slPct   = entryN ? (((slN - entryN) / entryN) * 100).toFixed(1) : '—';
-    var t1Pct   = entryN ? (((t1N - entryN) / entryN) * 100).toFixed(1) : '—';
-    var t2Pct   = entryN ? (((t2N - entryN) / entryN) * 100).toFixed(1) : '—';
-
-    if (verdict.label.includes('HOLD')) holdCount++;
-    else if (verdict.label.includes('MONITOR')) monCount++;
-    else exitCount++;
-
-    var isDefault = DEFAULT_POSITIONS.some(function(d){ return d.name === p.name; });
-
-    return '<div style="background:#fff;border:2px solid ' + verdict.border + ';border-radius:14px;padding:16px;position:relative">' +
-      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">' +
-        '<div>' +
-          '<div style="font-size:16px;font-weight:900;color:#0f172a">' + p.name + '</div>' +
-          '<div style="font-size:10px;color:#94a3b8;margin-top:1px">Bought ' + (p.bought_on || '—') + ' · ' + (p.votes_at_buy || '?') + '/5 votes at entry</div>' +
-        '</div>' +
-        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">' +
-          '<div style="background:' + verdict.bg + ';color:' + verdict.color + ';border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800">' + verdict.label + '</div>' +
-          (!isDefault ? '<button onclick="removePosition(\'' + p.name + '\')" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:10px">✕ remove</button>' : '') +
-        '</div>' +
-      '</div>' +
-
-      '<div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:10px">' +
-        '<div style="font-size:10px;color:#64748b;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Current MCP Signal</div>' +
-        '<div style="font-size:13px;font-weight:800;color:#0f172a">' + sigLabel(sig) + '</div>' +
-        '<div style="font-size:10px;color:#94a3b8;margin-top:2px">Signal at entry: ' + (p.votes_at_buy || '?') + '/5 bullish</div>' +
-      '</div>' +
-
-      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px">' +
-        '<div style="background:#fef2f2;border-radius:6px;padding:6px 8px">' +
-          '<div style="color:#94a3b8;font-size:9px;font-weight:700">SL</div>' +
-          '<div style="color:#dc2626;font-weight:800">₹' + slN.toFixed(0) + '</div>' +
-          '<div style="color:#fca5a5;font-size:9px">' + slPct + '%</div>' +
-        '</div>' +
-        '<div style="background:#f0fdf4;border-radius:6px;padding:6px 8px">' +
-          '<div style="color:#94a3b8;font-size:9px;font-weight:700">T1</div>' +
-          '<div style="color:#15803d;font-weight:800">₹' + t1N.toFixed(0) + '</div>' +
-          '<div style="color:#86efac;font-size:9px">+' + t1Pct + '%</div>' +
-        '</div>' +
-        '<div style="background:#eff6ff;border-radius:6px;padding:6px 8px">' +
-          '<div style="color:#94a3b8;font-size:9px;font-weight:700">T2</div>' +
-          '<div style="color:#2563eb;font-weight:800">' + (t2N ? '₹' + t2N.toFixed(0) : '—') + '</div>' +
-          '<div style="color:#93c5fd;font-size:9px">' + (t2N ? '+' + t2Pct + '%' : '') + '</div>' +
-        '</div>' +
-      '</div>' +
-
-      '<div style="margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">' +
-        '<div style="font-size:10px;color:#64748b">Entry: <b style="color:#0f172a">₹' + entryN.toFixed(2) + '</b></div>' +
-        (isDefault ? '<button onclick="removePosition(\'' + p.name + '\')" style="background:#fef2f2;color:#dc2626;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:700;cursor:pointer">Exit / Remove</button>' : '') +
-      '</div>' +
-    '</div>';
-  }).join('');
-
-  // Summary chips
-  var chips = [];
-  if (holdCount) chips.push('<div style="background:#f0fdf4;color:#15803d;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🟢 HOLD: ' + holdCount + '</div>');
-  if (monCount)  chips.push('<div style="background:#fffbeb;color:#b45309;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🟡 MONITOR: ' + monCount + '</div>');
-  if (exitCount) chips.push('<div style="background:#fef2f2;color:#dc2626;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🔴 REVIEW EXIT: ' + exitCount + '</div>');
-  chips.push('<div style="color:#94a3b8;font-size:11px;padding:5px 0">Signals checked from live equity scan</div>');
-  summary.innerHTML = chips.join('');
-}
-
-// Auto-render when tab is opened
-document.querySelector('[onclick*="showTab(\'pos\'"]').addEventListener('click', function(){
-  setTimeout(renderPositions, 50);
-});
-</script>
 </div>
 
 <!-- F&O TAB -->
@@ -2105,10 +1924,34 @@ document.getElementById('goalModal').addEventListener('click', function(e){
 renderGoal();
 
 /* ─── Position Tracker ─── */
+const DEFAULT_POSITIONS = [
+  {name:'HDFCBANK', entry:796.30, sl:777.34, t1:820.00, t2:843.70, votes_at_buy:4, bought_at:'25 Jun 2026'},
+  {name:'ICICIBANK',entry:1387.50,sl:1355.15,t1:1427.94,t2:1468.38,votes_at_buy:4, bought_at:'25 Jun 2026'},
+  {name:'KOTAKBANK',entry:409.00, sl:400.01, t1:420.24, t2:431.47, votes_at_buy:4, bought_at:'25 Jun 2026'},
+  {name:'SBIN',     entry:1045.40,sl:1023.07,t1:1073.32,t2:1101.23,votes_at_buy:3, bought_at:'25 Jun 2026'},
+];
+
 let positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
 
 function savePositions(){
   localStorage.setItem('nse_positions', JSON.stringify(positions));
+}
+
+// Seed defaults on first load (respects user-removed list)
+(function seedDefaults(){
+  const removed = JSON.parse(localStorage.getItem('nse_removed') || '[]');
+  DEFAULT_POSITIONS.forEach(d=>{
+    if(!positions.find(p=>p.name===d.name) && !removed.includes(d.name))
+      positions.push(d);
+  });
+  savePositions();
+})();
+
+function sigLabel(sig){
+  const map = {'STRONG_BUY':'🔥 Strong Buy','BUY':'✅ Buy','WEAK_BUY':'🟡 Weak Buy',
+    'NEUTRAL':'⏸ Neutral','SELL':'🔴 Sell','STRONG_SELL':'🔴 Strong Sell',
+    'NO_SIGNAL':'— No Signal','WATCH':'👀 Watching'};
+  return map[sig] || sig;
 }
 
 function markBought(name, entry, sl, t1, t2, votes){
@@ -2127,11 +1970,21 @@ function markBought(name, entry, sl, t1, t2, votes){
   toast('✅ '+name+' added to My Positions', 3000);
   const btn = document.getElementById('btn-'+name);
   if(btn){ btn.textContent='✅ TRACKING'; btn.style.background='#15803d'; }
+  // Auto-switch to My Positions tab
+  setTimeout(()=>{
+    const posTab = document.querySelector('.tab[onclick*="\'pos\'"]');
+    if(posTab) showTab('pos', posTab);
+  }, 500);
 }
 
 function removePosition(name){
   positions = positions.filter(p=>p.name!==name);
   savePositions();
+  // Mark defaults as removed so they don't re-seed on next load
+  if(DEFAULT_POSITIONS.find(d=>d.name===name)){
+    const removed = JSON.parse(localStorage.getItem('nse_removed') || '[]');
+    if(!removed.includes(name)){ removed.push(name); localStorage.setItem('nse_removed', JSON.stringify(removed)); }
+  }
   renderPositions();
   const btn = document.getElementById('btn-'+name);
   if(btn){ btn.textContent='📌 I BOUGHT'; btn.style.background='#4f46e5'; }
@@ -2144,66 +1997,154 @@ function clearAllPositions(){
   renderPositions();
 }
 
+function addPositionPrompt(){
+  let sym = prompt('Enter stock symbol (e.g. RELIANCE):');
+  if(!sym) return;
+  sym = sym.toUpperCase().trim();
+  const entry = parseFloat(prompt('Entry price (₹):') || '0');
+  const sl    = parseFloat(prompt('Stop Loss price (₹):') || '0');
+  const t1    = parseFloat(prompt('Target 1 price (₹):') || '0');
+  if(!sym || !entry) return;
+  positions.push({name:sym, entry, sl, t1, t2:0, votes_at_buy:0,
+    bought_at: new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})});
+  savePositions();
+  renderPositions();
+}
+
 function renderPositions(){
+  // ── Equity tab: dark inline panel ──
   const panel = document.getElementById('positionsPanel');
   const box   = document.getElementById('positionCards');
-  if(!positions.length){ panel.style.display='none'; return; }
-  panel.style.display='block';
+  if(panel) panel.style.display = positions.length ? 'block' : 'none';
+  if(box && positions.length){
+    box.innerHTML = positions.map(p=>{
+      const cur = SCAN_DATA[p.name] || {};
+      const curSig   = cur.signal || 'NO_SIGNAL';
+      const curVotes = cur.buy_votes || 0;
+      let verdict, vcolor, vbg, vicon;
+      if(curVotes>=3 && (curSig==='STRONG_BUY'||curSig==='BUY')){
+        verdict='HOLD — Signal still strong. Stick to your plan.'; vcolor='#15803d'; vbg='#f0fdf4'; vicon='✅';
+      } else if(curVotes===2){
+        verdict='MONITOR — 2 of 4 agree. Watch closely.'; vcolor='#b45309'; vbg='#fffbeb'; vicon='⚠️';
+      } else {
+        verdict='CONSIDER EXITING — Signal has weakened.'; vcolor='#dc2626'; vbg='#fff1f2'; vicon='🔴';
+      }
+      const slPct = p.entry>0 ? Math.round((p.sl-p.entry)/p.entry*100) : 0;
+      return `<div style="background:#1e293b;border-radius:12px;padding:14px;position:relative">
+        <button onclick="removePosition('${p.name}')" style="position:absolute;top:10px;right:10px;background:transparent;border:none;color:#475569;cursor:pointer;font-size:14px">✕</button>
+        <div style="font-size:15px;font-weight:900;color:#fff;margin-bottom:2px">${p.name}</div>
+        <div style="font-size:10px;color:#64748b;margin-bottom:10px">Bought ${p.bought_at||'—'} · ${p.votes_at_buy||'?'}/5 at entry</div>
+        <div style="background:${vbg};border-radius:8px;padding:8px 12px;margin-bottom:10px">
+          <div style="font-size:12px;font-weight:900;color:${vcolor}">${vicon} ${verdict}</div>
+          <div style="font-size:10px;color:${vcolor};margin-top:3px;opacity:.8">Current: ${sigLabel(curSig)} (${curVotes}/4 agree)</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+          <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:#64748b;font-weight:700">ENTRY</div>
+            <div style="font-size:14px;font-weight:900;color:#fff">₹${p.entry}</div>
+          </div>
+          <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:#dc2626;font-weight:700">STOP LOSS</div>
+            <div style="font-size:14px;font-weight:900;color:#dc2626">₹${p.sl}</div>
+            <div style="font-size:9px;color:#475569">${slPct}%</div>
+          </div>
+          <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
+            <div style="font-size:9px;color:#15803d;font-weight:700">TARGET 1</div>
+            <div style="font-size:14px;font-weight:900;color:#15803d">₹${p.t1}</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
 
-  box.innerHTML = positions.map(p=>{
-    const cur = SCAN_DATA[p.name] || {};
+  // ── Positions tab: light cards with SL/T1/T2 and SCAN_DATA verdicts ──
+  const posCards   = document.getElementById('pos-cards');
+  const posEmpty   = document.getElementById('pos-empty');
+  const posSummary = document.getElementById('pos-summary');
+  if(!posCards) { _updateBuyBtns(); return; }
+
+  if(!positions.length){
+    posCards.style.display='none';
+    if(posEmpty)   posEmpty.style.display='block';
+    if(posSummary) posSummary.innerHTML='';
+    _updateBuyBtns(); return;
+  }
+  posCards.style.display='grid';
+  if(posEmpty) posEmpty.style.display='none';
+
+  let holdCount=0, monCount=0, exitCount=0;
+  const isDefault = n => DEFAULT_POSITIONS.some(d=>d.name===n);
+
+  posCards.innerHTML = positions.map(p=>{
+    const cur      = SCAN_DATA[p.name] || {};
     const curSig   = cur.signal || 'NO_SIGNAL';
     const curVotes = cur.buy_votes || 0;
-    const curSl    = cur.sl   || p.sl;
-    const curT1    = cur.t1   || p.t1;
-
-    // Decision logic based on all MCP signals
-    let verdict, vcolor, vbg, vicon;
-    if(curVotes >= 3 && (curSig==='STRONG_BUY'||curSig==='BUY')){
-      verdict='HOLD — Signal still strong. Stick to your plan.';
-      vcolor='#15803d'; vbg='#f0fdf4'; vicon='✅';
+    const entryN=parseFloat(p.entry)||0, slN=parseFloat(p.sl)||0;
+    const t1N=parseFloat(p.t1)||0,       t2N=parseFloat(p.t2)||0;
+    const slPct = entryN ? ((slN-entryN)/entryN*100).toFixed(1) : '—';
+    const t1Pct = entryN ? ((t1N-entryN)/entryN*100).toFixed(1) : '—';
+    const t2Pct = (entryN&&t2N) ? ((t2N-entryN)/entryN*100).toFixed(1) : '—';
+    let border,bg,color,label;
+    if(curVotes>=3 && (curSig==='STRONG_BUY'||curSig==='BUY')){
+      border='#86efac'; bg='#f0fdf4'; color='#15803d'; label='✅ HOLD'; holdCount++;
     } else if(curVotes===2){
-      verdict='MONITOR — 2 of 4 agree. Watch closely. Keep SL tight.';
-      vcolor='#b45309'; vbg='#fffbeb'; vicon='⚠️';
-    } else if(curVotes<=1 || curSig==='NO_SIGNAL'){
-      verdict='CONSIDER EXITING — Signal has weakened. Most MCPs no longer agree.';
-      vcolor='#dc2626'; vbg='#fff1f2'; vicon='🔴';
+      border='#fcd34d'; bg='#fffbeb'; color='#b45309'; label='👀 MONITOR CLOSELY'; monCount++;
     } else {
-      verdict='HOLD — Watching.';
-      vcolor='#2563eb'; vbg='#eff6ff'; vicon='🔵';
+      border='#fca5a5'; bg='#fef2f2'; color='#dc2626'; label='⚠ CONSIDER EXITING'; exitCount++;
     }
-
-    const slPct = p.entry>0 ? Math.round((p.sl - p.entry)/p.entry*100) : 0;
-
-    return `<div style="background:#1e293b;border-radius:12px;padding:14px;position:relative">
-      <button onclick="removePosition('${p.name}')" style="position:absolute;top:10px;right:10px;background:transparent;border:none;color:#475569;cursor:pointer;font-size:14px">✕</button>
-      <div style="font-size:15px;font-weight:900;color:#fff;margin-bottom:2px">${p.name}</div>
-      <div style="font-size:10px;color:#64748b;margin-bottom:10px">Bought ${p.bought_at} · ${p.votes_at_buy}/4 agreed at entry</div>
-
-      <div style="background:${vbg};border-radius:8px;padding:8px 12px;margin-bottom:10px">
-        <div style="font-size:12px;font-weight:900;color:${vcolor}">${vicon} ${verdict}</div>
-        <div style="font-size:10px;color:${vcolor};margin-top:3px;opacity:.8">Current signal: ${curSig.replace('_',' ')} (${curVotes}/4 MCPs agree)</div>
+    return `<div style="background:#fff;border:2px solid ${border};border-radius:14px;padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <div style="font-size:16px;font-weight:900;color:#0f172a">${p.name}</div>
+          <div style="font-size:10px;color:#94a3b8;margin-top:1px">Bought ${p.bought_at||'—'} · ${p.votes_at_buy||'?'}/5 votes at entry</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+          <div style="background:${bg};color:${color};border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800">${label}</div>
+          ${!isDefault(p.name)?`<button onclick="removePosition('${p.name}')" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:10px">✕ remove</button>`:''}
+        </div>
       </div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
-        <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
-          <div style="font-size:9px;color:#64748b;font-weight:700">YOUR ENTRY</div>
-          <div style="font-size:14px;font-weight:900;color:#fff">₹${p.entry}</div>
+      <div style="background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:10px">
+        <div style="font-size:10px;color:#64748b;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">Current MCP Signal</div>
+        <div style="font-size:13px;font-weight:800;color:#0f172a">${sigLabel(curSig)}</div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:2px">${curVotes}/4 MCPs agree now · ${p.votes_at_buy||'?'}/5 at entry</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px">
+        <div style="background:#fef2f2;border-radius:6px;padding:6px 8px">
+          <div style="color:#94a3b8;font-size:9px;font-weight:700">SL</div>
+          <div style="color:#dc2626;font-weight:800">₹${slN.toFixed(0)}</div>
+          <div style="color:#fca5a5;font-size:9px">${slPct}%</div>
         </div>
-        <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
-          <div style="font-size:9px;color:#dc2626;font-weight:700">STOP LOSS</div>
-          <div style="font-size:14px;font-weight:900;color:#dc2626">₹${p.sl}</div>
-          <div style="font-size:9px;color:#475569">${slPct}%</div>
+        <div style="background:#f0fdf4;border-radius:6px;padding:6px 8px">
+          <div style="color:#94a3b8;font-size:9px;font-weight:700">T1</div>
+          <div style="color:#15803d;font-weight:800">₹${t1N.toFixed(0)}</div>
+          <div style="color:#86efac;font-size:9px">+${t1Pct}%</div>
         </div>
-        <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
-          <div style="font-size:9px;color:#15803d;font-weight:700">TARGET 1</div>
-          <div style="font-size:14px;font-weight:900;color:#15803d">₹${p.t1}</div>
+        <div style="background:#eff6ff;border-radius:6px;padding:6px 8px">
+          <div style="color:#94a3b8;font-size:9px;font-weight:700">T2</div>
+          <div style="color:#2563eb;font-weight:800">${t2N?'₹'+t2N.toFixed(0):'—'}</div>
+          <div style="color:#93c5fd;font-size:9px">${t2N?'+'+t2Pct+'%':''}</div>
         </div>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:10px;color:#64748b">Entry: <b style="color:#0f172a">₹${entryN.toFixed(2)}</b></div>
+        ${isDefault(p.name)?`<button onclick="removePosition('${p.name}')" style="background:#fef2f2;color:#dc2626;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:700;cursor:pointer">Exit / Remove</button>`:''}
       </div>
     </div>`;
   }).join('');
 
-  // Update buy buttons for tracked stocks
+  // Summary chips
+  const chips = [];
+  if(holdCount) chips.push(`<div style="background:#f0fdf4;color:#15803d;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🟢 HOLD: ${holdCount}</div>`);
+  if(monCount)  chips.push(`<div style="background:#fffbeb;color:#b45309;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🟡 MONITOR: ${monCount}</div>`);
+  if(exitCount) chips.push(`<div style="background:#fef2f2;color:#dc2626;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700">🔴 REVIEW EXIT: ${exitCount}</div>`);
+  const dateEl = document.getElementById('header-scan-date');
+  chips.push(`<div style="color:#94a3b8;font-size:11px;padding:5px 0">Signals from scan data · Last refresh: ${dateEl?dateEl.textContent:'—'}</div>`);
+  if(posSummary) posSummary.innerHTML = chips.join('');
+
+  _updateBuyBtns();
+}
+
+function _updateBuyBtns(){
   positions.forEach(p=>{
     const btn = document.getElementById('btn-'+p.name);
     if(btn){ btn.textContent='✅ TRACKING'; btn.style.background='#15803d'; }
