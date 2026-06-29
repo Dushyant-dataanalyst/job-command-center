@@ -2,9 +2,9 @@ name: NSE FO Refresh Every 5 Min
 
 on:
   schedule:
-    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 8:00 AM - 4:00 PM IST (2:30-10:30 UTC)
+    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 8:00 AM – 4:00 PM IST (2:30–10:30 UTC)
     - cron: '30 15 * * 1-5'       # Once at 9:00 PM IST (15:30 UTC) — next-day prep
-  workflow_dispatch:
+  workflow_dispatch:               # Manual trigger from GitHub UI
 
 jobs:
   fo-refresh:
@@ -27,33 +27,37 @@ jobs:
       - name: Install dependencies
         run: pip install --quiet yfinance pandas numpy requests
 
-      - name: Run F&O refresh
+      - name: Run F&O refresh (writes fo_latest.json to repo root)
         run: |
+          set -e
           cd nse-trading-bot
           python refresh_fo_cloud.py
+          echo "✅ refresh_fo_cloud.py succeeded"
+          echo "fo_latest.json preview:"
+          cat ../fo_latest.json | python3 -c "
+          import sys,json
+          d=json.load(sys.stdin)
+          for k,v in d.items():
+              if k=='_meta': print(' meta:', v)
+              elif isinstance(v,dict): print(f' {k}: {v.get(\"consensus\",\"?\")} spot={v.get(\"spot\",\"?\")} as_of={v.get(\"data_as_of\",\"?\")}')
+          "
 
-      - name: Copy dashboard to repo root
+      - name: Commit fo_latest.json if changed
         run: |
-          cp nse-trading-bot/results/nse_live_dashboard.html nse_live_dashboard.html
-          cp nse-trading-bot/results/fo_latest.json fo_latest.json 2>/dev/null || true
-
-      - name: Commit and push if changed
-        run: |
-          git config user.name "NSE Bot"
+          git config user.name  "NSE Bot"
           git config user.email "nse-bot@github-actions"
 
-          # Fetch latest — reset HEAD to origin without touching working tree
-          # This avoids rebase conflicts when laptop also pushes simultaneously
+          # Fetch latest from origin — avoids conflict if laptop also pushed
           git fetch origin master
           git reset --mixed origin/master
 
-          git add nse_live_dashboard.html fo_latest.json nse-trading-bot/results/nse_live_dashboard.html
+          git add fo_latest.json
 
           if git diff --staged --quiet; then
-            echo "No changes to commit"
+            echo "fo_latest.json unchanged — no commit needed"
           else
             NOW=$(TZ='Asia/Kolkata' date '+%d %b %H:%M IST')
             git commit -m "chore: fo refresh ${NOW}"
             git push origin master
-            echo "Deployed to Vercel"
+            echo "✅ Pushed fo_latest.json — Vercel will redeploy"
           fi

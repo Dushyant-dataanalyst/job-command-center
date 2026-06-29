@@ -1,17 +1,33 @@
 {
+  "_meta": {
+    "generated_at": "29 Jun 2026 14:50 IST",
+    "source": "yfinance EOD"
+  },
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 23980.7,
+    "spot": 23961.3,
     "consensus": "WAIT",
     "ce_votes": 1,
-    "pe_votes": 0,
+    "pe_votes": 2,
     "data_as_of": "2026-06-29",
-    "fetched_at": "29 Jun 2026 06:52 IST",
-    "data_warning": "Signals based on 2026-06-29 close (yfinance EOD). Verify in Kite before trading.",
+    "fetched_at": "29 Jun 2026 14:50 IST",
+    "indicators": {
+      "rsi": 70.4,
+      "macd": 92.87,
+      "macd_signal": 44.0,
+      "ema9": 23937.29,
+      "ema18": 23836.35,
+      "ema50": 23849.43,
+      "roc5": -0.22,
+      "pivot": 24118.87,
+      "r1": 24198.73,
+      "s1": 23976.13,
+      "ann_vol": 0.1137
+    },
+    "data_warning": "EOD data (2026-06-29) via yfinance. Verify live price in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "zerodha_symbol": "\u2014",
-      "zerodha_search": "\u2014",
       "strike": 0,
       "expiry": "30 Jul 2026",
       "days_to_exp": 31,
@@ -21,21 +37,34 @@
       "target1_premium": 0.0,
       "target_premium": 0.0,
       "cost_1_lot": 0
-    }
+    },
+    "safe_spread": {}
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 57778.65,
+    "spot": 57885.75,
     "consensus": "WAIT",
     "ce_votes": 3,
     "pe_votes": 2,
     "data_as_of": "2026-06-29",
-    "fetched_at": "29 Jun 2026 06:52 IST",
-    "data_warning": "Signals based on 2026-06-29 close (yfinance EOD). Verify in Kite before trading.",
+    "fetched_at": "29 Jun 2026 14:50 IST",
+    "indicators": {
+      "rsi": 78.7,
+      "macd": 904.65,
+      "macd_signal": 729.18,
+      "ema9": 57539.63,
+      "ema18": 56791.12,
+      "ema50": 55945.17,
+      "roc5": 0.35,
+      "pivot": 58330.98,
+      "r1": 58552.12,
+      "s1": 57955.92,
+      "ann_vol": 0.1612
+    },
+    "data_warning": "EOD data (2026-06-29) via yfinance. Verify live price in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "zerodha_symbol": "\u2014",
-      "zerodha_search": "\u2014",
       "strike": 0,
       "expiry": "29 Jul 2026",
       "days_to_exp": 30,
@@ -45,6 +74,7 @@
       "target1_premium": 0.0,
       "target_premium": 0.0,
       "cost_1_lot": 0
-    }
+    },
+    "safe_spread": {}
   }
 }

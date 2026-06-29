@@ -2,11 +2,21 @@
   "version": 2,
   "name": "nse-trading-dashboard",
   "builds": [
-    { "src": "nse_live_dashboard.html", "use": "@vercel/static" }
+    { "src": "nse_live_dashboard.html", "use": "@vercel/static" },
+    { "src": "fo_latest.json",          "use": "@vercel/static" }
   ],
   "routes": [
+    {
+      "src": "/fo_latest.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/fo_latest.json"
+    },
+    {
+      "src": "/nse_live_dashboard.html",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0" },
+      "dest": "/nse_live_dashboard.html"
+    },
     { "src": "/", "dest": "/nse_live_dashboard.html" },
-    { "src": "/nse_live_dashboard.html", "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0" }, "dest": "/nse_live_dashboard.html" },
     { "src": "/(.*)", "dest": "/nse_live_dashboard.html" }
   ]
 }
