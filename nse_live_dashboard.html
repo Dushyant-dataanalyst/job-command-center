@@ -276,10 +276,8 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 
 <!-- MY POSITIONS PANEL -->
 <div id="positionsPanel" style="display:none;background:#0f172a;border-radius:14px;padding:16px 20px;margin-bottom:14px">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-    <span style="font-size:14px;font-weight:900;color:#fff">📊 MY ACTIVE POSITIONS</span>
-    <span style="font-size:11px;color:#64748b">Updates every 5 min · Compares today's signals to when you bought</span>
-    <button onclick="clearAllPositions()" style="margin-left:auto;background:#1e293b;color:#94a3b8;border:1px solid #334155;border-radius:6px;padding:4px 12px;font-size:10px;font-weight:700;cursor:pointer">Clear All</button>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+    <button onclick="clearAllPositions()" style="background:#1e293b;color:#94a3b8;border:1px solid #334155;border-radius:6px;padding:4px 12px;font-size:10px;font-weight:700;cursor:pointer">Clear All</button>
   </div>
   <div id="positionCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px"></div>
 </div>
@@ -2276,6 +2274,22 @@ function addPositionPrompt(){
   renderPositions();
 }
 
+function _positionCommentary(p, cur, curVotes){
+  const sector = cur.sector || 'this stock';
+  const strategies = cur.strategies || {};
+  const agreeing = Object.keys(strategies).filter(k => strategies[k]==='BUY' || strategies[k]==='STRONG_BUY');
+  const disagreeing = Object.keys(strategies).filter(k => !(strategies[k]==='BUY' || strategies[k]==='STRONG_BUY'));
+  const votesAtBuy = p.votes_at_buy || 0;
+  const trend = curVotes > votesAtBuy ? 'strengthened' : curVotes < votesAtBuy ? 'weakened' : 'held steady';
+
+  if(curVotes>=3){
+    return `${sector} · conviction has ${trend} since entry (${votesAtBuy}/5 → ${curVotes}/4)${agreeing.length?'. '+agreeing.join(', ')+' still back this trade':''}.`;
+  } else if(curVotes===2){
+    return `${sector} · conviction has ${trend} since entry (${votesAtBuy}/5 → ${curVotes}/4)${disagreeing.length?'. '+disagreeing.join(', ')+' turned cautious':''} — tighten your stop.`;
+  }
+  return `${sector} · conviction has ${trend} sharply since entry (${votesAtBuy}/5 → ${curVotes}/4)${disagreeing.length?'. '+disagreeing.join(', ')+' no longer back this':''} — review your exit plan.`;
+}
+
 function renderPositions(){
   // ── Equity tab: dark inline panel ──
   const panel = document.getElementById('positionsPanel');
@@ -2303,6 +2317,7 @@ function renderPositions(){
           <div style="font-size:12px;font-weight:900;color:${vcolor}">${vicon} ${verdict}</div>
           <div style="font-size:10px;color:${vcolor};margin-top:3px;opacity:.8">Current: ${sigLabel(curSig)} (${curVotes}/4 agree)</div>
         </div>
+        <div style="font-size:10px;color:#94a3b8;margin-bottom:10px;line-height:1.4">💬 ${_positionCommentary(p, cur, curVotes)}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
           <div style="background:#0f172a;border-radius:6px;padding:8px;text-align:center">
             <div style="font-size:9px;color:#64748b;font-weight:700">ENTRY</div>
@@ -2373,6 +2388,7 @@ function renderPositions(){
         <div style="font-size:13px;font-weight:800;color:#0f172a">${sigLabel(curSig)}</div>
         <div style="font-size:10px;color:#94a3b8;margin-top:2px">${curVotes}/4 MCPs agree now · ${p.votes_at_buy||'?'}/5 at entry</div>
       </div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:10px;line-height:1.4">💬 ${_positionCommentary(p, cur, curVotes)}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px">
         <div style="background:#fef2f2;border-radius:6px;padding:6px 8px">
           <div style="color:#94a3b8;font-size:9px;font-weight:700">SL</div>
