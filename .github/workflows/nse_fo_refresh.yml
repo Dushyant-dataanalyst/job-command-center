@@ -25,7 +25,7 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        run: pip install --quiet yfinance pandas numpy requests
+        run: pip install --quiet yfinance==1.4.1 pandas==2.2.3 numpy==2.1.2 requests==2.34.2
 
       - name: Run F&O refresh (writes fo_latest.json to repo root)
         run: |
@@ -56,7 +56,21 @@ jobs:
           python sector_rotation_refresh.py
           echo "✅ sector_rotation_refresh.py succeeded"
 
-      - name: Commit fo_latest.json + trade_journal.json + sector_rotation.json if changed
+      - name: Run market mood gauge (writes market_mood.json to repo root)
+        run: |
+          set -e
+          cd nse-trading-bot
+          python market_mood_refresh.py
+          echo "✅ market_mood_refresh.py succeeded"
+
+      - name: Run news/events tracker (writes news_feed.json to repo root)
+        run: |
+          set -e
+          cd nse-trading-bot
+          python news_refresh.py
+          echo "✅ news_refresh.py succeeded"
+
+      - name: Commit fo_latest.json + trade_journal.json + sector_rotation.json + market_mood.json + news_feed.json if changed
         run: |
           git config user.name  "NSE Bot"
           git config user.email "nse-bot@github-actions"
@@ -65,7 +79,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json
 
           if git diff --staged --quiet; then
             echo "no changes — no commit needed"

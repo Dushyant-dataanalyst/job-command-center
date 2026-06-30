@@ -35,7 +35,7 @@ body{background:#f1f5f9;color:#0f172a;font-family:-apple-system,BlinkMacSystemFo
 @keyframes rot{to{transform:rotate(360deg)}}
 
 /* ── Goal tracker ── */
-.goal-bar{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);border-radius:14px;padding:16px 22px;margin-bottom:14px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(79,70,229,.18)}
+.goal-bar{background:#0f172a;border-radius:14px;padding:16px 22px;margin-bottom:14px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
 .goal-left{flex:0 0 auto}
 .goal-label{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:2px}
 .goal-target{font-size:22px;font-weight:900;color:#fff;letter-spacing:-.5px}
@@ -45,8 +45,7 @@ body{background:#f1f5f9;color:#0f172a;font-family:-apple-system,BlinkMacSystemFo
 .goal-earned{color:#34d399}
 .goal-remaining{color:#64748b}
 .goal-bar-wrap{background:#1e293b;border-radius:20px;height:10px;overflow:hidden;position:relative}
-.goal-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,#4f46e5,#06b6d4);transition:width .6s ease;position:relative}
-.goal-bar-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:6px;background:rgba(255,255,255,.4);border-radius:0 20px 20px 0}
+.goal-bar-fill{height:100%;border-radius:20px;background:#4f46e5;transition:width .6s ease;position:relative}
 .goal-pct{font-size:18px;font-weight:900;color:#fff;margin-left:10px;white-space:nowrap}
 .goal-months{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .goal-month-chip{background:#1e293b;border:1px solid #334155;border-radius:8px;padding:5px 10px;font-size:10px;font-weight:700;color:#94a3b8;text-align:center;min-width:52px}
@@ -247,7 +246,7 @@ tr:last-child td{border-bottom:none}
 <div class="kpis">
   <div class="kpi" style="--c:#16a34a"><div class="kpi-label">Strong Buy</div><div class="kpi-val">22</div><div class="kpi-sub">3–4 strategies agree</div></div>
   <div class="kpi" style="--c:#2563eb"><div class="kpi-label">Buy Signal</div><div class="kpi-val">3</div><div class="kpi-sub">2 strategies agree</div></div>
-  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Watch List</div><div class="kpi-val">14</div><div class="kpi-sub">Setup forming</div></div>
+  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Setups Forming</div><div class="kpi-val">14</div><div class="kpi-sub">1-2 traders interested</div></div>
   <div class="kpi" style="--c:#7c3aed"><div class="kpi-label">Action Today</div><div class="kpi-val">25</div><div class="kpi-sub">BUY candidates</div></div>
   <div class="kpi" style="--c:#0891b2"><div class="kpi-label">Avg Days T1</div><div class="kpi-val">5</div><div class="kpi-sub">First profit target</div></div>
   <div class="kpi" style="--c:#dc2626"><div class="kpi-label">Avg T1 Gain</div><div class="kpi-val" style="font-size:22px">3.8%</div><div class="kpi-sub">Expected first exit</div></div>
@@ -264,7 +263,7 @@ tr:last-child td{border-bottom:none}
   <div class="tab active" onclick="showTab('eq',this)">📈 Equity BUY (25)</div>
   <div class="tab" onclick="showTab('pos',this)">📌 My Positions</div>
   <div class="tab" onclick="showTab('fo',this)">⚡ Futures & Options</div>
-  <div class="tab" onclick="showTab('wl',this)">👁 Watch List (14)</div>
+  <div class="tab" onclick="showTab('wl',this)">👁 Setups Forming (14)</div>
   <div class="tab" onclick="showTab('ipo',this)">🚀 IPO Tracker</div>
   <div class="tab" onclick="showTab('guide',this)">📋 Strategy Guide</div>
 </div>
@@ -276,8 +275,81 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 
 <!-- Inline equity-tab positions block removed — tracked exclusively in the My Positions tab now -->
 
+<!-- Patch vote-badge tooltips (title="Inna:BUY" etc) with what each strategy
+     actually checks, sourced from the Strategy Guide tab, so the logic is
+     visible without switching tabs. Runs once on load against every table,
+     not per-row markup — avoids touching ~25 rows of static HTML. -->
+<script>
+(function patchStrategyTooltips(){
+  var STRATEGY_DESC = {
+    Inna: '18-MA pullback in uptrend — bounce off MA18 with volume',
+    Pham: 'RSI recovery + EMA9>20>50 stack, RSI 35-60, PEG<2.5',
+    Cianni: '20/50-day breakout with ADX>22 + volume surge',
+    Unger: '3 sub-systems vote (breakout/trend/mean-reversion) — 2 of 3 must trigger'
+  };
+  document.querySelectorAll('span[title]').forEach(function(el){
+    var t = el.getAttribute('title') || '';
+    var colonIdx = t.indexOf(':');
+    if (colonIdx < 0) return;
+    var name = t.slice(0, colonIdx);
+    if (STRATEGY_DESC[name]) {
+      el.setAttribute('title', t + ' — ' + STRATEGY_DESC[name]);
+    }
+  });
+})();
+</script>
+
 <!-- EQUITY TAB -->
 <div id="eq" class="panel active">
+<!-- MARKET MOOD — fetched live from /market_mood.json -->
+<div id="market-mood-panel" style="margin-bottom:14px"></div>
+<script>
+(function buildMarketMood(){
+  function render(d){
+    var box = document.getElementById('market-mood-panel');
+    if (!box || d.composite_score == null) return;
+    var score = d.composite_score;
+    var label = d.label;
+    var labelColor = score < 20 ? '#f87171' : score < 40 ? '#fb923c' : score < 60 ? '#fbbf24' : score < 80 ? '#4ade80' : '#22c55e';
+    var c = d.components || {};
+
+    function chip(name, comp){
+      if (!comp || comp.score == null) return '';
+      return '<div style="background:#1e293b;border-radius:8px;padding:6px 10px;font-size:10px;color:#94a3b8">' +
+        '<b style="color:#e2e8f0">' + name + '</b>: ' + comp.score + '/100 (' + comp.weight_pct + '% weight)' +
+      '</div>';
+    }
+
+    box.innerHTML =
+      '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+          '<span style="font-size:14px;font-weight:800">🎭 Market Mood</span>' +
+          '<span style="font-size:11px;color:#64748b">' + (d.fetched_at || '') + '</span>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:16px;margin-bottom:10px">' +
+          '<div style="font-size:32px;font-weight:900;color:' + labelColor + '">' + score + '</div>' +
+          '<div>' +
+            '<div style="font-size:15px;font-weight:800;color:' + labelColor + '">' + label + '</div>' +
+            '<div style="background:#1e293b;border-radius:20px;height:8px;width:200px;overflow:hidden;margin-top:4px;position:relative">' +
+              '<div style="position:absolute;left:0;top:0;bottom:0;width:100%;background:linear-gradient(90deg,#f87171,#fbbf24,#4ade80)"></div>' +
+              '<div style="position:absolute;left:' + score + '%;top:-2px;width:2px;height:12px;background:#fff"></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          chip('India VIX', c.india_vix) + chip('Breadth', c.market_breadth) + chip('NIFTY Momentum', c.nifty_momentum) +
+        '</div>' +
+        '<div style="font-size:10px;color:#475569;margin-top:10px">' + (d.disclaimer || '') + '</div>' +
+      '</div>';
+  }
+
+  fetch('/market_mood.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if (d) render(d); })
+    .catch(function(){});
+})();
+</script>
+
 <!-- SECTOR ROTATION — fetched live from /sector_rotation.json -->
 <div id="sector-rotation-panel" style="margin-bottom:14px"></div>
 <script>
@@ -295,7 +367,7 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
       var widthPct = Math.round(Math.abs(s.score) / maxAbsScore * 100);
       var isTop = topSet.has(s.sector);
       var trendIcon = s.bullish_trend ? '▲' : '▼';
-      return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">' +
+      return '<div onclick="filterBySectorBar(\'' + s.sector.replace(/'/g,"\\'") + '\')" title="Click to filter the equity table to ' + s.sector + '" style="display:flex;align-items:center;gap:10px;margin-bottom:6px;cursor:pointer">' +
         '<div style="width:84px;font-size:11px;font-weight:700;color:' + (isTop ? '#fff' : '#94a3b8') + '">' +
           (isTop ? '🔥 ' : '') + s.sector +
         '</div>' +
@@ -323,6 +395,20 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
       ? '<div style="font-size:9px;color:#475569;margin-top:8px">No data: ' + Object.keys(d.sectors_with_errors).join(', ') + '</div>'
       : '';
 
+    var building = d.building_momentum || [];
+    var buildingHtml = building.length
+      ? '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #1e293b">' +
+          '<div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:6px">👀 Building — heavier volume, no price move confirmed yet</div>' +
+          building.map(function(s){
+            return '<div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#cbd5e1;margin-bottom:4px">' +
+              '<span style="font-weight:700;width:84px">' + s.sector + '</span>' +
+              '<span style="color:#fbbf24">' + s.rel_volume + 'x vol</span>' +
+              '<span style="color:#64748b">· ' + s.roc5_pct + '% (5d)</span>' +
+            '</div>';
+          }).join('') +
+        '</div>'
+      : '';
+
     box.innerHTML =
       '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
         '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px">' +
@@ -331,12 +417,60 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
         '</div>' +
         (sectors.length ? bars : '<div style="font-size:12px;color:#64748b">No sector data yet — refreshes every 5 min during market hours.</div>') +
         pickRows +
+        buildingHtml +
         errNote +
         '<div style="font-size:10px;color:#475569;margin-top:10px">Educational momentum/volume screen, not investment advice. Verify live price before trading.</div>' +
       '</div>';
   }
 
   fetch('/sector_rotation.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ if (d) render(d); })
+    .catch(function(){});
+})();
+</script>
+
+<!-- NEWS & CORPORATE EVENTS — fetched live from /news_feed.json -->
+<div id="news-panel" style="margin-bottom:14px"></div>
+<script>
+(function buildNews(){
+  function row(item, showTicker){
+    var date = (item.published || '').split(' ').slice(0,1).join(' ') || '';
+    return '<div style="padding:8px 0;border-bottom:1px solid #1e293b">' +
+      '<div style="display:flex;align-items:baseline;gap:8px">' +
+        (showTicker ? '<span style="background:#1e293b;color:#38bdf8;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:800">' + item.ticker + '</span>' : '') +
+        '<span style="font-size:11px;font-weight:700;color:#e2e8f0">' + item.company + '</span>' +
+        '<span style="font-size:9px;color:#475569;margin-left:auto">' + (item.published || '') + '</span>' +
+      '</div>' +
+      '<div style="font-size:10px;color:#94a3b8;margin-top:2px">' + (item.summary || '') + '</div>' +
+    '</div>';
+  }
+
+  function render(d){
+    var box = document.getElementById('news-panel');
+    if (!box) return;
+    var posNews = d.position_news || [];
+    var recent = d.recent_announcements || [];
+
+    var posHtml = posNews.length
+      ? posNews.slice(0,5).map(function(i){ return row(i, true); }).join('')
+      : '<div style="font-size:11px;color:#64748b;padding:6px 0">No announcements for your tracked positions right now.</div>';
+
+    box.innerHTML =
+      '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+          '<span style="font-size:14px;font-weight:800">📰 NSE Corporate Announcements</span>' +
+          '<span style="font-size:11px;color:#64748b">' + (d.fetched_at || '') + '</span>' +
+        '</div>' +
+        '<div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:4px">Your Positions</div>' +
+        posHtml +
+        (recent.length ? '<details style="margin-top:10px"><summary style="font-size:11px;color:#64748b;cursor:pointer">Show recent market-wide announcements (' + recent.length + ')</summary>' +
+          recent.slice(0,10).map(function(i){ return row(i, false); }).join('') + '</details>' : '') +
+        '<div style="font-size:10px;color:#475569;margin-top:10px">' + (d.disclaimer || '') + '</div>' +
+      '</div>';
+  }
+
+  fetch('/news_feed.json?v=' + Date.now())
     .then(function(r){ return r.ok ? r.json() : null; })
     .then(function(d){ if (d) render(d); })
     .catch(function(){});
@@ -426,6 +560,8 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
     <button class="sc active" onclick="filterSector('all',this)" style="background:#0f172a;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer">All Sectors</button>
     ${uniqueSectors.map(sec=>`<button class="sc" onclick="filterSector('${sec}',this)" style="background:#f1f5f9;color:#475569;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer">${sec}</button>`).join('')}
   </div>`;
+
+  html+=`<div style="font-size:10px;color:#94a3b8;margin-bottom:14px">↓ Full breakdown for all ${totalStocks} stocks (incl. per-trader votes) in the table below</div>`;
 
   document.getElementById('breakout-picks').innerHTML=html;
 
@@ -1231,6 +1367,16 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
                 '<th style="padding:4px 10px;text-align:right">P&amp;L</th>' +
               '</tr></thead><tbody>' + rows + '</tbody></table>'
           ) : '<div style="font-size:12px;color:#64748b">No mock trades yet — opens automatically next time a BUY_CE/BUY_PE signal fires.</div>') +
+          (s.loss_diagnostic ? (
+            '<details style="margin-top:10px"><summary style="font-size:12px;font-weight:700;color:#fbbf24;cursor:pointer">🔍 Why am I losing?</summary>' +
+              '<div style="margin-top:8px;padding:10px;background:#1e293b;border-radius:8px">' +
+                (s.expectancy_pct != null ? '<div style="font-size:11px;color:#e2e8f0;margin-bottom:6px"><b>Expectancy:</b> ' +
+                  (s.expectancy_pct > 0 ? '+' : '') + s.expectancy_pct + '% per trade' +
+                  ' <span style="color:#64748b">(avg win ' + (s.avg_win_pct > 0 ? '+' : '') + s.avg_win_pct + '%, avg loss ' + s.avg_loss_pct + '%)</span></div>' : '') +
+                '<div style="font-size:11px;color:#cbd5e1">' + s.loss_diagnostic + '</div>' +
+              '</div>' +
+            '</details>'
+          ) : '') +
           '<div style="font-size:10px;color:#475569;margin-top:10px">Paper trades only — simulated using the same premium model as the live signals. Not a recommendation. Track record, not financial advice.</div>' +
         '</div>';
     }
@@ -1335,17 +1481,17 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
   </script>
 
   <!-- SAFE MODE BANNER -->
-  <div style="background:#052e16;border-radius:12px;padding:12px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+  <div style="background:#0f172a;border-radius:12px;padding:12px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
     <span style="font-size:18px">🛡</span>
     <div style="flex:1">
       <div style="font-size:13px;font-weight:900;color:#4ade80">SAFE MODE ON — Spread Strategy Only</div>
-      <div style="font-size:11px;color:#166534;margin-top:2px">
+      <div style="font-size:11px;color:#64748b;margin-top:2px">
         Only the safe spread trade is shown by default. Your maximum loss is always locked and known before you enter.
         Aggressive single-leg option is hidden — tap to reveal only if you want it.
       </div>
     </div>
     <div style="text-align:right">
-      <div style="font-size:11px;color:#166534">Min R:R required</div>
+      <div style="font-size:11px;color:#64748b">Min R:R required</div>
       <div style="font-size:20px;font-weight:900;color:#4ade80">1 : 2</div>
     </div>
   </div>
@@ -2138,6 +2284,17 @@ function filterSector(sector,el){
   el.style.background='#0f172a'; el.style.color='#fff';
   _eqSec=sector;
   _applyEqFilters();
+}
+
+/* Sector Rotation bars aren't .sc chips — wrapper finds the matching chip
+   (if any) to keep its active state in sync, then filters and scrolls to
+   the table so the click actually shows the result. */
+function filterBySectorBar(sector){
+  const chip = [...document.querySelectorAll('.sc')].find(b=>b.textContent.trim()===sector);
+  if (chip) { filterSector(sector, chip); }
+  else { _eqSec=sector; _applyEqFilters(); }
+  const table = document.querySelector('#eq .sec');
+  if (table) table.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 /* ─── Sort equity ─── */

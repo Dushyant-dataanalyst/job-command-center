@@ -10,7 +10,8 @@ the MCP server for the full rationale on scoring and data honesty.
 from datetime import datetime
 
 import pandas as pd
-import yfinance as yf
+
+from yf_retry import download_with_retry
 
 SECTOR_INDICES = {
     "Banking":  "^NSEBANK",
@@ -42,7 +43,7 @@ SECTOR_STOCKS = {
 
 
 def _momentum_volume(ticker, period="2mo"):
-    df = yf.download(ticker, period=period, progress=False, auto_adjust=True)
+    df = download_with_retry(ticker, period=period)
     if df.empty or len(df) < 25:
         return None
     if isinstance(df.columns, pd.MultiIndex):
@@ -77,6 +78,9 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
     Rank NSE sector indices by 5-day momentum and relative volume to find
     which sectors are rotating into strength right now, then rank a few
     representative large-cap stocks within the top sectors the same way.
+    Also flags sectors that may rotate in NEXT: heavier-than-usual volume
+    (rel_volume >= 1.3x) without a confirmed price move yet, returned in
+    building_momentum.
 
     All figures are fetched live from yfinance at call time. Returns
     data_as_of per instrument so the caller can verify freshness (yfinance
@@ -102,6 +106,17 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
     )
     top_sectors = ranked_sectors[:top_n]
 
+    # "Building Momentum": heavier-than-usual participation (rel_volume >= 1.3x)
+    # without a confirmed price move yet (roc5 still flat/slightly negative).
+    # Classic early-accumulation pattern — reclassification of data already
+    # fetched above, no extra yfinance calls.
+    building_momentum = [
+        {"sector": k, **v} for k, v in sector_results.items()
+        if "score" in v and v.get("rel_volume") is not None
+        and v["rel_volume"] >= 1.3 and -1.0 <= v["roc5_pct"] <= 0.5
+    ]
+    building_momentum.sort(key=lambda s: s["rel_volume"], reverse=True)
+
     stock_picks = {}
     for sector_name, _ in top_sectors:
         picks = []
@@ -123,6 +138,7 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
         "all_sectors_ranked": [{"sector": k, **v} for k, v in ranked_sectors],
         "sectors_with_errors": {k: v["error"] for k, v in sector_results.items() if "error" in v},
         "top_sectors": [k for k, _ in top_sectors],
+        "building_momentum": building_momentum,
         "stock_picks_by_sector": stock_picks,
         "disclaimer": "Educational momentum/volume screen only, not investment advice. Sector-stock membership list is a static classification — verify current constituents and live price in your broker terminal (e.g. Zerodha Kite) before placing any order.",
     }

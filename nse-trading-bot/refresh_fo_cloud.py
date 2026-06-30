@@ -7,10 +7,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 import numpy as np
 import pandas as pd
-import yfinance as yf
 import requests
 import warnings
 from datetime import date, timedelta, datetime
+from yf_retry import download_with_retry
 
 warnings.filterwarnings('ignore')
 
@@ -52,7 +52,7 @@ def _premium_estimate(spot, strike, ann_vol, days):
     return round(p, 0)
 
 def _get_indicators(ticker):
-    df = yf.download(ticker, period="6mo", progress=False, auto_adjust=True)
+    df = download_with_retry(ticker, period="6mo")
     if df.empty or len(df) < 55:
         return {}
     if isinstance(df.columns, pd.MultiIndex):

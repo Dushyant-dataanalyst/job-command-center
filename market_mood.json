@@ -1,0 +1,29 @@
+{
+  "fetched_at": "30 Jun 2026 13:11 IST",
+  "composite_score": 59,
+  "label": "Neutral",
+  "components": {
+    "india_vix": {
+      "score": 83,
+      "weight_pct": 40,
+      "level": 13.46
+    },
+    "market_breadth": {
+      "score": 38,
+      "weight_pct": 30,
+      "detail": "19/50 stocks above 20-day EMA"
+    },
+    "nifty_momentum": {
+      "score": 47,
+      "weight_pct": 30,
+      "detail": {
+        "roc5_pct": -0.71,
+        "ema_aligned_bullish": false,
+        "ema_aligned_bearish": false,
+        "data_as_of": "2026-06-30"
+      }
+    }
+  },
+  "method": "composite = weighted avg of (40% India VIX inverted, 30% market breadth % above 20-day EMA across a 50-stock basket, 30% NIFTY EMA-alignment + ROC5 momentum). Missing components are excluded and weights renormalized, not faked.",
+  "disclaimer": "Constructed proxy index, not an official Fear & Greed index (none exists free for India). Educational use only."
+}

@@ -105,9 +105,9 @@ def _compute_stats(trades):
     wins = [t for t in closed if t["result"] == "win"]
     losses = [t for t in closed if t["result"] == "loss"]
 
-    def bucket(keyfn):
+    def bucket(items, keyfn):
         out = {}
-        for t in closed:
+        for t in items:
             k = keyfn(t)
             b = out.setdefault(k, {"total": 0, "wins": 0})
             b["total"] += 1
@@ -117,8 +117,8 @@ def _compute_stats(trades):
             b["win_rate"] = round(b["wins"] / b["total"] * 100, 1) if b["total"] else 0.0
         return out
 
-    by_instrument = bucket(lambda t: t["instrument"])
-    by_votes = bucket(lambda t: t["votes"])
+    by_instrument = bucket(closed, lambda t: t["instrument"])
+    by_votes = bucket(closed, lambda t: t["votes"])
 
     insight = "Not enough closed trades yet to draw a conclusion."
     if len(closed) >= 3:
@@ -127,15 +127,52 @@ def _compute_stats(trades):
             parts = [f"{k} setups: {v['wins']}/{v['total']} ({v['win_rate']}% win)" for k, v in sorted(by_votes.items(), reverse=True)]
             insight = " · ".join(parts)
 
+    win_rate = round(len(wins) / len(closed) * 100, 1) if closed else 0.0
+    avg_win_pct = round(sum(t["pnl_pct"] for t in wins) / len(wins), 1) if wins else 0.0
+    avg_loss_pct = round(sum(t["pnl_pct"] for t in losses) / len(losses), 1) if losses else 0.0  # negative
+    # Expectancy: average % P&L per trade, blending win-rate with avg win/loss size.
+    # Positive win rate alone can still be a net loser if losses are big relative to wins.
+    expectancy_pct = round((win_rate / 100 * avg_win_pct) + ((1 - win_rate / 100) * avg_loss_pct), 2) if closed else None
+
+    # Loss clustering — same bucket() helper, applied to the loss subset only,
+    # to spot which vote-strength/instrument combos are actually losing money.
+    loss_by_votes = bucket(losses, lambda t: t["votes"])
+    loss_by_instrument = bucket(losses, lambda t: t["instrument"])
+
+    MIN_SAMPLE = 10
+    if len(closed) < MIN_SAMPLE:
+        loss_diagnostic = f"Only {len(closed)} closed trades so far — need at least {MIN_SAMPLE} before a loss pattern means anything more than noise. Keep paper-trading."
+    elif not losses:
+        loss_diagnostic = f"No losses yet across {len(closed)} closed trades — too early to call this an edge, but nothing to fix either."
+    else:
+        # Find the vote-strength bucket with the worst loss concentration among buckets with >=2 losses.
+        candidates = {k: v for k, v in loss_by_votes.items() if v["total"] >= 2}
+        if candidates:
+            worst_key = max(candidates.items(), key=lambda kv: kv[1]["total"] / max(by_votes.get(kv[0], {}).get("total", 1), 1))[0]
+            worst = loss_by_votes[worst_key]
+            total_at_that_vote = by_votes.get(worst_key, {}).get("total", worst["total"])
+            other_votes = {k: v for k, v in by_votes.items() if k != worst_key}
+            best_other = max(other_votes.items(), key=lambda kv: kv[1]["win_rate"], default=None)
+            tail = f" {best_other[0]} setups are {best_other[1]['win_rate']}% win so far — consider raising your entry threshold." if best_other and best_other[1]["win_rate"] > by_votes.get(worst_key, {}).get("win_rate", 0) else ""
+            loss_diagnostic = f"Your losses are concentrated in {worst_key}-vote setups ({worst['total']} of {len(losses)} losses, out of {total_at_that_vote} total {worst_key} trades).{tail}"
+        else:
+            loss_diagnostic = f"{len(losses)} losses so far, spread thinly across vote-strengths — no single pattern stands out yet."
+
     return {
         "total_closed": len(closed),
         "open_count": len(open_),
         "wins": len(wins),
         "losses": len(losses),
-        "win_rate": round(len(wins) / len(closed) * 100, 1) if closed else 0.0,
+        "win_rate": win_rate,
+        "avg_win_pct": avg_win_pct,
+        "avg_loss_pct": avg_loss_pct,
+        "expectancy_pct": expectancy_pct,
         "by_instrument": by_instrument,
         "by_votes": by_votes,
+        "loss_by_votes": loss_by_votes,
+        "loss_by_instrument": loss_by_instrument,
         "insight": insight,
+        "loss_diagnostic": loss_diagnostic,
     }
 
 
