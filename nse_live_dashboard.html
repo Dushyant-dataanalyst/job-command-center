@@ -1128,6 +1128,63 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
   <script>/* FO_EXACT_DATA_START */ const FO_EXACT = {"NIFTY50": {"instrument": "NIFTY50", "spot": 24056.0, "consensus": "WAIT", "ce_votes": 0, "pe_votes": 0, "neutral_votes": 5, "agreeing_traders": [], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 15:56 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "WAIT \u2014 No Trade", "zerodha_symbol": "\u2014", "zerodha_search": "\u2014", "kite_steps": "No trade today \u2014 wait for clearer signal", "strike": 0, "option_type": "\u2014", "expiry": "30 Jul 2026", "days_to_exp": 35, "lot_size": 75, "entry_premium": 0, "sl_premium": 0, "target1_premium": 0, "target_premium": 0, "cost_1_lot": 0, "lots_for_10k": 0, "total_invest": 0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {}, "trade_logic": "No clear direction. 3 out of 5 strategies don't agree. Stay out today.", "entry_timing": "Do not trade \u2014 wait for clearer signal tomorrow", "exit_rule": "\u2014"}, "indicators": {"spot": 24056.0, "ema9": 23931.29, "ema18": 23821.65, "ema20": 23809.53, "ema50": 23845.68, "atr": 256.55, "rsi": 65.6, "macd": 93.55, "macd_signal": 31.78, "ann_vol": 0.1176, "pivot": 23966.98, "r1": 24144.72, "s1": 23843.92, "roc5": -0.46, "roc3": -0.19, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD bullish"]}, {"strategy": "Tanmay", "direction": "NEUTRAL", "score": 1, "reasons": ["Spot in S1-R1 range (23844\u201324145) \u2014 wait for breakout", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "NEUTRAL", "score": 0, "reasons": ["Market not decisive \u2014 Nikhil would prefer Bull Put Spread (sell premium)", "Skip plain CE/PE buy \u2014 wait for clearer trend or sell OTM spread"]}, {"strategy": "Sivakumar", "direction": "NEUTRAL", "score": 0, "reasons": ["Above pivot 23967 \u2014 bullish bias", "Medium-term downtrend (EMA20<EMA50)"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}, "BANKNIFTY": {"instrument": "BANKNIFTY", "spot": 58177.05, "consensus": "WAIT", "ce_votes": 2, "pe_votes": 0, "neutral_votes": 3, "agreeing_traders": [], "data_as_of": "2026-06-25", "fetched_at": "25 Jun 2026 15:56 IST", "data_warning": "OHLCV signals based on 2026-06-25 close via yfinance. Premium: estimated. Verify price before placing order.", "trade": {"action": "WAIT \u2014 No Trade", "zerodha_symbol": "\u2014", "zerodha_search": "\u2014", "kite_steps": "No trade today \u2014 wait for clearer signal", "strike": 0, "option_type": "\u2014", "expiry": "29 Jul 2026", "days_to_exp": 34, "lot_size": 30, "entry_premium": 0, "sl_premium": 0, "target1_premium": 0, "target_premium": 0, "cost_1_lot": 0, "lots_for_10k": 0, "total_invest": 0, "max_loss": 0, "max_profit": 0, "rr_ratio": 0, "single_leg_rr": "1:2 (SL -25%, T1 +50%)", "safe_spread": {}, "trade_logic": "No clear direction. 3 out of 5 strategies don't agree. Stay out today.", "entry_timing": "Do not trade \u2014 wait for clearer signal tomorrow", "exit_rule": "\u2014"}, "indicators": {"spot": 58177.05, "ema9": 57453.09, "ema18": 56662.34, "ema20": 56534.3, "ema50": 55866.62, "atr": 760.16, "rsi": 77.1, "macd": 913.9, "macd_signal": 685.3, "ann_vol": 0.1623, "pivot": 57827.2, "r1": 58579.5, "s1": 57398.05, "roc5": 0.37, "roc3": 0.42, "data_date": "2026-06-25"}, "all_signals": [{"strategy": "Inna", "direction": "BUY_CE", "score": 3, "reasons": ["Uptrend: spot > EMA18 > EMA50", "MACD bullish", "RSI=77.1 overbought \u2014 wait for pullback"]}, {"strategy": "Tanmay", "direction": "NEUTRAL", "score": 1, "reasons": ["Spot in S1-R1 range (57398\u201358580) \u2014 wait for breakout", "EMA9 > EMA20 bullish"]}, {"strategy": "Ashwin", "direction": "NEUTRAL", "score": 1, "reasons": ["Full EMA bullish alignment", "RSI=77.1 overbought \u2014 no CE buy", "MACD above zero line \u2014 bullish"]}, {"strategy": "Nikhil", "direction": "NEUTRAL", "score": 0, "reasons": ["Market not decisive \u2014 Nikhil would prefer Bull Put Spread (sell premium)", "Skip plain CE/PE buy \u2014 wait for clearer trend or sell OTM spread"]}, {"strategy": "Sivakumar", "direction": "BUY_CE", "score": 6, "reasons": ["Above pivot 57827 \u2014 bullish bias", "Medium-term uptrend (EMA20>EMA50)", "Near pivot support \u2014 Siva CE entry zone"]}], "sebi_note": "Manual execution only. Place orders yourself in Zerodha Kite. No auto-trading."}}; /* FO_EXACT_DATA_END */</script>
   <!-- MARKET INTELLIGENCE STRIP -->
   <div id="fo-intel-strip" style="margin-bottom:14px"></div>
+
+  <!-- TRADING BRAIN — mock-trade track record, fetched live from /trade_journal.json -->
+  <div id="trading-brain-panel" style="margin-bottom:14px"></div>
+  <script>
+  (function buildTradingBrain(){
+    function render(j){
+      var box = document.getElementById('trading-brain-panel');
+      if (!box) return;
+      var s = (j && j.stats) || {total_closed:0, open_count:0, wins:0, losses:0, win_rate:0, by_votes:{}, insight:'No data yet.'};
+      var trades = (j && j.trades) || [];
+      var recent = trades.slice().reverse().slice(0, 6);
+
+      var wrColor = s.win_rate >= 60 ? '#4ade80' : s.win_rate >= 40 ? '#fbbf24' : '#f87171';
+      var rows = recent.map(function(t){
+        var statusColor = t.status === 'open' ? '#38bdf8' : (t.result === 'win' ? '#4ade80' : '#f87171');
+        var statusLabel = t.status === 'open' ? 'OPEN' : (t.result === 'win' ? 'WIN' : 'LOSS') + ' · ' + (t.exit_reason || '');
+        var pnl = t.pnl_pct != null ? (t.pnl_pct > 0 ? '+' : '') + t.pnl_pct + '%' : '—';
+        return '<tr>' +
+          '<td style="padding:6px 10px;font-weight:600">' + t.instrument + '</td>' +
+          '<td style="padding:6px 10px">' + t.consensus + ' (' + t.votes + ')</td>' +
+          '<td style="padding:6px 10px">' + t.strike + ' ' + t.option_type + '</td>' +
+          '<td style="padding:6px 10px;color:' + statusColor + ';font-weight:700">' + statusLabel + '</td>' +
+          '<td style="padding:6px 10px;text-align:right">' + pnl + '</td>' +
+        '</tr>';
+      }).join('');
+
+      box.innerHTML =
+        '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
+          '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+            '<span style="font-size:14px;font-weight:800">🧠 Trading Brain</span>' +
+            '<span style="background:#1e293b;color:' + wrColor + ';font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px">' +
+              s.win_rate + '% win rate · ' + s.total_closed + ' closed' +
+            '</span>' +
+            '<span style="background:#1e293b;color:#38bdf8;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px">' +
+              s.open_count + ' open' +
+            '</span>' +
+          '</div>' +
+          '<div style="font-size:12px;color:#94a3b8;margin-bottom:10px">' + s.insight + '</div>' +
+          (recent.length ? (
+            '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
+              '<thead><tr style="color:#64748b;text-align:left">' +
+                '<th style="padding:4px 10px">Instrument</th><th style="padding:4px 10px">Signal</th>' +
+                '<th style="padding:4px 10px">Strike</th><th style="padding:4px 10px">Status</th>' +
+                '<th style="padding:4px 10px;text-align:right">P&amp;L</th>' +
+              '</tr></thead><tbody>' + rows + '</tbody></table>'
+          ) : '<div style="font-size:12px;color:#64748b">No mock trades yet — opens automatically next time a BUY_CE/BUY_PE signal fires.</div>') +
+          '<div style="font-size:10px;color:#475569;margin-top:10px">Paper trades only — simulated using the same premium model as the live signals. Not a recommendation. Track record, not financial advice.</div>' +
+        '</div>';
+    }
+
+    fetch('/trade_journal.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){ if (j) render(j); })
+      .catch(function(){});
+  })();
+  </script>
+
   <script>
   (function buildFOIntel(){
     const INR=n=>'₹'+Math.round(n).toLocaleString('en-IN');

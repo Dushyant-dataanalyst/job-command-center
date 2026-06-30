@@ -14,9 +14,8 @@ from datetime import date, timedelta, datetime
 
 warnings.filterwarnings('ignore')
 
-RESULTS_DIR = pathlib.Path(__file__).parent / "results"
-RESULTS_DIR.mkdir(exist_ok=True)
-OUT_FILE = RESULTS_DIR / "nse_live_dashboard.html"
+REPO_ROOT = pathlib.Path(__file__).parent.parent
+SIDECAR_FILE = REPO_ROOT / "fo_latest.json"
 
 # ── Same constants as fo_traders_mcp.py ───────────────────────────────────
 INSTRUMENTS = {
@@ -129,7 +128,7 @@ def _fo_signal(instrument):
     zs_search = f"{nse_sym} {expiry.strftime('%b').upper()} {strike} {opt}" if opt else "—"
     now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
     return {
-        "instrument": instrument, "spot": spot,
+        "instrument": instrument, "spot": spot, "ann_vol": v["ann_vol"],
         "consensus": consensus, "ce_votes": ce_v, "pe_votes": pe_v,
         "data_as_of": v["data_date"], "fetched_at": now_str,
         "data_warning": f"Signals based on {v['data_date']} close (yfinance EOD). Verify in Kite before trading.",
@@ -144,39 +143,10 @@ def _fo_signal(instrument):
         }
     }
 
-def patch_html(fo_exact, now_str):
-    if not OUT_FILE.exists():
-        print("No dashboard HTML found — skipping patch")
-        return False
-    html = OUT_FILE.read_text(encoding="utf-8")
-    changed = False
-
-    # Patch FO_EXACT JSON blob
-    JS  = '/* FO_EXACT_DATA_START */'
-    JE  = '/* FO_EXACT_DATA_END */'
-    if JS in html and JE in html:
-        new_blob = f'{JS} const FO_EXACT = {json.dumps(fo_exact)}; {JE}'
-        html = html[:html.index(JS)] + new_blob + html[html.index(JE)+len(JE):]
-        changed = True
-
-    # Patch refresh timestamp badge
-    BS = '<!-- FO_REFRESH_TS_START -->'
-    BE = '<!-- FO_REFRESH_TS_END -->'
-    if BS in html and BE in html:
-        new_badge = (f'{BS}<span style="background:#0f172a;color:#38bdf8;font-size:11px;'
-                     f'font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block">'
-                     f'&#9889; F&amp;O refreshed: {now_str}</span>{BE}')
-        html = html[:html.index(BS)] + new_badge + html[html.index(BE)+len(BE):]
-        changed = True
-
-    if changed:
-        OUT_FILE.write_text(html, encoding="utf-8")
-    return changed
-
 def main():
     now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
     print(f"[{now_str}] Cloud F&O refresh starting...")
-    fo_exact = {}
+    fo_exact = {"_meta": {"generated_at": now_str, "source": "yfinance EOD"}}
     for inst in ["NIFTY50", "BANKNIFTY"]:
         try:
             r = _fo_signal(inst)
@@ -184,11 +154,9 @@ def main():
             print(f"  {inst}: {r.get('consensus')} | spot={r.get('spot')}")
         except Exception as e:
             print(f"  {inst} ERROR: {e}")
-    patched = patch_html(fo_exact, now_str)
-    print(f"  HTML patched: {patched}")
-    # Write a JSON sidecar so the workflow can check if data changed
-    sidecar = RESULTS_DIR / "fo_latest.json"
-    sidecar.write_text(json.dumps(fo_exact, indent=2))
+    # Write the sidecar that the dashboard fetches at /fo_latest.json (repo root = Vercel site root)
+    SIDECAR_FILE.write_text(json.dumps(fo_exact, indent=2))
+    print(f"  Wrote {SIDECAR_FILE}")
     print("Done.")
 
 if __name__ == "__main__":

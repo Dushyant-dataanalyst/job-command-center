@@ -42,7 +42,14 @@ jobs:
               elif isinstance(v,dict): print(f' {k}: {v.get(\"consensus\",\"?\")} spot={v.get(\"spot\",\"?\")} as_of={v.get(\"data_as_of\",\"?\")}')
           "
 
-      - name: Commit fo_latest.json if changed
+      - name: Run trading brain (paper-trades signals, marks open trades to market)
+        run: |
+          set -e
+          cd nse-trading-bot
+          python trade_brain.py
+          echo "✅ trade_brain.py succeeded"
+
+      - name: Commit fo_latest.json + trade_journal.json if changed
         run: |
           git config user.name  "NSE Bot"
           git config user.email "nse-bot@github-actions"
@@ -51,13 +58,13 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json
+          git add fo_latest.json trade_journal.json
 
           if git diff --staged --quiet; then
-            echo "fo_latest.json unchanged — no commit needed"
+            echo "no changes — no commit needed"
           else
             NOW=$(TZ='Asia/Kolkata' date '+%d %b %H:%M IST')
-            git commit -m "chore: fo refresh ${NOW}"
+            git commit -m "chore: fo refresh + brain update ${NOW}"
             git push origin master
-            echo "✅ Pushed fo_latest.json — Vercel will redeploy"
+            echo "✅ Pushed — Vercel will redeploy"
           fi
