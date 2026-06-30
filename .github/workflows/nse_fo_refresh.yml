@@ -49,7 +49,14 @@ jobs:
           python trade_brain.py
           echo "✅ trade_brain.py succeeded"
 
-      - name: Commit fo_latest.json + trade_journal.json if changed
+      - name: Run sector rotation scan (writes sector_rotation.json to repo root)
+        run: |
+          set -e
+          cd nse-trading-bot
+          python sector_rotation_refresh.py
+          echo "✅ sector_rotation_refresh.py succeeded"
+
+      - name: Commit fo_latest.json + trade_journal.json + sector_rotation.json if changed
         run: |
           git config user.name  "NSE Bot"
           git config user.email "nse-bot@github-actions"
@@ -58,7 +65,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json
+          git add fo_latest.json trade_journal.json sector_rotation.json
 
           if git diff --staged --quiet; then
             echo "no changes — no commit needed"

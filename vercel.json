@@ -4,7 +4,8 @@
   "builds": [
     { "src": "nse_live_dashboard.html", "use": "@vercel/static" },
     { "src": "fo_latest.json",          "use": "@vercel/static" },
-    { "src": "trade_journal.json",      "use": "@vercel/static" }
+    { "src": "trade_journal.json",      "use": "@vercel/static" },
+    { "src": "sector_rotation.json",    "use": "@vercel/static" }
   ],
   "routes": [
     {
@@ -16,6 +17,11 @@
       "src": "/trade_journal.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/trade_journal.json"
+    },
+    {
+      "src": "/sector_rotation.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/sector_rotation.json"
     },
     {
       "src": "/nse_live_dashboard.html",

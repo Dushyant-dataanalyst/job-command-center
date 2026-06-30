@@ -1,92 +1,22 @@
 """
 Sector Rotation MCP Server.
 
-Exposes one tool, scan_sector_rotation, which:
-  1. Pulls live price/volume for 10 NSE sector indices via yfinance.
-  2. Ranks sectors by a momentum*volume score (5-day ROC% x relative volume
-     vs 20-day average) to find which sectors are rotating into strength.
-  3. For the top N sectors, does the same per-stock scoring across a small
-     set of representative large-caps in that sector, to surface specific
-     picks.
-
-Every number in the response is fetched live at call time — nothing here
-is cached, pre-baked, or guessed. data_as_of is reported per instrument so
-the caller can judge freshness (yfinance NSE data is EOD/15-min delayed,
-not tick-level). The sector->stock membership map below is a static
-classification (which company belongs to which sector), not market data,
-so it does not need a live source.
+Thin MCP wrapper around sector_rotation_core.scan_sector_rotation — see
+that module for the actual scan logic and data-honesty notes. This file
+just exposes it as a stdio MCP tool for Claude to call live.
 
 Run as a stdio MCP server:
     python server.py
 """
+import pathlib
 import sys
-from datetime import datetime
 
-import numpy as np
-import pandas as pd
-import yfinance as yf
+sys.path.insert(0, str(pathlib.Path(__file__).parent.parent.parent))  # nse-trading-bot/
+
 from mcp.server.fastmcp import FastMCP
+from sector_rotation_core import scan_sector_rotation as _scan_sector_rotation
 
 mcp = FastMCP("sector-rotation")
-
-SECTOR_INDICES = {
-    "Banking":  "^NSEBANK",
-    "IT":       "^CNXIT",
-    "Auto":     "^CNXAUTO",
-    "Pharma":   "^CNXPHARMA",
-    "FMCG":     "^CNXFMCG",
-    "Metal":    "^CNXMETAL",
-    "Energy":   "^CNXENERGY",
-    "Realty":   "^CNXREALTY",
-    "PSU Bank": "^CNXPSUBANK",
-    "Media":    "^CNXMEDIA",
-}
-
-# Static sector -> representative large-cap constituents (membership
-# classification, not a market-data feed — does not go stale day to day).
-SECTOR_STOCKS = {
-    "Banking":  ["HDFCBANK.NS", "ICICIBANK.NS", "SBIN.NS", "KOTAKBANK.NS", "AXISBANK.NS"],
-    "IT":       ["TCS.NS", "INFY.NS", "WIPRO.NS", "HCLTECH.NS", "TECHM.NS"],
-    "Auto":     ["MARUTI.NS", "TMPV.NS", "M&M.NS", "BAJAJ-AUTO.NS", "EICHERMOT.NS"],
-    "Pharma":   ["SUNPHARMA.NS", "DRREDDY.NS", "CIPLA.NS", "DIVISLAB.NS", "AUROPHARMA.NS"],
-    "FMCG":     ["HINDUNILVR.NS", "ITC.NS", "NESTLEIND.NS", "BRITANNIA.NS", "DABUR.NS"],
-    "Metal":    ["TATASTEEL.NS", "JSWSTEEL.NS", "HINDALCO.NS", "VEDL.NS", "SAIL.NS"],
-    "Energy":   ["RELIANCE.NS", "ONGC.NS", "POWERGRID.NS", "NTPC.NS", "BPCL.NS"],
-    "Realty":   ["DLF.NS", "GODREJPROP.NS", "OBEROIRLTY.NS", "PHOENIXLTD.NS", "PRESTIGE.NS"],
-    "PSU Bank": ["SBIN.NS", "BANKBARODA.NS", "PNB.NS", "CANBK.NS", "UNIONBANK.NS"],
-    "Media":    ["ZEEL.NS", "SUNTV.NS", "PVRINOX.NS", "NETWORK18.NS", "SAREGAMA.NS"],
-}
-
-
-def _momentum_volume(ticker, period="2mo"):
-    df = yf.download(ticker, period=period, progress=False, auto_adjust=True)
-    if df.empty or len(df) < 25:
-        return None
-    if isinstance(df.columns, pd.MultiIndex):
-        df.columns = [c[0].lower() for c in df.columns]
-    else:
-        df.columns = [c.lower() for c in df.columns]
-    close, vol = df["close"], df["volume"]
-    roc5 = float(close.pct_change(5).iloc[-1] * 100)
-    # Today's bar can still be mid-formation (volume=0 if yfinance hasn't
-    # rolled it up yet) — use the most recent bar that actually has volume
-    # so relative volume isn't falsely zeroed out intraday.
-    vol_nonzero = vol[vol > 0]
-    if len(vol_nonzero) < 21:
-        return None
-    last_vol = float(vol_nonzero.iloc[-1])
-    avg_vol20 = float(vol_nonzero.iloc[-21:-1].mean())
-    rel_vol = round(last_vol / avg_vol20, 2) if avg_vol20 else None
-    ema9 = close.ewm(span=9, adjust=False).mean()
-    ema20 = close.ewm(span=20, adjust=False).mean()
-    bullish = bool(close.iloc[-1] > ema9.iloc[-1] > ema20.iloc[-1])
-    return {
-        "roc5_pct": round(roc5, 2),
-        "rel_volume": rel_vol,
-        "bullish_trend": bullish,
-        "last_close": round(float(close.iloc[-1]), 2),
-        "data_as_of": str(df.index[-1].date()),
-    }
 
 
 @mcp.tool()
@@ -103,49 +33,7 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
     investment advice — always verify live price in your broker terminal
     before placing any order.
     """
-    fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
-    sector_results = {}
-    for name, ticker in SECTOR_INDICES.items():
-        try:
-            m = _momentum_volume(ticker)
-            if m:
-                score = round(m["roc5_pct"] * (m["rel_volume"] or 1), 2)
-                sector_results[name] = {**m, "score": score}
-            else:
-                sector_results[name] = {"error": "insufficient data"}
-        except Exception as e:
-            sector_results[name] = {"error": str(e)}
-
-    ranked_sectors = sorted(
-        [(k, v) for k, v in sector_results.items() if "score" in v],
-        key=lambda kv: kv[1]["score"], reverse=True,
-    )
-    top_sectors = ranked_sectors[:top_n]
-
-    stock_picks = {}
-    for sector_name, _ in top_sectors:
-        picks = []
-        for tkr in SECTOR_STOCKS.get(sector_name, []):
-            try:
-                m = _momentum_volume(tkr)
-                if m:
-                    score = round(m["roc5_pct"] * (m["rel_volume"] or 1), 2)
-                    picks.append({"symbol": tkr.replace(".NS", ""), **m, "score": score})
-            except Exception:
-                continue
-        picks.sort(key=lambda p: p["score"], reverse=True)
-        stock_picks[sector_name] = picks[:stocks_per_sector]
-
-    return {
-        "fetched_at": fetched_at,
-        "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
-        "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
-        "all_sectors_ranked": [{"sector": k, **v} for k, v in ranked_sectors],
-        "sectors_with_errors": {k: v["error"] for k, v in sector_results.items() if "error" in v},
-        "top_sectors": [k for k, _ in top_sectors],
-        "stock_picks_by_sector": stock_picks,
-        "disclaimer": "Educational momentum/volume screen only, not investment advice. Sector-stock membership list is a static classification — verify current constituents and live price in your broker terminal (e.g. Zerodha Kite) before placing any order.",
-    }
+    return _scan_sector_rotation(top_n=top_n, stocks_per_sector=stocks_per_sector)
 
 
 if __name__ == "__main__":

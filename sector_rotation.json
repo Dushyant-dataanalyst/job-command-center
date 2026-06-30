@@ -1,0 +1,186 @@
+{
+  "fetched_at": "30 Jun 2026 12:21 IST",
+  "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
+  "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
+  "all_sectors_ranked": [
+    {
+      "sector": "Pharma",
+      "roc5_pct": 2.3,
+      "rel_volume": 1.63,
+      "bullish_trend": true,
+      "last_close": 25331.7,
+      "data_as_of": "2026-06-30",
+      "score": 3.75
+    },
+    {
+      "sector": "Realty",
+      "roc5_pct": 2.1,
+      "rel_volume": 1.05,
+      "bullish_trend": true,
+      "last_close": 828.95,
+      "data_as_of": "2026-06-30",
+      "score": 2.21
+    },
+    {
+      "sector": "Auto",
+      "roc5_pct": 0.18,
+      "rel_volume": 2.11,
+      "bullish_trend": true,
+      "last_close": 26632.1,
+      "data_as_of": "2026-06-30",
+      "score": 0.38
+    },
+    {
+      "sector": "Banking",
+      "roc5_pct": -0.42,
+      "rel_volume": 1.39,
+      "bullish_trend": true,
+      "last_close": 57690.3,
+      "data_as_of": "2026-06-30",
+      "score": -0.58
+    },
+    {
+      "sector": "Energy",
+      "roc5_pct": -2.0,
+      "rel_volume": 0.56,
+      "bullish_trend": false,
+      "last_close": 39738.8,
+      "data_as_of": "2026-06-30",
+      "score": -1.12
+    },
+    {
+      "sector": "FMCG",
+      "roc5_pct": -1.58,
+      "rel_volume": 0.86,
+      "bullish_trend": false,
+      "last_close": 48775.15,
+      "data_as_of": "2026-06-30",
+      "score": -1.36
+    },
+    {
+      "sector": "PSU Bank",
+      "roc5_pct": -2.2,
+      "rel_volume": 0.83,
+      "bullish_trend": false,
+      "last_close": 8524.45,
+      "data_as_of": "2026-06-30",
+      "score": -1.83
+    },
+    {
+      "sector": "Metal",
+      "roc5_pct": -3.8,
+      "rel_volume": 0.78,
+      "bullish_trend": false,
+      "last_close": 12525.5,
+      "data_as_of": "2026-06-30",
+      "score": -2.96
+    },
+    {
+      "sector": "IT",
+      "roc5_pct": -4.28,
+      "rel_volume": 0.93,
+      "bullish_trend": false,
+      "last_close": 26446.0,
+      "data_as_of": "2026-06-30",
+      "score": -3.98
+    }
+  ],
+  "sectors_with_errors": {
+    "Media": "insufficient data"
+  },
+  "top_sectors": [
+    "Pharma",
+    "Realty",
+    "Auto"
+  ],
+  "stock_picks_by_sector": {
+    "Pharma": [
+      {
+        "symbol": "DRREDDY",
+        "roc5_pct": 4.68,
+        "rel_volume": 0.66,
+        "bullish_trend": true,
+        "last_close": 1362.2,
+        "data_as_of": "2026-06-30",
+        "score": 3.09
+      },
+      {
+        "symbol": "AUROPHARMA",
+        "roc5_pct": 2.65,
+        "rel_volume": 0.95,
+        "bullish_trend": true,
+        "last_close": 1574.9,
+        "data_as_of": "2026-06-30",
+        "score": 2.52
+      },
+      {
+        "symbol": "CIPLA",
+        "roc5_pct": 2.57,
+        "rel_volume": 0.89,
+        "bullish_trend": true,
+        "last_close": 1469.9,
+        "data_as_of": "2026-06-30",
+        "score": 2.29
+      }
+    ],
+    "Realty": [
+      {
+        "symbol": "PHOENIXLTD",
+        "roc5_pct": 5.7,
+        "rel_volume": 0.98,
+        "bullish_trend": true,
+        "last_close": 1957.2,
+        "data_as_of": "2026-06-30",
+        "score": 5.59
+      },
+      {
+        "symbol": "GODREJPROP",
+        "roc5_pct": 4.2,
+        "rel_volume": 0.68,
+        "bullish_trend": true,
+        "last_close": 1874.4,
+        "data_as_of": "2026-06-30",
+        "score": 2.86
+      },
+      {
+        "symbol": "OBEROIRLTY",
+        "roc5_pct": 3.78,
+        "rel_volume": 0.71,
+        "bullish_trend": true,
+        "last_close": 1768.8,
+        "data_as_of": "2026-06-30",
+        "score": 2.68
+      }
+    ],
+    "Auto": [
+      {
+        "symbol": "MARUTI",
+        "roc5_pct": 4.58,
+        "rel_volume": 1.45,
+        "bullish_trend": true,
+        "last_close": 14067.0,
+        "data_as_of": "2026-06-30",
+        "score": 6.64
+      },
+      {
+        "symbol": "M&M",
+        "roc5_pct": 2.21,
+        "rel_volume": 0.32,
+        "bullish_trend": false,
+        "last_close": 3104.4,
+        "data_as_of": "2026-06-30",
+        "score": 0.71
+      },
+      {
+        "symbol": "TMPV",
+        "roc5_pct": 0.13,
+        "rel_volume": 0.61,
+        "bullish_trend": false,
+        "last_close": 355.0,
+        "data_as_of": "2026-06-30",
+        "score": 0.08
+      }
+    ]
+  },
+  "disclaimer": "Educational momentum/volume screen only, not investment advice. Sector-stock membership list is a static classification \u2014 verify current constituents and live price in your broker terminal (e.g. Zerodha Kite) before placing any order."
+}
