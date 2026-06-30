@@ -1,0 +1,69 @@
+{
+  "fetched_at": "30 Jun 2026 14:27 IST",
+  "positions": [
+    {
+      "name": "HDFCBANK",
+      "entry": 796.3,
+      "sl": 777.34,
+      "t1": 820.0,
+      "t2": 843.7,
+      "current_price": 800.15,
+      "pnl_pct": 0.48,
+      "status": "healthy",
+      "bought_at": "25 Jun 2026",
+      "source": "default"
+    },
+    {
+      "name": "ICICIBANK",
+      "entry": 1387.5,
+      "sl": 1355.15,
+      "t1": 1427.94,
+      "t2": 1468.38,
+      "current_price": 1376.5,
+      "pnl_pct": -0.79,
+      "status": "healthy",
+      "bought_at": "25 Jun 2026",
+      "source": "default"
+    },
+    {
+      "name": "KOTAKBANK",
+      "entry": 409.0,
+      "sl": 400.01,
+      "t1": 420.24,
+      "t2": 431.47,
+      "current_price": 392.8,
+      "pnl_pct": -3.96,
+      "status": "below_sl",
+      "bought_at": "25 Jun 2026",
+      "source": "default"
+    },
+    {
+      "name": "SBIN",
+      "entry": 1045.4,
+      "sl": 1023.07,
+      "t1": 1073.32,
+      "t2": 1101.23,
+      "current_price": 1034.25,
+      "pnl_pct": -1.07,
+      "status": "healthy",
+      "bought_at": "25 Jun 2026",
+      "source": "default"
+    }
+  ],
+  "errors": {},
+  "stats": {
+    "total_tracked": 4,
+    "total_pnl_pct": -1.33,
+    "best": {
+      "name": "HDFCBANK",
+      "pnl_pct": 0.48
+    },
+    "worst": {
+      "name": "KOTAKBANK",
+      "pnl_pct": -3.96
+    },
+    "below_sl_count": 1,
+    "diagnostic": "HDFCBANK is your best performer at +0.48%, KOTAKBANK is your worst at -3.96%. KOTAKBANK is below stop-loss \u2014 review your exit plan."
+  },
+  "disclaimer": "Real positions, real prices \u2014 not paper trades. yfinance EOD/delayed quotes; verify live price in your broker terminal before acting."
+}

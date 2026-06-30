@@ -7,9 +7,16 @@
     { "src": "trade_journal.json",      "use": "@vercel/static" },
     { "src": "sector_rotation.json",    "use": "@vercel/static" },
     { "src": "market_mood.json",        "use": "@vercel/static" },
-    { "src": "news_feed.json",          "use": "@vercel/static" }
+    { "src": "news_feed.json",          "use": "@vercel/static" },
+    { "src": "equity_journal.json",     "use": "@vercel/static" },
+    { "src": "stock_fo.json",           "use": "@vercel/static" },
+    { "src": "api/save-positions.js",   "use": "@vercel/node" }
   ],
   "routes": [
+    {
+      "src": "/api/save-positions",
+      "dest": "/api/save-positions.js"
+    },
     {
       "src": "/fo_latest.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
@@ -34,6 +41,16 @@
       "src": "/news_feed.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/news_feed.json"
+    },
+    {
+      "src": "/equity_journal.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/equity_journal.json"
+    },
+    {
+      "src": "/stock_fo.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/stock_fo.json"
     },
     {
       "src": "/nse_live_dashboard.html",

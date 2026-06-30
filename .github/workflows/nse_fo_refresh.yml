@@ -70,7 +70,21 @@ jobs:
           python news_refresh.py
           echo "✅ news_refresh.py succeeded"
 
-      - name: Commit fo_latest.json + trade_journal.json + sector_rotation.json + market_mood.json + news_feed.json if changed
+      - name: Run equity brain (writes equity_journal.json to repo root)
+        run: |
+          set -e
+          cd nse-trading-bot
+          python equity_brain.py
+          echo "✅ equity_brain.py succeeded"
+
+      - name: Run stock F&O signals (writes stock_fo.json to repo root)
+        run: |
+          set -e
+          cd nse-trading-bot
+          python stock_fo_refresh.py
+          echo "✅ stock_fo_refresh.py succeeded"
+
+      - name: Commit fo_latest.json + trade_journal.json + sector_rotation.json + market_mood.json + news_feed.json + equity_journal.json + stock_fo.json if changed
         run: |
           git config user.name  "NSE Bot"
           git config user.email "nse-bot@github-actions"
@@ -79,7 +93,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json
 
           if git diff --staged --quiet; then
             echo "no changes — no commit needed"

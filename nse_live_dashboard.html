@@ -214,10 +214,13 @@ tr:last-child td{border-bottom:none}
       </div>
       <span class="goal-pct" id="goalPct">0%</span>
     </div>
-    <div style="font-size:10px;color:#475569;margin-top:5px" id="goalPace">Enter your first month's profit to start tracking</div>
   </div>
-  <div class="goal-months" id="goalMonths"></div>
-  <button class="goal-add-btn" onclick="openGoalModal()">+ Add Month</button>
+  <details style="flex-basis:100%">
+    <summary style="cursor:pointer;font-size:10px;color:#64748b;font-weight:700;user-select:none">▾ Monthly breakdown</summary>
+    <div style="font-size:10px;color:#475569;margin-top:8px" id="goalPace">Enter your first month's profit to start tracking</div>
+    <div class="goal-months" id="goalMonths" style="margin-top:8px"></div>
+    <button class="goal-add-btn" onclick="openGoalModal()" style="margin-top:8px">+ Add Month</button>
+  </details>
 </div>
 
 <!-- Goal Modal -->
@@ -242,29 +245,12 @@ tr:last-child td{border-bottom:none}
   </div>
 </div>
 
-<!-- KPI CARDS -->
-<div class="kpis">
-  <div class="kpi" style="--c:#16a34a"><div class="kpi-label">Strong Buy</div><div class="kpi-val">22</div><div class="kpi-sub">3–4 strategies agree</div></div>
-  <div class="kpi" style="--c:#2563eb"><div class="kpi-label">Buy Signal</div><div class="kpi-val">3</div><div class="kpi-sub">2 strategies agree</div></div>
-  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Setups Forming</div><div class="kpi-val">14</div><div class="kpi-sub">1-2 traders interested</div></div>
-  <div class="kpi" style="--c:#7c3aed"><div class="kpi-label">Action Today</div><div class="kpi-val">25</div><div class="kpi-sub">BUY candidates</div></div>
-  <div class="kpi" style="--c:#0891b2"><div class="kpi-label">Avg Days T1</div><div class="kpi-val">5</div><div class="kpi-sub">First profit target</div></div>
-  <div class="kpi" style="--c:#dc2626"><div class="kpi-label">Avg T1 Gain</div><div class="kpi-val" style="font-size:22px">3.8%</div><div class="kpi-sub">Expected first exit</div></div>
-</div>
-
-<!-- CHARTS -->
-<div class="charts">
-  <div class="chart-card" style="--a:#4f46e5"><div class="chart-ttl">Signal History (30 days)</div><canvas id="histChart"></canvas></div>
-  <div class="chart-card" style="--a:#0891b2"><div class="chart-ttl">BUY Signal — Sector Mix</div><canvas id="sectorChart"></canvas></div>
-</div>
-
 <!-- TABS -->
 <div class="tabs">
   <div class="tab active" onclick="showTab('eq',this)">📈 Equity BUY (25)</div>
   <div class="tab" onclick="showTab('pos',this)">📌 My Positions</div>
   <div class="tab" onclick="showTab('fo',this)">⚡ Futures & Options</div>
   <div class="tab" onclick="showTab('wl',this)">👁 Setups Forming (14)</div>
-  <div class="tab" onclick="showTab('ipo',this)">🚀 IPO Tracker</div>
   <div class="tab" onclick="showTab('guide',this)">📋 Strategy Guide</div>
 </div>
 
@@ -301,6 +287,22 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 
 <!-- EQUITY TAB -->
 <div id="eq" class="panel active">
+<!-- KPI CARDS -->
+<div class="kpis">
+  <div class="kpi" style="--c:#16a34a"><div class="kpi-label">Strong Buy</div><div class="kpi-val">22</div><div class="kpi-sub">3–4 strategies agree</div></div>
+  <div class="kpi" style="--c:#2563eb"><div class="kpi-label">Buy Signal</div><div class="kpi-val">3</div><div class="kpi-sub">2 strategies agree</div></div>
+  <div class="kpi" style="--c:#d97706"><div class="kpi-label">Setups Forming</div><div class="kpi-val">14</div><div class="kpi-sub">1-2 traders interested</div></div>
+  <div class="kpi" style="--c:#7c3aed"><div class="kpi-label">Action Today</div><div class="kpi-val">25</div><div class="kpi-sub">BUY candidates</div></div>
+  <div class="kpi" style="--c:#0891b2"><div class="kpi-label">Avg Days T1</div><div class="kpi-val">5</div><div class="kpi-sub">First profit target</div></div>
+  <div class="kpi" style="--c:#dc2626"><div class="kpi-label">Avg T1 Gain</div><div class="kpi-val" style="font-size:22px">3.8%</div><div class="kpi-sub">Expected first exit</div></div>
+</div>
+
+<!-- CHARTS -->
+<div class="charts">
+  <div class="chart-card" style="--a:#4f46e5"><div class="chart-ttl">Signal History (30 days)</div><canvas id="histChart"></canvas></div>
+  <div class="chart-card" style="--a:#0891b2"><div class="chart-ttl">BUY Signal — Sector Mix</div><canvas id="sectorChart"></canvas></div>
+</div>
+
 <!-- MARKET MOOD — fetched live from /market_mood.json -->
 <div id="market-mood-panel" style="margin-bottom:14px"></div>
 <script>
@@ -367,7 +369,7 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
       var widthPct = Math.round(Math.abs(s.score) / maxAbsScore * 100);
       var isTop = topSet.has(s.sector);
       var trendIcon = s.bullish_trend ? '▲' : '▼';
-      return '<div onclick="filterBySectorBar(\'' + s.sector.replace(/'/g,"\\'") + '\')" title="Click to filter the equity table to ' + s.sector + '" style="display:flex;align-items:center;gap:10px;margin-bottom:6px;cursor:pointer">' +
+      return '<div class="sr-bar-row" data-sector="' + s.sector.replace(/"/g,'&quot;') + '" onclick="filterBySectorBar(\'' + s.sector.replace(/'/g,"\\'") + '\')" title="Click to filter the equity table to ' + s.sector + '" style="display:flex;align-items:center;gap:10px;margin-bottom:6px;cursor:pointer;border-radius:6px;padding:2px 4px">' +
         '<div style="width:84px;font-size:11px;font-weight:700;color:' + (isTop ? '#fff' : '#94a3b8') + '">' +
           (isTop ? '🔥 ' : '') + s.sector +
         '</div>' +
@@ -579,6 +581,9 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
     <button class="fb active" onclick="filterEq('all',this)">All (25)</button>
     <button class="fb" onclick="filterEq('STRONG_BUY',this)">🔥 Strong Buy (22)</button>
     <button class="fb" onclick="filterEq('BUY',this)">✅ Buy (3)</button>
+    <span id="sector-filter-pill" onclick="clearSectorFilter()" style="display:none;align-items:center;gap:6px;background:#0f172a;color:#fff;border-radius:20px;padding:5px 12px 5px 14px;font-size:11px;font-weight:700;cursor:pointer">
+      Filtering: <b id="sector-filter-name" style="font-weight:900"></b> <span style="font-size:13px">✕</span>
+    </span>
     <div style="flex:1"></div>
     <span class="count-badge" id="eq-count">25 shown</span>
   </div>
@@ -1303,6 +1308,52 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 </div>
 
 <!-- Summary bar -->
+<!-- LIVE P&L — fetched from /equity_journal.json, real yfinance prices not signal votes -->
+<div id="equity-brain-panel" style="margin-bottom:16px"></div>
+<script>
+(function buildEquityBrain(){
+  const INR3=n=>'₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2});
+  function render(j){
+    var box = document.getElementById('equity-brain-panel');
+    if (!box) return;
+    var s = (j && j.stats) || {};
+    var rows = (j && j.positions) || [];
+    var pnlColor = s.total_pnl_pct == null ? '#94a3b8' : s.total_pnl_pct >= 0 ? '#15803d' : '#dc2626';
+
+    var cards = rows.map(function(p){
+      var color = p.pnl_pct == null ? '#94a3b8' : p.pnl_pct >= 0 ? '#15803d' : '#dc2626';
+      var bg = p.pnl_pct == null ? '#f8fafc' : p.pnl_pct >= 0 ? '#f0fdf4' : '#fef2f2';
+      var statusLabel = p.status === 'below_sl' ? '⚠ BELOW SL' : p.status === 'target1_hit' ? '🎯 T1 HIT' : p.status === 'target2_hit' ? '🎯 T2 HIT' : '';
+      return '<div style="background:' + bg + ';border-radius:8px;padding:8px 12px;min-width:130px">' +
+        '<div style="font-size:11px;font-weight:800;color:#0f172a">' + p.name + (p.source==='synced' ? ' <span style="color:#94a3b8;font-weight:400">(synced)</span>' : '') + '</div>' +
+        '<div style="font-size:9px;color:#94a3b8">' + INR3(p.current_price) + ' (entry ' + INR3(p.entry) + ')</div>' +
+        '<div style="font-size:13px;font-weight:900;color:' + color + '">' + (p.pnl_pct >= 0 ? '+' : '') + p.pnl_pct + '%</div>' +
+        (statusLabel ? '<div style="font-size:9px;font-weight:700;color:' + color + '">' + statusLabel + '</div>' : '') +
+      '</div>';
+    }).join('');
+
+    box.innerHTML =
+      '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+          '<span style="font-size:14px;font-weight:800">💰 Live P&amp;L — Equity Brain</span>' +
+          '<span style="background:#1e293b;color:' + pnlColor + ';font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px">' +
+            (s.total_pnl_pct != null ? (s.total_pnl_pct >= 0 ? '+' : '') + s.total_pnl_pct + '% total' : 'no data') +
+          '</span>' +
+          '<span style="font-size:11px;color:#64748b">' + (j.fetched_at || '') + '</span>' +
+        '</div>' +
+        (cards || '<div style="font-size:12px;color:#64748b">No live price data yet.</div>') +
+        '<div style="font-size:11px;color:#94a3b8;margin-top:10px">' + (s.diagnostic || '') + '</div>' +
+        '<div style="font-size:10px;color:#475569;margin-top:6px">' + (j.disclaimer || '') + '</div>' +
+      '</div>';
+  }
+
+  fetch('/equity_journal.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(j){ if (j) render(j); })
+    .catch(function(){});
+})();
+</script>
+
 <div id="pos-summary" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px"></div>
 
 <!-- Position cards -->
@@ -1691,195 +1742,85 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
       </div>
     </div>
   </div>
-  <!-- Stock F&O signals -->
+  <!-- STOCK F&O SIGNALS — live, fetched from /stock_fo.json. Replaces a static
+       25-Jun snapshot with an unverifiable "Score" methodology and no
+       strike/premium/expiry. -->
   <div class="sec">
-    <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#4f46e5"></span>Stock Futures Signals (Sorted by Conviction)</div>
-    <table><thead><tr>
-      <th>Stock</th><th>Trend</th><th>Price ₹</th><th onclick="sortFo(3)">Score</th>
-      <th>RSI</th><th>5d Move</th><th>Options Strategy</th><th>SL / Target</th>
-    </tr></thead>
-    <tbody><tr>
-              <td style="font-weight:700;color:#0f172a">ICICIBANK</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,387.50</td>
-              <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">80.8</td>
-              <td style="color:#059669;font-weight:600">+3.4%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,347 &nbsp;
-                Tgt: ₹1,441
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">AXISBANK</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,377.20</td>
-              <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">81.4</td>
-              <td style="color:#059669;font-weight:600">+1.3%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,341 &nbsp;
-                Tgt: ₹1,426
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">LT</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹4,216.40</td>
-              <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">71.1</td>
-              <td style="color:#059669;font-weight:600">+0.6%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹4,095 &nbsp;
-                Tgt: ₹4,378
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">SUNPHARMA</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,862.80</td>
-              <td style="color:#15803d;font-weight:700">+8</td>
-              <td style="color:#0f172a">79.3</td>
-              <td style="color:#059669;font-weight:600">+2.1%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,825 &nbsp;
-                Tgt: ₹1,913
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">BAJFINANCE</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹980.40</td>
-              <td style="color:#15803d;font-weight:700">+7</td>
-              <td style="color:#0f172a">73.2</td>
-              <td style="color:#059669;font-weight:600">+2.2%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹946 &nbsp;
-                Tgt: ₹1,027
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">TITAN</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹4,291.30</td>
-              <td style="color:#15803d;font-weight:700">+7</td>
-              <td style="color:#0f172a">52.0</td>
-              <td style="color:#dc2626;font-weight:600">-2.2%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BUY ATM CALL (CE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹4,146 &nbsp;
-                Tgt: ₹4,485
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">KOTAKBANK</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹409.00</td>
-              <td style="color:#15803d;font-weight:700">+7</td>
-              <td style="color:#0f172a">81.3</td>
-              <td style="color:#059669;font-weight:600">+1.5%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹398 &nbsp;
-                Tgt: ₹424
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">MARUTI</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹13,745.00</td>
-              <td style="color:#15803d;font-weight:700">+6</td>
-              <td style="color:#0f172a">65.2</td>
-              <td style="color:#059669;font-weight:600">+1.9%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹13,315 &nbsp;
-                Tgt: ₹14,318
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">SBIN</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,045.40</td>
-              <td style="color:#15803d;font-weight:700">+5</td>
-              <td style="color:#0f172a">75.6</td>
-              <td style="color:#059669;font-weight:600">+0.3%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,017 &nbsp;
-                Tgt: ₹1,083
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">HDFCBANK</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹796.30</td>
-              <td style="color:#15803d;font-weight:700">+3</td>
-              <td style="color:#0f172a">75.8</td>
-              <td style="color:#059669;font-weight:600">+1.3%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹773 &nbsp;
-                Tgt: ₹828
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">BHARTIARTL</td>
-              <td><span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,850.70</td>
-              <td style="color:#15803d;font-weight:700">+3</td>
-              <td style="color:#0f172a">60.0</td>
-              <td style="color:#dc2626;font-weight:600">-1.3%</td>
-              <td style="font-size:11px;font-weight:700;color:#15803d">BULL CALL SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,798 &nbsp;
-                Tgt: ₹1,921
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">RELIANCE</td>
-              <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,318.10</td>
-              <td style="color:#991b1b;font-weight:700">-3</td>
-              <td style="color:#0f172a">57.4</td>
-              <td style="color:#dc2626;font-weight:600">-0.8%</td>
-              <td style="font-size:11px;font-weight:700;color:#991b1b">BEAR PUT SPREAD</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,358 &nbsp;
-                Tgt: ₹1,264
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">INFY</td>
-              <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹1,041.20</td>
-              <td style="color:#991b1b;font-weight:700">-8</td>
-              <td style="color:#0f172a">28.2</td>
-              <td style="color:#dc2626;font-weight:600">-7.7%</td>
-              <td style="font-size:11px;font-weight:700;color:#991b1b">BUY ATM PUT (PE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹1,092 &nbsp;
-                Tgt: ₹974
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">WIPRO</td>
-              <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹175.00</td>
-              <td style="color:#991b1b;font-weight:700">-8</td>
-              <td style="color:#0f172a">19.7</td>
-              <td style="color:#dc2626;font-weight:600">-4.3%</td>
-              <td style="font-size:11px;font-weight:700;color:#991b1b">BUY ATM PUT (PE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹182 &nbsp;
-                Tgt: ₹166
-              </td>
-            </tr><tr>
-              <td style="font-weight:700;color:#0f172a">TCS</td>
-              <td><span style="background:#fee2e2;color:#991b1b;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↓ Bearish</span></td>
-              <td style="font-weight:600;color:#0f172a">₹2,094.70</td>
-              <td style="color:#991b1b;font-weight:700">-11</td>
-              <td style="color:#0f172a">36.6</td>
-              <td style="color:#dc2626;font-weight:600">-4.9%</td>
-              <td style="font-size:11px;font-weight:700;color:#991b1b">BUY ATM PUT (PE)</td>
-              <td style="font-size:11px;color:#64748b">
-                SL: ₹2,174 &nbsp;
-                Tgt: ₹1,989
-              </td>
-            </tr></tbody></table>
+    <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#4f46e5"></span>🎯 Stock F&amp;O Signals — What To Buy</div>
+    <div id="stock-fo-panel"><div style="font-size:12px;color:#94a3b8;padding:12px 0">Loading live signals…</div></div>
   </div>
+  <script>
+  (function buildStockFO(){
+    const INR4=n=>'₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:2});
+    function render(d){
+      var box = document.getElementById('stock-fo-panel');
+      if (!box) return;
+      var meta = d._meta || {};
+      var rows = Object.keys(d).filter(function(k){ return k !== '_meta'; })
+        .map(function(k){ return d[k]; })
+        .sort(function(a,b){
+          var av = a.consensus === 'WAIT' ? -1 : (a.votes || 0);
+          var bv = b.consensus === 'WAIT' ? -1 : (b.votes || 0);
+          return bv - av;
+        });
+
+      var html = '<table><thead><tr>' +
+        '<th>Stock</th><th>Signal</th><th>Spot ₹</th><th>Strategy</th><th>Strikes / Entry</th><th>Risk / Reward</th><th>Expiry</th>' +
+        '</tr></thead><tbody>';
+
+      rows.forEach(function(r){
+        var bullish = r.consensus === 'BUY_CE';
+        var color = r.consensus === 'WAIT' ? '#64748b' : bullish ? '#15803d' : '#dc2626';
+        var bg = r.consensus === 'WAIT' ? '#f8fafc' : bullish ? '#dcfce7' : '#fef2f2';
+        var sigLabel = r.consensus === 'WAIT' ? 'WAIT' : (bullish ? '↑ ' : '↓ ') + (r.votes||0) + '/6';
+
+        if (!r.trade) {
+          html += '<tr><td style="font-weight:700;color:#0f172a">' + r.name + '</td>' +
+            '<td><span style="background:' + bg + ';color:' + color + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' + sigLabel + '</span></td>' +
+            '<td>' + INR4(r.spot) + '</td>' +
+            '<td colspan="4" style="font-size:11px;color:#94a3b8">No trade — consensus not reached (CE ' + r.ce_votes + ', PE ' + r.pe_votes + ')</td></tr>';
+          return;
+        }
+
+        var t = r.trade;
+        var strategyLabel, strikesCell, riskRewardCell;
+        if (t.type === 'single_leg') {
+          strategyLabel = 'BUY ' + (bullish?'CE':'PE');
+          strikesCell = t.strike + ' @ ' + INR4(t.entry_premium);
+          riskRewardCell = 'SL ' + INR4(t.sl_premium) + ' · T1 ' + INR4(t.target1_premium) + ' · T2 ' + INR4(t.target2_premium);
+        } else {
+          strategyLabel = bullish ? 'Bull Call Spread' : 'Bear Put Spread';
+          strikesCell = 'Long ' + t.long_strike + ' / Short ' + t.short_strike + ' (net ' + INR4(t.net_debit) + ')';
+          riskRewardCell = 'Max P ' + INR4(t.max_profit) + ' · Max L ' + INR4(t.max_loss) + ' · BE ' + INR4(t.breakeven);
+        }
+
+        html += '<tr><td style="font-weight:700;color:#0f172a">' + r.name + '</td>' +
+          '<td><span style="background:' + bg + ';color:' + color + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' + sigLabel + '</span></td>' +
+          '<td>' + INR4(r.spot) + '</td>' +
+          '<td style="font-size:11px;font-weight:700;color:' + color + '">' + strategyLabel + '</td>' +
+          '<td style="font-size:11px;color:#0f172a">' + strikesCell + '</td>' +
+          '<td style="font-size:11px;color:#64748b">' + riskRewardCell + '</td>' +
+          '<td style="font-size:10px;color:#94a3b8">' + t.expiry + ' (' + t.days_to_exp + 'd)</td></tr>';
+      });
+
+      html += '</tbody></table>' +
+        '<div style="font-size:10px;color:#94a3b8;margin-top:10px;line-height:1.5">' +
+          (meta.method || '') + ' Strike intervals are an approximation (not official exchange data) — verify actual listed strikes in your broker\'s option chain. No lot size shown (not available from any live source); figures are per-share, not total position cost.' +
+        '</div>' +
+        '<div style="font-size:10px;color:#64748b;margin-top:4px">Last updated: ' + (meta.generated_at || '—') + '</div>';
+
+      box.innerHTML = html;
+    }
+
+    fetch('/stock_fo.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ if (d) render(d); })
+      .catch(function(){
+        var box = document.getElementById('stock-fo-panel');
+        if (box) box.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:12px 0">Could not load live signal — try refreshing.</div>';
+      });
+  })();
+  </script>
 </div>
 
 <!-- WATCH LIST TAB -->
@@ -1975,224 +1916,6 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 </div>
 </div>
 
-<!-- IPO TAB -->
-<div id="ipo" class="panel">
-
-        <!-- 5-Filter Explainer -->
-        <div class="sec">
-          <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#dc2626"></span>5-Filter IPO Strategy
-            <span style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400">70-80% success when all filters applied · Source: ipowatch.in</span>
-          </div>
-          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:4px">
-            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:3px solid #15803d;border-radius:8px;padding:8px 10px">
-              <div style="font-size:10px;font-weight:800;color:#64748b;margin-bottom:4px">FILTER 1</div>
-              <div style="font-size:11px;font-weight:700;color:#0f172a">QIB > 20×</div>
-            </div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:3px solid #15803d;border-radius:8px;padding:8px 10px">
-              <div style="font-size:10px;font-weight:800;color:#64748b;margin-bottom:4px">FILTER 2</div>
-              <div style="font-size:11px;font-weight:700;color:#0f172a">Overall > 30×</div>
-            </div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:3px solid #2563eb;border-radius:8px;padding:8px 10px">
-              <div style="font-size:10px;font-weight:800;color:#64748b;margin-bottom:4px">FILTER 3</div>
-              <div style="font-size:11px;font-weight:700;color:#0f172a">GMP > 25% ↑</div>
-            </div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:3px solid #d97706;border-radius:8px;padding:8px 10px">
-              <div style="font-size:10px;font-weight:800;color:#64748b;margin-bottom:4px">FILTER 4</div>
-              <div style="font-size:11px;font-weight:700;color:#0f172a">Rev/PAT CAGR > 15%</div>
-            </div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-top:3px solid #7c3aed;border-radius:8px;padding:8px 10px">
-              <div style="font-size:10px;font-weight:800;color:#64748b;margin-bottom:4px">FILTER 5</div>
-              <div style="font-size:11px;font-weight:700;color:#0f172a">Valuation ≤30% above peers</div>
-            </div>
-          </div>
-          <div style="font-size:11px;color:#64748b;padding:6px 0">
-            ✅ If ≥3 pass → <strong>APPLY</strong> &nbsp;·&nbsp; ❌ If ≥2 fail → <strong>SKIP</strong> &nbsp;·&nbsp;
-            Listing gain >40% → Sell 75% · Gain 20-40% → Sell 50% · Gain &lt;20% → Sell 100%
-          </div>
-        </div>
-
-        <!-- Live IPO Scan -->
-        <div class="sec">
-          <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#dc2626"></span>Upcoming IPOs — Should You Apply?
-            <span style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400">Showing APPLY &amp; WATCHLIST only · SKIP hidden · Mainboard &amp; SME</span>
-          </div>
-          <div style="display:flex;flex-wrap:wrap;gap:10px"><div style="color:#94a3b8;padding:30px;font-size:13px;text-align:center;width:100%">No APPLY/WATCHLIST IPOs right now.<br><span style="font-size:11px">All current IPOs are either SKIP or already listed. Check back when new IPOs open.</span></div></div>
-          <div style="margin-top:10px;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 14px;font-size:11px;color:#9a3412">
-            ⚠️ <strong>GMP is unofficial</strong> and can be manipulated. Filters 1 & 2 (QIB + Overall subscription) need manual check on NSE/BSE website on Day 3 of bidding.
-            Filters 4 & 5 need DRHP verification. Subscription data auto-fetched where available.
-          </div>
-        </div>
-
-        <!-- Post-listing tracker -->
-        <div class="sec">
-          <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#7c3aed"></span>Post-Listing Momentum Tracker — HOLD or EXIT?</div>
-          <table><thead><tr>
-            <th>IPO</th><th>Current Price</th><th>Return from IPO</th><th>vs 20 DMA</th><th>Action</th>
-          </tr></thead>
-          <tbody>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">DATAPATTNS</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹585</div></td>
-              <td style="font-weight:700;color:#0f172a">₹4,507</td>
-              <td style="font-weight:800;color:#15803d">+670.4%</td>
-              <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹4,411</span></td>
-              <td><span style="background:#dcfce7;
-                   color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">HOLD</span>
-                  </td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">KAYNES</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹587</div></td>
-              <td style="font-weight:700;color:#0f172a">₹3,265</td>
-              <td style="font-weight:800;color:#15803d">+456.2%</td>
-              <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹3,166</span></td>
-              <td><span style="background:#dcfce7;
-                   color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">HOLD</span>
-                  </td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">IREDA</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹32</div></td>
-              <td style="font-weight:700;color:#0f172a">₹127</td>
-              <td style="font-weight:800;color:#15803d">+298.3%</td>
-              <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹125</span></td>
-              <td><span style="background:#dcfce7;
-                   color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">HOLD</span>
-                  </td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">DOMS</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹790</div></td>
-              <td style="font-weight:700;color:#0f172a">₹2,252</td>
-              <td style="font-weight:800;color:#15803d">+185.1%</td>
-              <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹2,220</span></td>
-              <td><span style="background:#dcfce7;
-                   color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">HOLD</span>
-                  </td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">PREMIERENE</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹427</div></td>
-              <td style="font-weight:700;color:#0f172a">₹1,051</td>
-              <td style="font-weight:800;color:#15803d">+146.0%</td>
-              <td style="font-size:11px;color:#dc2626;font-weight:700">↓ Below 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹1,064</span></td>
-              <td><span style="background:#fef9c3;
-                   color:#d97706;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">PARTIAL HOLD</span>
-                  <div style="font-size:10px;color:#dc2626;margin-top:3px">Below 20 DMA — EXIT signal per strategy</div></td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">WAAREEENER</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹1503</div></td>
-              <td style="font-weight:700;color:#0f172a">₹3,009</td>
-              <td style="font-weight:800;color:#15803d">+100.2%</td>
-              <td style="font-size:11px;color:#dc2626;font-weight:700">↓ Below 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹3,059</span></td>
-              <td><span style="background:#fef9c3;
-                   color:#d97706;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">PARTIAL HOLD</span>
-                  <div style="font-size:10px;color:#dc2626;margin-top:3px">Below 20 DMA — EXIT signal per strategy</div></td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">TATATECH</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹500</div></td>
-              <td style="font-weight:700;color:#0f172a">₹748</td>
-              <td style="font-weight:800;color:#15803d">+49.7%</td>
-              <td style="font-size:11px;color:#15803d;font-weight:700">↑ Above 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹742</span></td>
-              <td><span style="background:#dcfce7;
-                   color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">HOLD</span>
-                  </td>
-            </tr>
-            <tr>
-              <td><div style="font-weight:800;color:#0f172a">SWIGGY</div>
-                  <div style="font-size:10px;color:#94a3b8">Quality · IPO: ₹390</div></td>
-              <td style="font-weight:700;color:#0f172a">₹241</td>
-              <td style="font-weight:800;color:#dc2626">-38.3%</td>
-              <td style="font-size:11px;color:#dc2626;font-weight:700">↓ Below 20DMA<br>
-                  <span style="color:#94a3b8;font-size:10px;font-weight:400">₹251</span></td>
-              <td><span style="background:#fee2e2;
-                   color:#dc2626;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:800">EXIT</span>
-                  <div style="font-size:10px;color:#dc2626;margin-top:3px">Below 20 DMA — EXIT signal per strategy · Below IPO price (3</div></td>
-            </tr></tbody></table>
-        </div>
-
-        <!-- Recent listing gains -->
-        <div class="sec">
-          <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#059669"></span>Recent Listing Results — Did GMP Predict Correctly?</div>
-          <table><thead><tr><th>IPO Name</th><th>IPO Price</th><th>Listed At</th><th>Listing Gain</th><th>Strategy Action</th></tr></thead>
-          <tbody>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Hexagon Nutrition</td>
-              <td style="color:#64748b">₹45</td>
-              <td style="font-weight:700">₹48</td>
-              <td style="font-weight:800;color:#d97706">+7.2%</td>
-              <td style="font-size:11px;color:#d97706;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">CMR Green Technologies</td>
-              <td style="color:#64748b">₹192</td>
-              <td style="font-weight:700">₹275</td>
-              <td style="font-weight:800;color:#15803d">+43.4%</td>
-              <td style="font-size:11px;color:#15803d;font-weight:600">Sold 75%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Bagmane REIT</td>
-              <td style="color:#64748b">₹100</td>
-              <td style="font-weight:700">₹104</td>
-              <td style="font-weight:800;color:#d97706">+3.5%</td>
-              <td style="font-size:11px;color:#d97706;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Kissht</td>
-              <td style="color:#64748b">₹171</td>
-              <td style="font-weight:700">₹190</td>
-              <td style="font-weight:800;color:#d97706">+11.1%</td>
-              <td style="font-size:11px;color:#d97706;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Citius Transnet InvIT</td>
-              <td style="color:#64748b">₹100</td>
-              <td style="font-weight:700">₹105</td>
-              <td style="font-weight:800;color:#d97706">+4.6%</td>
-              <td style="font-size:11px;color:#d97706;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Propshare Celestia</td>
-              <td style="color:#64748b">₹1,050,000</td>
-              <td style="font-weight:700">₹999,900</td>
-              <td style="font-weight:800;color:#dc2626">-4.8%</td>
-              <td style="font-size:11px;color:#dc2626;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Om Power Transmission</td>
-              <td style="color:#64748b">₹175</td>
-              <td style="font-weight:700">₹186</td>
-              <td style="font-weight:800;color:#d97706">+6.3%</td>
-              <td style="font-size:11px;color:#d97706;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Amir Chand</td>
-              <td style="color:#64748b">₹212</td>
-              <td style="font-weight:700">₹200</td>
-              <td style="font-weight:800;color:#dc2626">-5.7%</td>
-              <td style="font-size:11px;color:#dc2626;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Sai Parenteral’s</td>
-              <td style="color:#64748b">₹392</td>
-              <td style="font-weight:700">₹400</td>
-              <td style="font-weight:800;color:#d97706">+2.0%</td>
-              <td style="font-size:11px;color:#d97706;font-weight:600">Sold 100%</td>
-            </tr>
-            <tr>
-              <td style="font-weight:700;color:#0f172a">Powerica</td>
-              <td style="color:#64748b">₹395</td>
-              <td style="font-weight:700">₹366</td>
-              <td style="font-weight:800;color:#dc2626">-7.3%</td>
-              <td style="font-size:11px;color:#dc2626;font-weight:600">Sold 100%</td>
-            </tr></tbody></table>
-        </div>
-</div>
 
 <!-- GUIDE TAB -->
 <div id="guide" class="panel">
@@ -2292,6 +2015,18 @@ function filterEq(type,el){
   _applyEqFilters();
 }
 
+function _updateSectorFilterUI(sector){
+  var pill = document.getElementById('sector-filter-pill');
+  var name = document.getElementById('sector-filter-name');
+  if (pill && name) {
+    if (sector === 'all') { pill.style.display = 'none'; }
+    else { name.textContent = sector; pill.style.display = 'inline-flex'; }
+  }
+  document.querySelectorAll('.sr-bar-row').forEach(function(row){
+    row.style.outline = (row.dataset.sector === sector) ? '2px solid #38bdf8' : 'none';
+  });
+}
+
 function filterSector(sector,el){
   document.querySelectorAll('.sc').forEach(b=>{
     b.style.background='#f1f5f9'; b.style.color='#475569';
@@ -2299,6 +2034,13 @@ function filterSector(sector,el){
   el.style.background='#0f172a'; el.style.color='#fff';
   _eqSec=sector;
   _applyEqFilters();
+  _updateSectorFilterUI(sector);
+}
+
+function clearSectorFilter(){
+  const allChip = document.querySelector('.sc');
+  if (allChip) { filterSector('all', allChip); }
+  else { _eqSec='all'; _applyEqFilters(); _updateSectorFilterUI('all'); }
 }
 
 /* Sector Rotation bars aren't .sc chips — wrapper finds the matching chip
@@ -2307,7 +2049,7 @@ function filterSector(sector,el){
 function filterBySectorBar(sector){
   const chip = [...document.querySelectorAll('.sc')].find(b=>b.textContent.trim()===sector);
   if (chip) { filterSector(sector, chip); }
-  else { _eqSec=sector; _applyEqFilters(); }
+  else { _eqSec=sector; _applyEqFilters(); _updateSectorFilterUI(sector); }
   const table = document.querySelector('#eq .sec');
   if (table) table.scrollIntoView({behavior:'smooth', block:'start'});
 }
@@ -2429,6 +2171,23 @@ let positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
 
 function savePositions(){
   localStorage.setItem('nse_positions', JSON.stringify(positions));
+  _syncPositionsToBackend();
+}
+
+// Sync ad-hoc positions (not the 4 hardcoded defaults — equity_brain.py
+// already tracks those) to the backend so Equity Brain can compute live
+// P&L for them too. Fire-and-forget: localStorage is already the local
+// source of truth, so a failed sync just means that one stock won't show
+// live P&L until the next successful save — nothing breaks locally.
+function _syncPositionsToBackend(){
+  var adHoc = positions.filter(function(p){
+    return !DEFAULT_POSITIONS.some(function(d){ return d.name === p.name; });
+  });
+  fetch('/api/save-positions', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(adHoc)
+  }).catch(function(){});
 }
 
 // Seed defaults on first load (respects user-removed list)
