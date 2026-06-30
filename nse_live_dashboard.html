@@ -1573,70 +1573,85 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
           </div>
         </div>
   <!-- Index cards -->
+  <!-- EXACT TRADE — live, fetched from /fo_latest.json. Replaces a static 25-Jun snapshot
+       that never updated and never showed strike/premium/SL/targets/lot size. -->
   <div class="sec">
-    <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#7c3aed"></span>Index Futures — NIFTY &amp; BANKNIFTY</div>
-    <div style="display:flex;gap:14px;flex-wrap:wrap"><div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:18px 20px;min-width:280px;flex:1">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-                <div>
-                  <div style="font-size:16px;font-weight:800;color:#0f172a">NIFTY 50</div>
-                  <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:2px">₹24,056.00</div>
-                </div>
-                <span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;margin-bottom:12px">
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">RSI</div><div style="font-weight:700;color:#0f172a">65.6</div></div>
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">ATR</div><div style="font-weight:700;color:#0f172a">256.55</div></div>
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">EMA50</div><div style="font-weight:700;color:#0f172a">₹23,846</div></div>
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">5d ROC</div><div style="font-weight:700;color:#15803d">-0.5%</div></div>
-              </div>
-              <div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:11px">
-                <div style="display:flex;justify-content:space-between;color:#64748b">
-                  <span>S2: ₹23,666</span><span>S1: ₹23,844</span>
-                  <span style="color:#6366f1;font-weight:700">P: ₹23,967</span>
-                  <span>R1: ₹24,145</span><span>R2: ₹24,268</span>
-                </div>
-              </div>
-              <div style="background:#dcfce7;border-radius:8px;padding:10px 12px">
-                <div style="font-size:11px;font-weight:800;color:#15803d;margin-bottom:4px">
-                  RECOMMENDED: BULL CALL SPREAD</div>
-                <div style="font-size:11px;color:#374151;line-height:1.5">Moderate uptrend. Buy ATM CE, Sell OTM CE (+385 pts). Cap risk.</div>
-              </div>
-            </div><div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:18px 20px;min-width:280px;flex:1">
-              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
-                <div>
-                  <div style="font-size:16px;font-weight:800;color:#0f172a">BANKNIFTY</div>
-                  <div style="font-size:22px;font-weight:900;color:#15803d;margin-top:2px">₹58,177.05</div>
-                </div>
-                <span style="background:#dcfce7;color:#15803d;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">↑ Bullish</span>
-              </div>
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;margin-bottom:12px">
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">RSI</div><div style="font-weight:700;color:#0f172a">77.1</div></div>
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">ATR</div><div style="font-weight:700;color:#0f172a">760.16</div></div>
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">EMA50</div><div style="font-weight:700;color:#0f172a">₹55,867</div></div>
-                <div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px">
-                  <div style="color:#64748b;font-size:10px">5d ROC</div><div style="font-weight:700;color:#15803d">+0.4%</div></div>
-              </div>
-              <div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:11px">
-                <div style="display:flex;justify-content:space-between;color:#64748b">
-                  <span>S2: ₹56,646</span><span>S1: ₹57,398</span>
-                  <span style="color:#6366f1;font-weight:700">P: ₹57,827</span>
-                  <span>R1: ₹58,580</span><span>R2: ₹59,009</span>
-                </div>
-              </div>
-              <div style="background:#dcfce7;border-radius:8px;padding:10px 12px">
-                <div style="font-size:11px;font-weight:800;color:#15803d;margin-bottom:4px">
-                  RECOMMENDED: BULL CALL SPREAD</div>
-                <div style="font-size:11px;color:#374151;line-height:1.5">Moderate uptrend. Buy ATM CE, Sell OTM CE (+1140 pts). Cap risk.</div>
-              </div>
-            </div></div>
+    <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#7c3aed"></span>🎯 Exact Trade — What To Buy Right Now</div>
+    <div id="exact-trade-panel" style="display:flex;gap:14px;flex-wrap:wrap">
+      <div style="font-size:12px;color:#94a3b8;padding:20px">Loading live signal…</div>
+    </div>
   </div>
+  <script>
+  (function buildExactTrade(){
+    const INR2=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+    function render(d){
+      var box = document.getElementById('exact-trade-panel');
+      if (!box) return;
+      var html = '';
+      [{sym:'NIFTY50', label:'NIFTY 50'}, {sym:'BANKNIFTY', label:'BANKNIFTY'}].forEach(function(cfg){
+        var inst = d[cfg.sym];
+        if (!inst || inst.error) {
+          html += '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px 20px;min-width:280px;flex:1;font-size:12px;color:#94a3b8">' + cfg.label + ': no data yet</div>';
+          return;
+        }
+        var t = inst.trade || {};
+        var actionable = inst.consensus !== 'WAIT';
+        var border = actionable ? '#bbf7d0' : '#e2e8f0';
+        var bg = actionable ? '#f0fdf4' : '#f8fafc';
+        var votes = inst.consensus === 'BUY_CE' ? inst.ce_votes : inst.consensus === 'BUY_PE' ? inst.pe_votes : Math.max(inst.ce_votes||0, inst.pe_votes||0);
+
+        html += '<div style="background:' + bg + ';border:1px solid ' + border + ';border-radius:12px;padding:18px 20px;min-width:280px;flex:1">' +
+          '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">' +
+            '<div>' +
+              '<div style="font-size:16px;font-weight:800;color:#0f172a">' + cfg.label + '</div>' +
+              '<div style="font-size:22px;font-weight:900;color:#0f172a;margin-top:2px">' + INR2(inst.spot) + '</div>' +
+            '</div>' +
+            '<span style="background:' + (actionable ? '#dcfce7' : '#f1f5f9') + ';color:' + (actionable ? '#15803d' : '#64748b') + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' +
+              (actionable ? (inst.consensus === 'BUY_CE' ? '↑ ' + votes + '/5 Bullish' : '↓ ' + votes + '/5 Bearish') : votes + '/5 — WAIT') +
+            '</span>' +
+          '</div>';
+
+        if (!actionable) {
+          html += '<div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:10px 12px;font-size:11px;color:#64748b">' +
+            'No trade today — consensus hasn\'t reached 4/5. CE votes: ' + (inst.ce_votes||0) + ', PE votes: ' + (inst.pe_votes||0) + '. ' +
+            (inst.data_warning || '') +
+          '</div>';
+        } else {
+          var slPct = t.entry_premium ? Math.round((t.sl_premium - t.entry_premium) / t.entry_premium * 100) : 0;
+          var t1Pct = t.entry_premium ? Math.round((t.target1_premium - t.entry_premium) / t.entry_premium * 100) : 0;
+          var t2Pct = t.entry_premium ? Math.round((t.target_premium - t.entry_premium) / t.entry_premium * 100) : 0;
+          html += '<div style="background:#dcfce7;border-radius:8px;padding:10px 12px;margin-bottom:10px">' +
+            '<div style="font-size:13px;font-weight:900;color:#15803d">' + (t.action || '') + '</div>' +
+            '<div style="font-size:10px;color:#374151;margin-top:2px">Expiry: ' + (t.expiry||'—') + ' (' + (t.days_to_exp||'?') + 'd) · Search in Kite: <b>' + (t.zerodha_search||'—') + '</b></div>' +
+          '</div>' +
+          '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px;margin-bottom:10px">' +
+            '<div style="background:rgba(0,0,0,0.04);border-radius:6px;padding:6px 8px;text-align:center">' +
+              '<div style="color:#64748b;font-size:9px">ENTRY</div><div style="font-weight:800;color:#0f172a">' + INR2(t.entry_premium||0) + '</div></div>' +
+            '<div style="background:#fef2f2;border-radius:6px;padding:6px 8px;text-align:center">' +
+              '<div style="color:#dc2626;font-size:9px">STOP LOSS</div><div style="font-weight:800;color:#dc2626">' + INR2(t.sl_premium||0) + '</div><div style="font-size:9px;color:#fca5a5">' + slPct + '%</div></div>' +
+            '<div style="background:#f0fdf4;border-radius:6px;padding:6px 8px;text-align:center">' +
+              '<div style="color:#15803d;font-size:9px">TARGET 1</div><div style="font-weight:800;color:#15803d">' + INR2(t.target1_premium||0) + '</div><div style="font-size:9px;color:#86efac">+' + t1Pct + '%</div></div>' +
+          '</div>' +
+          '<div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;background:rgba(0,0,0,0.04);border-radius:8px;padding:8px 10px">' +
+            '<span>Target 2: <b style="color:#2563eb">' + INR2(t.target_premium||0) + '</b> (+' + t2Pct + '%)</span>' +
+            '<span>Lot: <b style="color:#0f172a">' + (t.lot_size||'—') + '</b></span>' +
+            '<span>Cost (1 lot): <b style="color:#0f172a">' + INR2(t.cost_1_lot||0) + '</b></span>' +
+          '</div>';
+        }
+        html += '<div style="font-size:9px;color:#94a3b8;margin-top:8px">' + (inst.data_warning || '') + '</div></div>';
+      });
+      box.innerHTML = html;
+    }
+
+    fetch('/fo_latest.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ if (d) render(d); })
+      .catch(function(){
+        var box = document.getElementById('exact-trade-panel');
+        if (box) box.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:20px">Could not load live signal — try refreshing.</div>';
+      });
+  })();
+  </script>
   <!-- Strategy explainer -->
   <div class="sec">
     <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#0891b2"></span>F&amp;O Strategy Framework</div>
