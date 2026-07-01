@@ -287,6 +287,7 @@ let SCAN_META = null;
     <div class="chart-card" id="ov-mood"></div>
     <div class="chart-card" id="ov-sectors"></div>
   </div>
+  <div id="ov-regime" style="margin-bottom:14px"></div>
 </div>
 <script>
 (function buildOverview(){
@@ -294,13 +295,15 @@ let SCAN_META = null;
     fetch('/equity_journal.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
     fetch('/market_mood.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
     fetch('/trade_journal.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
-    fetch('/sector_rotation.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
+    fetch('/sector_rotation.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+    fetch('/market_regime.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
   ]).then(function(results){
-    var eqJ = results[0], mood = results[1], tradeJ = results[2], sector = results[3];
+    var eqJ = results[0], mood = results[1], tradeJ = results[2], sector = results[3], regime = results[4];
     renderHealth(eqJ, mood, tradeJ);
     renderAction(eqJ);
     renderMood(mood);
     renderSectors(sector);
+    renderRegime(regime);
     // renderHealth()/renderAction() read the global SCAN_DATA for the
     // Strong-Buy count and untracked-signal list — that's populated by a
     // separate async fetch (_loadEquityScan()) with no ordering guarantee
@@ -398,6 +401,39 @@ let SCAN_META = null;
       '<div class="chart-ttl" style="--a:#0891b2">📊 Top Sectors — Building Momentum</div>' +
       '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
         top.map(function(s){ return '<span style="background:#ecfeff;color:#0e7490;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700">' + s + '</span>'; }).join('') +
+      '</div>';
+  }
+
+  function renderRegime(regime){
+    var box = document.getElementById('ov-regime');
+    if (!box) return;
+    var inst = (regime && regime.instruments) || {};
+    if (!Object.keys(inst).length) {
+      box.innerHTML = '<div class="sec" style="margin-bottom:0"><div class="sec-ttl"><span class="sec-ttl-dot" style="background:#7c3aed"></span>🧭 Market Regime</div><div style="font-size:12px;color:#94a3b8">No data yet.</div></div>';
+      return;
+    }
+    var trendColor = {Bullish:'#15803d', Bearish:'#dc2626', 'Sideways/Choppy':'#d97706'};
+    var volColor = {Low:'#15803d', Normal:'#d97706', High:'#dc2626'};
+    var cards = Object.entries(inst).map(function(kv){
+      var name = kv[0], r = kv[1];
+      return '<div style="background:#f8fafc;border-radius:8px;padding:10px 12px;flex:1;min-width:140px">' +
+        '<div style="font-size:11px;font-weight:800;color:#0f172a;margin-bottom:4px">' + name + '</div>' +
+        '<div style="font-size:13px;font-weight:900;color:' + (trendColor[r.trend] || '#64748b') + '">' + r.trend + '</div>' +
+        '<div style="font-size:10px;color:#64748b;margin-top:3px">ADX ' + (r.adx != null ? r.adx : '—') + ' · ' +
+          '<span style="color:' + (volColor[r.volatility] || '#64748b') + '">' + r.volatility + ' vol</span> (' + r.atr_pct + '%) · ' + r.volume_behavior + ' volume</div>' +
+      '</div>';
+    }).join('');
+    var rec = regime.recommendation || {best_fit_strategies: [], avoid: [], reasoning: []};
+    var fitChips = rec.best_fit_strategies.map(function(s){ return '<span style="background:#dcfce7;color:#15803d;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">✅ ' + s + '</span>'; }).join(' ');
+    var avoidChips = rec.avoid.map(function(s){ return '<span style="background:#fef2f2;color:#dc2626;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">⚠ Avoid ' + s + '</span>'; }).join(' ');
+    box.innerHTML =
+      '<div class="sec" style="margin-bottom:0">' +
+        '<div class="sec-ttl"><span class="sec-ttl-dot" style="background:#7c3aed"></span>🧭 Market Regime — Which Strategies Fit Right Now</div>' +
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">' + cards + '</div>' +
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">' + fitChips + ' ' + avoidChips + '</div>' +
+        '<ul style="font-size:11px;color:#64748b;margin:0;padding-left:18px;line-height:1.7">' +
+          rec.reasoning.map(function(r){ return '<li>' + r + '</li>'; }).join('') +
+        '</ul>' +
       '</div>';
   }
 })();

@@ -12,6 +12,7 @@
     { "src": "stock_fo.json",           "use": "@vercel/static" },
     { "src": "equity_scan.json",        "use": "@vercel/static" },
     { "src": "equity_scan_history.json","use": "@vercel/static" },
+    { "src": "market_regime.json",      "use": "@vercel/static" },
     { "src": "api/save-positions.js",   "use": "@vercel/node" }
   ],
   "routes": [
@@ -63,6 +64,11 @@
       "src": "/equity_scan_history.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/equity_scan_history.json"
+    },
+    {
+      "src": "/market_regime.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/market_regime.json"
     },
     {
       "src": "/nse_live_dashboard.html",

@@ -43,6 +43,14 @@ jobs:
               elif isinstance(v,dict): print(f' {k}: {v.get(\"consensus\",\"?\")} spot={v.get(\"spot\",\"?\")} as_of={v.get(\"data_as_of\",\"?\")}')
           "
 
+      - name: Run market regime detection (writes market_regime.json to repo root)
+        continue-on-error: true
+        run: |
+          set -e
+          cd nse-trading-bot
+          python market_regime_refresh.py
+          echo "✅ market_regime_refresh.py succeeded"
+
       - name: Run trading brain (paper-trades signals, marks open trades to market)
         continue-on-error: true
         run: |
@@ -113,7 +121,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json
 
           if git diff --staged --quiet; then
             echo "no changes — no commit needed"
