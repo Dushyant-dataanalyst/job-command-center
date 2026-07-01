@@ -23,7 +23,7 @@ const OWNER = 'Dushyant-dataanalyst';
 const REPO = 'job-command-center';
 const BRANCH = 'master';
 const FILE_PATH = 'my_positions.json';
-const ALLOWED_ORIGIN = 'https://nse-trading-dashboard.vercel.app'; // adjust if your Vercel domain differs
+const ALLOWED_ORIGIN = 'https://job-command-center-nu.vercel.app'; // must match the dashboard's actual Vercel domain
 
 function sanitizePositions(input) {
   if (!Array.isArray(input)) return [];
