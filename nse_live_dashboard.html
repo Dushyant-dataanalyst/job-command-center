@@ -155,10 +155,91 @@ tr:last-child td{border-bottom:none}
 }
 .mobile-ip-bar{display:none;background:#fef9c3;border:1px solid #fde68a;border-radius:8px;
                padding:9px 13px;margin-bottom:10px;font-size:11px;color:#854d0e;line-height:1.6}
+
+/* ── Stale-data kill-switch ── */
+@keyframes staleFlash{0%,100%{opacity:1}50%{opacity:.85}}
+#stale-banner.show{animation:staleFlash 1.5s ease-in-out infinite}
+body.stale-blocked #eq-body .dr,
+body.stale-blocked #exact-trade-panel > div,
+body.stale-blocked #breakout-picks,
+body.stale-blocked #fo-positions-panel > div{
+  filter:grayscale(1) opacity(.35);
+  pointer-events:none;
+  position:relative;
+}
+body.stale-blocked #eq-body .dr::after,
+body.stale-blocked #exact-trade-panel > div::after{
+  content:'STALE — VERIFY BEFORE TRADING';
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(220,38,38,.06);color:#dc2626;font-weight:900;font-size:11px;
+  text-align:center;pointer-events:none;
+}
 </style>
 </head>
 <body>
 <div class="wrap">
+
+<!-- STALE DATA KILL-SWITCH — computed client-side (browser's own clock vs
+     fo_latest.json's timestamp), not server-side, so it still works even if
+     the page itself is being served from a stale cache. During market hours,
+     if the newest signal data is older than the threshold, this blocks
+     interaction with BUY/STRONG_BUY signals rather than just showing a
+     banner — a dashboard that looks live but is silently stale is more
+     dangerous than no dashboard at all. -->
+<div id="stale-banner" style="display:none;background:#dc2626;color:#fff;font-weight:900;text-align:center;padding:12px 16px;border-radius:10px;margin-bottom:12px;font-size:13px;letter-spacing:.3px"></div>
+<script>
+(function(){
+  const STALE_THRESHOLD_MIN = 15; // 3 missed 5-min cron cycles = treat as broken, not just "a bit slow"
+  const MARKET_OPEN_MIN = 9 * 60 + 15;   // 9:15 IST
+  const MARKET_CLOSE_MIN = 15 * 60 + 30; // 15:30 IST
+
+  function parseISTTimestamp(str){
+    const m = str && String(str).match(/(\d{1,2}) (\w{3}) (\d{4}) (\d{1,2}):(\d{2})/);
+    if (!m) return null;
+    const MONTHS = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+    const mon = MONTHS[m[2]];
+    if (mon === undefined) return null;
+    // The wall-clock values in the string ARE IST — subtract 5:30 to recover the true UTC instant.
+    return Date.UTC(+m[3], mon, +m[1], +m[4], +m[5]) - 5.5 * 3600 * 1000;
+  }
+
+  function isMarketHoursIST(){
+    // Shift the current true instant by +5:30 and read UTC components back off it —
+    // gives "as if IST" wall-clock parts regardless of the browser's own local timezone.
+    const shifted = new Date(Date.now() + 5.5 * 3600 * 1000);
+    const day = shifted.getUTCDay();
+    if (day === 0 || day === 6) return false;
+    const mins = shifted.getUTCHours() * 60 + shifted.getUTCMinutes();
+    return mins >= MARKET_OPEN_MIN && mins <= MARKET_CLOSE_MIN;
+  }
+
+  function checkDataStaleness(){
+    fetch('/fo_latest.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if (!d) return;
+        const ts = (d._meta && d._meta.generated_at) || d.fetched_at;
+        const instant = parseISTTimestamp(ts);
+        if (instant == null) return;
+        const ageMin = (Date.now() - instant) / 60000;
+        const stale = isMarketHoursIST() && ageMin > STALE_THRESHOLD_MIN;
+        document.body.classList.toggle('stale-blocked', stale);
+        const banner = document.getElementById('stale-banner');
+        if (!banner) return;
+        if (stale) {
+          banner.style.display = 'block';
+          banner.classList.add('show');
+          banner.textContent = '⛔ DATA STALE — DO NOT TRADE OFF THIS. Last refresh ' + Math.round(ageMin) + ' min ago (expected every 5 min during market hours). BUY/STRONG_BUY signals are blocked until fresh data arrives.';
+        } else {
+          banner.style.display = 'none';
+          banner.classList.remove('show');
+        }
+      })
+      .catch(function(){}); // network failure here isn't itself proof of staleness — don't false-positive on a blip
+  }
+  checkDataStaleness();
+})();
+</script>
 
 <!-- HEADER -->
 <div class="hdr">
