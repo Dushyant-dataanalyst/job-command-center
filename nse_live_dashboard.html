@@ -1264,11 +1264,14 @@ function updateEquityCounts(){
             '<div style="background:#f0fdf4;border-radius:6px;padding:6px 8px;text-align:center">' +
               '<div style="color:#15803d;font-size:9px">TARGET 1</div><div style="font-weight:800;color:#15803d">' + INR2(t.target1_premium||0) + '</div><div style="font-size:9px;color:#86efac">+' + t1Pct + '%</div></div>' +
           '</div>' +
-          '<div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;background:rgba(0,0,0,0.04);border-radius:8px;padding:8px 10px">' +
+          '<div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;background:rgba(0,0,0,0.04);border-radius:8px;padding:8px 10px;margin-bottom:10px">' +
             '<span>Target 2: <b style="color:#2563eb">' + INR2(t.target_premium||0) + '</b> (+' + t2Pct + '%)</span>' +
             '<span>Lot: <b style="color:#0f172a">' + (t.lot_size||'—') + '</b></span>' +
             '<span>Cost (1 lot): <b style="color:#0f172a">' + INR2(t.cost_1_lot||0) + '</b></span>' +
-          '</div>';
+          '</div>' +
+          (isFOTracked(cfg.sym)
+            ? '<span style="background:#15803d;color:#fff;border-radius:5px;padding:4px 10px;font-size:10px;font-weight:700">✅ TRACKING</span>'
+            : '<button onclick="markFOBought(\'' + cfg.sym + '\',\'' + (inst.consensus==='BUY_CE'?'CE':'PE') + '\',' + (t.strike||0) + ',\'' + (t.expiry||'') + '\',' + (t.entry_premium||0) + ',' + (t.sl_premium||0) + ',' + (t.target1_premium||0) + ',' + (t.target_premium||0) + ',' + (t.lot_size||0) + ')" style="background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:10px;font-weight:800;cursor:pointer">📌 I TOOK THIS TRADE</button>');
         }
         html += '<div style="font-size:9px;color:#94a3b8;margin-top:8px">' + (inst.data_warning || '') + '</div></div>';
       });
@@ -1283,6 +1286,132 @@ function updateEquityCounts(){
         if (box) box.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:20px">Could not load live signal — try refreshing.</div>';
       });
   })();
+  </script>
+
+  <!-- MY F&O POSITIONS — real trades you took (not the auto paper-traded
+       Trading Brain above), tracked in localStorage like equity's "I BOUGHT",
+       re-priced live using the same premium-estimate model as the signal
+       engine itself (yfinance doesn't expose real NSE option chain quotes,
+       so this is an estimate — verify actual premium in your broker). -->
+  <div class="sec">
+    <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#4f46e5"></span>📌 My F&amp;O Positions</div>
+    <div id="fo-positions-panel"><div style="font-size:12px;color:#94a3b8;padding:10px 0">No F&amp;O trades tracked yet — use "I TOOK THIS TRADE" above.</div></div>
+  </div>
+  <script>
+  let foPositions = JSON.parse(localStorage.getItem('nse_fo_positions') || '[]');
+
+  function isFOTracked(instrument){
+    return foPositions.some(function(p){ return p.instrument === instrument && p.status === 'open'; });
+  }
+
+  function saveFOPositions(){
+    localStorage.setItem('nse_fo_positions', JSON.stringify(foPositions));
+  }
+
+  function markFOBought(instrument, optionType, strike, expiry, entryPremium, slPremium, t1Premium, t2Premium, lotSize){
+    if (isFOTracked(instrument)) { toast('Already tracking a ' + instrument + ' trade', 2000); return; }
+    foPositions.push({
+      instrument: instrument, option_type: optionType, strike: strike, expiry: expiry,
+      entry_premium: entryPremium, sl_premium: slPremium, t1_premium: t1Premium, t2_premium: t2Premium,
+      lot_size: lotSize, status: 'open',
+      taken_at: new Date().toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}),
+    });
+    saveFOPositions();
+    renderFOPositions();
+    toast('✅ ' + instrument + ' ' + optionType + ' ' + strike + ' added to My F&O Positions', 3000);
+  }
+
+  function closeFOPosition(idx){
+    var exitStr = prompt('Exit premium (₹) — what you actually got when you closed this in your broker:');
+    var exit = parseFloat(exitStr);
+    if (!exitStr || isNaN(exit)) return;
+    var p = foPositions[idx];
+    p.status = 'closed';
+    p.exit_premium = exit;
+    p.closed_at = new Date().toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'});
+    saveFOPositions();
+    renderFOPositions();
+  }
+
+  function removeFOPosition(idx){
+    foPositions.splice(idx, 1);
+    saveFOPositions();
+    renderFOPositions();
+  }
+
+  /* Same Black-Scholes-ish estimate as refresh_fo_cloud.py's _premium_estimate()
+     — yfinance has no real NSE option-chain quotes, so this re-prices open
+     positions using the identical model the signal engine itself trades on. */
+  function _estimatePremium(spot, strike, annVol, days){
+    const T = Math.max(days, 1) / 365.0;
+    const mono = Math.abs(spot - strike) / spot;
+    let p = 0.4 * annVol * spot * Math.sqrt(T);
+    if (mono > 0.002) p *= Math.max(0.3, 1 - mono * 8);
+    return Math.round(p);
+  }
+
+  function _daysToExpiry(expiryStr){
+    const d = new Date(expiryStr);
+    if (isNaN(d.getTime())) return 1;
+    return Math.max(Math.ceil((d - new Date()) / 86400000), 1);
+  }
+
+  function renderFOPositions(){
+    const box = document.getElementById('fo-positions-panel');
+    if (!box) return;
+    if (!foPositions.length) {
+      box.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:10px 0">No F&O trades tracked yet — use "I TOOK THIS TRADE" above.</div>';
+      return;
+    }
+    fetch('/fo_latest.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ _renderFOCards(d || {}); })
+      .catch(function(){ _renderFOCards({}); });
+  }
+
+  function _renderFOCards(liveData){
+    const box = document.getElementById('fo-positions-panel');
+    if (!box) return;
+    const INR2 = n => '₹' + Math.round(n).toLocaleString('en-IN');
+    box.innerHTML = foPositions.map(function(p, idx){
+      const live = liveData[p.instrument];
+      let curPremium = null, pnlPct = null, status = 'open';
+      if (p.status === 'closed') {
+        curPremium = p.exit_premium;
+        pnlPct = p.entry_premium ? Math.round((p.exit_premium - p.entry_premium) / p.entry_premium * 100) : null;
+      } else if (live && !live.error) {
+        curPremium = _estimatePremium(live.spot, p.strike, live.ann_vol, _daysToExpiry(p.expiry));
+        pnlPct = p.entry_premium ? Math.round((curPremium - p.entry_premium) / p.entry_premium * 100) : null;
+        if (p.sl_premium && curPremium <= p.sl_premium) status = 'below_sl';
+        else if (p.t2_premium && curPremium >= p.t2_premium) status = 'target2_hit';
+        else if (p.t1_premium && curPremium >= p.t1_premium) status = 'target1_hit';
+      }
+      const color = pnlPct == null ? '#64748b' : pnlPct >= 0 ? '#15803d' : '#dc2626';
+      const bg = pnlPct == null ? '#f8fafc' : pnlPct >= 0 ? '#f0fdf4' : '#fef2f2';
+      const statusLabel = status === 'below_sl' ? '⚠ BELOW SL' : status === 'target1_hit' ? '🎯 T1 HIT' : status === 'target2_hit' ? '🎯 T2 HIT' : '';
+      return '<div style="background:' + bg + ';border-radius:10px;padding:12px 14px;margin-bottom:8px">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">' +
+          '<div>' +
+            '<div style="font-weight:800;font-size:13px;color:#0f172a">' + p.instrument + ' ' + p.strike + ' ' + p.option_type +
+              (p.status === 'closed' ? ' <span style="color:#94a3b8;font-weight:400;font-size:10px">(closed)</span>' : '') + '</div>' +
+            '<div style="font-size:10px;color:#94a3b8">Expiry ' + p.expiry + ' · Taken ' + p.taken_at + ' · Entry ' + INR2(p.entry_premium) + '</div>' +
+          '</div>' +
+          '<div style="text-align:right">' +
+            '<div style="font-size:15px;font-weight:900;color:' + color + '">' + (curPremium != null ? INR2(curPremium) : '—') +
+              (pnlPct != null ? ' <span style="font-size:11px">(' + (pnlPct >= 0 ? '+' : '') + pnlPct + '%)</span>' : '') + '</div>' +
+            (statusLabel ? '<div style="font-size:10px;font-weight:700;color:' + color + '">' + statusLabel + '</div>' : '') +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;margin-top:8px">' +
+          (p.status === 'open' ? '<button onclick="closeFOPosition(' + idx + ')" style="background:#0f172a;color:#fff;border:none;border-radius:5px;padding:3px 10px;font-size:10px;font-weight:700;cursor:pointer">Mark Closed</button>' : '') +
+          '<button onclick="removeFOPosition(' + idx + ')" style="background:transparent;color:#94a3b8;border:1px solid #e2e8f0;border-radius:5px;padding:3px 10px;font-size:10px;font-weight:700;cursor:pointer">Remove</button>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#94a3b8;margin-top:6px">Estimated premium (same model the signal engine uses) — yfinance has no real NSE option-chain feed. Verify actual premium in your broker before acting.</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  renderFOPositions();
   </script>
   <!-- Strategy explainer -->
   <div class="sec">
