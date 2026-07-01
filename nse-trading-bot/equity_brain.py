@@ -77,13 +77,21 @@ def _merged_tracked_positions():
 
 def _live_price(symbol):
     df = download_with_retry(symbol + ".NS", period="5d")
-    if df.empty:
-        return None
-    if isinstance(df.columns, pd.MultiIndex):
-        df.columns = [c[0].lower() for c in df.columns]
-    else:
-        df.columns = [c.lower() for c in df.columns]
-    return round(float(df["close"].iloc[-1]), 2)
+    if not df.empty:
+        if isinstance(df.columns, pd.MultiIndex):
+            df.columns = [c[0].lower() for c in df.columns]
+        else:
+            df.columns = [c.lower() for c in df.columns]
+        return round(float(df["close"].iloc[-1]), 2), "yfinance"
+
+    # yfinance failed — fall back to Kite Connect if a valid same-day session
+    # exists. P&L only needs current price vs. entry, so this is a complete
+    # fallback here (unlike the F&O signal, which also needs historical data).
+    from kite_fallback import get_stock_spot
+    spot = get_stock_spot(symbol)
+    if spot is not None:
+        return round(float(spot), 2), "kite_fallback"
+    return None, None
 
 
 def main():
@@ -94,9 +102,9 @@ def main():
 
     for p in tracked:
         name = p["name"]
-        price = _live_price(name)
+        price, price_source = _live_price(name)
         if price is None:
-            errors[name] = "no live price data"
+            errors[name] = "no live price data (yfinance and Kite fallback both unavailable)"
             continue
         entry = p.get("entry") or 0
         sl = p.get("sl") or 0
@@ -121,6 +129,7 @@ def main():
             "status": status,
             "bought_at": p.get("bought_at", "—"),
             "source": "default" if any(d["name"] == name for d in TRACKED_POSITIONS) else "synced",
+            "price_source": price_source,
         })
 
     valid = [r for r in results if r["pnl_pct"] is not None]

@@ -110,7 +110,25 @@ def _fo_signal(instrument):
     cfg = INSTRUMENTS[instrument]
     v   = _get_indicators(cfg["ticker"])
     if not v:
-        return {"error": f"No data for {instrument}"}
+        # yfinance is down — Kite's simple quote API can give a live spot
+        # price but not 6 months of historical OHLCV, so it can't
+        # reconstruct the EMA/RSI/MACD/ADX signal. Surface the spot price
+        # so the dashboard isn't blank, but be explicit that no consensus
+        # signal is available rather than fabricating one from a single
+        # price point.
+        from kite_fallback import get_index_spot
+        spot = get_index_spot(instrument)
+        if spot is not None:
+            return {
+                "instrument": instrument, "spot": round(float(spot), 2),
+                "consensus": "WAIT", "ce_votes": 0, "pe_votes": 0,
+                "data_as_of": None, "fetched_at": now_ist_str(),
+                "data_warning": "yfinance unavailable — showing live spot from Kite fallback only. "
+                                "No technical signal available (needs historical data yfinance normally provides). "
+                                "Verify in Kite before trading.",
+                "trade": {"action": "WAIT — No Trade (signal unavailable, yfinance down)"},
+            }
+        return {"error": f"No data for {instrument} — yfinance and Kite fallback both unavailable"}
     consensus, ce_v, pe_v = _signals(v)
     expiry  = _next_monthly_expiry(cfg["expiry_day"])
     days_to = max((expiry - date.today()).days, 1)

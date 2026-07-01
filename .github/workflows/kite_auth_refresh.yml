@@ -1,0 +1,68 @@
+name: Kite Session Refresh (Manual, Daily)
+
+# Kite Connect access_tokens expire every trading day (~6 AM IST) — there is
+# no long-lived key that works on its own. This workflow is the ~30-second
+# manual step each morning: visit the login URL below, log into Kite, copy
+# the request_token from the redirect URL, paste it in when running this
+# workflow, and the rest of today's cron runs can use the resulting session
+# as a fallback whenever yfinance fails.
+#
+# Login URL (replace YOUR_API_KEY with the real value — safe to hardcode
+# here, an API key alone can't authenticate anything without also having
+# your Kite login):
+#   https://kite.zerodha.com/connect/login?api_key=YOUR_API_KEY&v=3
+# After logging in, Kite redirects to your app's redirect URL with
+# ?request_token=XXXXX in the query string — copy that value.
+
+on:
+  workflow_dispatch:
+    inputs:
+      request_token:
+        description: 'request_token from the Kite login redirect URL (see workflow comments for the login URL)'
+        required: true
+        type: string
+
+jobs:
+  refresh-session:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install --quiet requests==2.34.2
+
+      - name: Exchange request_token for today's access_token
+        env:
+          KITE_API_KEY: ${{ secrets.KITE_API_KEY }}
+          KITE_API_SECRET: ${{ secrets.KITE_API_SECRET }}
+          KITE_REQUEST_TOKEN: ${{ inputs.request_token }}
+        run: |
+          cd nse-trading-bot
+          python kite_auth_refresh.py
+
+      - name: Commit today's session
+        run: |
+          git config user.name  "NSE Bot"
+          git config user.email "nse-bot@github-actions"
+          git fetch origin master
+          git reset --mixed origin/master
+          git add kite_session.json
+          if git diff --staged --quiet; then
+            echo "no changes — no commit needed"
+          else
+            git commit -m "chore: refresh Kite session for today"
+            git push origin master
+          fi
