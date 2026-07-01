@@ -384,6 +384,7 @@ let SCAN_META = null;
 
 <!-- OVERVIEW TAB — one-glance answers to: is it healthy, what needs action, what changed -->
 <div id="overview" class="panel active">
+  <div id="ov-circuit-breaker" style="margin-bottom:14px"></div>
   <div id="ov-action" style="margin-bottom:14px"></div>
   <div id="ov-health" class="kpis" style="margin-bottom:14px"></div>
   <div class="charts" style="margin-bottom:14px">
@@ -539,6 +540,71 @@ let SCAN_META = null;
         '</ul>' +
       '</div>';
   }
+})();
+</script>
+
+<!-- MAX-LOSS CIRCUIT BREAKER — combines realized equity trades (closed via
+     "Exit/Remove", tracked client-side) and F&O paper-trade outcomes
+     (trade_journal.json) closed today/this week, against configurable
+     thresholds. References closedEquityTrades only inside the async fetch
+     callback below (not at IIFE top-level) — that global is declared later
+     in the script, but by the time this callback fires, the whole page has
+     already finished its synchronous pass, same pattern used throughout
+     this file. -->
+<script>
+(function(){
+  const DAILY_MAX_LOSS_PCT = -3;   // aggregate realized %, not portfolio-value-weighted — a practical proxy given available data
+  const WEEKLY_MAX_LOSS_PCT = -8;
+
+  function _parseTradeDate(str){
+    const m = str && String(str).match(/(\d{1,2}) (\w{3}) (\d{4})/);
+    if (!m) return null;
+    const MONTHS = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+    const mon = MONTHS[m[2]];
+    if (mon === undefined) return null;
+    return new Date(+m[3], mon, +m[1]);
+  }
+
+  function _daysAgo(date){
+    if (!date) return Infinity;
+    const now = new Date();
+    const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return Math.round((todayMidnight - date) / 86400000);
+  }
+
+  function checkCircuitBreaker(){
+    fetch('/trade_journal.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(foJournal){
+        const foTrades = (foJournal && foJournal.trades || []).filter(function(t){ return t.status === 'closed' && t.pnl_pct != null; });
+        const eqTrades = (typeof closedEquityTrades !== 'undefined' ? closedEquityTrades : []);
+
+        const allTrades = [
+          ...eqTrades.map(function(t){ return { pct: t.outcome_pct, daysAgo: _daysAgo(_parseTradeDate(t.closed_at)), label: t.name }; }),
+          ...foTrades.map(function(t){ return { pct: t.pnl_pct, daysAgo: _daysAgo(_parseTradeDate(t.closed_at)), label: t.instrument }; }),
+        ].filter(function(t){ return t.pct != null && isFinite(t.daysAgo); });
+
+        const todayPnl = allTrades.filter(function(t){ return t.daysAgo === 0; }).reduce(function(a,t){ return a + t.pct; }, 0);
+        const weekPnl = allTrades.filter(function(t){ return t.daysAgo <= 7; }).reduce(function(a,t){ return a + t.pct; }, 0);
+
+        const box = document.getElementById('ov-circuit-breaker');
+        if (!box) return;
+        const dailyBreached = todayPnl <= DAILY_MAX_LOSS_PCT;
+        const weeklyBreached = weekPnl <= WEEKLY_MAX_LOSS_PCT;
+        if (!dailyBreached && !weeklyBreached) { box.innerHTML = ''; return; }
+
+        const msgs = [];
+        if (dailyBreached) msgs.push('Today\'s realized P&L is ' + todayPnl.toFixed(1) + '% (threshold ' + DAILY_MAX_LOSS_PCT + '%)');
+        if (weeklyBreached) msgs.push('This week\'s realized P&L is ' + weekPnl.toFixed(1) + '% (threshold ' + WEEKLY_MAX_LOSS_PCT + '%)');
+        box.innerHTML =
+          '<div style="background:#dc2626;color:#fff;font-weight:900;text-align:center;padding:14px 16px;border-radius:10px;font-size:13px">' +
+            '⛔ MAX-LOSS CIRCUIT BREAKER — STOP TRADING<br>' +
+            '<span style="font-weight:600;font-size:11px">' + msgs.join(' · ') + '</span>' +
+          '</div>';
+      })
+      .catch(function(){});
+  }
+  checkCircuitBreaker();
 })();
 </script>
 
@@ -1006,6 +1072,34 @@ function updateEquityCounts(){
     <div style="font-size:11px;color:#64748b;margin-top:2px">Auto-checks current MCP signal vs your entry signal every page load</div>
   </div>
   <button onclick="addPositionPrompt()" style="background:#4f46e5;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer">+ Add Position</button>
+</div>
+
+<!-- POSITION SIZING CALCULATOR — reuses the exact risk convention already
+     documented in the Strategy Guide tab ("Risk only ₹1,000/trade = 1% of
+     ₹1 lakh"), just made interactive instead of a fixed example. Capital
+     defaults to ₹1.5L per the user's actual MIS capital. -->
+<div class="sec" style="margin-bottom:14px">
+  <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#4f46e5"></span>🧮 Position Sizing Calculator</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:10px">
+    <div>
+      <label style="font-size:10px;color:#64748b;font-weight:700;display:block;margin-bottom:4px">Capital (₹)</label>
+      <input id="ps-capital" type="number" value="150000" style="width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">
+    </div>
+    <div>
+      <label style="font-size:10px;color:#64748b;font-weight:700;display:block;margin-bottom:4px">Risk per trade (%)</label>
+      <input id="ps-risk" type="number" value="1" step="0.1" style="width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">
+    </div>
+    <div>
+      <label style="font-size:10px;color:#64748b;font-weight:700;display:block;margin-bottom:4px">Entry (₹)</label>
+      <input id="ps-entry" type="number" step="0.01" style="width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">
+    </div>
+    <div>
+      <label style="font-size:10px;color:#64748b;font-weight:700;display:block;margin-bottom:4px">Stop Loss (₹)</label>
+      <input id="ps-sl" type="number" step="0.01" style="width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">
+    </div>
+  </div>
+  <button onclick="calculatePositionSize()" style="background:#4f46e5;color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:12px;font-weight:700;cursor:pointer">Calculate</button>
+  <div id="ps-result"></div>
 </div>
 
 <!-- Summary bar -->
@@ -1533,6 +1627,63 @@ function updateEquityCounts(){
 
   renderFOPositions();
   </script>
+
+  <!-- REAL VS PAPER — compares your actual manually-tracked F&O outcomes
+       (foPositions, closed via "Mark Closed" above) against trade_brain.py's
+       automated paper-trading track record. Answers "is the signal engine's
+       track record something I'm actually replicating, or diverging from?" -->
+  <div class="sec">
+    <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#0d9488"></span>⚖️ Real vs Paper Track Record</div>
+    <div id="real-vs-paper-panel"><div style="font-size:12px;color:#94a3b8;padding:10px 0">Loading…</div></div>
+  </div>
+  <script>
+  (function(){
+    function renderRealVsPaper(paperStats){
+      const box = document.getElementById('real-vs-paper-panel');
+      if (!box) return;
+      const closedReal = (typeof foPositions !== 'undefined' ? foPositions : []).filter(function(p){
+        return p.status === 'closed' && p.entry_premium && p.exit_premium != null;
+      });
+      const realOutcomes = closedReal.map(function(p){ return round2((p.exit_premium - p.entry_premium) / p.entry_premium * 100); });
+      const realWins = realOutcomes.filter(function(x){ return x > 0; });
+      const realWinRate = realOutcomes.length ? round2(realWins.length / realOutcomes.length * 100) : null;
+      const realAvg = realOutcomes.length ? round2(realOutcomes.reduce(function(a,b){ return a+b; }, 0) / realOutcomes.length) : null;
+
+      const s = paperStats || {};
+      function card(title, count, winRate, avg, color, note){
+        return '<div style="background:#f8fafc;border-radius:10px;padding:14px 16px;flex:1;min-width:180px">' +
+          '<div style="font-size:12px;font-weight:800;color:#0f172a;margin-bottom:8px">' + title + '</div>' +
+          (count === 0
+            ? '<div style="font-size:12px;color:#94a3b8">' + note + '</div>'
+            : '<div style="font-size:22px;font-weight:900;color:' + color + '">' + winRate + '%</div>' +
+              '<div style="font-size:10px;color:#94a3b8;margin-bottom:6px">win rate · ' + count + ' closed</div>' +
+              '<div style="font-size:11px;color:#374151">Avg return: <b>' + (avg >= 0 ? '+' : '') + avg + '%</b></div>') +
+        '</div>';
+      }
+      const paperColor = (s.win_rate || 0) >= 60 ? '#15803d' : (s.win_rate || 0) >= 40 ? '#d97706' : '#dc2626';
+      const realColor = realWinRate == null ? '#94a3b8' : realWinRate >= 60 ? '#15803d' : realWinRate >= 40 ? '#d97706' : '#dc2626';
+
+      box.innerHTML =
+        '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px">' +
+          card('🤖 Paper (Automated)', s.total_closed || 0, s.win_rate || 0, s.expectancy_pct || 0, paperColor, 'No paper trades closed yet.') +
+          card('💰 Real (Your Trades)', closedReal.length, realWinRate, realAvg, realColor, 'No real F&O trades closed yet — use "Mark Closed" above once you exit a position.') +
+        '</div>' +
+        (closedReal.length && s.total_closed
+          ? '<div style="font-size:10px;color:#94a3b8">' +
+              (realWinRate >= s.win_rate
+                ? 'Your real execution is currently keeping pace with (or beating) the paper track record.'
+                : 'Your real execution is currently behind the paper track record — worth reviewing entry/exit timing vs. the signal.') +
+            '</div>'
+          : '<div style="font-size:10px;color:#94a3b8">Comparison becomes meaningful once both sides have a few closed trades.</div>');
+    }
+
+    fetch('/trade_journal.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){ renderRealVsPaper(j && j.stats); })
+      .catch(function(){ renderRealVsPaper(null); });
+  })();
+  </script>
+
   <!-- Strategy explainer -->
   <div class="sec">
     <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#0891b2"></span>F&amp;O Strategy Framework</div>
@@ -1685,7 +1836,45 @@ function updateEquityCounts(){
     </div>
   </div>
 </div>
+
+<!-- LIVE VOTER PERFORMANCE — real rolling win rate/weight from actual closed
+     trades (voter_weights.json), not the static table above (which shows
+     historical backtest figures for each trader's own original system, a
+     different thing from how well THEIR reconstructed logic has performed
+     inside this specific dashboard). -->
+<div class="sec">
+  <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#7c3aed"></span>📊 Live Voter Performance — Real Trades in This Dashboard</div>
+  <div id="voter-performance-panel"><div style="font-size:12px;color:#94a3b8;padding:10px 0">Loading…</div></div>
 </div>
+</div>
+<script>
+(function(){
+  fetch('/voter_weights.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      var box = document.getElementById('voter-performance-panel');
+      if (!box || !d) return;
+      var voters = d.voters || {};
+      var cards = ['Inna','Pham','Cianni','Unger'].map(function(name){
+        var v = voters[name] || {};
+        var hasData = v.win_rate != null;
+        var wrColor = !hasData ? '#94a3b8' : v.win_rate >= 60 ? '#15803d' : v.win_rate >= 40 ? '#d97706' : '#dc2626';
+        return '<div style="background:#f8fafc;border-radius:10px;padding:12px 14px;flex:1;min-width:150px">' +
+          '<div style="font-size:12px;font-weight:800;color:#0f172a;margin-bottom:6px">' + name + '</div>' +
+          '<div style="font-size:20px;font-weight:900;color:' + wrColor + '">' + (hasData ? v.win_rate + '%' : '—') + '</div>' +
+          '<div style="font-size:9px;color:#94a3b8;margin-bottom:8px">win rate' + (hasData ? ' (' + v.trade_count + ' trades)' : ' — not enough trades yet') + '</div>' +
+          '<div style="font-size:11px;color:#374151">Weight: <b>' + (v.weight != null ? v.weight : '0.25') + '</b></div>' +
+          (hasData ? '<div style="font-size:10px;color:#64748b">Avg return: ' + (v.avg_return_pct >= 0 ? '+' : '') + v.avg_return_pct + '%</div>' : '') +
+        '</div>';
+      }).join('');
+      box.innerHTML =
+        '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">' + cards + '</div>' +
+        '<div style="font-size:10px;color:#94a3b8">' + (d.total_closed_trades || 0) + ' total closed equity trades tracked · ' + (d.method || '') + '</div>' +
+        '<div style="font-size:10px;color:#94a3b8;margin-top:4px">' + (d.disclaimer || '') + '</div>';
+    })
+    .catch(function(){});
+})();
+</script>
 
 <div class="footer">
   NSE 4-Strategy Dashboard &nbsp;·&nbsp; Strategies: Inna Rosputnia · Pham · Cianni · Unger<br>
@@ -2081,6 +2270,33 @@ function removePosition(name){
 }
 
 function round2(n){ return Math.round(n * 100) / 100; }
+
+function calculatePositionSize(){
+  const capital = parseFloat(document.getElementById('ps-capital').value) || 0;
+  const riskPct = parseFloat(document.getElementById('ps-risk').value) || 0;
+  const entry = parseFloat(document.getElementById('ps-entry').value) || 0;
+  const sl = parseFloat(document.getElementById('ps-sl').value) || 0;
+  const result = document.getElementById('ps-result');
+  if (!capital || !riskPct || !entry || !sl || entry <= sl) {
+    result.innerHTML = '<div style="color:#dc2626;font-size:11px;margin-top:8px">Enter valid capital, risk %, entry, and stop-loss (entry must be greater than stop-loss).</div>';
+    return;
+  }
+  const riskAmount = capital * riskPct / 100;
+  const riskPerShare = entry - sl;
+  const maxShares = Math.floor(riskAmount / riskPerShare);
+  const positionValue = maxShares * entry;
+  const pctOfCapital = capital ? (positionValue / capital * 100).toFixed(1) : 0;
+  const warning = positionValue > capital
+    ? '<div style="color:#dc2626;font-size:11px;margin-top:8px">⚠ Position value exceeds your capital at this risk % — the stop-loss is too tight relative to entry price, or reduce risk %.</div>'
+    : '';
+  result.innerHTML =
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:12px">' +
+      '<div class="kpi" style="--c:#4f46e5"><div class="kpi-label">Max Shares</div><div class="kpi-val" style="font-size:22px">' + maxShares.toLocaleString('en-IN') + '</div></div>' +
+      '<div class="kpi" style="--c:#15803d"><div class="kpi-label">Position Value</div><div class="kpi-val" style="font-size:18px">₹' + Math.round(positionValue).toLocaleString('en-IN') + '</div></div>' +
+      '<div class="kpi" style="--c:#dc2626"><div class="kpi-label">Risk Amount</div><div class="kpi-val" style="font-size:18px">₹' + Math.round(riskAmount).toLocaleString('en-IN') + '</div></div>' +
+      '<div class="kpi" style="--c:#d97706"><div class="kpi-label">% of Capital</div><div class="kpi-val" style="font-size:18px">' + pctOfCapital + '%</div></div>' +
+    '</div>' + warning;
+}
 
 function clearAllPositions(){
   if(!confirm('Remove all tracked positions?')) return;
