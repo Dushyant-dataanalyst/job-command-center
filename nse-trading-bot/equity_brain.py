@@ -24,11 +24,10 @@ best/worst performer, count above/below SL, total unrealized P&L.
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
-from datetime import datetime
-
 import pandas as pd
 
 from yf_retry import download_with_retry
+from ist_time import now_ist_str
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 OUT_FILE = REPO_ROOT / "equity_journal.json"
@@ -88,7 +87,7 @@ def _live_price(symbol):
 
 
 def main():
-    now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+    now_str = now_ist_str()
     tracked = _merged_tracked_positions()
     results = []
     errors = {}

@@ -29,8 +29,9 @@ intentionally omitted (not guessed). All premium/SL/target figures are in
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
-from datetime import date, datetime
+from datetime import date
 
+from ist_time import now_ist_str
 from refresh_fo_cloud import _get_indicators, _signals, _premium_estimate, _next_monthly_expiry
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
@@ -106,7 +107,7 @@ def _stock_signal(name):
         return {"error": f"No data for {name}"}
     consensus, ce_v, pe_v = _signals(v)
     spot = v["spot"]
-    now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+    now_str = now_ist_str()
 
     if consensus == "WAIT":
         return {
@@ -144,7 +145,7 @@ def _stock_signal(name):
 
 
 def main():
-    now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+    now_str = now_ist_str()
     results = {"_meta": {"generated_at": now_str, "method": "Same 3-factor consensus as refresh_fo_cloud.py (EMA alignment, MACD, pivot breakout, ROC5). votes==6 -> single-leg, votes in [4,5] -> capped-risk spread."}}
     errors = {}
     for name in TRACKED_STOCKS:

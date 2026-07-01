@@ -6,8 +6,7 @@ tickers, cheap enough for the 5-min market-hours cadence).
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
-from datetime import datetime
-
+from ist_time import now_ist_str
 from market_regime_core import detect_regime
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
@@ -16,7 +15,7 @@ OUT_FILE = REPO_ROOT / "market_regime.json"
 
 def main():
     try:
-        now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+        now_str = now_ist_str()
         result = detect_regime()
         result["fetched_at"] = now_str
         OUT_FILE.write_text(json.dumps(result, indent=2))
@@ -26,7 +25,7 @@ def main():
         print(f"  Wrote {OUT_FILE}")
     except Exception as e:
         OUT_FILE.write_text(json.dumps({
-            "fetched_at": datetime.now().strftime("%d %b %Y %H:%M IST"),
+            "fetched_at": now_ist_str(),
             "error": str(e),
             "instruments": {},
             "recommendation": {"best_fit_strategies": [], "avoid": [], "reasoning": []},

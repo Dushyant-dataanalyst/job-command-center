@@ -2,13 +2,25 @@ name: NSE FO Refresh Every 5 Min
 
 on:
   schedule:
-    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 8:00 AM – 4:00 PM IST (2:30–10:30 UTC)
+    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 07:30-16:25 IST (02:00-10:55 UTC)
     - cron: '30 15 * * 1-5'       # Once at 9:00 PM IST (15:30 UTC) — next-day prep
-  workflow_dispatch:               # Manual trigger from GitHub UI
+  workflow_dispatch:               # Manual trigger from GitHub UI — hit "Run workflow" any time to force a fresh pull
+
+# Ensures a hung/slow run can never block the next scheduled tick from starting —
+# a stuck run gets cancelled the moment a newer one is queued, instead of every
+# future cron trigger silently piling up behind it indefinitely.
+concurrency:
+  group: nse-fo-refresh
+  cancel-in-progress: true
 
 jobs:
   fo-refresh:
     runs-on: ubuntu-latest
+    # 8 min, not the tighter 3-4 min originally suggested — market_mood_refresh.py alone
+    # checks ~50 stocks for breadth and sector_rotation_refresh.py adds ~20 more, each with
+    # up to 35s of retry backoff on a failing ticker. A too-tight timeout would kill
+    # legitimately-slow-but-working runs, which is the opposite of what this guards against.
+    timeout-minutes: 8
     permissions:
       contents: write
 

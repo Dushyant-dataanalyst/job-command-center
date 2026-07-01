@@ -26,11 +26,10 @@ so nothing is hidden — every number here is fetched live at call time.
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
-from datetime import datetime
-
 from refresh_fo_cloud import _get_indicators
 from sector_rotation_core import SECTOR_STOCKS
 from yf_retry import download_with_retry
+from ist_time import now_ist_str
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 OUT_FILE = REPO_ROOT / "market_mood.json"
@@ -96,7 +95,7 @@ def _band(score):
 
 def main():
     try:
-        fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
+        fetched_at = now_ist_str()
         vix_score, vix_level = _vix_score()
         breadth_score, breadth_detail = _breadth_score()
         momentum_score, momentum_detail = _momentum_score()
@@ -127,7 +126,7 @@ def main():
         print(f"  composite={composite} ({result['label']}) vix={vix_level} breadth={breadth_score}% momentum={momentum_score}")
         print(f"  Wrote {OUT_FILE}")
     except Exception as e:
-        fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
+        fetched_at = now_ist_str()
         OUT_FILE.write_text(json.dumps({
             "error": str(e),
             "fetched_at": fetched_at,

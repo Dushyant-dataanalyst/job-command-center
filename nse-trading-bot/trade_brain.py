@@ -20,7 +20,8 @@ Runs after refresh_fo_cloud.py in the same CI step, reusing its signal math.
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
-from datetime import date, datetime
+from datetime import date
+from ist_time import now_ist_str
 from refresh_fo_cloud import INSTRUMENTS, _next_monthly_expiry, _atm, _premium_estimate
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
@@ -177,7 +178,7 @@ def _compute_stats(trades):
 
 
 def main():
-    now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+    now_str = now_ist_str()
     if not SIGNAL_FILE.exists():
         print("No fo_latest.json found — run refresh_fo_cloud.py first. Skipping.")
         return

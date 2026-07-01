@@ -9,8 +9,9 @@ import numpy as np
 import pandas as pd
 import requests
 import warnings
-from datetime import date, timedelta, datetime
+from datetime import date, timedelta
 from yf_retry import download_with_retry
+from ist_time import now_ist_str
 
 warnings.filterwarnings('ignore')
 
@@ -126,7 +127,7 @@ def _fo_signal(instrument):
     cost    = round(prem * lot, 0)
     zs      = f"{nse_sym}{expiry.strftime('%y%b').upper()}{strike}{opt}" if opt else "—"
     zs_search = f"{nse_sym} {expiry.strftime('%b').upper()} {strike} {opt}" if opt else "—"
-    now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+    now_str = now_ist_str()
     return {
         "instrument": instrument, "spot": spot, "ann_vol": v["ann_vol"],
         "consensus": consensus, "ce_votes": ce_v, "pe_votes": pe_v,
@@ -144,7 +145,7 @@ def _fo_signal(instrument):
     }
 
 def main():
-    now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+    now_str = now_ist_str()
     print(f"[{now_str}] Cloud F&O refresh starting...")
     fo_exact = {"_meta": {"generated_at": now_str, "source": "yfinance EOD"}}
     for inst in ["NIFTY50", "BANKNIFTY"]:

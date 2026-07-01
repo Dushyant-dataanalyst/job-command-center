@@ -7,11 +7,10 @@ No MCP SDK dependency here — just yfinance/pandas. Every number is fetched
 live at call time; nothing is cached or pre-baked. See module docstring in
 the MCP server for the full rationale on scoring and data honesty.
 """
-from datetime import datetime
-
 import pandas as pd
 
 from yf_retry import download_with_retry
+from ist_time import now_ist_str
 
 SECTOR_INDICES = {
     "Banking":  "^NSEBANK",
@@ -87,7 +86,7 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
     NSE data is EOD/15-min-delayed, not tick-level). Educational
     momentum/volume screen only — not investment advice.
     """
-    fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
+    fetched_at = now_ist_str()
     sector_results = {}
     for name, ticker in SECTOR_INDICES.items():
         try:

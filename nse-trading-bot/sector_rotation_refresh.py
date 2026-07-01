@@ -22,10 +22,10 @@ def main():
             print(f"  Errors: {result['sectors_with_errors']}")
         print(f"  Wrote {OUT_FILE}")
     except Exception as e:
-        from datetime import datetime
+        from ist_time import now_ist_str
         OUT_FILE.write_text(json.dumps({
             "error": str(e),
-            "fetched_at": datetime.now().strftime("%d %b %Y %H:%M IST"),
+            "fetched_at": now_ist_str(),
             "top_sectors": [],
             "sectors": {},
         }, indent=2))

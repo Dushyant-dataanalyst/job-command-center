@@ -12,8 +12,9 @@ disclaimer.
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
-from datetime import date, datetime
+from datetime import date
 
+from ist_time import now_ist_str
 from equity_scan_core import scan_universe
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
@@ -44,7 +45,7 @@ def _update_history(strong_buy, buy, watch):
 
 def main():
     try:
-        now_str = datetime.now().strftime("%d %b %Y %H:%M IST")
+        now_str = now_ist_str()
         results, errors = scan_universe(fetch_peg=True)
         strong_buy = sum(1 for r in results.values() if r["signal"] == "STRONG_BUY")
         buy = sum(1 for r in results.values() if r["signal"] == "BUY")
@@ -70,7 +71,7 @@ def main():
     except Exception as e:
         OUT_FILE.write_text(json.dumps({
             "_meta": {
-                "generated_at": datetime.now().strftime("%d %b %Y %H:%M IST"),
+                "generated_at": now_ist_str(),
                 "error": str(e),
                 "counts": {"strong_buy": 0, "buy": 0, "watch": 0, "total": 0},
             },

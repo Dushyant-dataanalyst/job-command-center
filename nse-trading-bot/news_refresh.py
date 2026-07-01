@@ -27,9 +27,10 @@ import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
 import xml.etree.ElementTree as ET
-from datetime import datetime
 
 import requests
+
+from ist_time import now_ist_str
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 OUT_FILE = REPO_ROOT / "news_feed.json"
@@ -67,7 +68,7 @@ def _fetch_feed(url):
 
 
 def main():
-    fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
+    fetched_at = now_ist_str()
     all_items = []
     feed_errors = {}
     for name, url in FEEDS.items():
