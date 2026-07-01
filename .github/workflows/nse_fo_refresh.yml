@@ -40,6 +40,7 @@ jobs:
         run: pip install --quiet yfinance==1.4.1 pandas==2.2.3 numpy==2.1.2 requests==2.34.2
 
       - name: Run F&O refresh (writes fo_latest.json to repo root)
+        id: fo_refresh
         continue-on-error: true
         run: |
           set -e
@@ -56,6 +57,7 @@ jobs:
           "
 
       - name: Run market regime detection (writes market_regime.json to repo root)
+        id: market_regime
         continue-on-error: true
         run: |
           set -e
@@ -64,6 +66,7 @@ jobs:
           echo "✅ market_regime_refresh.py succeeded"
 
       - name: Run trading brain (paper-trades signals, marks open trades to market)
+        id: trade_brain
         continue-on-error: true
         run: |
           set -e
@@ -72,6 +75,7 @@ jobs:
           echo "✅ trade_brain.py succeeded"
 
       - name: Run sector rotation scan (writes sector_rotation.json to repo root)
+        id: sector_rotation
         continue-on-error: true
         run: |
           set -e
@@ -80,6 +84,7 @@ jobs:
           echo "✅ sector_rotation_refresh.py succeeded"
 
       - name: Run market mood gauge (writes market_mood.json to repo root)
+        id: market_mood
         continue-on-error: true
         run: |
           set -e
@@ -88,6 +93,7 @@ jobs:
           echo "✅ market_mood_refresh.py succeeded"
 
       - name: Run news/events tracker (writes news_feed.json to repo root)
+        id: news_refresh
         continue-on-error: true
         run: |
           set -e
@@ -96,6 +102,7 @@ jobs:
           echo "✅ news_refresh.py succeeded"
 
       - name: Run equity brain (writes equity_journal.json to repo root)
+        id: equity_brain
         continue-on-error: true
         run: |
           set -e
@@ -104,6 +111,7 @@ jobs:
           echo "✅ equity_brain.py succeeded"
 
       - name: Run stock F&O signals (writes stock_fo.json to repo root)
+        id: stock_fo
         continue-on-error: true
         run: |
           set -e
@@ -111,10 +119,25 @@ jobs:
           python stock_fo_refresh.py
           echo "✅ stock_fo_refresh.py succeeded"
 
+      # Must run BEFORE equity scan — equity_scan_core.py reads
+      # voter_weights.json to weight its consensus scoring. Same once-daily
+      # gating: weights only need recalculating once real trades have
+      # actually closed since the last run, not every 5 minutes.
+      - name: Recalculate per-voter weights (writes voter_weights.json to repo root)
+        id: voter_weights
+        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          set -e
+          cd nse-trading-bot
+          python voter_weights_refresh.py
+          echo "✅ voter_weights_refresh.py succeeded"
+
       # Once-daily only (9pm IST prep cron, or manual dispatch) — a 49-stock
       # multi-indicator + fundamentals scan is too heavy to repeat every
       # 5 minutes, and swing signals don't need that granularity.
       - name: Run equity scan (writes equity_scan.json to repo root)
+        id: equity_scan
         if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
         continue-on-error: true
         run: |
@@ -122,6 +145,52 @@ jobs:
           cd nse-trading-bot
           python equity_scan_refresh.py
           echo "✅ equity_scan_refresh.py succeeded"
+
+      # Same once-daily gating as equity scan — a snapshot is only useful
+      # once the day's data has settled, not every 5 minutes.
+      - name: Snapshot today's JSON files (writes snapshots/YYYY-MM-DD/)
+        id: snapshot_daily
+        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          cd nse-trading-bot
+          python snapshot_daily.py
+
+      # Runs right before commit — catches a truncated/corrupted write from
+      # any step above before it can ever reach git history. Loose validation
+      # (parseable + right top-level shape), not a strict schema, since these
+      # scripts' output shapes have changed multiple times already. A file
+      # that fails gets restored from the last commit on origin, so a bad
+      # write never overwrites the last known-good version.
+      - name: Validate JSON outputs (restore last-good on corruption)
+        id: validate_json
+        if: always()
+        continue-on-error: true
+        run: |
+          cd nse-trading-bot
+          python validate_json_outputs.py
+
+      - name: Record run outcome + notify on failure
+        if: always()
+        env:
+          STEP_FO_REFRESH: ${{ steps.fo_refresh.outcome }}
+          STEP_MARKET_REGIME: ${{ steps.market_regime.outcome }}
+          STEP_TRADE_BRAIN: ${{ steps.trade_brain.outcome }}
+          STEP_SECTOR_ROTATION: ${{ steps.sector_rotation.outcome }}
+          STEP_MARKET_MOOD: ${{ steps.market_mood.outcome }}
+          STEP_NEWS_REFRESH: ${{ steps.news_refresh.outcome }}
+          STEP_EQUITY_BRAIN: ${{ steps.equity_brain.outcome }}
+          STEP_STOCK_FO: ${{ steps.stock_fo.outcome }}
+          STEP_EQUITY_SCAN: ${{ steps.equity_scan.outcome }}
+          STEP_VOTER_WEIGHTS: ${{ steps.voter_weights.outcome }}
+          STEP_SNAPSHOT_DAILY: ${{ steps.snapshot_daily.outcome }}
+          STEP_VALIDATE_JSON: ${{ steps.validate_json.outcome }}
+          GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          cd nse-trading-bot
+          python record_run_outcome.py
 
       - name: Commit updated JSON files if changed
         if: always()
@@ -133,7 +202,8 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json logs/run_history.json
+          if [ -d snapshots ]; then git add snapshots/; fi
 
           if git diff --staged --quiet; then
             echo "no changes — no commit needed"

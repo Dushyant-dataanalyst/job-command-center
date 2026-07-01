@@ -174,7 +174,7 @@ def main():
         except Exception as e:
             print(f"  {inst} ERROR: {e}")
     # Write the sidecar that the dashboard fetches at /fo_latest.json (repo root = Vercel site root)
-    SIDECAR_FILE.write_text(json.dumps(fo_exact, indent=2))
+    SIDECAR_FILE.write_text(json.dumps(fo_exact, indent=2), encoding="utf-8")
     print(f"  Wrote {SIDECAR_FILE}")
     print("Done.")
 

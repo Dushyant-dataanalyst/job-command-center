@@ -96,7 +96,7 @@ def main():
         "disclaimer": "Corporate filings/announcements only (results, board meetings, trading-window closures, etc.), not macro/general market news. General-news API integration deferred — see NEXT UPGRADE in script docstring.",
     }
 
-    OUT_FILE.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+    OUT_FILE.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"  position_news={len(position_news)} recent={len(recent_announcements)} errors={feed_errors}")
     print(f"  Wrote {OUT_FILE}")
 

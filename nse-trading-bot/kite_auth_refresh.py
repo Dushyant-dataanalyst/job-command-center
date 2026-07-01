@@ -57,7 +57,7 @@ def refresh_session(request_token):
         "refreshed_at": now_ist_str(),
         "trading_date": now_ist().strftime("%Y-%m-%d"),  # tokens are valid for this IST trading day only
     }
-    SESSION_FILE.write_text(json.dumps(session, indent=2))
+    SESSION_FILE.write_text(json.dumps(session, indent=2), encoding="utf-8")
     print(f"  Kite session refreshed for {session['trading_date']}")
     print(f"  Wrote {SESSION_FILE}")
 

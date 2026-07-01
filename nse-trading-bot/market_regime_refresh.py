@@ -18,7 +18,7 @@ def main():
         now_str = now_ist_str()
         result = detect_regime()
         result["fetched_at"] = now_str
-        OUT_FILE.write_text(json.dumps(result, indent=2))
+        OUT_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
         for name, r in result["instruments"].items():
             print(f"  {name}: {r['trend']} | volatility={r['volatility']} ({r['atr_pct']}%, {r['atr_percentile_6mo']}th pct) | volume={r['volume_behavior']}")
         print(f"  Best fit: {result['recommendation']['best_fit_strategies']} | Avoid: {result['recommendation']['avoid']}")
@@ -29,7 +29,7 @@ def main():
             "error": str(e),
             "instruments": {},
             "recommendation": {"best_fit_strategies": [], "avoid": [], "reasoning": []},
-        }, indent=2))
+        }, indent=2), encoding="utf-8")
         print(f"  ERROR in main(): {e} — wrote error-state JSON")
 
 

@@ -21,13 +21,16 @@ Universe: reuses SECTOR_STOCKS from sector_rotation_core.py (46 stocks /
 third separate stock list — the original hand-pasted SCAN_DATA covered a
 slightly different 43-stock set with no documented membership rule.
 """
-import sys, os
+import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
 import numpy as np
 import pandas as pd
 
 from yf_retry import download_with_retry
+
+REPO_ROOT = pathlib.Path(__file__).parent.parent
+VOTER_WEIGHTS_FILE = REPO_ROOT / "voter_weights.json"
 from sector_rotation_core import SECTOR_STOCKS
 
 STRATEGY_NAMES = ["Inna", "Pham", "Cianni", "Unger"]
@@ -182,6 +185,33 @@ def _strategy_unger(v):
     return "NO_SIGNAL"
 
 
+_VOTER_WEIGHTS_CACHE = None
+
+
+def _load_voter_weights():
+    """Cached per-process — this gets called once per stock in a 49-stock
+    scan, no reason to re-read the file every time. Defaults to equal
+    weight (0.25 each) if voter_weights.json is missing/malformed, same
+    fallback voter_weights_refresh.py itself uses when there isn't enough
+    closed-trade history yet."""
+    global _VOTER_WEIGHTS_CACHE
+    if _VOTER_WEIGHTS_CACHE is not None:
+        return _VOTER_WEIGHTS_CACHE
+    equal = {"Inna": 0.25, "Pham": 0.25, "Cianni": 0.25, "Unger": 0.25}
+    if not VOTER_WEIGHTS_FILE.exists():
+        _VOTER_WEIGHTS_CACHE = equal
+        return equal
+    try:
+        data = json.loads(VOTER_WEIGHTS_FILE.read_text(encoding="utf-8"))
+        voters = data.get("voters", {})
+        weights = {name: voters.get(name, {}).get("weight", 0.25) for name in equal}
+        _VOTER_WEIGHTS_CACHE = weights
+        return weights
+    except Exception:
+        _VOTER_WEIGHTS_CACHE = equal
+        return equal
+
+
 def scan_one(symbol, sector, fetch_peg=True):
     """Returns None if there wasn't enough price history to score this
     stock — caller should skip it, not treat it as an error."""
@@ -198,7 +228,20 @@ def scan_one(symbol, sector, fetch_peg=True):
         "Unger": _strategy_unger(v),
     }
     buy_votes = sum(1 for s in strategies.values() if s in ("BUY", "STRONG_BUY"))
-    signal = "STRONG_BUY" if buy_votes >= 3 else "BUY" if buy_votes == 2 else "WATCH"
+
+    # Weighted consensus: each voter's weight is scaled by 4 (the voter
+    # count) so equal weights (0.25 each, the default until enough real
+    # closed-trade history exists) reproduce the exact plain vote count —
+    # zero behavior change on day one. As voter_weights_refresh.py learns
+    # real win rates over time, a consistently-right voter's YES vote counts
+    # for more than 1, and a consistently-wrong voter's for less, without
+    # needing a whole new threshold system.
+    weights = _load_voter_weights()
+    weighted_votes = round(sum(
+        weights.get(name, 0.25) * 4
+        for name, sig in strategies.items() if sig in ("BUY", "STRONG_BUY")
+    ), 2)
+    signal = "STRONG_BUY" if weighted_votes >= 3 else "BUY" if weighted_votes >= 2 else "WATCH"
 
     entry = round(v["spot"], 2)
     atr = v["atr"] or entry * 0.02
@@ -212,6 +255,7 @@ def scan_one(symbol, sector, fetch_peg=True):
     return {
         "signal": signal,
         "buy_votes": buy_votes,
+        "weighted_votes": weighted_votes,
         "entry": entry, "sl": sl, "t1": t1, "t2": t2, "t3": t3,
         "pct_t1": pct_t1,
         "strategies": strategies,

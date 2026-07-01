@@ -122,7 +122,7 @@ def main():
             "disclaimer": "Constructed proxy index, not an official Fear & Greed index (none exists free for India). Educational use only.",
         }
 
-        OUT_FILE.write_text(json.dumps(result, indent=2))
+        OUT_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
         print(f"  composite={composite} ({result['label']}) vix={vix_level} breadth={breadth_score}% momentum={momentum_score}")
         print(f"  Wrote {OUT_FILE}")
     except Exception as e:
@@ -132,7 +132,7 @@ def main():
             "fetched_at": fetched_at,
             "composite_score": None,
             "label": "No data",
-        }, indent=2))
+        }, indent=2), encoding="utf-8")
         print(f"  ERROR in main(): {e} — wrote error-state JSON")
 
 

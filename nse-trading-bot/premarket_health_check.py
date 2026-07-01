@@ -94,7 +94,7 @@ def main():
         "status": "ALL CLEAR" if all_ok else "ISSUE FOUND",
         "checks": {name: {"ok": ok, "detail": detail} for name, (ok, detail) in checks.items()},
     }
-    OUT_FILE.write_text(json.dumps(result, indent=2))
+    OUT_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(f"  Status: {result['status']}")
     for name, (ok, detail) in checks.items():
         print(f"  [{'OK' if ok else 'FAIL'}] {name}: {detail}")

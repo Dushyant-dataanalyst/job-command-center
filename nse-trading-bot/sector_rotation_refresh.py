@@ -15,7 +15,7 @@ OUT_FILE = REPO_ROOT / "sector_rotation.json"
 def main():
     try:
         result = scan_sector_rotation(top_n=3, stocks_per_sector=3)
-        OUT_FILE.write_text(json.dumps(result, indent=2))
+        OUT_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
         top = ", ".join(result["top_sectors"])
         print(f"  Top sectors: {top}")
         if result["sectors_with_errors"]:
@@ -28,7 +28,7 @@ def main():
             "fetched_at": now_ist_str(),
             "top_sectors": [],
             "sectors": {},
-        }, indent=2))
+        }, indent=2), encoding="utf-8")
         print(f"  ERROR in main(): {e} — wrote error-state JSON")
 
 

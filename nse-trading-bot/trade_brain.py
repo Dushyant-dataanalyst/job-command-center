@@ -213,7 +213,7 @@ def main():
     journal["stats"] = _compute_stats(trades)
     journal["_meta"] = {"generated_at": now_str}
 
-    JOURNAL_FILE.write_text(json.dumps(journal, indent=2))
+    JOURNAL_FILE.write_text(json.dumps(journal, indent=2), encoding="utf-8")
     print(f"  Wrote {JOURNAL_FILE} — {journal['stats']['total_closed']} closed, {journal['stats']['open_count']} open, {journal['stats']['win_rate']}% win rate")
     print("Done.")
 

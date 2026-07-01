@@ -161,7 +161,7 @@ def main():
             print(f"  {name} ERROR: {e}")
 
     results["_meta"]["errors"] = errors
-    OUT_FILE.write_text(json.dumps(results, indent=2))
+    OUT_FILE.write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(f"  Wrote {OUT_FILE}")
 
 

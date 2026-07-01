@@ -1,0 +1,60 @@
+{
+  "fetched_at": "01 Jul 2026 16:55 IST",
+  "positions": [
+    {
+      "name": "ICICIBANK",
+      "entry": 1387.5,
+      "sl": 1355.15,
+      "t1": 1427.94,
+      "t2": 1468.38,
+      "current_price": 1379.8,
+      "pnl_pct": -0.55,
+      "status": "healthy",
+      "bought_at": "25 Jun 2026",
+      "source": "default",
+      "price_source": "yfinance"
+    },
+    {
+      "name": "SBIN",
+      "entry": 1045.4,
+      "sl": 1023.07,
+      "t1": 1073.32,
+      "t2": 1101.23,
+      "current_price": 1047.4,
+      "pnl_pct": 0.19,
+      "status": "healthy",
+      "bought_at": "25 Jun 2026",
+      "source": "default",
+      "price_source": "yfinance"
+    },
+    {
+      "name": "PAGEIND",
+      "entry": 40810,
+      "sl": 39558.57,
+      "t1": 42374.29,
+      "t2": 43938.58,
+      "current_price": 43610.0,
+      "pnl_pct": 6.86,
+      "status": "target1_hit",
+      "bought_at": "25 Jun 2026",
+      "source": "synced",
+      "price_source": "yfinance"
+    }
+  ],
+  "errors": {},
+  "stats": {
+    "total_tracked": 3,
+    "total_pnl_pct": 2.17,
+    "best": {
+      "name": "PAGEIND",
+      "pnl_pct": 6.86
+    },
+    "worst": {
+      "name": "ICICIBANK",
+      "pnl_pct": -0.55
+    },
+    "below_sl_count": 0,
+    "diagnostic": "PAGEIND is your best performer at +6.86%, ICICIBANK is your worst at -0.55%."
+  },
+  "disclaimer": "Real positions, real prices \u2014 not paper trades. yfinance EOD/delayed quotes; verify live price in your broker terminal before acting."
+}

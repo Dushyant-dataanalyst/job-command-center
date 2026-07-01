@@ -40,7 +40,7 @@ def _update_history(strong_buy, buy, watch):
     history.append({"date": today, "sb": strong_buy, "b": buy, "w": watch})
     history.sort(key=lambda h: h["date"])
     history = history[-HISTORY_MAX_DAYS:]
-    HISTORY_FILE.write_text(json.dumps(history, indent=2))
+    HISTORY_FILE.write_text(json.dumps(history, indent=2), encoding="utf-8")
 
 
 def main():
@@ -65,7 +65,7 @@ def main():
             },
         }
         out.update(results)
-        OUT_FILE.write_text(json.dumps(out, indent=2))
+        OUT_FILE.write_text(json.dumps(out, indent=2), encoding="utf-8")
         print(f"  scanned={len(results)} strong_buy={strong_buy} buy={buy} watch={watch} errors={len(errors)}")
         print(f"  Wrote {OUT_FILE}")
     except Exception as e:
@@ -75,7 +75,7 @@ def main():
                 "error": str(e),
                 "counts": {"strong_buy": 0, "buy": 0, "watch": 0, "total": 0},
             },
-        }, indent=2))
+        }, indent=2), encoding="utf-8")
         print(f"  ERROR in main(): {e} — wrote error-state JSON")
 
 

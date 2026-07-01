@@ -164,7 +164,7 @@ def main():
         "disclaimer": "Real positions, real prices — not paper trades. yfinance EOD/delayed quotes; verify live price in your broker terminal before acting.",
     }
 
-    OUT_FILE.write_text(json.dumps(journal, indent=2))
+    OUT_FILE.write_text(json.dumps(journal, indent=2), encoding="utf-8")
     print(f"  tracked={len(tracked)} priced={len(valid)} total_pnl={total_pnl_pct}% errors={errors}")
     print(f"  Wrote {OUT_FILE}")
 

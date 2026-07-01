@@ -793,7 +793,7 @@ function renderEquityScan(){
     const isTracked=positions.find(p=>p.name===name);
     const btnHtml=isTracked
       ?`<span style="background:#15803d;color:#fff;border-radius:5px;padding:3px 8px;font-size:9px;font-weight:700">✅ TRACKING</span>`
-      :`<button onclick="markBought('${name}','${s.entry}','${s.sl}','${s.t1}','${s.t2}',${s.buy_votes})" style="background:#4f46e5;color:#fff;border:none;border-radius:5px;padding:3px 8px;font-size:9px;font-weight:700;cursor:pointer">📌 I BOUGHT</button>`;
+      :`<button onclick="markBought('${name}','${s.entry}','${s.sl}','${s.t1}','${s.t2}',${s.buy_votes},'${_encodeStrategies(s.strategies)}')" style="background:#4f46e5;color:#fff;border:none;border-radius:5px;padding:3px 8px;font-size:9px;font-weight:700;cursor:pointer">📌 I BOUGHT</button>`;
     html+=`<div style="background:#fff;border:2px solid #dcfce7;border-radius:10px;padding:12px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
         <div>
@@ -847,6 +847,23 @@ function _voteBadges(strategies){
     return `<span title="${name}:${v} — ${STRATEGY_DESC[name]}" style="background:${bg};color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">${name[0]}</span>`;
   }).join('');
 }
+/* Pipe-delimited encoding (not JSON) so this survives being embedded as a
+   single-quoted argument inside an onclick="..." HTML attribute without any
+   quote-escaping gymnastics — captures which specific voters recommended a
+   stock at buy time, needed later to compute each voter's real win rate. */
+function _encodeStrategies(strategies){
+  return ['Inna','Pham','Cianni','Unger'].map(function(name){
+    return name + ':' + ((strategies && strategies[name]) || 'NO_SIGNAL');
+  }).join('|');
+}
+function _decodeStrategies(encoded){
+  const out = {};
+  (encoded || '').split('|').forEach(function(pair){
+    const idx = pair.indexOf(':');
+    if (idx > 0) out[pair.slice(0, idx)] = pair.slice(idx + 1);
+  });
+  return out;
+}
 /* Trading-day-aware date add (skips Sat/Sun) — Exit Timeline column */
 function _addTradingDays(from, n){
   const d = new Date(from);
@@ -878,7 +895,7 @@ function renderEquityRows(){
     const isTracked = (typeof positions !== 'undefined') && positions.find(p => p.name === name);
     const btnHtml = isTracked
       ? `<span style="background:#15803d;color:#fff;border-radius:5px;padding:2px 6px;font-size:9px;font-weight:700;margin-top:4px;display:inline-block">✅ TRACKING</span>`
-      : `<button onclick="markBought('${name}','${s.entry}','${s.sl}','${s.t1}','${s.t2}',${s.buy_votes})"
+      : `<button onclick="markBought('${name}','${s.entry}','${s.sl}','${s.t1}','${s.t2}',${s.buy_votes},'${_encodeStrategies(s.strategies)}')"
           id="btn-${name}"
           style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
           📌 I BOUGHT
@@ -1908,6 +1925,11 @@ const DEFAULT_POSITIONS = [
 ];
 
 let positions = JSON.parse(localStorage.getItem('nse_positions') || '[]');
+// Declared here (not near removePosition() below) — savePositions()/seedDefaults()
+// run synchronously during initial script execution and reference this via
+// _syncPositionsToBackend(), so it must exist before that point, not just
+// before removePosition() is first called.
+let closedEquityTrades = JSON.parse(localStorage.getItem('nse_closed_equity_trades') || '[]');
 
 function savePositions(){
   localStorage.setItem('nse_positions', JSON.stringify(positions));
@@ -1929,7 +1951,7 @@ function _syncPositionsToBackend(){
   fetch('/api/save-positions', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ positions: adHoc, removedDefaults: removed })
+    body: JSON.stringify({ positions: adHoc, removedDefaults: removed, closedTrades: closedEquityTrades })
   }).catch(function(){});
 }
 
@@ -1987,7 +2009,7 @@ function sigLabel(sig){
   return map[sig] || sig;
 }
 
-function markBought(name, entry, sl, t1, t2, votes){
+function markBought(name, entry, sl, t1, t2, votes, strategiesEncoded){
   if(positions.find(p=>p.name===name)){
     toast('Already tracking '+name, 2000);
     return;
@@ -1996,6 +2018,7 @@ function markBought(name, entry, sl, t1, t2, votes){
     name, entry:parseFloat(entry), sl:parseFloat(sl),
     t1:parseFloat(t1), t2:parseFloat(t2),
     votes_at_buy: votes,
+    strategies_at_buy: _decodeStrategies(strategiesEncoded), // which of the 4 voters recommended this, at buy time — needed later to compute each voter's real win rate
     bought_at: new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})
   });
   savePositions();
@@ -2010,7 +2033,18 @@ function markBought(name, entry, sl, t1, t2, votes){
   }, 500);
 }
 
+/* Closed equity trades — every removal used to just vanish with zero record.
+   Logged here (localStorage + synced to backend like positions themselves)
+   so the nightly per-voter win-rate recalculation has real outcomes to
+   learn from, not just currently-open positions. closedEquityTrades itself
+   is declared up near `positions` — savePositions()/seedDefaults() run
+   synchronously at load and reference it via _syncPositionsToBackend(). */
+function saveClosedTrades(){
+  localStorage.setItem('nse_closed_equity_trades', JSON.stringify(closedEquityTrades));
+}
+
 function removePosition(name){
+  const p = positions.find(x => x.name === name);
   positions = positions.filter(p=>p.name!==name);
   // Mark defaults as removed so they don't re-seed on next load — must happen
   // BEFORE savePositions() so the backend sync (triggered inside it) sees
@@ -2019,11 +2053,34 @@ function removePosition(name){
     const removed = JSON.parse(localStorage.getItem('nse_removed') || '[]');
     if(!removed.includes(name)){ removed.push(name); localStorage.setItem('nse_removed', JSON.stringify(removed)); }
   }
+
+  if (p) {
+    const suggestedExit = (SCAN_DATA[name] && SCAN_DATA[name].entry) || p.entry;
+    const exitStr = prompt('Exit price for ' + name + ' (₹) — what you actually got when you closed this in your broker:', suggestedExit);
+    const exit = parseFloat(exitStr);
+    if (exitStr && !isNaN(exit)) {
+      closedEquityTrades.push({
+        name: p.name,
+        entry: p.entry, exit: exit,
+        outcome_pct: p.entry ? round2((exit - p.entry) / p.entry * 100) : null,
+        votes_at_buy: p.votes_at_buy,
+        strategies_at_buy: p.strategies_at_buy || {},
+        bought_at: p.bought_at,
+        closed_at: new Date().toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}),
+      });
+      saveClosedTrades();
+      // savePositions() below already re-syncs everything (including
+      // closedEquityTrades) to the backend — no separate sync call needed.
+    }
+  }
+
   savePositions();
   renderPositions();
   const btn = document.getElementById('btn-'+name);
   if(btn){ btn.textContent='📌 I BOUGHT'; btn.style.background='#4f46e5'; }
 }
+
+function round2(n){ return Math.round(n * 100) / 100; }
 
 function clearAllPositions(){
   if(!confirm('Remove all tracked positions?')) return;
