@@ -249,7 +249,8 @@ tr:last-child td{border-bottom:none}
 
 <!-- TABS -->
 <div class="tabs">
-  <div class="tab active" onclick="showTab('eq',this)"><span class="tab-full">📈 Equity BUY (25)</span><span class="tab-short">📈 Equity</span></div>
+  <div class="tab active" onclick="showTab('overview',this)"><span class="tab-full">🏠 Overview</span><span class="tab-short">🏠 Home</span></div>
+  <div class="tab" onclick="showTab('eq',this)"><span class="tab-full">📈 Equity BUY (25)</span><span class="tab-short">📈 Equity</span></div>
   <div class="tab" onclick="showTab('pos',this)"><span class="tab-full">📌 My Positions</span><span class="tab-short">📌 Mine</span></div>
   <div class="tab" onclick="showTab('fo',this)"><span class="tab-full">⚡ Futures & Options</span><span class="tab-short">⚡ F&O</span></div>
   <div class="tab" onclick="showTab('wl',this)"><span class="tab-full">👁 Setups Forming (14)</span><span class="tab-short">👁 Setups</span></div>
@@ -287,8 +288,123 @@ const SCAN_DATA = {"HDFCBANK": {"signal": "STRONG_BUY", "buy_votes": 4, "entry":
 })();
 </script>
 
+<!-- OVERVIEW TAB — one-glance answers to: is it healthy, what needs action, what changed -->
+<div id="overview" class="panel active">
+  <div id="ov-action" style="margin-bottom:14px"></div>
+  <div id="ov-health" class="kpis" style="margin-bottom:14px"></div>
+  <div class="charts" style="margin-bottom:14px">
+    <div class="chart-card" id="ov-mood"></div>
+    <div class="chart-card" id="ov-sectors"></div>
+  </div>
+</div>
+<script>
+(function buildOverview(){
+  Promise.all([
+    fetch('/equity_journal.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+    fetch('/market_mood.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+    fetch('/trade_journal.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+    fetch('/sector_rotation.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
+  ]).then(function(results){
+    var eqJ = results[0], mood = results[1], tradeJ = results[2], sector = results[3];
+    renderHealth(eqJ, mood, tradeJ);
+    renderAction(eqJ);
+    renderMood(mood);
+    renderSectors(sector);
+  });
+
+  function renderHealth(eqJ, mood, tradeJ){
+    var box = document.getElementById('ov-health');
+    if (!box) return;
+    var eqS = (eqJ && eqJ.stats) || {};
+    var moodScore = mood && mood.composite_score;
+    var moodColor = moodScore == null ? '#94a3b8' : moodScore < 20 ? '#dc2626' : moodScore < 40 ? '#ea580c' : moodScore < 60 ? '#d97706' : '#15803d';
+    var tS = (tradeJ && tradeJ.stats) || {};
+    var strongBuyCount = Object.keys(SCAN_DATA).filter(function(n){ return SCAN_DATA[n].signal === 'STRONG_BUY'; }).length;
+
+    var cards = [
+      {label:'Portfolio P&L', val:(eqS.total_pnl_pct != null ? (eqS.total_pnl_pct >= 0 ? '+' : '') + eqS.total_pnl_pct + '%' : '—'),
+        c: eqS.total_pnl_pct == null ? '#64748b' : eqS.total_pnl_pct >= 0 ? '#15803d' : '#dc2626'},
+      {label:'Market Mood', val:(moodScore != null ? moodScore + ' · ' + mood.label : '—'), c: moodColor},
+      {label:'F&O Win Rate', val:(tS.win_rate != null ? tS.win_rate + '% (' + tS.total_closed + ')' : '—'),
+        c: tS.win_rate == null ? '#64748b' : tS.win_rate >= 60 ? '#15803d' : tS.win_rate >= 40 ? '#d97706' : '#dc2626'},
+      {label:"Today's Strong Buys", val: strongBuyCount, c:'#4f46e5'}
+    ];
+    box.innerHTML = cards.map(function(k){
+      return '<div class="kpi" style="--c:' + k.c + '"><div class="kpi-label">' + k.label + '</div><div class="kpi-val">' + k.val + '</div></div>';
+    }).join('');
+  }
+
+  function renderAction(eqJ){
+    var box = document.getElementById('ov-action');
+    if (!box) return;
+    var items = [];
+    var posRows = (eqJ && eqJ.positions) || [];
+    posRows.forEach(function(p){
+      var pnl = (p.pnl_pct >= 0 ? '+' : '') + p.pnl_pct + '%';
+      if (p.status === 'below_sl') items.push({sev:'high', txt:'⚠ <b>' + p.name + '</b> is below stop loss (' + pnl + ') — review your exit.'});
+      else if (p.status === 'target1_hit') items.push({sev:'good', txt:'🎯 <b>' + p.name + '</b> hit Target 1 (' + pnl + ') — consider booking partial profit.'});
+      else if (p.status === 'target2_hit') items.push({sev:'good', txt:'🎯 <b>' + p.name + '</b> hit Target 2 (' + pnl + ') — consider booking more profit.'});
+    });
+
+    var trackedNames = (typeof positions !== 'undefined' ? positions : []).map(function(p){ return p.name; });
+    var untracked = Object.keys(SCAN_DATA).filter(function(n){
+      return SCAN_DATA[n].signal === 'STRONG_BUY' && SCAN_DATA[n].buy_votes >= 3 && trackedNames.indexOf(n) === -1;
+    });
+    if (untracked.length) {
+      items.push({sev:'info', txt:'📌 ' + untracked.length + ' new high-conviction signal' + (untracked.length > 1 ? 's' : '') +
+        ' not in your positions: <b>' + untracked.slice(0, 5).join(', ') + '</b>' +
+        (untracked.length > 5 ? ' +' + (untracked.length - 5) + ' more' : '') + '.'});
+    }
+    if (!items.length) items.push({sev:'good', txt:'✅ No urgent action needed — all tracked positions within normal range.'});
+
+    var sevColor = {high:'#dc2626', good:'#15803d', info:'#4f46e5'};
+    var sevBg = {high:'#fef2f2', good:'#f0fdf4', info:'#eef2ff'};
+    box.innerHTML =
+      '<div class="sec" style="margin-bottom:0">' +
+        '<div class="sec-ttl"><span class="sec-ttl-dot" style="background:#4f46e5"></span>⚡ Action Needed</div>' +
+        items.map(function(it){
+          return '<div style="background:' + sevBg[it.sev] + ';border-left:3px solid ' + sevColor[it.sev] + ';border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:12px;color:#0f172a">' + it.txt + '</div>';
+        }).join('') +
+      '</div>';
+  }
+
+  function renderMood(mood){
+    var box = document.getElementById('ov-mood');
+    if (!box) return;
+    if (!mood || mood.composite_score == null) {
+      box.innerHTML = '<div class="chart-ttl">🎭 Market Mood</div><div style="font-size:12px;color:#94a3b8">No data yet.</div>';
+      return;
+    }
+    var score = mood.composite_score, label = mood.label;
+    var labelColor = score < 20 ? '#dc2626' : score < 40 ? '#ea580c' : score < 60 ? '#d97706' : '#15803d';
+    box.innerHTML =
+      '<div class="chart-ttl" style="--a:' + labelColor + '">🎭 Market Mood</div>' +
+      '<div style="display:flex;align-items:center;gap:14px">' +
+        '<div style="font-size:32px;font-weight:900;color:' + labelColor + '">' + score + '</div>' +
+        '<div><div style="font-size:14px;font-weight:800;color:' + labelColor + '">' + label + '</div>' +
+        '<div style="font-size:10px;color:#94a3b8">as of ' + (mood.fetched_at || '—') + '</div></div>' +
+      '</div>';
+  }
+
+  function renderSectors(sector){
+    var box = document.getElementById('ov-sectors');
+    if (!box) return;
+    var top = (sector && sector.top_sectors) || [];
+    if (!top.length) {
+      box.innerHTML = '<div class="chart-ttl">📊 Sector Rotation</div><div style="font-size:12px;color:#94a3b8">No data yet.</div>';
+      return;
+    }
+    box.innerHTML =
+      '<div class="chart-ttl" style="--a:#0891b2">📊 Top Sectors — Building Momentum</div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+        top.map(function(s){ return '<span style="background:#ecfeff;color:#0e7490;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700">' + s + '</span>'; }).join('') +
+      '</div>';
+  }
+})();
+</script>
+
 <!-- EQUITY TAB -->
-<div id="eq" class="panel active">
+<div id="eq" class="panel">
 <!-- KPI CARDS -->
 <div class="kpis">
   <div class="kpi" style="--c:#16a34a"><div class="kpi-label">Strong Buy</div><div class="kpi-val">22</div><div class="kpi-sub">3–4 strategies agree</div></div>
