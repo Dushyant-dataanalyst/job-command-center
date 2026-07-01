@@ -41,6 +41,14 @@ function sanitizePositions(input) {
     .slice(0, 50);
 }
 
+function sanitizeRemoved(input) {
+  if (!Array.isArray(input)) return [];
+  return input
+    .filter((n) => typeof n === 'string' && n.trim())
+    .map((n) => String(n).toUpperCase().trim().slice(0, 30))
+    .slice(0, 20);
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -63,7 +71,9 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'Server not configured — GITHUB_TOKEN env var missing' });
   }
 
-  const sanitized = sanitizePositions(req.body);
+  const body = req.body || {};
+  const sanitized = sanitizePositions(body.positions);
+  const removedDefaults = sanitizeRemoved(body.removedDefaults);
 
   const apiBase = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
   const headers = {
@@ -83,12 +93,13 @@ module.exports = async function handler(req, res) {
       throw new Error(`GitHub GET failed: ${getRes.status}`);
     }
 
-    const content = Buffer.from(JSON.stringify(sanitized, null, 2)).toString('base64');
+    const payload = { positions: sanitized, removedDefaults };
+    const content = Buffer.from(JSON.stringify(payload, null, 2)).toString('base64');
     const putRes = await fetch(apiBase, {
       method: 'PUT',
       headers,
       body: JSON.stringify({
-        message: `chore: sync ${sanitized.length} ad-hoc position(s) from dashboard`,
+        message: `chore: sync ${sanitized.length} ad-hoc position(s), ${removedDefaults.length} removed default(s) from dashboard`,
         content,
         branch: BRANCH,
         ...(sha ? { sha } : {}),
@@ -100,7 +111,7 @@ module.exports = async function handler(req, res) {
       throw new Error(`GitHub PUT failed: ${putRes.status} ${errText}`);
     }
 
-    return res.status(200).json({ ok: true, count: sanitized.length });
+    return res.status(200).json({ ok: true, count: sanitized.length, removed: removedDefaults.length });
   } catch (e) {
     return res.status(502).json({ error: 'Sync failed', detail: String((e && e.message) || e) });
   }

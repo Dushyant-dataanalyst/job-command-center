@@ -2292,19 +2292,22 @@ function savePositions(){
   _syncPositionsToBackend();
 }
 
-// Sync ad-hoc positions (not the 4 hardcoded defaults — equity_brain.py
-// already tracks those) to the backend so Equity Brain can compute live
-// P&L for them too. Fire-and-forget: localStorage is already the local
-// source of truth, so a failed sync just means that one stock won't show
-// live P&L until the next successful save — nothing breaks locally.
+// Sync ad-hoc positions AND removed-default names to the backend, so
+// equity_brain.py's hardcoded 4-stock list can be corrected to match what's
+// actually tracked here (otherwise a removed default keeps showing live P&L
+// server-side forever, and a newly-added stock never gets one). Fire-and-
+// forget: localStorage is already the local source of truth, so a failed
+// sync just means the backend view stays stale until the next successful
+// save — nothing breaks locally.
 function _syncPositionsToBackend(){
   var adHoc = positions.filter(function(p){
     return !DEFAULT_POSITIONS.some(function(d){ return d.name === p.name; });
   });
+  var removed = JSON.parse(localStorage.getItem('nse_removed') || '[]');
   fetch('/api/save-positions', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(adHoc)
+    body: JSON.stringify({ positions: adHoc, removedDefaults: removed })
   }).catch(function(){});
 }
 
@@ -2350,12 +2353,14 @@ function markBought(name, entry, sl, t1, t2, votes){
 
 function removePosition(name){
   positions = positions.filter(p=>p.name!==name);
-  savePositions();
-  // Mark defaults as removed so they don't re-seed on next load
+  // Mark defaults as removed so they don't re-seed on next load — must happen
+  // BEFORE savePositions() so the backend sync (triggered inside it) sees
+  // this removal immediately instead of one save cycle late.
   if(DEFAULT_POSITIONS.find(d=>d.name===name)){
     const removed = JSON.parse(localStorage.getItem('nse_removed') || '[]');
     if(!removed.includes(name)){ removed.push(name); localStorage.setItem('nse_removed', JSON.stringify(removed)); }
   }
+  savePositions();
   renderPositions();
   const btn = document.getElementById('btn-'+name);
   if(btn){ btn.textContent='📌 I BOUGHT'; btn.style.background='#4f46e5'; }

@@ -11,8 +11,10 @@ already does — this is the complementary, price-based half).
 TRACKED_POSITIONS mirrors the dashboard's hardcoded DEFAULT_POSITIONS
 (nse_live_dashboard.html) — kept in sync manually, the same pattern as
 SECTOR_STOCKS in sector_rotation_core.py. Ad-hoc positions added via
-"I BOUGHT" on the dashboard are read from my_positions.json if present
-(see save-positions sync mechanism) and merged in, deduped by symbol.
+"I BOUGHT" on the dashboard, and any of the 4 defaults the user removed
+there, are read from my_positions.json if present (see save-positions sync
+mechanism) — ad-hoc positions get merged in, removed defaults get excluded,
+both deduped/filtered by symbol.
 
 With only a handful of positions, this does NOT attempt the
 vote-strength statistical clustering trade_brain.py does (not enough
@@ -41,22 +43,34 @@ TRACKED_POSITIONS = [
 ]
 
 
-def _load_synced_positions():
-    """Ad-hoc positions added via 'I BOUGHT' on the dashboard, synced through
-    api/save-positions.js. Returns [] if the sync file doesn't exist yet —
-    that's a normal state, not an error (sync may not be set up)."""
+def _load_sync_data():
+    """Ad-hoc positions + removed-default names synced through
+    api/save-positions.js. Returns ([], []) if the sync file doesn't exist
+    yet — that's a normal state, not an error (sync may not be set up).
+    Also accepts the old bare-array shape (ad-hoc positions only, no
+    removals) for backward compatibility with files written before this."""
     if not SYNCED_POSITIONS_FILE.exists():
-        return []
+        return [], []
     try:
         data = json.loads(SYNCED_POSITIONS_FILE.read_text(encoding="utf-8"))
-        return data if isinstance(data, list) else []
+        if isinstance(data, dict):
+            positions = data.get("positions", [])
+            removed = data.get("removedDefaults", [])
+        elif isinstance(data, list):
+            positions, removed = data, []
+        else:
+            positions, removed = [], []
+        return (positions if isinstance(positions, list) else [],
+                removed if isinstance(removed, list) else [])
     except Exception:
-        return []
+        return [], []
 
 
 def _merged_tracked_positions():
-    merged = {p["name"]: p for p in TRACKED_POSITIONS}
-    for p in _load_synced_positions():
+    synced_positions, removed = _load_sync_data()
+    removed_set = set(removed)
+    merged = {p["name"]: p for p in TRACKED_POSITIONS if p["name"] not in removed_set}
+    for p in synced_positions:
         if isinstance(p, dict) and p.get("name"):
             merged.setdefault(p["name"], p)  # defaults win if somehow duplicated
     return list(merged.values())
