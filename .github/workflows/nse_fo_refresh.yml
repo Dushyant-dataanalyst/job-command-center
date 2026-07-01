@@ -143,3 +143,12 @@ jobs:
             git push origin master
             echo "✅ Pushed — Vercel will redeploy"
           fi
+
+      # Independent of GitHub Actions itself working — this is the whole point.
+      # If the scheduled trigger silently stops firing (exactly what happened
+      # earlier today), no ping arrives, and healthchecks.io alerts by email
+      # on its own, without depending on anything in this repo/workflow.
+      - name: Heartbeat ping (independent of GitHub Actions scheduling)
+        if: always()
+        run: |
+          curl -fsS --retry 3 --max-time 10 "${{ secrets.HEALTHCHECK_PING_URL }}" > /dev/null || true
