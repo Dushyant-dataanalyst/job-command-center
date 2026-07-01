@@ -1,0 +1,51 @@
+name: Pre-Market Health Check
+
+on:
+  schedule:
+    - cron: '0 3 * * 1-5'   # 8:30 AM IST (03:00 UTC), before market open at 9:15 IST
+  workflow_dispatch:
+
+concurrency:
+  group: premarket-health-check
+  cancel-in-progress: true
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # need at least 2 commits so "last commit age" is meaningful
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install --quiet yfinance==1.4.1 pandas==2.2.3 numpy==2.1.2 requests==2.34.2
+
+      - name: Run pre-market health check (writes health_check.json to repo root)
+        run: |
+          cd nse-trading-bot
+          python premarket_health_check.py
+
+      - name: Commit health_check.json if changed
+        run: |
+          git config user.name  "NSE Bot"
+          git config user.email "nse-bot@github-actions"
+          git fetch origin master
+          git reset --mixed origin/master
+          git add health_check.json
+          if git diff --staged --quiet; then
+            echo "no changes — no commit needed"
+          else
+            git commit -m "chore: pre-market health check $(cat health_check.json | python3 -c "import json,sys; print(json.load(sys.stdin)['status'])")"
+            git push origin master
+          fi

@@ -241,6 +241,28 @@ body.stale-blocked #exact-trade-panel > div::after{
 })();
 </script>
 
+<!-- PRE-MARKET HEALTH CHECK — runs once daily at 8:30 AM IST (premarket_health_check.py),
+     surfaced here since no external Telegram/Discord channel is wired up. Quiet pill when
+     all clear, escalates to a full banner (same visual language as the stale-data one)
+     only when an issue is actually found. -->
+<div id="health-check-banner" style="display:none;background:#d97706;color:#fff;font-weight:800;padding:10px 16px;border-radius:10px;margin-bottom:10px;font-size:12px"></div>
+<script>
+(function(){
+  fetch('/health_check.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      const banner = document.getElementById('health-check-banner');
+      if (!banner || !d) return;
+      if (d.status === 'ALL CLEAR') { banner.style.display = 'none'; return; }
+      const failed = Object.entries(d.checks || {}).filter(function(kv){ return !kv[1].ok; });
+      banner.style.display = 'block';
+      banner.innerHTML = '⚠ PRE-MARKET CHECK FOUND AN ISSUE (checked ' + (d.checked_at || '—') + '): ' +
+        failed.map(function(kv){ return '<b>' + kv[0].replace(/_/g,' ') + '</b> — ' + kv[1].detail; }).join(' · ');
+    })
+    .catch(function(){});
+})();
+</script>
+
 <!-- HEADER -->
 <div class="hdr">
   <div>

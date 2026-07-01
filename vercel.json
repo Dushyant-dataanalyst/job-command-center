@@ -13,6 +13,7 @@
     { "src": "equity_scan.json",        "use": "@vercel/static" },
     { "src": "equity_scan_history.json","use": "@vercel/static" },
     { "src": "market_regime.json",      "use": "@vercel/static" },
+    { "src": "health_check.json",       "use": "@vercel/static" },
     { "src": "api/save-positions.js",   "use": "@vercel/node" }
   ],
   "routes": [
@@ -69,6 +70,11 @@
       "src": "/market_regime.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/market_regime.json"
+    },
+    {
+      "src": "/health_check.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/health_check.json"
     },
     {
       "src": "/nse_live_dashboard.html",
