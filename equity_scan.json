@@ -1,0 +1,897 @@
+{
+  "_meta": {
+    "generated_at": "01 Jul 2026 13:45 IST",
+    "source": "yfinance EOD",
+    "universe": "SECTOR_STOCKS (sector_rotation_core.py) \u2014 46 stocks / 10 sectors",
+    "strategy_note": "Inna/Pham/Cianni/Unger reconstructed from short tooltip descriptions, not verified against an original spec. Educational signal engine only, not investment advice.",
+    "counts": {
+      "strong_buy": 2,
+      "buy": 8,
+      "watch": 39,
+      "total": 49
+    },
+    "errors": {}
+  },
+  "HDFCBANK": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 799.5,
+    "sl": 778.37,
+    "t1": 825.91,
+    "t2": 852.33,
+    "t3": 878.74,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Banking",
+    "data_as_of": "2026-07-01"
+  },
+  "ICICIBANK": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1381.0,
+    "sl": 1346.75,
+    "t1": 1423.81,
+    "t2": 1466.62,
+    "t3": 1509.44,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Banking",
+    "data_as_of": "2026-07-01"
+  },
+  "SBIN": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 1042.3,
+    "sl": 1017.37,
+    "t1": 1073.46,
+    "t2": 1104.62,
+    "t3": 1135.79,
+    "pct_t1": 3.0,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "PSU Bank",
+    "data_as_of": "2026-07-01"
+  },
+  "KOTAKBANK": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 399.2,
+    "sl": 388.69,
+    "t1": 412.34,
+    "t2": 425.47,
+    "t3": 438.61,
+    "pct_t1": 3.3,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "BUY"
+    },
+    "sector": "Banking",
+    "data_as_of": "2026-07-01"
+  },
+  "AXISBANK": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 1374.9,
+    "sl": 1340.29,
+    "t1": 1418.16,
+    "t2": 1461.43,
+    "t3": 1504.69,
+    "pct_t1": 3.1,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "BUY"
+    },
+    "sector": "Banking",
+    "data_as_of": "2026-07-01"
+  },
+  "TCS": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 2003.6,
+    "sl": 1925.31,
+    "t1": 2101.46,
+    "t2": 2199.32,
+    "t3": 2297.19,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "IT",
+    "data_as_of": "2026-07-01"
+  },
+  "INFY": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 988.0,
+    "sl": 940.39,
+    "t1": 1047.51,
+    "t2": 1107.03,
+    "t3": 1166.54,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "IT",
+    "data_as_of": "2026-07-01"
+  },
+  "WIPRO": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 170.23,
+    "sl": 165.09,
+    "t1": 176.65,
+    "t2": 183.08,
+    "t3": 189.5,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "IT",
+    "data_as_of": "2026-07-01"
+  },
+  "HCLTECH": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1040.0,
+    "sl": 996.22,
+    "t1": 1094.72,
+    "t2": 1149.45,
+    "t3": 1204.17,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "IT",
+    "data_as_of": "2026-07-01"
+  },
+  "TECHM": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1358.0,
+    "sl": 1298.18,
+    "t1": 1432.77,
+    "t2": 1507.55,
+    "t3": 1582.32,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "IT",
+    "data_as_of": "2026-07-01"
+  },
+  "MARUTI": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 14344.0,
+    "sl": 13826.82,
+    "t1": 14990.48,
+    "t2": 15636.95,
+    "t3": 16283.43,
+    "pct_t1": 4.5,
+    "strategies": {
+      "Inna": "STRONG_BUY",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "BUY"
+    },
+    "sector": "Auto",
+    "data_as_of": "2026-07-01"
+  },
+  "TMPV": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 347.25,
+    "sl": 328.59,
+    "t1": 370.58,
+    "t2": 393.9,
+    "t3": 417.23,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Auto",
+    "data_as_of": "2026-07-01"
+  },
+  "M&M": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 3140.6,
+    "sl": 3031.76,
+    "t1": 3276.65,
+    "t2": 3412.7,
+    "t3": 3548.75,
+    "pct_t1": 4.3,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Auto",
+    "data_as_of": "2026-07-01"
+  },
+  "BAJAJ-AUTO": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 9844.0,
+    "sl": 9542.71,
+    "t1": 10220.61,
+    "t2": 10597.23,
+    "t3": 10973.84,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "Auto",
+    "data_as_of": "2026-07-01"
+  },
+  "EICHERMOT": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 7140.0,
+    "sl": 6873.59,
+    "t1": 7473.01,
+    "t2": 7806.02,
+    "t3": 8139.04,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "Auto",
+    "data_as_of": "2026-07-01"
+  },
+  "SUNPHARMA": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 1872.8,
+    "sl": 1836.16,
+    "t1": 1918.6,
+    "t2": 1964.4,
+    "t3": 2010.2,
+    "pct_t1": 2.4,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Pharma",
+    "data_as_of": "2026-07-01"
+  },
+  "DRREDDY": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1346.7,
+    "sl": 1305.23,
+    "t1": 1398.54,
+    "t2": 1450.38,
+    "t3": 1502.21,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "WATCH",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Pharma",
+    "data_as_of": "2026-07-01"
+  },
+  "CIPLA": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1457.5,
+    "sl": 1414.18,
+    "t1": 1511.65,
+    "t2": 1565.8,
+    "t3": 1619.95,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Pharma",
+    "data_as_of": "2026-07-01"
+  },
+  "DIVISLAB": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 6559.5,
+    "sl": 6391.55,
+    "t1": 6769.44,
+    "t2": 6979.38,
+    "t3": 7189.31,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Pharma",
+    "data_as_of": "2026-07-01"
+  },
+  "AUROPHARMA": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1563.4,
+    "sl": 1507.81,
+    "t1": 1632.89,
+    "t2": 1702.38,
+    "t3": 1771.86,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Pharma",
+    "data_as_of": "2026-07-01"
+  },
+  "HINDUNILVR": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 2180.6,
+    "sl": 2123.82,
+    "t1": 2251.57,
+    "t2": 2322.55,
+    "t3": 2393.52,
+    "pct_t1": 3.3,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "FMCG",
+    "data_as_of": "2026-07-01"
+  },
+  "ITC": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 290.8,
+    "sl": 285.51,
+    "t1": 297.41,
+    "t2": 304.03,
+    "t3": 310.64,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "FMCG",
+    "data_as_of": "2026-07-01"
+  },
+  "NESTLEIND": {
+    "signal": "STRONG_BUY",
+    "buy_votes": 3,
+    "entry": 1450.5,
+    "sl": 1403.06,
+    "t1": 1509.8,
+    "t2": 1569.1,
+    "t3": 1628.4,
+    "pct_t1": 4.1,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "BUY",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "BUY"
+    },
+    "sector": "FMCG",
+    "data_as_of": "2026-07-01"
+  },
+  "BRITANNIA": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 5248.0,
+    "sl": 5122.91,
+    "t1": 5404.36,
+    "t2": 5560.73,
+    "t3": 5717.09,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "FMCG",
+    "data_as_of": "2026-07-01"
+  },
+  "DABUR": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 442.1,
+    "sl": 430.22,
+    "t1": 456.95,
+    "t2": 471.8,
+    "t3": 486.65,
+    "pct_t1": 3.4,
+    "strategies": {
+      "Inna": "STRONG_BUY",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "BUY"
+    },
+    "sector": "FMCG",
+    "data_as_of": "2026-07-01"
+  },
+  "TATASTEEL": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 186.45,
+    "sl": 181.08,
+    "t1": 193.16,
+    "t2": 199.87,
+    "t3": 206.59,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Metal",
+    "data_as_of": "2026-07-01"
+  },
+  "JSWSTEEL": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1219.7,
+    "sl": 1185.98,
+    "t1": 1261.85,
+    "t2": 1304.0,
+    "t3": 1346.15,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Metal",
+    "data_as_of": "2026-07-01"
+  },
+  "HINDALCO": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 941.0,
+    "sl": 903.18,
+    "t1": 988.28,
+    "t2": 1035.55,
+    "t3": 1082.83,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Metal",
+    "data_as_of": "2026-07-01"
+  },
+  "VEDL": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 276.8,
+    "sl": 261.85,
+    "t1": 295.49,
+    "t2": 314.17,
+    "t3": 332.86,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Metal",
+    "data_as_of": "2026-07-01"
+  },
+  "SAIL": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 168.0,
+    "sl": 160.06,
+    "t1": 177.93,
+    "t2": 187.85,
+    "t3": 197.77,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Metal",
+    "data_as_of": "2026-07-01"
+  },
+  "RELIANCE": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 1310.2,
+    "sl": 1275.99,
+    "t1": 1352.96,
+    "t2": 1395.73,
+    "t3": 1438.49,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "Energy",
+    "data_as_of": "2026-07-01"
+  },
+  "ONGC": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 234.24,
+    "sl": 226.58,
+    "t1": 243.81,
+    "t2": 253.39,
+    "t3": 262.96,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Energy",
+    "data_as_of": "2026-07-01"
+  },
+  "POWERGRID": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 286.6,
+    "sl": 279.72,
+    "t1": 295.2,
+    "t2": 303.8,
+    "t3": 312.4,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "Energy",
+    "data_as_of": "2026-07-01"
+  },
+  "NTPC": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 358.9,
+    "sl": 348.74,
+    "t1": 371.6,
+    "t2": 384.3,
+    "t3": 397.0,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Energy",
+    "data_as_of": "2026-07-01"
+  },
+  "BPCL": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 302.85,
+    "sl": 290.68,
+    "t1": 318.06,
+    "t2": 333.28,
+    "t3": 348.49,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Energy",
+    "data_as_of": "2026-07-01"
+  },
+  "DLF": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 640.1,
+    "sl": 612.84,
+    "t1": 674.17,
+    "t2": 708.25,
+    "t3": 742.33,
+    "pct_t1": 5.3,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "BUY"
+    },
+    "sector": "Realty",
+    "data_as_of": "2026-07-01"
+  },
+  "GODREJPROP": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 1933.0,
+    "sl": 1853.35,
+    "t1": 2032.56,
+    "t2": 2132.12,
+    "t3": 2231.69,
+    "pct_t1": 5.2,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "BUY"
+    },
+    "sector": "Realty",
+    "data_as_of": "2026-07-01"
+  },
+  "OBEROIRLTY": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 1792.6,
+    "sl": 1728.54,
+    "t1": 1872.67,
+    "t2": 1952.75,
+    "t3": 2032.82,
+    "pct_t1": 4.5,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "BUY",
+      "Unger": "BUY"
+    },
+    "sector": "Realty",
+    "data_as_of": "2026-07-01"
+  },
+  "PHOENIXLTD": {
+    "signal": "STRONG_BUY",
+    "buy_votes": 3,
+    "entry": 2002.7,
+    "sl": 1923.52,
+    "t1": 2101.68,
+    "t2": 2200.65,
+    "t3": 2299.63,
+    "pct_t1": 4.9,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "BUY",
+      "Unger": "BUY"
+    },
+    "sector": "Realty",
+    "data_as_of": "2026-07-01"
+  },
+  "PRESTIGE": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 1610.8,
+    "sl": 1533.43,
+    "t1": 1707.51,
+    "t2": 1804.22,
+    "t3": 1900.94,
+    "pct_t1": 6.0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "BUY",
+      "Unger": "BUY"
+    },
+    "sector": "Realty",
+    "data_as_of": "2026-07-01"
+  },
+  "BANKBARODA": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 272.8,
+    "sl": 263.75,
+    "t1": 284.11,
+    "t2": 295.43,
+    "t3": 306.74,
+    "pct_t1": 4.1,
+    "strategies": {
+      "Inna": "WATCH",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "BUY"
+    },
+    "sector": "PSU Bank",
+    "data_as_of": "2026-07-01"
+  },
+  "PNB": {
+    "signal": "BUY",
+    "buy_votes": 2,
+    "entry": 107.1,
+    "sl": 104.32,
+    "t1": 110.57,
+    "t2": 114.05,
+    "t3": 117.53,
+    "pct_t1": 3.2,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "BUY"
+    },
+    "sector": "PSU Bank",
+    "data_as_of": "2026-07-01"
+  },
+  "CANBK": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 126.49,
+    "sl": 122.36,
+    "t1": 131.65,
+    "t2": 136.81,
+    "t3": 141.98,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "PSU Bank",
+    "data_as_of": "2026-07-01"
+  },
+  "UNIONBANK": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 173.6,
+    "sl": 168.64,
+    "t1": 179.8,
+    "t2": 186.0,
+    "t3": 192.2,
+    "pct_t1": 3.6,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "PSU Bank",
+    "data_as_of": "2026-07-01"
+  },
+  "ZEEL": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 107.54,
+    "sl": 99.8,
+    "t1": 117.22,
+    "t2": 126.89,
+    "t3": 136.57,
+    "pct_t1": 9.0,
+    "strategies": {
+      "Inna": "WATCH",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "BUY"
+    },
+    "sector": "Media",
+    "data_as_of": "2026-07-01"
+  },
+  "SUNTV": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 514.9,
+    "sl": 497.76,
+    "t1": 536.32,
+    "t2": 557.75,
+    "t3": 579.17,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Media",
+    "data_as_of": "2026-07-01"
+  },
+  "PVRINOX": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 985.15,
+    "sl": 948.79,
+    "t1": 1030.6,
+    "t2": 1076.05,
+    "t3": 1121.5,
+    "pct_t1": 4.6,
+    "strategies": {
+      "Inna": "STRONG_BUY",
+      "Pham": "WATCH",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "NO_SIGNAL"
+    },
+    "sector": "Media",
+    "data_as_of": "2026-07-01"
+  },
+  "NETWORK18": {
+    "signal": "WATCH",
+    "buy_votes": 1,
+    "entry": 32.8,
+    "sl": 30.97,
+    "t1": 35.09,
+    "t2": 37.37,
+    "t3": 39.66,
+    "pct_t1": 7.0,
+    "strategies": {
+      "Inna": "BUY",
+      "Pham": "NO_SIGNAL",
+      "Cianni": "NO_SIGNAL",
+      "Unger": "WATCH"
+    },
+    "sector": "Media",
+    "data_as_of": "2026-07-01"
+  },
+  "SAREGAMA": {
+    "signal": "WATCH",
+    "buy_votes": 0,
+    "entry": 494.85,
+    "sl": 471.46,
+    "t1": 524.09,
+    "t2": 553.33,
+    "t3": 582.56,
+    "pct_t1": 0,
+    "strategies": {
+      "Inna": "NO_SIGNAL",
+      "Pham": "WATCH",
+      "Cianni": "WATCH",
+      "Unger": "WATCH"
+    },
+    "sector": "Media",
+    "data_as_of": "2026-07-01"
+  }
+}

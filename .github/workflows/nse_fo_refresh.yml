@@ -91,6 +91,18 @@ jobs:
           python stock_fo_refresh.py
           echo "✅ stock_fo_refresh.py succeeded"
 
+      # Once-daily only (9pm IST prep cron, or manual dispatch) — a 49-stock
+      # multi-indicator + fundamentals scan is too heavy to repeat every
+      # 5 minutes, and swing signals don't need that granularity.
+      - name: Run equity scan (writes equity_scan.json to repo root)
+        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        run: |
+          set -e
+          cd nse-trading-bot
+          python equity_scan_refresh.py
+          echo "✅ equity_scan_refresh.py succeeded"
+
       - name: Commit updated JSON files if changed
         if: always()
         run: |
@@ -101,7 +113,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json
 
           if git diff --staged --quiet; then
             echo "no changes — no commit needed"
