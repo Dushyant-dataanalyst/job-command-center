@@ -13,13 +13,23 @@ OUT_FILE = REPO_ROOT / "sector_rotation.json"
 
 
 def main():
-    result = scan_sector_rotation(top_n=3, stocks_per_sector=3)
-    OUT_FILE.write_text(json.dumps(result, indent=2))
-    top = ", ".join(result["top_sectors"])
-    print(f"  Top sectors: {top}")
-    if result["sectors_with_errors"]:
-        print(f"  Errors: {result['sectors_with_errors']}")
-    print(f"  Wrote {OUT_FILE}")
+    try:
+        result = scan_sector_rotation(top_n=3, stocks_per_sector=3)
+        OUT_FILE.write_text(json.dumps(result, indent=2))
+        top = ", ".join(result["top_sectors"])
+        print(f"  Top sectors: {top}")
+        if result["sectors_with_errors"]:
+            print(f"  Errors: {result['sectors_with_errors']}")
+        print(f"  Wrote {OUT_FILE}")
+    except Exception as e:
+        from datetime import datetime
+        OUT_FILE.write_text(json.dumps({
+            "error": str(e),
+            "fetched_at": datetime.now().strftime("%d %b %Y %H:%M IST"),
+            "top_sectors": [],
+            "sectors": {},
+        }, indent=2))
+        print(f"  ERROR in main(): {e} — wrote error-state JSON")
 
 
 if __name__ == "__main__":

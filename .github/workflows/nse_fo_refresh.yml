@@ -28,6 +28,7 @@ jobs:
         run: pip install --quiet yfinance==1.4.1 pandas==2.2.3 numpy==2.1.2 requests==2.34.2
 
       - name: Run F&O refresh (writes fo_latest.json to repo root)
+        continue-on-error: true
         run: |
           set -e
           cd nse-trading-bot
@@ -43,6 +44,7 @@ jobs:
           "
 
       - name: Run trading brain (paper-trades signals, marks open trades to market)
+        continue-on-error: true
         run: |
           set -e
           cd nse-trading-bot
@@ -50,6 +52,7 @@ jobs:
           echo "✅ trade_brain.py succeeded"
 
       - name: Run sector rotation scan (writes sector_rotation.json to repo root)
+        continue-on-error: true
         run: |
           set -e
           cd nse-trading-bot
@@ -57,6 +60,7 @@ jobs:
           echo "✅ sector_rotation_refresh.py succeeded"
 
       - name: Run market mood gauge (writes market_mood.json to repo root)
+        continue-on-error: true
         run: |
           set -e
           cd nse-trading-bot
@@ -64,6 +68,7 @@ jobs:
           echo "✅ market_mood_refresh.py succeeded"
 
       - name: Run news/events tracker (writes news_feed.json to repo root)
+        continue-on-error: true
         run: |
           set -e
           cd nse-trading-bot
@@ -71,6 +76,7 @@ jobs:
           echo "✅ news_refresh.py succeeded"
 
       - name: Run equity brain (writes equity_journal.json to repo root)
+        continue-on-error: true
         run: |
           set -e
           cd nse-trading-bot
@@ -78,13 +84,15 @@ jobs:
           echo "✅ equity_brain.py succeeded"
 
       - name: Run stock F&O signals (writes stock_fo.json to repo root)
+        continue-on-error: true
         run: |
           set -e
           cd nse-trading-bot
           python stock_fo_refresh.py
           echo "✅ stock_fo_refresh.py succeeded"
 
-      - name: Commit fo_latest.json + trade_journal.json + sector_rotation.json + market_mood.json + news_feed.json + equity_journal.json + stock_fo.json if changed
+      - name: Commit updated JSON files if changed
+        if: always()
         run: |
           git config user.name  "NSE Bot"
           git config user.email "nse-bot@github-actions"

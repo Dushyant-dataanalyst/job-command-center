@@ -95,36 +95,46 @@ def _band(score):
 
 
 def main():
-    fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
-    vix_score, vix_level = _vix_score()
-    breadth_score, breadth_detail = _breadth_score()
-    momentum_score, momentum_detail = _momentum_score()
+    try:
+        fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
+        vix_score, vix_level = _vix_score()
+        breadth_score, breadth_detail = _breadth_score()
+        momentum_score, momentum_detail = _momentum_score()
 
-    components = {
-        "india_vix": {"score": vix_score, "weight_pct": 40, "level": vix_level},
-        "market_breadth": {"score": breadth_score, "weight_pct": 30, "detail": breadth_detail},
-        "nifty_momentum": {"score": momentum_score, "weight_pct": 30, "detail": momentum_detail},
-    }
+        components = {
+            "india_vix": {"score": vix_score, "weight_pct": 40, "level": vix_level},
+            "market_breadth": {"score": breadth_score, "weight_pct": 30, "detail": breadth_detail},
+            "nifty_momentum": {"score": momentum_score, "weight_pct": 30, "detail": momentum_detail},
+        }
 
-    valid = [(c["score"], c["weight_pct"]) for c in components.values() if c["score"] is not None]
-    if valid:
-        total_weight = sum(w for _, w in valid)
-        composite = round(sum(s * w for s, w in valid) / total_weight)
-    else:
-        composite = None
+        valid = [(c["score"], c["weight_pct"]) for c in components.values() if c["score"] is not None]
+        if valid:
+            total_weight = sum(w for _, w in valid)
+            composite = round(sum(s * w for s, w in valid) / total_weight)
+        else:
+            composite = None
 
-    result = {
-        "fetched_at": fetched_at,
-        "composite_score": composite,
-        "label": _band(composite) if composite is not None else "No data",
-        "components": components,
-        "method": "composite = weighted avg of (40% India VIX inverted, 30% market breadth % above 20-day EMA across a 50-stock basket, 30% NIFTY EMA-alignment + ROC5 momentum). Missing components are excluded and weights renormalized, not faked.",
-        "disclaimer": "Constructed proxy index, not an official Fear & Greed index (none exists free for India). Educational use only.",
-    }
+        result = {
+            "fetched_at": fetched_at,
+            "composite_score": composite,
+            "label": _band(composite) if composite is not None else "No data",
+            "components": components,
+            "method": "composite = weighted avg of (40% India VIX inverted, 30% market breadth % above 20-day EMA across a 50-stock basket, 30% NIFTY EMA-alignment + ROC5 momentum). Missing components are excluded and weights renormalized, not faked.",
+            "disclaimer": "Constructed proxy index, not an official Fear & Greed index (none exists free for India). Educational use only.",
+        }
 
-    OUT_FILE.write_text(json.dumps(result, indent=2))
-    print(f"  composite={composite} ({result['label']}) vix={vix_level} breadth={breadth_score}% momentum={momentum_score}")
-    print(f"  Wrote {OUT_FILE}")
+        OUT_FILE.write_text(json.dumps(result, indent=2))
+        print(f"  composite={composite} ({result['label']}) vix={vix_level} breadth={breadth_score}% momentum={momentum_score}")
+        print(f"  Wrote {OUT_FILE}")
+    except Exception as e:
+        fetched_at = datetime.now().strftime("%d %b %Y %H:%M IST")
+        OUT_FILE.write_text(json.dumps({
+            "error": str(e),
+            "fetched_at": fetched_at,
+            "composite_score": None,
+            "label": "No data",
+        }, indent=2))
+        print(f"  ERROR in main(): {e} — wrote error-state JSON")
 
 
 if __name__ == "__main__":
