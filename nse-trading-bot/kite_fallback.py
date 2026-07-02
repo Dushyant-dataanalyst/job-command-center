@@ -29,6 +29,8 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent
 SESSION_FILE = REPO_ROOT / "kite_session.json"
 
 KITE_QUOTE_LTP_URL = "https://api.kite.trade/quote/ltp"
+KITE_TRADES_URL = "https://api.kite.trade/trades"
+KITE_ORDERS_URL = "https://api.kite.trade/orders"
 
 # Verify these against your own Kite account before relying on them —
 # exact index symbol strings can vary and aren't independently testable
@@ -95,3 +97,38 @@ def get_stock_spot(nse_symbol):
     if not result:
         return None
     return result.get(symbol)
+
+
+def _authed_get(url):
+    session = _load_session()
+    if session is None:
+        return None, "no valid Kite session for today — run kite_auth_refresh.py (see kite_auth_refresh.yml for the login URL)"
+    try:
+        resp = requests.get(
+            url,
+            headers={
+                "X-Kite-Version": "3",
+                "Authorization": f"token {session['api_key']}:{session['access_token']}",
+            },
+            timeout=10,
+        )
+        if resp.status_code != 200:
+            return None, f"Kite API returned {resp.status_code}: {resp.text}"
+        return resp.json().get("data", []), None
+    except Exception as e:
+        return None, f"request failed: {e}"
+
+
+def get_trades():
+    """Today's executed trades (fills) on your Kite account — real broker
+    data, not the paper-trading journal. Returns (trades, error) where
+    trades is a list of Kite's raw trade dicts (trading_symbol, transaction_type,
+    quantity, average_price, trade_id, order_id, fill_timestamp, ...) or
+    (None, reason) if no valid session / the request failed."""
+    return _authed_get(KITE_TRADES_URL)
+
+
+def get_orders():
+    """Today's order book (all statuses: COMPLETE/OPEN/CANCELLED/REJECTED),
+    same (data, error) shape as get_trades()."""
+    return _authed_get(KITE_ORDERS_URL)
