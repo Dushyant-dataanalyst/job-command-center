@@ -6,12 +6,17 @@ on:
     - cron: '30 15 * * 1-5'       # Once at 9:00 PM IST (15:30 UTC) — next-day prep
   workflow_dispatch:               # Manual trigger from GitHub UI — hit "Run workflow" any time to force a fresh pull
 
-# Ensures a hung/slow run can never block the next scheduled tick from starting —
-# a stuck run gets cancelled the moment a newer one is queued, instead of every
-# future cron trigger silently piling up behind it indefinitely.
+# cancel-in-progress was true until 02-Jul-2026 — reverted after finding it was
+# likely the actual cause of near-zero commits that day. logs/run_history.json
+# changes on every execution and forces a commit, so commit count == execution
+# count; with only ~9-min job runtime possible (50-stock scan w/ retry backoff)
+# against a 5-min trigger interval, cancel-in-progress:true meant almost every
+# run got killed by the next tick before it ever reached the commit step. A
+# queued run (this setting) can finish and commit even if a slower predecessor
+# is still running; a genuinely hung run is still bounded by timeout-minutes below.
 concurrency:
   group: nse-fo-refresh
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   fo-refresh:
