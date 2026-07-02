@@ -12,11 +12,13 @@ import warnings
 from datetime import date, timedelta
 from yf_retry import download_with_retry
 from ist_time import now_ist_str
+from alerts import send_alert
 
 warnings.filterwarnings('ignore')
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 SIDECAR_FILE = REPO_ROOT / "fo_latest.json"
+FO_ALERT_STATE_FILE = REPO_ROOT / "logs" / "fo_alert_state.json"
 
 # ── Same constants as fo_traders_mcp.py ───────────────────────────────────
 INSTRUMENTS = {
@@ -162,6 +164,45 @@ def _fo_signal(instrument):
         }
     }
 
+def _load_fo_alert_state():
+    if not FO_ALERT_STATE_FILE.exists():
+        return {}
+    try:
+        return json.loads(FO_ALERT_STATE_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _save_fo_alert_state(state):
+    FO_ALERT_STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    FO_ALERT_STATE_FILE.write_text(json.dumps(state, indent=2), encoding="utf-8")
+
+
+def _alert_fo_signal_changes(fo_exact):
+    """This refresh runs every 5 min — alert only on a NEW actionable signal
+    (WAIT -> BUY_CE/BUY_PE, or a direction flip), not every run while the
+    same signal still holds, so it doesn't spam every 5 minutes. State is
+    persisted in logs/fo_alert_state.json so a restart/redeploy doesn't
+    accidentally re-fire on an already-alerted, still-active signal."""
+    state = _load_fo_alert_state()
+    for inst, r in fo_exact.items():
+        if inst == "_meta" or not isinstance(r, dict) or "error" in r:
+            continue
+        consensus = r.get("consensus")
+        prev = state.get(inst)
+        if consensus and consensus != "WAIT" and consensus != prev:
+            trade = r.get("trade", {})
+            votes = r.get("ce_votes") if consensus == "BUY_CE" else r.get("pe_votes")
+            text = (
+                f"{inst}: {trade.get('action', consensus)} — spot {r.get('spot')}, "
+                f"signal score {votes}/6, entry premium ~{trade.get('entry_premium')}, "
+                f"SL {trade.get('sl_premium')}, T1 {trade.get('target1_premium')}"
+            )
+            send_alert(text, level="SIGNAL")
+        state[inst] = consensus
+    _save_fo_alert_state(state)
+
+
 def main():
     now_str = now_ist_str()
     print(f"[{now_str}] Cloud F&O refresh starting...")
@@ -176,6 +217,7 @@ def main():
     # Write the sidecar that the dashboard fetches at /fo_latest.json (repo root = Vercel site root)
     SIDECAR_FILE.write_text(json.dumps(fo_exact, indent=2), encoding="utf-8")
     print(f"  Wrote {SIDECAR_FILE}")
+    _alert_fo_signal_changes(fo_exact)
     print("Done.")
 
 if __name__ == "__main__":
