@@ -188,20 +188,26 @@ body.stale-blocked #exact-trade-panel > div::after{
      dangerous than no dashboard at all. -->
 <div id="stale-banner" style="display:none;background:#dc2626;color:#fff;font-weight:900;text-align:center;padding:12px 16px;border-radius:10px;margin-bottom:12px;font-size:13px;letter-spacing:.3px"></div>
 <script>
+// Shared across the staleness poll, the 5-min live-fetch IIFE, and the refresh
+// button — one source of truth for "what's the newest data timestamp we've
+// actually seen", so the button can tell real refreshes apart from re-reloads
+// of the same unchanged backend snapshot.
+let _lastKnownDataTs = null;
+
+function parseISTTimestamp(str){
+  const m = str && String(str).match(/(\d{1,2}) (\w{3}) (\d{4}) (\d{1,2}):(\d{2})/);
+  if (!m) return null;
+  const MONTHS = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
+  const mon = MONTHS[m[2]];
+  if (mon === undefined) return null;
+  // The wall-clock values in the string ARE IST — subtract 5:30 to recover the true UTC instant.
+  return Date.UTC(+m[3], mon, +m[1], +m[4], +m[5]) - 5.5 * 3600 * 1000;
+}
+
 (function(){
   const STALE_THRESHOLD_MIN = 15; // 3 missed 5-min cron cycles = treat as broken, not just "a bit slow"
   const MARKET_OPEN_MIN = 9 * 60 + 15;   // 9:15 IST
   const MARKET_CLOSE_MIN = 15 * 60 + 30; // 15:30 IST
-
-  function parseISTTimestamp(str){
-    const m = str && String(str).match(/(\d{1,2}) (\w{3}) (\d{4}) (\d{1,2}):(\d{2})/);
-    if (!m) return null;
-    const MONTHS = {Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};
-    const mon = MONTHS[m[2]];
-    if (mon === undefined) return null;
-    // The wall-clock values in the string ARE IST — subtract 5:30 to recover the true UTC instant.
-    return Date.UTC(+m[3], mon, +m[1], +m[4], +m[5]) - 5.5 * 3600 * 1000;
-  }
 
   function isMarketHoursIST(){
     // Shift the current true instant by +5:30 and read UTC components back off it —
@@ -221,6 +227,7 @@ body.stale-blocked #exact-trade-panel > div::after{
         const ts = (d._meta && d._meta.generated_at) || d.fetched_at;
         const instant = parseISTTimestamp(ts);
         if (instant == null) return;
+        if (_lastKnownDataTs == null || instant > _lastKnownDataTs) _lastKnownDataTs = instant;
         const ageMin = (Date.now() - instant) / 60000;
         const stale = isMarketHoursIST() && ageMin > STALE_THRESHOLD_MIN;
         document.body.classList.toggle('stale-blocked', stale);
@@ -238,6 +245,7 @@ body.stale-blocked #exact-trade-panel > div::after{
       .catch(function(){}); // network failure here isn't itself proof of staleness — don't false-positive on a blip
   }
   checkDataStaleness();
+  setInterval(checkDataStaleness, 60000); // poll every 60s so staleness (and _lastKnownDataTs) stay current without needing a manual reload
 })();
 </script>
 
@@ -2569,13 +2577,40 @@ renderPositions();
 function doRefresh(btn){
   btn.classList.add('spin'); btn.disabled=true;
   const orig=btn.innerHTML;
-  btn.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Loading…`;
-  toast('🔄 Fetching latest from server…', 5000);
-  // Cache-busted reload — always gets the latest version pushed by the scheduler
-  setTimeout(()=>{
-    const url = location.href.split('?')[0] + '?v=' + Date.now();
-    location.replace(url);
-  }, 600);
+  btn.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Checking…`;
+
+  function restore(){
+    btn.classList.remove('spin'); btn.disabled=false; btn.innerHTML=orig;
+  }
+
+  // Check whether the backend has actually produced newer data before doing
+  // a blind reload — previously this always reloaded regardless, so an
+  // unchanged backend (very possible given the cron's own cadence issues)
+  // looked identical after the "refresh" with zero explanation of why.
+  fetch('/fo_latest.json?v=' + Date.now())
+    .then(r => r.ok ? r.json() : Promise.reject(new Error('bad response')))
+    .then(d => {
+      const ts = (d._meta && d._meta.generated_at) || d.fetched_at;
+      const instant = parseISTTimestamp(ts);
+      const hhmm = (ts || '').match(/(\d{1,2}:\d{2})/);
+      const hhmmStr = hhmm ? hhmm[1] : (ts || '?');
+      const isNewer = instant != null && (_lastKnownDataTs == null || instant > _lastKnownDataTs);
+      if (isNewer) {
+        _lastKnownDataTs = instant;
+        toast('✅ Refreshed — now showing ' + hhmmStr + ' IST data', 3000);
+        setTimeout(() => {
+          const url = location.href.split('?')[0] + '?v=' + Date.now();
+          location.replace(url);
+        }, 500);
+      } else {
+        toast('⏳ No new data yet — still showing ' + hhmmStr + ' IST (backend hasn\'t refreshed since)', 4000);
+        restore();
+      }
+    })
+    .catch(() => {
+      toast('⚠ Could not reach server — check your connection and try again', 4000);
+      restore();
+    });
 }
 
 /* ─── Auto-refresh timer ─── */
@@ -2660,6 +2695,12 @@ function doRefresh(btn){
   function applyLiveData(d) {
     var meta = d._meta || {};
     var ts   = meta.generated_at || '';
+
+    // Keep the shared "newest data we've seen" marker current so the
+    // refresh button's own check (doRefresh) doesn't lag behind this
+    // 5-min background poll.
+    var instant = (typeof parseISTTimestamp === 'function') ? parseISTTimestamp(ts) : null;
+    if (instant != null && (_lastKnownDataTs == null || instant > _lastKnownDataTs)) _lastKnownDataTs = instant;
 
     // ── Update timestamp badge and header date ──
     var badge = document.getElementById('fo-refresh-ts');
