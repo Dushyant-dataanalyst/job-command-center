@@ -3,8 +3,13 @@ System B entrypoint — Master Brief Part 4. Run manually (`python run_screen.py
 whenever you want a refreshed ranked watchlist; this is a research tool, not
 a live feed, so it isn't wired into any cron by default.
 
-Writes quality_growth_watchlist.json in this folder — separate from every
-JSON file the trading bot's dashboard reads, on purpose.
+Writes quality_growth_watchlist.json to the REPO ROOT, not this folder —
+that's the one deliberate exception to "separate folder from the bot": the
+dashboard reads every feed from repo root (vercel.json no-cache routes), so
+the output artifact lives there like every other JSON feed. All the CODE
+(scoring logic, data fetch, config) stays in this folder with zero imports
+from nse-trading-bot/ — only the output JSON crosses the boundary, and it's
+data, not code that could ever place an order.
 """
 import sys, os, json, pathlib, time
 sys.path.insert(0, os.path.dirname(__file__))
@@ -13,7 +18,8 @@ import config
 from data_fetch import fetch_stock_data
 from screen import score_stock
 
-OUT_FILE = pathlib.Path(__file__).parent / config.OUTPUT_FILE
+REPO_ROOT = pathlib.Path(__file__).parent.parent
+OUT_FILE = REPO_ROOT / config.OUTPUT_FILE
 
 
 def main():

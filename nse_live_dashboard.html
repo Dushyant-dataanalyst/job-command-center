@@ -357,6 +357,7 @@ body.stale-blocked #exact-trade-panel > div::after{
   <div class="tab" onclick="showTab('pos',this)"><span class="tab-full">📌 My Positions</span><span class="tab-short">📌 Mine</span></div>
   <div class="tab" onclick="showTab('fo',this)"><span class="tab-full">⚡ Futures & Options</span><span class="tab-short">⚡ F&O</span></div>
   <div class="tab" onclick="showTab('wl',this)"><span class="tab-full">👁 Setups Forming (<span id="tab-wl-count">14</span>)</span><span class="tab-short">👁 Setups</span></div>
+  <div class="tab" onclick="showTab('lt',this)"><span class="tab-full">🌱 Long Term</span><span class="tab-short">🌱 LT</span></div>
   <div class="tab" onclick="showTab('guide',this)"><span class="tab-full">📋 Strategy Guide</span><span class="tab-short">📋 Guide</span></div>
 </div>
 
@@ -367,6 +368,8 @@ body.stale-blocked #exact-trade-panel > div::after{
 <script>
 let SCAN_DATA = {};
 let SCAN_META = null;
+let LT_DATA = {}; // System B quality-growth screen, keyed by bare NSE symbol (no .NS) — see _loadLongTerm()
+const LT_QUALITY_THRESHOLD = 65; // composite score above which a swing BUY also gets the "long-term quality" badge
 </script>
 
 <!-- Inline equity-tab positions block removed — tracked exclusively in the My Positions tab now -->
@@ -944,6 +947,13 @@ function _fmtDate(d){
   return d.toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
 }
 
+function _longTermBadge(name){
+  const lt = LT_DATA[name];
+  if (!lt || lt.hard_fail || lt.composite < LT_QUALITY_THRESHOLD) return '';
+  const title = `System B long-term score ${lt.composite}/100 (${lt.investor_style_match ? lt.investor_style_match.primary : ''}-style) — swing signal AND a quality long-term hold. Consider a partial hold beyond T2/T3 if the thesis is still intact, instead of exiting the whole position at target.`;
+  return `<div title="${title.replace(/"/g,'&quot;')}" style="margin-top:4px;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:5px;padding:2px 6px;font-size:9px;font-weight:700;display:inline-block;cursor:help">🌱 Also Long-Term (${lt.composite})</div>`;
+}
+
 function renderEquityRows(){
   const tbody = document.getElementById('eq-body');
   if (!tbody) return;
@@ -970,6 +980,7 @@ function renderEquityRows(){
       <td>
         <div style="font-weight:700;font-size:13px;color:#0f172a">${name}</div>
         <div style="color:#94a3b8;font-size:10px;margin-top:1px">${s.sector || ''}</div>
+        ${_longTermBadge(name)}
         ${btnHtml}
       </td>
       <td><span style="background:${sig.bg};color:${sig.color};border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">${sig.emoji} ${sig.label} ${s.buy_votes}/4</span></td>
@@ -1814,6 +1825,18 @@ function updateEquityCounts(){
 </div>
 
 
+<!-- LONG TERM TAB (System B — quality-growth screen, Master Brief Part 4) -->
+<div id="lt" class="panel">
+<div class="sec">
+  <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#059669"></span>Long-Term Quality-Growth Screen <span id="lt-generated" style="margin-left:auto;font-size:10px;color:#94a3b8;font-weight:400"></span></div>
+  <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;font-size:11px;line-height:1.7;color:#374151;margin-bottom:12px">
+    <strong style="color:#15803d">Separate research system (System B)</strong> — long-term holds, not swing signals. Never places orders; you decide manually. Composite 0-100 across Quality (35%) / Growth (30%) / Valuation (20%) / India Red Flags (15%). Educational, not investment advice.
+  </div>
+  <div id="lt-body" style="display:grid;gap:10px"></div>
+</div>
+</div>
+
+
 <!-- GUIDE TAB -->
 <div id="guide" class="panel">
 <div class="sec">
@@ -2190,6 +2213,69 @@ function _loadEquityScan(){
   });
 }
 _loadEquityScan();
+
+/* ─── System B — Long Term quality-growth screen (Master Brief Part 4).
+     Separate JSON feed, separate tab, never touches order logic. Re-renders
+     the equity table too once loaded, since the "also a long-term pick"
+     badge on swing BUY rows depends on LT_DATA being populated — whichever
+     of the two loaders (this one or _loadEquityScan) finishes last is the
+     one that actually shows the badge, so both call renderEquityRows(). ─── */
+function _ltStyleBadge(style){
+  const colors = {Buffett:'#0f766e', Munger:'#7c3aed', Lynch:'#2563eb', Graham:'#b45309', Jhunjhunwala:'#be185d'};
+  const c = colors[style] || '#475569';
+  return `<span style="background:${c}1a;color:${c};border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap">${style}</span>`;
+}
+
+function renderLongTerm(){
+  const box = document.getElementById('lt-body');
+  if (!box) return;
+  const ranked = LT_DATA.__ranked || [];
+  if (!ranked.length) {
+    box.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:12px 0">Could not load the long-term screen — run quality-growth-screen/run_screen.py, or try refreshing.</div>';
+    return;
+  }
+  box.innerHTML = ranked.map(r => {
+    const bad = r.hard_fail;
+    const style = r.investor_style_match || {};
+    const outlook = r.industry_outlook || {};
+    const ratingColor = {High:'#059669', Medium:'#d97706', Low:'#dc2626', Unknown:'#94a3b8'}[outlook.rating] || '#94a3b8';
+    return `<div style="border:1px solid ${bad ? '#fecaca' : '#e2e8f0'};border-radius:10px;padding:12px 14px;background:${bad ? '#fef2f2' : '#fff'}">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="font-weight:800;font-size:14px;color:#0f172a">${r.ticker.replace('.NS','')}</span>
+        <span style="font-size:11px;color:#64748b">${r.sector || ''} · ${r.industry || ''}</span>
+        <span style="margin-left:auto;font-weight:800;font-size:15px;color:${bad ? '#dc2626' : '#059669'}">${r.composite}/100</span>
+      </div>
+      ${bad ? `<div style="margin-top:6px;font-size:11px;color:#dc2626;font-weight:700">${bad}</div>` : ''}
+      <div style="margin-top:8px;font-size:11px;line-height:1.6;color:#374151">${(r.summary || '').replace(/^Why: /,'<strong>Why:</strong> ')}</div>
+      <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+        <span style="background:${ratingColor}1a;color:${ratingColor};border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700">${outlook.rating || '?'} industry tailwind</span>
+        ${style.primary ? _ltStyleBadge(style.primary) : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function _loadLongTerm(){
+  fetch('/quality_growth_watchlist.json?v=' + Date.now())
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      LT_DATA = {};
+      if (data && Array.isArray(data.ranked)) {
+        LT_DATA.__ranked = data.ranked;
+        LT_DATA.__generatedAt = data.generated_at || '';
+        data.ranked.forEach(r => { LT_DATA[r.ticker.replace('.NS', '')] = r; });
+      }
+      const genEl = document.getElementById('lt-generated');
+      if (genEl && LT_DATA.__generatedAt) genEl.textContent = 'as of ' + LT_DATA.__generatedAt;
+      renderLongTerm();
+      renderEquityRows(); // pick up the long-term badge on swing BUY rows now that LT_DATA is real
+    })
+    .catch(() => {
+      const box = document.getElementById('lt-body');
+      if (box) box.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:12px 0">Could not load the long-term screen — try refreshing.</div>';
+    });
+}
+_loadLongTerm();
 
 function sigLabel(sig){
   const map = {'STRONG_BUY':'🔥 Strong Buy','BUY':'✅ Buy','WEAK_BUY':'🟡 Weak Buy',
