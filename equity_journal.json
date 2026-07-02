@@ -1,15 +1,41 @@
 {
-  "fetched_at": "02 Jul 2026 11:33 IST",
+  "fetched_at": "02 Jul 2026 15:00 IST",
   "positions": [
+    {
+      "name": "HDFCBANK",
+      "entry": 796.3,
+      "sl": 777.34,
+      "t1": 820.0,
+      "t2": 843.7,
+      "current_price": 797.15,
+      "pnl_pct": 0.11,
+      "status": "healthy",
+      "bought_at": "25 Jun 2026",
+      "source": "default",
+      "price_source": "yfinance"
+    },
     {
       "name": "ICICIBANK",
       "entry": 1387.5,
       "sl": 1355.15,
       "t1": 1427.94,
       "t2": 1468.38,
-      "current_price": 1385.9,
-      "pnl_pct": -0.12,
+      "current_price": 1402.1,
+      "pnl_pct": 1.05,
       "status": "healthy",
+      "bought_at": "25 Jun 2026",
+      "source": "default",
+      "price_source": "yfinance"
+    },
+    {
+      "name": "KOTAKBANK",
+      "entry": 409.0,
+      "sl": 400.01,
+      "t1": 420.24,
+      "t2": 431.47,
+      "current_price": 399.2,
+      "pnl_pct": -2.4,
+      "status": "below_sl",
       "bought_at": "25 Jun 2026",
       "source": "default",
       "price_source": "yfinance"
@@ -20,8 +46,8 @@
       "sl": 1023.07,
       "t1": 1073.32,
       "t2": 1101.23,
-      "current_price": 1051.4,
-      "pnl_pct": 0.57,
+      "current_price": 1051.6,
+      "pnl_pct": 0.59,
       "status": "healthy",
       "bought_at": "25 Jun 2026",
       "source": "default",
@@ -29,32 +55,32 @@
     },
     {
       "name": "PAGEIND",
-      "entry": 40810,
-      "sl": 39558.57,
-      "t1": 42374.29,
-      "t2": 43938.58,
-      "current_price": 42960.0,
-      "pnl_pct": 5.27,
+      "entry": 40950,
+      "sl": 39698.57,
+      "t1": 42514.29,
+      "t2": 44078.58,
+      "current_price": 42885.0,
+      "pnl_pct": 4.73,
       "status": "target1_hit",
-      "bought_at": "25 Jun 2026",
+      "bought_at": "26 Jun 2026",
       "source": "synced",
       "price_source": "yfinance"
     }
   ],
   "errors": {},
   "stats": {
-    "total_tracked": 3,
-    "total_pnl_pct": 1.91,
+    "total_tracked": 5,
+    "total_pnl_pct": 0.82,
     "best": {
       "name": "PAGEIND",
-      "pnl_pct": 5.27
+      "pnl_pct": 4.73
     },
     "worst": {
-      "name": "ICICIBANK",
-      "pnl_pct": -0.12
+      "name": "KOTAKBANK",
+      "pnl_pct": -2.4
     },
-    "below_sl_count": 0,
-    "diagnostic": "PAGEIND is your best performer at +5.27%, ICICIBANK is your worst at -0.12%."
+    "below_sl_count": 1,
+    "diagnostic": "PAGEIND is your best performer at +4.73%, KOTAKBANK is your worst at -2.4%. KOTAKBANK is below stop-loss \u2014 review your exit plan."
   },
   "disclaimer": "Real positions, real prices \u2014 not paper trades. yfinance EOD/delayed quotes; verify live price in your broker terminal before acting."
 }
