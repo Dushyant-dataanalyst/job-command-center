@@ -1,56 +1,56 @@
 {
   "_meta": {
-    "generated_at": "01 Jul 2026 22:58 IST",
+    "generated_at": "02 Jul 2026 11:32 IST",
     "source": "yfinance EOD"
   },
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 24005.85,
-    "ann_vol": 0.1154,
+    "spot": 24083.6,
+    "ann_vol": 0.1155,
+    "consensus": "BUY_CE",
+    "ce_votes": 5,
+    "pe_votes": 0,
+    "data_as_of": "2026-07-02",
+    "fetched_at": "02 Jul 2026 11:32 IST",
+    "data_warning": "Signals based on 2026-07-02 close (yfinance EOD). Verify in Kite before trading.",
+    "trade": {
+      "action": "BUY NIFTY 24100 CE",
+      "zerodha_symbol": "NIFTY26JUL24100CE",
+      "zerodha_search": "NIFTY JUL 24100 CE",
+      "strike": 24100,
+      "expiry": "30 Jul 2026",
+      "days_to_exp": 28,
+      "lot_size": 75,
+      "entry_premium": 308.0,
+      "sl_premium": 216.0,
+      "target1_premium": 431.0,
+      "target_premium": 616.0,
+      "cost_1_lot": 23100.0
+    }
+  },
+  "BANKNIFTY": {
+    "instrument": "BANKNIFTY",
+    "spot": 58027.85,
+    "ann_vol": 0.1601,
     "consensus": "WAIT",
     "ce_votes": 3,
     "pe_votes": 0,
-    "data_as_of": "2026-07-01",
-    "fetched_at": "01 Jul 2026 22:59 IST",
-    "data_warning": "Signals based on 2026-07-01 close (yfinance EOD). Verify in Kite before trading.",
+    "data_as_of": "2026-07-02",
+    "fetched_at": "02 Jul 2026 11:32 IST",
+    "data_warning": "Signals based on 2026-07-02 close (yfinance EOD). Verify in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "zerodha_symbol": "\u2014",
       "zerodha_search": "\u2014",
       "strike": 0,
-      "expiry": "30 Jul 2026",
-      "days_to_exp": 29,
-      "lot_size": 75,
+      "expiry": "29 Jul 2026",
+      "days_to_exp": 27,
+      "lot_size": 30,
       "entry_premium": 0,
       "sl_premium": 0.0,
       "target1_premium": 0.0,
       "target_premium": 0.0,
       "cost_1_lot": 0
-    }
-  },
-  "BANKNIFTY": {
-    "instrument": "BANKNIFTY",
-    "spot": 58033.05,
-    "ann_vol": 0.1606,
-    "consensus": "BUY_CE",
-    "ce_votes": 5,
-    "pe_votes": 0,
-    "data_as_of": "2026-07-01",
-    "fetched_at": "01 Jul 2026 22:59 IST",
-    "data_warning": "Signals based on 2026-07-01 close (yfinance EOD). Verify in Kite before trading.",
-    "trade": {
-      "action": "BUY BANKNIFTY 58000 CE",
-      "zerodha_symbol": "BANKNIFTY26JUL58000CE",
-      "zerodha_search": "BANKNIFTY JUL 58000 CE",
-      "strike": 58000,
-      "expiry": "29 Jul 2026",
-      "days_to_exp": 28,
-      "lot_size": 30,
-      "entry_premium": 1033.0,
-      "sl_premium": 723.0,
-      "target1_premium": 1446.0,
-      "target_premium": 2066.0,
-      "cost_1_lot": 30990.0
     }
   }
 }
