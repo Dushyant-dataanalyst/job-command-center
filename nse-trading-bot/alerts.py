@@ -27,7 +27,11 @@ FALLBACK_MAX = 100
 # avoids emoji in anything that might print to a Windows cp1252 console.
 # Telegram itself renders emoji fine; this is just about print() not crashing
 # when someone runs a script locally on Windows, same lesson learned earlier.
-LEVEL_PREFIX = {"INFO": "[INFO]", "WARNING": "[WARNING]", "CRITICAL": "[CRITICAL]"}
+# SIGNAL is not in the Master Brief's original 3-level spec (INFO/WARNING/
+# CRITICAL) — added for actionable trade-opportunity pushes (e.g. a 4/4
+# unanimous equity signal) that are neither routine (INFO) nor a problem
+# (WARNING/CRITICAL), so they don't get lost in the noise of every-run pings.
+LEVEL_PREFIX = {"INFO": "[INFO]", "WARNING": "[WARNING]", "CRITICAL": "[CRITICAL]", "SIGNAL": "[SIGNAL]"}
 
 
 def _append_fallback_log(level, message, error):

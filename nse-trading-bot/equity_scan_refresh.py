@@ -16,6 +16,7 @@ from datetime import date
 
 from ist_time import now_ist_str
 from equity_scan_core import scan_universe
+from alerts import send_alert
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 OUT_FILE = REPO_ROOT / "equity_scan.json"
@@ -43,6 +44,22 @@ def _update_history(strong_buy, buy, watch):
     HISTORY_FILE.write_text(json.dumps(history, indent=2), encoding="utf-8")
 
 
+def _alert_unanimous_picks(results):
+    """This scan only runs once a day (9pm IST prep, or manual dispatch) —
+    if the user isn't at the dashboard right when it lands, a unanimous
+    (4/4 voter) pick is easy to miss until the entry has already moved.
+    Push it immediately instead of relying on them checking the tab."""
+    unanimous = {name: r for name, r in results.items() if r.get("buy_votes") == 4}
+    if not unanimous:
+        return
+    lines = [
+        f"{name}: entry ~{r['entry']}, SL {r['sl']}, T1 {r['t1']} (all 4 voters agree)"
+        for name, r in sorted(unanimous.items(), key=lambda kv: kv[1]["entry"])
+    ]
+    text = f"{len(unanimous)} stock(s) hit 4/4 unanimous BUY in today's scan:\n" + "\n".join(lines)
+    send_alert(text, level="SIGNAL")
+
+
 def main():
     try:
         now_str = now_ist_str()
@@ -68,6 +85,7 @@ def main():
         OUT_FILE.write_text(json.dumps(out, indent=2), encoding="utf-8")
         print(f"  scanned={len(results)} strong_buy={strong_buy} buy={buy} watch={watch} errors={len(errors)}")
         print(f"  Wrote {OUT_FILE}")
+        _alert_unanimous_picks(results)
     except Exception as e:
         OUT_FILE.write_text(json.dumps({
             "_meta": {
