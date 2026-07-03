@@ -1,14 +1,34 @@
 {
-  "fetched_at": "03 Jul 2026 11:31 IST",
-  "positions": [],
+  "fetched_at": "03 Jul 2026 11:36 IST",
+  "positions": [
+    {
+      "name": "DLF",
+      "entry": 667.25,
+      "sl": 642.62,
+      "t1": 698.04,
+      "t2": 728.83,
+      "current_price": 667.55,
+      "pnl_pct": 0.04,
+      "status": "healthy",
+      "bought_at": "3 Jul 2026",
+      "source": "synced",
+      "price_source": "yfinance"
+    }
+  ],
   "errors": {},
   "stats": {
-    "total_tracked": 0,
-    "total_pnl_pct": null,
-    "best": null,
-    "worst": null,
+    "total_tracked": 1,
+    "total_pnl_pct": 0.04,
+    "best": {
+      "name": "DLF",
+      "pnl_pct": 0.04
+    },
+    "worst": {
+      "name": "DLF",
+      "pnl_pct": 0.04
+    },
     "below_sl_count": 0,
-    "diagnostic": "No live price data available \u2014 check yfinance connectivity."
+    "diagnostic": "Only 1 tracked positions \u2014 too few to draw a pattern, but here's where things stand: DLF +0.04%."
   },
   "disclaimer": "Real positions, real prices \u2014 not paper trades. yfinance EOD/delayed quotes; verify live price in your broker terminal before acting."
 }
