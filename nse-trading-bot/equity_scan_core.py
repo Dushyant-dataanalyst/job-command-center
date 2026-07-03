@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import numpy as np
 import pandas as pd
 
-from yf_retry import download_with_retry
+from market_data import get_ohlcv
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 VOTER_WEIGHTS_FILE = REPO_ROOT / "voter_weights.json"
@@ -72,7 +72,7 @@ def _peg_ratio(ticker):
 
 
 def _extended_indicators(ticker):
-    df = download_with_retry(ticker, period="6mo")
+    df, data_source = get_ohlcv(ticker, period="6mo")
     if df.empty or len(df) < 55:
         return None
     if isinstance(df.columns, pd.MultiIndex):
@@ -119,6 +119,7 @@ def _extended_indicators(ticker):
         "prev_close": float(close.iloc[-2]),
         "rel_volume": rel_volume,
         "data_date": str(df.index[-1].date()),
+        "data_source": data_source,
     }
 
 

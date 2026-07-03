@@ -9,7 +9,7 @@ the MCP server for the full rationale on scoring and data honesty.
 """
 import pandas as pd
 
-from yf_retry import download_with_retry
+from market_data import get_ohlcv
 from ist_time import now_ist_str
 
 SECTOR_INDICES = {
@@ -42,7 +42,7 @@ SECTOR_STOCKS = {
 
 
 def _momentum_volume(ticker, period="2mo"):
-    df = download_with_retry(ticker, period=period)
+    df, data_source = get_ohlcv(ticker, period=period)
     if df.empty or len(df) < 25:
         return None
     if isinstance(df.columns, pd.MultiIndex):
@@ -69,6 +69,7 @@ def _momentum_volume(ticker, period="2mo"):
         "bullish_trend": bullish,
         "last_close": round(float(close.iloc[-1]), 2),
         "data_as_of": str(df.index[-1].date()),
+        "data_source": data_source,
     }
 
 

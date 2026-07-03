@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import numpy as np
 import pandas as pd
 
-from yf_retry import download_with_retry
+from market_data import get_ohlcv
 from equity_scan_core import _adx14
 
 INSTRUMENTS = {"NIFTY50": "^NSEI", "BANKNIFTY": "^NSEBANK"}
@@ -27,7 +27,7 @@ TREND_ADX_THRESHOLD = 20  # ADX below this = no reliable trend direction (choppy
 
 
 def _regime_indicators(ticker):
-    df = download_with_retry(ticker, period="6mo")
+    df, data_source = get_ohlcv(ticker, period="6mo")
     if df.empty or len(df) < 55:
         return None
     if isinstance(df.columns, pd.MultiIndex):
@@ -62,6 +62,7 @@ def _regime_indicators(ticker):
         "atr_percentile": round(percentile, 0),
         "rel_volume": rel_volume,
         "data_date": str(df.index[-1].date()),
+        "data_source": data_source,
     }
 
 
@@ -161,6 +162,7 @@ def detect_regime():
                 "rel_volume": v["rel_volume"],
                 "spot": round(v["spot"], 2),
                 "data_as_of": v["data_date"],
+                "data_source": v["data_source"],
             }
         except Exception as e:
             errors[name] = str(e)

@@ -55,8 +55,8 @@ jobs:
 
       - name: Commit today's session
         run: |
-          git config user.name  "NSE Bot"
-          git config user.email "nse-bot@github-actions"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin master
           git reset --mixed origin/master
           git add kite_session.json

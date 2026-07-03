@@ -10,7 +10,7 @@ import pandas as pd
 import requests
 import warnings
 from datetime import date, timedelta
-from yf_retry import download_with_retry
+from market_data import get_ohlcv
 from ist_time import now_ist_str
 from alerts import send_alert
 
@@ -55,7 +55,7 @@ def _premium_estimate(spot, strike, ann_vol, days):
     return round(p, 0)
 
 def _get_indicators(ticker):
-    df = download_with_retry(ticker, period="6mo")
+    df, data_source = get_ohlcv(ticker, period="6mo")
     if df.empty or len(df) < 55:
         return {}
     if isinstance(df.columns, pd.MultiIndex):
@@ -92,6 +92,7 @@ def _get_indicators(ticker):
         "roc5":round(float(close.pct_change(5).iloc[-1]*100),2),
         "roc3":round(float(close.pct_change(3).iloc[-1]*100),2),
         "data_date":str(df.index[-1].date()),
+        "data_source":data_source,
     }
 
 def _signals(v):
