@@ -200,8 +200,14 @@ jobs:
       - name: Commit updated JSON files if changed
         if: always()
         run: |
-          git config user.name  "NSE Bot"
-          git config user.email "nse-bot@github-actions"
+          # 41898282+github-actions[bot]@users.noreply.github.com is GitHub's
+          # own official bot service-account identity (App ID 41898282) — a
+          # real, recognized account, unlike the previous made-up
+          # nse-bot@github-actions address that Vercel/GitHub couldn't match
+          # to anyone ("Invalid git email address" warning in Vercel's UI).
+          # Purely cosmetic either way — deployments always worked regardless.
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           # Fetch latest from origin — avoids conflict if laptop also pushed
           git fetch origin master
