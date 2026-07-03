@@ -772,9 +772,13 @@ const LT_QUALITY_THRESHOLD = 65; // composite score above which a swing BUY also
 (function buildNews(){
   function row(item, showTicker){
     var date = (item.published || '').split(' ').slice(0,1).join(' ') || '';
+    var kindBadge = item.kind === 'holding'
+      ? '<span style="background:#14532d;color:#4ade80;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:800">🏠 HOLDING</span>'
+      : (item.kind === 'watchlist' ? '<span style="background:#1e3a5f;color:#38bdf8;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:800">🌱 WATCHLIST</span>' : '');
     return '<div style="padding:8px 0;border-bottom:1px solid #1e293b">' +
-      '<div style="display:flex;align-items:baseline;gap:8px">' +
+      '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap">' +
         (showTicker ? '<span style="background:#1e293b;color:#38bdf8;border-radius:5px;padding:1px 6px;font-size:9px;font-weight:800">' + item.ticker + '</span>' : '') +
+        (showTicker ? kindBadge : '') +
         '<span style="font-size:11px;font-weight:700;color:#e2e8f0">' + item.company + '</span>' +
         '<span style="font-size:9px;color:#475569;margin-left:auto">' + (item.published || '') + '</span>' +
       '</div>' +
@@ -787,10 +791,12 @@ const LT_QUALITY_THRESHOLD = 65; // composite score above which a swing BUY also
     if (!box) return;
     var posNews = d.position_news || [];
     var recent = d.recent_announcements || [];
+    var heldCount = (d.tracked_positions || []).length;
+    var wlCount = (d.tracked_watchlist || []).length;
 
     var posHtml = posNews.length
       ? posNews.slice(0,5).map(function(i){ return row(i, true); }).join('')
-      : '<div style="font-size:11px;color:#64748b;padding:6px 0">No announcements for your tracked positions right now.</div>';
+      : '<div style="font-size:11px;color:#64748b;padding:6px 0">No announcements for your holdings or long-term watchlist right now.</div>';
 
     box.innerHTML =
       '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
@@ -798,7 +804,7 @@ const LT_QUALITY_THRESHOLD = 65; // composite score above which a swing BUY also
           '<span style="font-size:14px;font-weight:800">📰 NSE Corporate Announcements</span>' +
           '<span style="font-size:11px;color:#64748b">' + (d.fetched_at || '') + '</span>' +
         '</div>' +
-        '<div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:4px">Your Positions</div>' +
+        '<div style="font-size:11px;font-weight:700;color:#94a3b8;margin-bottom:4px">Your Holdings (' + heldCount + ') &amp; Long-Term Watchlist (' + wlCount + ')</div>' +
         posHtml +
         (recent.length ? '<details style="margin-top:10px"><summary style="font-size:11px;color:#64748b;cursor:pointer">Show recent market-wide announcements (' + recent.length + ')</summary>' +
           recent.slice(0,10).map(function(i){ return row(i, false); }).join('') + '</details>' : '') +
@@ -1840,6 +1846,15 @@ function updateEquityCounts(){
   <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 14px;font-size:11px;line-height:1.7;color:#374151;margin-bottom:12px">
     <strong style="color:#15803d">Separate research system (System B)</strong> — long-term holds, not swing signals. Never places orders; you decide manually. Composite 0-100 across Quality (35%) / Growth (30%) / Valuation (20%) / India Red Flags (15%). Educational, not investment advice.
   </div>
+  <div id="lt-holdings" style="display:none"></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px">
+    <input type="text" id="lt-search" placeholder="Search stock, theme, or industry…" oninput="_applyLtFilters()"
+      style="flex:1;min-width:160px;padding:6px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:12px">
+    <select id="lt-theme-filter" onchange="_applyLtFilters()" style="padding:6px 10px;border:1px solid #e2e8f0;border-radius:8px;font-size:12px">
+      <option value="all">All Industries</option>
+    </select>
+  </div>
+  <div id="lt-count" style="font-size:10px;color:#94a3b8;margin-bottom:8px"></div>
   <div id="lt-body" style="display:grid;gap:10px"></div>
 </div>
 </div>
@@ -2234,33 +2249,93 @@ function _ltStyleBadge(style){
   return `<span style="background:${c}1a;color:${c};border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap">${style}</span>`;
 }
 
+let _ltSearch = '';
+let _ltTheme = 'all';
+
+function _ltCardHtml(r){
+  const bad = r.hard_fail;
+  const style = r.investor_style_match || {};
+  const outlook = r.industry_outlook || {};
+  const ratingColor = {High:'#059669', Medium:'#d97706', Low:'#dc2626', Unknown:'#94a3b8'}[outlook.rating] || '#94a3b8';
+  return `<div style="border:1px solid ${bad ? '#fecaca' : '#e2e8f0'};border-radius:10px;padding:12px 14px;background:${bad ? '#fef2f2' : '#fff'}">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-weight:800;font-size:14px;color:#0f172a">${r.ticker.replace('.NS','')}</span>
+      <span style="font-size:11px;color:#64748b">${r.theme ? r.theme + ' · ' : ''}${r.sector || ''} · ${r.industry || ''}</span>
+      <span style="margin-left:auto;font-weight:800;font-size:15px;color:${bad ? '#dc2626' : '#059669'}">${r.composite}/100</span>
+    </div>
+    ${bad ? `<div style="margin-top:6px;font-size:11px;color:#dc2626;font-weight:700">${bad}</div>` : ''}
+    <div style="margin-top:8px;font-size:11px;line-height:1.6;color:#374151">${(r.summary || '').replace(/^Why: /,'<strong>Why:</strong> ')}</div>
+    <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <span style="background:${ratingColor}1a;color:${ratingColor};border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700">${outlook.rating || '?'} industry tailwind</span>
+      ${style.primary ? _ltStyleBadge(style.primary) : ''}
+    </div>
+  </div>`;
+}
+
+function _populateLtThemeDropdown(ranked){
+  const sel = document.getElementById('lt-theme-filter');
+  if (!sel) return;
+  const themes = Array.from(new Set(ranked.map(r => r.theme).filter(Boolean))).sort();
+  const current = sel.value || 'all';
+  sel.innerHTML = '<option value="all">All Industries</option>' + themes.map(t => `<option value="${t}">${t}</option>`).join('');
+  sel.value = themes.includes(current) ? current : 'all';
+}
+
+function _ltHoldingsSection(ranked){
+  // Cross-references real current holdings (the same `positions` array the
+  // My Positions tab uses) against the long-term screen — if you're actually
+  // holding something that's also a System B pick, it surfaces up top
+  // instead of being buried at whatever rank it landed on.
+  if (typeof positions === 'undefined' || !positions.length) return '';
+  const heldNames = new Set(positions.map(p => p.name));
+  const matches = ranked.filter(r => heldNames.has(r.ticker.replace('.NS','')));
+  if (!matches.length) return '';
+  return `<div style="margin-bottom:16px">
+    <div style="font-size:12px;font-weight:800;color:#0f172a;margin-bottom:8px">🏠 Your Current Holdings in This Screen</div>
+    <div style="display:grid;gap:10px">${matches.map(_ltCardHtml).join('')}</div>
+  </div>`;
+}
+
+function _applyLtFilters(){
+  const searchEl = document.getElementById('lt-search');
+  const themeEl = document.getElementById('lt-theme-filter');
+  _ltSearch = ((searchEl && searchEl.value) || '').trim().toLowerCase();
+  _ltTheme = (themeEl && themeEl.value) || 'all';
+  renderLongTerm();
+}
+
 function renderLongTerm(){
   const box = document.getElementById('lt-body');
+  const holdingsBox = document.getElementById('lt-holdings');
+  const countEl = document.getElementById('lt-count');
   if (!box) return;
   const ranked = LT_DATA.__ranked || [];
   if (!ranked.length) {
     box.innerHTML = '<div style="font-size:12px;color:#94a3b8;padding:12px 0">Could not load the long-term screen — run quality-growth-screen/run_screen.py, or try refreshing.</div>';
+    if (holdingsBox) holdingsBox.style.display = 'none';
     return;
   }
-  box.innerHTML = ranked.map(r => {
-    const bad = r.hard_fail;
-    const style = r.investor_style_match || {};
-    const outlook = r.industry_outlook || {};
-    const ratingColor = {High:'#059669', Medium:'#d97706', Low:'#dc2626', Unknown:'#94a3b8'}[outlook.rating] || '#94a3b8';
-    return `<div style="border:1px solid ${bad ? '#fecaca' : '#e2e8f0'};border-radius:10px;padding:12px 14px;background:${bad ? '#fef2f2' : '#fff'}">
-      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-        <span style="font-weight:800;font-size:14px;color:#0f172a">${r.ticker.replace('.NS','')}</span>
-        <span style="font-size:11px;color:#64748b">${r.sector || ''} · ${r.industry || ''}</span>
-        <span style="margin-left:auto;font-weight:800;font-size:15px;color:${bad ? '#dc2626' : '#059669'}">${r.composite}/100</span>
-      </div>
-      ${bad ? `<div style="margin-top:6px;font-size:11px;color:#dc2626;font-weight:700">${bad}</div>` : ''}
-      <div style="margin-top:8px;font-size:11px;line-height:1.6;color:#374151">${(r.summary || '').replace(/^Why: /,'<strong>Why:</strong> ')}</div>
-      <div style="margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-        <span style="background:${ratingColor}1a;color:${ratingColor};border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700">${outlook.rating || '?'} industry tailwind</span>
-        ${style.primary ? _ltStyleBadge(style.primary) : ''}
-      </div>
-    </div>`;
-  }).join('');
+
+  _populateLtThemeDropdown(ranked);
+
+  if (holdingsBox) {
+    const html = _ltHoldingsSection(ranked);
+    holdingsBox.innerHTML = html;
+    holdingsBox.style.display = html ? 'block' : 'none';
+  }
+
+  const filtered = ranked.filter(r => {
+    const themeOk = _ltTheme === 'all' || r.theme === _ltTheme;
+    const hay = `${r.ticker} ${r.theme || ''} ${r.sector || ''} ${r.industry || ''}`.toLowerCase();
+    const searchOk = !_ltSearch || hay.includes(_ltSearch);
+    return themeOk && searchOk;
+  });
+
+  if (countEl) countEl.textContent = `${filtered.length} of ${ranked.length} shown`;
+
+  box.innerHTML = filtered.length
+    ? filtered.map(_ltCardHtml).join('')
+    : '<div style="font-size:12px;color:#94a3b8;padding:12px 0">No stocks match this filter.</div>';
 }
 
 function _loadLongTerm(){
