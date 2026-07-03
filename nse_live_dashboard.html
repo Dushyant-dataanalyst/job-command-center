@@ -2613,7 +2613,16 @@ function doRefresh(btn){
     });
 }
 
-/* ─── Auto-refresh timer ─── */
+/* ─── Auto-refresh timer ───
+   Previously used a hardcoded browser-local-time window (8AM-4PM +
+   9:00-9:10PM) to decide whether to even check for new data — meaning a
+   phone tab left open past that window (e.g. checked at 11:30 PM) would
+   NEVER auto-refresh again until the next morning, regardless of whether
+   the backend had actually pushed fresh data in the meantime. Replaced
+   with a server-truth check every 5 min (same _lastKnownDataTs/
+   parseISTTimestamp comparison doRefresh() and checkDataStaleness() use):
+   only reloads when the backend's generated_at has genuinely advanced, no
+   clock-guessing, works correctly at any hour. ─── */
 (function(){
   const INTERVAL_MS = 300000;
   let remaining = INTERVAL_MS;
@@ -2621,22 +2630,25 @@ function doRefresh(btn){
   const label    = document.getElementById('rf-label');
   const cdown    = document.getElementById('rf-countdown');
 
-  function isMarketHours(){
-    const now = new Date();
-    const h = now.getHours(), m = now.getMinutes();
-    const mins = h*60+m;
-    const isMarket = mins >= 8*60 && mins <= 16*60 && now.getDay()>=1 && now.getDay()<=5;
-    const isEvening = mins >= 21*60 && mins <= 21*60+10 && now.getDay()>=1 && now.getDay()<=5;
-    return isMarket || isEvening;
+  function checkAndMaybeReload(){
+    fetch('/fo_latest.json?v=' + Date.now())
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d) { label.textContent='Next auto-refresh in:'; return; }
+        const ts = (d._meta && d._meta.generated_at) || d.fetched_at;
+        const instant = parseISTTimestamp(ts);
+        const isNewer = instant != null && (_lastKnownDataTs == null || instant > _lastKnownDataTs);
+        if (isNewer) {
+          label.textContent='New data available — refreshing…';
+          setTimeout(()=>location.reload(),500);
+        } else {
+          label.textContent='Next auto-refresh in:';
+        }
+      })
+      .catch(()=>{ label.textContent='Next auto-refresh in:'; });
   }
 
   function tick(){
-    if (!isMarketHours()){
-      label.textContent='Market closed — next refresh at 8:30 AM IST';
-      cdown.textContent='—';
-      fill.style.width='0%';
-      return;
-    }
     remaining -= 1000;
     const pct = Math.max(0,(remaining/INTERVAL_MS)*100);
     fill.style.width=pct+'%';
@@ -2645,8 +2657,7 @@ function doRefresh(btn){
     label.textContent='Next auto-refresh in:';
     if(remaining<=0){
       remaining=INTERVAL_MS;
-      label.textContent='Refreshing now…';
-      setTimeout(()=>location.reload(),500);
+      checkAndMaybeReload();
     }
   }
   setInterval(tick,1000);
