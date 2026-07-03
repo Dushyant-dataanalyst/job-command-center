@@ -124,6 +124,18 @@ jobs:
           python stock_fo_refresh.py
           echo "✅ stock_fo_refresh.py succeeded"
 
+      # Real Zerodha portfolio (holdings/positions/margin/trades) via Kite
+      # Connect. Fails closed+graceful (writes session_live:false) when the
+      # daily token isn't live, so this never blocks the run.
+      - name: Run Kite portfolio sync (writes kite_portfolio.json to repo root)
+        id: kite_portfolio
+        continue-on-error: true
+        run: |
+          set -e
+          cd nse-trading-bot
+          python kite_portfolio_refresh.py
+          echo "✅ kite_portfolio_refresh.py succeeded"
+
       # Must run BEFORE equity scan — equity_scan_core.py reads
       # voter_weights.json to weight its consensus scoring. Same once-daily
       # gating: weights only need recalculating once real trades have
@@ -186,6 +198,7 @@ jobs:
           STEP_NEWS_REFRESH: ${{ steps.news_refresh.outcome }}
           STEP_EQUITY_BRAIN: ${{ steps.equity_brain.outcome }}
           STEP_STOCK_FO: ${{ steps.stock_fo.outcome }}
+          STEP_KITE_PORTFOLIO: ${{ steps.kite_portfolio.outcome }}
           STEP_EQUITY_SCAN: ${{ steps.equity_scan.outcome }}
           STEP_VOTER_WEIGHTS: ${{ steps.voter_weights.outcome }}
           STEP_SNAPSHOT_DAILY: ${{ steps.snapshot_daily.outcome }}
@@ -213,7 +226,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json logs/run_history.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json logs/run_history.json
           if [ -d snapshots ]; then git add snapshots/; fi
 
           if git diff --staged --quiet; then

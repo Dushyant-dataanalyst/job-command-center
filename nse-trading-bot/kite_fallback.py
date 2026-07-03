@@ -1,22 +1,29 @@
 """
-Kite Connect fallback — used only when yfinance fails, for two scopes:
+Kite Connect client — two roles:
 
-1. Tracked equity/F&O position P&L (equity_brain.py) — a clean, complete
-   fallback. P&L only needs current price vs. entry price, and Kite's
-   quote/ltp endpoint gives exactly that.
+A. QUOTE FALLBACK (used only when yfinance fails):
+   1. Tracked equity/F&O position P&L (equity_brain.py) — a clean, complete
+      fallback. P&L only needs current price vs. entry price, and Kite's
+      quote/ltp endpoint gives exactly that.
+   2. NIFTY/BANKNIFTY F&O signal (refresh_fo_cloud.py) — a PARTIAL fallback
+      only. Kite's simple quote API gives current price, not 6 months of
+      historical OHLCV, so it cannot reconstruct the EMA/RSI/MACD/ADX signal
+      yfinance provides. When yfinance is down, this returns the live spot
+      price so the dashboard isn't blank, but the caller must mark the
+      consensus signal as unavailable rather than fabricating indicators
+      from a single price point.
 
-2. NIFTY/BANKNIFTY F&O signal (refresh_fo_cloud.py) — a PARTIAL fallback
-   only. Kite's simple quote API gives current price, not 6 months of
-   historical OHLCV, so it cannot reconstruct the EMA/RSI/MACD/ADX signal
-   yfinance provides. When yfinance is down, this returns the live spot
-   price so the dashboard isn't blank, but the caller must mark the
-   consensus signal as unavailable rather than fabricating indicators
-   from a single price point.
+B. REAL PORTFOLIO READS (kite_portfolio_refresh.py) — this is the paid
+   ₹2000/month Kite Connect being actually used, not just as a fallback:
+   get_holdings/get_positions/get_margins/get_trades/get_orders pull the
+   user's real Zerodha account data (demat holdings, open positions,
+   available margin, today's fills/orders). Read-only — no order placement
+   (that needs a SEBI static whitelisted IP, impossible on GH Actions).
 
-Requires a same-day kite_session.json (see kite_auth_refresh.py) — Kite
-access_tokens expire daily, so this fails closed (returns None) if the
-session is missing or from a previous trading day, rather than trying a
-stale/invalid token.
+Everything here requires a same-day kite_session.json (see
+kite_auth_refresh.py) — Kite access_tokens expire daily, so every call
+fails closed (returns None / (None, reason)) if the session is missing or
+from a previous trading day, rather than trying a stale/invalid token.
 """
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
@@ -31,6 +38,9 @@ SESSION_FILE = REPO_ROOT / "kite_session.json"
 KITE_QUOTE_LTP_URL = "https://api.kite.trade/quote/ltp"
 KITE_TRADES_URL = "https://api.kite.trade/trades"
 KITE_ORDERS_URL = "https://api.kite.trade/orders"
+KITE_HOLDINGS_URL = "https://api.kite.trade/portfolio/holdings"
+KITE_POSITIONS_URL = "https://api.kite.trade/portfolio/positions"
+KITE_MARGINS_URL = "https://api.kite.trade/user/margins"
 
 # Verify these against your own Kite account before relying on them —
 # exact index symbol strings can vary and aren't independently testable
@@ -132,3 +142,25 @@ def get_orders():
     """Today's order book (all statuses: COMPLETE/OPEN/CANCELLED/REJECTED),
     same (data, error) shape as get_trades()."""
     return _authed_get(KITE_ORDERS_URL)
+
+
+def get_holdings():
+    """Long-term (delivery/CNC) demat holdings — your real Zerodha portfolio.
+    Returns (holdings, error) where holdings is a list of Kite holding dicts
+    (tradingsymbol, exchange, quantity, average_price, last_price, close_price,
+    pnl, day_change, day_change_percentage, ...) or (None, reason)."""
+    return _authed_get(KITE_HOLDINGS_URL)
+
+
+def get_positions():
+    """Intraday/F&O positions. Kite returns a dict {"net": [...], "day": [...]}
+    (not a flat list), so callers should read .get('net')/.get('day').
+    Returns (positions_dict, error) or (None, reason)."""
+    return _authed_get(KITE_POSITIONS_URL)
+
+
+def get_margins():
+    """Account margins/available funds. Kite returns a dict with 'equity' and
+    'commodity' segments, each with an 'available' block (live_balance,
+    cash, etc.). Returns (margins_dict, error) or (None, reason)."""
+    return _authed_get(KITE_MARGINS_URL)

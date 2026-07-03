@@ -16,6 +16,7 @@
     { "src": "health_check.json",       "use": "@vercel/static" },
     { "src": "voter_weights.json",      "use": "@vercel/static" },
     { "src": "quality_growth_watchlist.json", "use": "@vercel/static" },
+    { "src": "kite_portfolio.json",     "use": "@vercel/static" },
     { "src": "api/save-positions.js",   "use": "@vercel/node" }
   ],
   "routes": [
@@ -87,6 +88,11 @@
       "src": "/quality_growth_watchlist.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/quality_growth_watchlist.json"
+    },
+    {
+      "src": "/kite_portfolio.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/kite_portfolio.json"
     },
     {
       "src": "/nse_live_dashboard.html",

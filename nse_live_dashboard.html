@@ -1099,6 +1099,86 @@ function updateEquityCounts(){
   <button onclick="addPositionPrompt()" style="background:#4f46e5;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer">+ Add Position</button>
 </div>
 
+<!-- REAL PORTFOLIO (Zerodha via Kite Connect) — fetched from /kite_portfolio.json.
+     Real demat holdings/margin, not the manual "I BOUGHT" tracker. Shows a
+     "refresh your token" prompt when the daily Kite session isn't live. -->
+<div id="kite-portfolio-panel" style="margin-bottom:16px"></div>
+<script>
+(function buildKitePortfolio(){
+  const INR = n => '₹' + Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2});
+  function pill(txt, color){
+    return '<span style="background:'+color+'1a;color:'+color+';border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap">'+txt+'</span>';
+  }
+  function render(d){
+    const box = document.getElementById('kite-portfolio-panel');
+    if (!box) return;
+
+    if (!d || d.session_live === false){
+      box.innerHTML =
+        '<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 16px">' +
+          '<div style="font-size:13px;font-weight:800;color:#b45309">💼 Real Portfolio — Kite session not live</div>' +
+          '<div style="font-size:11px;color:#92400e;margin-top:4px">' + ((d && d.message) || 'Refresh your Kite token to pull live Zerodha holdings.') +
+          (d && d.fetched_at ? ' <span style="color:#a16207">(checked ' + d.fetched_at + ')</span>' : '') + '</div>' +
+        '</div>';
+      return;
+    }
+
+    const s = d.stats || {};
+    const pnlColor = (s.total_pnl||0) >= 0 ? '#059669' : '#dc2626';
+    const recon = d.reconciliation || {held_but_not_tracked:[], tracked_but_not_held:[]};
+
+    let rows = (d.holdings||[]).map(function(h){
+      const pc = (h.pnl||0) >= 0 ? '#059669' : '#dc2626';
+      const dc = (h.day_change_percentage||0) >= 0 ? '#059669' : '#dc2626';
+      return '<tr style="border-bottom:1px solid #f1f5f9">' +
+        '<td style="padding:6px 8px;font-weight:700;color:#0f172a">'+h.tradingsymbol+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;color:#475569">'+h.quantity+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;color:#475569">'+INR(h.average_price)+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;font-weight:700;color:#0f172a">'+INR(h.last_price)+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;font-weight:700;color:'+pc+'">'+INR(h.pnl)+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;color:'+dc+'">'+(h.day_change_percentage>=0?'+':'')+h.day_change_percentage+'%</td>' +
+      '</tr>';
+    }).join('');
+    if (!rows) rows = '<tr><td colspan="6" style="padding:10px;color:#94a3b8;font-size:12px">No delivery holdings in your Kite account.</td></tr>';
+
+    let reconHtml = '';
+    if ((recon.held_but_not_tracked||[]).length)
+      reconHtml += '<div style="font-size:11px;color:#2563eb;margin-top:6px">🆕 In your Zerodha account but not on your dashboard: <b>'+recon.held_but_not_tracked.join(', ')+'</b> — add them?</div>';
+    if ((recon.tracked_but_not_held||[]).length)
+      reconHtml += '<div style="font-size:11px;color:#d97706;margin-top:6px">⚠ Tracked on your dashboard but not held in Zerodha: <b>'+recon.tracked_but_not_held.join(', ')+'</b> — stale?</div>';
+
+    box.innerHTML =
+      '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+          '<span style="font-size:14px;font-weight:800">💼 Real Portfolio (Zerodha)</span>' +
+          pill('LIVE via Kite', '#38bdf8') +
+          '<span style="font-size:11px;color:#64748b;margin-left:auto">'+(d.fetched_at||'')+'</span>' +
+        '</div>' +
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px">' +
+          '<div><div style="font-size:10px;color:#64748b">Portfolio value</div><div style="font-size:16px;font-weight:800">'+INR(s.total_value)+'</div></div>' +
+          '<div><div style="font-size:10px;color:#64748b">Total P&L</div><div style="font-size:16px;font-weight:800;color:'+pnlColor+'">'+INR(s.total_pnl)+' ('+(s.total_pnl_pct>=0?'+':'')+ (s.total_pnl_pct==null?'—':s.total_pnl_pct) +'%)</div></div>' +
+          '<div><div style="font-size:10px;color:#64748b">Available margin</div><div style="font-size:16px;font-weight:800">'+(d.margin_available==null?'—':INR(d.margin_available))+'</div></div>' +
+        '</div>' +
+        '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px;color:#cbd5e1">' +
+          '<thead><tr style="color:#64748b;font-size:10px;text-align:right"><th style="text-align:left;padding:4px 8px">Stock</th><th style="padding:4px 8px">Qty</th><th style="padding:4px 8px">Avg</th><th style="padding:4px 8px">LTP</th><th style="padding:4px 8px">P&L</th><th style="padding:4px 8px">Day</th></tr></thead>' +
+          '<tbody>'+rows+'</tbody></table></div>' +
+          reconHtml +
+        '<div style="font-size:10px;color:#475569;margin-top:10px">'+(d.disclaimer||'')+'</div>' +
+      '</div>';
+
+    // Feed real available margin into the position-sizing calculator's capital field.
+    if (d.margin_available != null){
+      const cap = document.getElementById('ps-capital');
+      if (cap && !cap.dataset.userEdited) cap.value = Math.round(d.margin_available);
+    }
+  }
+  fetch('/kite_portfolio.json?v=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){ render(d); })
+    .catch(function(){ render(null); });
+})();
+</script>
+
 <!-- POSITION SIZING CALCULATOR — reuses the exact risk convention already
      documented in the Strategy Guide tab ("Risk only ₹1,000/trade = 1% of
      ₹1 lakh"), just made interactive instead of a fixed example. Capital
@@ -1108,7 +1188,7 @@ function updateEquityCounts(){
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:10px">
     <div>
       <label style="font-size:10px;color:#64748b;font-weight:700;display:block;margin-bottom:4px">Capital (₹)</label>
-      <input id="ps-capital" type="number" value="150000" style="width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">
+      <input id="ps-capital" type="number" value="150000" oninput="this.dataset.userEdited='1'" style="width:100%;padding:7px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px">
     </div>
     <div>
       <label style="font-size:10px;color:#64748b;font-weight:700;display:block;margin-bottom:4px">Risk per trade (%)</label>
