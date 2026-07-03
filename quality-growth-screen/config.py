@@ -21,11 +21,49 @@ fields are manual, quarterly-updated entries in manual_redflags.json, not
 scraped or estimated.
 """
 
+# Each entry: {"ticker": <yfinance symbol>, "theme": <user-facing thematic
+# tag for filtering in the dashboard's Long Term tab>}. "theme" is a manual
+# label, not derived from yfinance's own sector/industry classification
+# (which is finer-grained and inconsistent for thematic grouping — e.g.
+# yfinance calls Olectra "Farm & Heavy Construction Machinery", not "EV").
+# All tickers below were verified live against yfinance before being added
+# (real longName + current price returned) — a few obvious candidates
+# (VATECHWABAG, TATAMOTORS, AMARAJABAT) failed to resolve and were swapped
+# for their correct current symbols (WABAG, TMPV, ARE&M respectively).
 WATCHLIST = [
-    "TCS.NS", "INFY.NS", "HDFCBANK.NS", "ICICIBANK.NS", "KOTAKBANK.NS",
-    "ASIANPAINT.NS", "TITAN.NS", "PIDILITIND.NS", "NESTLEIND.NS",
-    "HINDUNILVR.NS", "BAJFINANCE.NS", "DIVISLAB.NS", "SUNPHARMA.NS",
-    "LT.NS", "MARUTI.NS",
+    {"ticker": "TCS.NS", "theme": "IT Services"},
+    {"ticker": "INFY.NS", "theme": "IT Services"},
+    {"ticker": "HDFCBANK.NS", "theme": "Banking"},
+    {"ticker": "ICICIBANK.NS", "theme": "Banking"},
+    {"ticker": "KOTAKBANK.NS", "theme": "Banking"},
+    {"ticker": "ASIANPAINT.NS", "theme": "Chemicals"},
+    {"ticker": "TITAN.NS", "theme": "Consumer/Luxury"},
+    {"ticker": "PIDILITIND.NS", "theme": "Chemicals"},
+    {"ticker": "NESTLEIND.NS", "theme": "FMCG"},
+    {"ticker": "HINDUNILVR.NS", "theme": "FMCG"},
+    {"ticker": "BAJFINANCE.NS", "theme": "NBFC/Credit"},
+    {"ticker": "DIVISLAB.NS", "theme": "Pharma"},
+    {"ticker": "SUNPHARMA.NS", "theme": "Pharma"},
+    {"ticker": "LT.NS", "theme": "Infra/Capex"},
+    {"ticker": "MARUTI.NS", "theme": "Auto"},
+    # Water
+    {"ticker": "WABAG.NS", "theme": "Water"},
+    {"ticker": "IONEXCHANG.NS", "theme": "Water"},
+    # Solar
+    {"ticker": "WAAREEENER.NS", "theme": "Solar"},
+    {"ticker": "PREMIERENE.NS", "theme": "Solar"},
+    {"ticker": "WEBELSOLAR.NS", "theme": "Solar"},
+    # EV
+    {"ticker": "OLECTRA.NS", "theme": "EV"},
+    {"ticker": "EXIDEIND.NS", "theme": "EV"},
+    {"ticker": "ARE&M.NS", "theme": "EV"},
+    {"ticker": "TMPV.NS", "theme": "EV"},
+    # Green / Renewable
+    {"ticker": "ADANIGREEN.NS", "theme": "Green/Renewable"},
+    {"ticker": "NTPCGREEN.NS", "theme": "Green/Renewable"},
+    {"ticker": "JSWENERGY.NS", "theme": "Green/Renewable"},
+    {"ticker": "SUZLON.NS", "theme": "Green/Renewable"},
+    {"ticker": "TATAPOWER.NS", "theme": "Green/Renewable"},
 ]
 
 # --- Scoring weights (must sum to 100, matches the brief's category split) ---

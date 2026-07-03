@@ -320,9 +320,9 @@ def _build_summary(ticker, result, outlook, style):
     )
 
 
-def score_stock(ticker, data):
+def score_stock(ticker, data, theme=None):
     if "error" in data:
-        return {"ticker": ticker, "error": data["error"], "composite": None}
+        return {"ticker": ticker, "error": data["error"], "composite": None, "theme": theme}
 
     manual_redflags = _load_manual_redflags()
     info = data["info"]
@@ -340,6 +340,7 @@ def score_stock(ticker, data):
         "ticker": ticker,
         "composite": composite,
         "hard_fail": hard_fail,
+        "theme": theme,
         "sector": sector,
         "industry": industry,
         "quality": {"score": q_pts, "of": config.WEIGHT_QUALITY, "reasons": q_reasons},

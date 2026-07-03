@@ -131,16 +131,111 @@ BY_INDUSTRY = {
             "Cyclical — vehicle demand tracks rural income, financing rates, and fuel prices closely",
         ],
     },
+    "Pollution & Treatment Controls": {
+        "rating": "High",
+        "thesis": "India's acute water stress is turning water treatment from optional to mandatory — tightening effluent/zero-liquid-discharge norms and national river/lake cleanup missions are structurally growing the addressable market, not just a cyclical order pickup.",
+        "drivers": [
+            "Regulatory tightening (CPCB effluent norms, mandatory ZLD in water-stressed industrial states) pushes treatment capex from discretionary to compliance-driven",
+            "Export order wins in Middle East/Africa water infrastructure add a second growth leg beyond the domestic market",
+        ],
+        "risks": [
+            "EPC-style business model — working-capital heavy, long government-client payment cycles, lumpy order-book-to-execution timing",
+        ],
+    },
+    "Solar": {
+        "rating": "High",
+        "thesis": "India's PLI (production-linked incentive) scheme for solar cells/modules plus a 500GW non-fossil-capacity-by-2030 target is driving a genuine domestic manufacturing buildout, not just import substitution — anti-dumping duties on Chinese panels add a second tailwind via export potential.",
+        "drivers": [
+            "PLI-scheme-backed domestic cell/module manufacturing capacity additions",
+            "Corporate RE100/ESG-driven captive and merchant solar demand",
+            "US anti-dumping duties on Chinese panels create export opportunity for Indian manufacturers",
+        ],
+        "risks": [
+            "Capex-cycle/order-book exposure — cyclical, not a steady compounder",
+            "Industry-wide capacity additions risk module oversupply and margin compression unless a manufacturer has genuine tech/scale moat",
+        ],
+    },
+    "Utilities - Renewable": {
+        "rating": "High",
+        "thesis": "Long-tenure power purchase agreements (PPAs) give renewable generation assets real revenue visibility, and India's 500GW-by-2030 renewable capacity target is a sustained multi-year national priority, not a one-off push.",
+        "drivers": [
+            "Long-tenure PPAs lock in revenue visibility years in advance",
+            "Continued policy support for renewable capacity addition",
+        ],
+        "risks": [
+            "High leverage typical of capital-intensive power-generation assets",
+            "Tariff/PPA-renegotiation regulatory risk, execution risk on capacity-addition timelines",
+        ],
+    },
+    "Farm & Heavy Construction Machinery": {
+        "rating": "Medium",
+        "thesis": "Electric-bus manufacturers riding India's state-transport-undertaking EV bus tender wave (FAME-II / PM-eBus Sewa) have a real demand driver, but it's government-tender-dependent, not a broad consumer trend — lumpier and more concentrated than it looks.",
+        "drivers": [
+            "Government-funded state transport electrification mandates and growing state-level EV bus tenders",
+        ],
+        "risks": [
+            "Revenue concentration in government/STU tenders means delay-prone, lumpy order execution",
+            "Competitive intensity from other EV bus manufacturers",
+        ],
+    },
+    "Auto Parts": {
+        "rating": "Medium",
+        "thesis": "Traditional lead-acid battery replacement demand is steady but mature — the real optionality for incumbents is their pivot into lithium-ion/EV battery manufacturing (both major Indian players have announced gigafactory investments), a genuine but not-yet-proven transition.",
+        "drivers": [
+            "Steady replacement-cycle demand for lead-acid batteries (2-wheeler/4-wheeler/UPS)",
+            "Emerging lithium-ion/EV cell manufacturing capacity being built by incumbents",
+        ],
+        "risks": [
+            "Lithium-ion transition requires large capex with uncertain payback if EV adoption or cell-localization economics disappoint",
+            "Commoditized replacement-battery segment has thin pricing power",
+        ],
+    },
+    "Electrical Equipment & Parts": {
+        "rating": "Medium",
+        "thesis": "Same lead-acid-to-lithium-ion transition thesis as Auto Parts — yfinance classifies battery makers under this label instead when their product mix leans more industrial/energy-storage than pure auto-replacement.",
+        "drivers": [
+            "Steady replacement-cycle demand for lead-acid batteries (2-wheeler/4-wheeler/UPS/industrial)",
+            "Emerging lithium-ion/EV cell manufacturing capacity being built by incumbents",
+        ],
+        "risks": [
+            "Lithium-ion transition requires large capex with uncertain payback if EV adoption or cell-localization economics disappoint",
+            "Commoditized replacement-battery segment has thin pricing power",
+        ],
+    },
+    "Utilities - Independent Power Producers": {
+        "rating": "Medium",
+        "thesis": "Rising India power demand (AC penetration, data centers, EV charging load) benefits diversified generators, and both major players here are actively pivoting their capacity mix toward renewables — but thermal exposure carries longer-term transition risk.",
+        "drivers": [
+            "Rising overall India electricity demand across residential, commercial, and data-center load",
+            "Active renewable capacity mix expansion at both major diversified generators",
+        ],
+        "risks": [
+            "Thermal generation exposure carries stranded-asset/transition risk over the long term",
+            "High leverage typical of power-generation capex",
+        ],
+    },
+    "Specialty Industrial Machinery": {
+        "rating": "Medium",
+        "thesis": "India's wind energy capacity addition has picked up again after a multi-year slowdown, but the segment is more policy/tender-cycle-dependent and historically more volatile than solar — worth flagging company-specific history here, not just an industry view.",
+        "drivers": [
+            "Renewed order inflows as India's wind capacity addition target resumes",
+        ],
+        "risks": [
+            "Wind order-cycle volatility is historically worse than solar's",
+            "Company-specific: at least one major Indian wind turbine maker has a real history of financial distress/restructuring — that's a company-level caution flag, not just an industry-level one",
+        ],
+    },
 }
 
 BY_SECTOR_FALLBACK = {
-    "Technology": {"rating": "Medium", "thesis": "Broad technology sector — see industry-level entry for specifics.", "drivers": [], "risks": []},
+    "Technology": {"rating": "Medium", "thesis": "Broad technology sector — see industry-level entry for specifics (also covers solar manufacturers, which yfinance classifies under Technology, not Utilities/Energy).", "drivers": [], "risks": []},
     "Financial Services": {"rating": "High", "thesis": "Broad financial services — India's credit/financialization runway is structurally long. See industry-level entry for specifics.", "drivers": [], "risks": []},
     "Consumer Defensive": {"rating": "Medium", "thesis": "Broad consumer staples — steady premiumization tailwind, maturing growth rate. See industry-level entry for specifics.", "drivers": [], "risks": []},
     "Consumer Cyclical": {"rating": "Medium", "thesis": "Broad consumer discretionary — tracks India income growth, cyclical. See industry-level entry for specifics.", "drivers": [], "risks": []},
     "Healthcare": {"rating": "High", "thesis": "Broad healthcare/pharma — India's generics/CDMO role is structurally durable. See industry-level entry for specifics.", "drivers": [], "risks": []},
     "Industrials": {"rating": "High", "thesis": "Broad industrials/capex-cycle exposure. See industry-level entry for specifics.", "drivers": [], "risks": []},
     "Basic Materials": {"rating": "Medium", "thesis": "Broad materials/chemicals — cyclical, input-cost sensitive. See industry-level entry for specifics.", "drivers": [], "risks": []},
+    "Utilities": {"rating": "High", "thesis": "Broad utilities/power — India's renewable capacity buildout is a structural multi-year tailwind. See industry-level entry for specifics.", "drivers": [], "risks": []},
 }
 
 

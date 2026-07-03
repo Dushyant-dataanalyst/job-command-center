@@ -24,10 +24,11 @@ OUT_FILE = REPO_ROOT / config.OUTPUT_FILE
 
 def main():
     results = []
-    for i, ticker in enumerate(config.WATCHLIST):
-        print(f"  [{i+1}/{len(config.WATCHLIST)}] {ticker} ...")
+    for i, entry in enumerate(config.WATCHLIST):
+        ticker, theme = entry["ticker"], entry["theme"]
+        print(f"  [{i+1}/{len(config.WATCHLIST)}] {ticker} ({theme}) ...")
         data = fetch_stock_data(ticker)
-        result = score_stock(ticker, data)
+        result = score_stock(ticker, data, theme=theme)
         results.append(result)
         if "error" in data:
             print(f"    ERROR: {data['error']}")

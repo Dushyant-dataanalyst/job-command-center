@@ -1,11 +1,78 @@
 {
-  "generated_at": "02 Jul 2026 22:09",
+  "generated_at": "03 Jul 2026 10:50",
   "disclaimer": "Educational long-term research screen only, not investment advice. Composite score is a heuristic weighting (quality 35 / growth 30 / valuation 20 / india red-flags 15), not a verified backtest of what predicts future returns. Never places orders.",
   "ranked": [
+    {
+      "ticker": "SUZLON.NS",
+      "composite": 80.0,
+      "hard_fail": null,
+      "theme": "Green/Renewable",
+      "sector": "Industrials",
+      "industry": "Specialty Industrial Machinery",
+      "quality": {
+        "score": 28.0,
+        "of": 35,
+        "reasons": [
+          "ROE strong and consistent \u2014 avg 85.9% across 4 yrs, never below 16.8%",
+          "Very low debt \u2014 D/E 0.06 (brief's cap is 0.5)",
+          "FCF currently positive but was negative in an earlier year (capex cycle or one-off)"
+        ]
+      },
+      "growth": {
+        "score": 22.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 41.8% over 3 yrs, steady (no single lumpy year)",
+          "Earnings growing slowly \u2014 CAGR 3.6% over 3 yrs",
+          "Gross margin stable/expanding \u2014 31.7% to 35.2%"
+        ]
+      },
+      "valuation": {
+        "score": 20.0,
+        "of": 20,
+        "reasons": [
+          "PEG 0.35 \u2014 growth at a genuine discount (Lynch's <1 bar)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "Medium",
+        "thesis": "India's wind energy capacity addition has picked up again after a multi-year slowdown, but the segment is more policy/tender-cycle-dependent and historically more volatile than solar \u2014 worth flagging company-specific history here, not just an industry view.",
+        "drivers": [
+          "Renewed order inflows as India's wind capacity addition target resumes"
+        ],
+        "risks": [
+          "Wind order-cycle volatility is historically worse than solar's",
+          "Company-specific: at least one major Indian wind turbine maker has a real history of financial distress/restructuring \u2014 that's a company-level caution flag, not just an industry-level one"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Lynch",
+        "primary_philosophy": "Growth at a reasonable price (PEG < 1-1.5). Buy what you understand, in a business that's still growing.",
+        "reason": "Growth 22.0/30 paired with valuation 20.0/20 \u2014 still growing and not overpriced for it.",
+        "runner_up": "Graham",
+        "all_fit_scores": {
+          "Buffett": 0.76,
+          "Munger": 0.73,
+          "Lynch": 0.87,
+          "Graham": 0.87,
+          "Jhunjhunwala": 0.62
+        }
+      },
+      "summary": "Why: PEG 0.35 \u2014 growth at a genuine discount (Lynch's <1 bar). Industry outlook (industry): Medium secular tailwind \u2014 India's wind energy capacity addition has picked up again after a multi-year slowdown, but the segment is more policy/tender-cycle-dependent and historically more volatile than solar \u2014 worth flagging company-specific history here, not just an industry view. Closest investor style: Lynch (Growth at a reasonable price (PEG < 1-1.5). Buy what you understand, in a business that's still growing.) \u2014 Growth 22.0/30 paired with valuation 20.0/20 \u2014 still growing and not overpriced for it."
+    },
     {
       "ticker": "MARUTI.NS",
       "composite": 79.0,
       "hard_fail": null,
+      "theme": "Auto",
       "sector": "Consumer Cyclical",
       "industry": "Auto Manufacturers",
       "quality": {
@@ -72,6 +139,7 @@
       "ticker": "SUNPHARMA.NS",
       "composite": 73.0,
       "hard_fail": null,
+      "theme": "Pharma",
       "sector": "Healthcare",
       "industry": "Drug Manufacturers - Specialty & Generic",
       "quality": {
@@ -135,9 +203,145 @@
       "summary": "Why: Revenue CAGR 10.4% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): High secular tailwind \u2014 Indian pharma has a durable structural role as the world's generics/API supplier, and the CDMO (contract development/manufacturing) shift away from China is a genuine multi-year tailwind on top of the base generics business. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 23.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
     },
     {
+      "ticker": "WABAG.NS",
+      "composite": 73.0,
+      "hard_fail": null,
+      "theme": "Water",
+      "sector": "Industrials",
+      "industry": "Engineering & Construction",
+      "quality": {
+        "score": 25.0,
+        "of": 35,
+        "reasons": [
+          "ROE below the brief's 15-18% bar \u2014 avg 10.6% across 4 yrs",
+          "Very low debt \u2014 D/E 0.09 (brief's cap is 0.5)",
+          "FCF positive across all 4 yrs and growing (oldest to newest 80Cr -> 202Cr)"
+        ]
+      },
+      "growth": {
+        "score": 30.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 10.2% over 3 yrs, steady (no single lumpy year)",
+          "Earnings CAGR 205.5% over 3 yrs",
+          "Gross margin stable/expanding \u2014 23.0% to 23.8%"
+        ]
+      },
+      "valuation": {
+        "score": 8.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 31.2 \u2014 rich (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "High",
+        "thesis": "India's infrastructure capex cycle (roads, railways, defense, renewable energy, data centers) is a multi-year government-and-private-capex-driven tailwind that large diversified E&C players are structurally positioned to capture.",
+        "drivers": [
+          "Government capex on infrastructure has been a sustained multi-year budget priority",
+          "Private capex (data centers, renewables, semiconductor-adjacent) is now adding to public capex, not just replacing it"
+        ],
+        "risks": [
+          "Order-book-to-execution lag means growth is lumpy and working-capital-heavy",
+          "Government capex is budget-cycle and election-cycle sensitive"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 30.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Buffett",
+        "all_fit_scores": {
+          "Buffett": 0.7,
+          "Munger": 0.69,
+          "Lynch": 0.7,
+          "Graham": 0.51,
+          "Jhunjhunwala": 1.0
+        }
+      },
+      "summary": "Why: Revenue CAGR 10.2% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): High secular tailwind \u2014 India's infrastructure capex cycle (roads, railways, defense, renewable energy, data centers) is a multi-year government-and-private-capex-driven tailwind that large diversified E&C players are structurally positioned to capture. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 30.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "WAAREEENER.NS",
+      "composite": 73.0,
+      "hard_fail": null,
+      "theme": "Solar",
+      "sector": "Technology",
+      "industry": "Solar",
+      "quality": {
+        "score": 25.0,
+        "of": 35,
+        "reasons": [
+          "ROE strong and consistent \u2014 avg 25.5% across 4 yrs, never below 19.7%",
+          "Very low debt \u2014 D/E 0.26 (brief's cap is 0.5)",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 24.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 58.9% over 3 yrs, steady (no single lumpy year)",
+          "Earnings CAGR 97.4% over 3 yrs",
+          "Gross margin volatile \u2014 ranged 18.8% to 31.9%"
+        ]
+      },
+      "valuation": {
+        "score": 14.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 22.1 \u2014 reasonable (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "High",
+        "thesis": "India's PLI (production-linked incentive) scheme for solar cells/modules plus a 500GW non-fossil-capacity-by-2030 target is driving a genuine domestic manufacturing buildout, not just import substitution \u2014 anti-dumping duties on Chinese panels add a second tailwind via export potential.",
+        "drivers": [
+          "PLI-scheme-backed domestic cell/module manufacturing capacity additions",
+          "Corporate RE100/ESG-driven captive and merchant solar demand",
+          "US anti-dumping duties on Chinese panels create export opportunity for Indian manufacturers"
+        ],
+        "risks": [
+          "Capex-cycle/order-book exposure \u2014 cyclical, not a steady compounder",
+          "Industry-wide capacity additions risk module oversupply and margin compression unless a manufacturer has genuine tech/scale moat"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 24.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Lynch",
+        "all_fit_scores": {
+          "Buffett": 0.7,
+          "Munger": 0.69,
+          "Lynch": 0.75,
+          "Graham": 0.69,
+          "Jhunjhunwala": 0.9
+        }
+      },
+      "summary": "Why: Revenue CAGR 58.9% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): High secular tailwind \u2014 India's PLI (production-linked incentive) scheme for solar cells/modules plus a 500GW non-fossil-capacity-by-2030 target is driving a genuine domestic manufacturing buildout, not just import substitution \u2014 anti-dumping duties on Chinese panels add a second tailwind via export potential. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 24.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
       "ticker": "HDFCBANK.NS",
       "composite": 72.0,
       "hard_fail": null,
+      "theme": "Banking",
       "sector": "Financial Services",
       "industry": "Banks - Regional",
       "quality": {
@@ -203,6 +407,7 @@
       "ticker": "ICICIBANK.NS",
       "composite": 68.0,
       "hard_fail": null,
+      "theme": "Banking",
       "sector": "Financial Services",
       "industry": "Banks - Regional",
       "quality": {
@@ -269,6 +474,7 @@
       "ticker": "NESTLEIND.NS",
       "composite": 68.0,
       "hard_fail": null,
+      "theme": "FMCG",
       "sector": "Consumer Defensive",
       "industry": "Packaged Foods",
       "quality": {
@@ -293,7 +499,7 @@
         "score": 0.0,
         "of": 20,
         "reasons": [
-          "Trailing PE 79.6 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+          "Trailing PE 79.9 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
         ]
       },
       "redflags": {
@@ -335,6 +541,7 @@
       "ticker": "HINDUNILVR.NS",
       "composite": 67.0,
       "hard_fail": null,
+      "theme": "FMCG",
       "sector": "Consumer Defensive",
       "industry": "Household & Personal Products",
       "quality": {
@@ -401,6 +608,7 @@
       "ticker": "INFY.NS",
       "composite": 66.0,
       "hard_fail": null,
+      "theme": "IT Services",
       "sector": "Technology",
       "industry": "Information Technology Services",
       "quality": {
@@ -464,9 +672,77 @@
       "summary": "Why: ROE strong and consistent \u2014 avg 31.1% across 4 yrs, never below 28.2%. Industry outlook (industry): Medium secular tailwind \u2014 India IT services has shifted from a linear headcount-growth model to one squeezed by AI-driven productivity gains on the client side \u2014 deal volumes are healthy but pricing/headcount growth per deal is structurally slower than the 2010s. Closest investor style: Buffett (Durable moat + high returns on capital + low debt. Price is secondary to business quality.) \u2014 Quality sub-score 35.0/35 and red-flag cleanliness 10.0/15 \u2014 moat/low-debt profile matters more here than price."
     },
     {
+      "ticker": "ARE&M.NS",
+      "composite": 66.0,
+      "hard_fail": null,
+      "theme": "EV",
+      "sector": "Industrials",
+      "industry": "Electrical Equipment & Parts",
+      "quality": {
+        "score": 15.0,
+        "of": 35,
+        "reasons": [
+          "ROE below the brief's 15-18% bar \u2014 avg 12.4% across 4 yrs",
+          "Very low debt \u2014 D/E 0.05 (brief's cap is 0.5)",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 26.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 10.1% over 3 yrs, steady (no single lumpy year)",
+          "Earnings CAGR 7.0% over 3 yrs \u2014 solid, not exceptional",
+          "Gross margin stable/expanding \u2014 30.8% to 32.1%"
+        ]
+      },
+      "valuation": {
+        "score": 15.0,
+        "of": 20,
+        "reasons": [
+          "PEG 1.31 \u2014 reasonably priced for its growth"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "Medium",
+        "thesis": "Same lead-acid-to-lithium-ion transition thesis as Auto Parts \u2014 yfinance classifies battery makers under this label instead when their product mix leans more industrial/energy-storage than pure auto-replacement.",
+        "drivers": [
+          "Steady replacement-cycle demand for lead-acid batteries (2-wheeler/4-wheeler/UPS/industrial)",
+          "Emerging lithium-ion/EV cell manufacturing capacity being built by incumbents"
+        ],
+        "risks": [
+          "Lithium-ion transition requires large capex with uncertain payback if EV adoption or cell-localization economics disappoint",
+          "Commoditized replacement-battery segment has thin pricing power"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Lynch",
+        "primary_philosophy": "Growth at a reasonable price (PEG < 1-1.5). Buy what you understand, in a business that's still growing.",
+        "reason": "Growth 26.0/30 paired with valuation 15.0/20 \u2014 still growing and not overpriced for it.",
+        "runner_up": "Graham",
+        "all_fit_scores": {
+          "Buffett": 0.5,
+          "Munger": 0.55,
+          "Lynch": 0.81,
+          "Graham": 0.72,
+          "Jhunjhunwala": 0.68
+        }
+      },
+      "summary": "Why: Revenue CAGR 10.1% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): Medium secular tailwind \u2014 Same lead-acid-to-lithium-ion transition thesis as Auto Parts \u2014 yfinance classifies battery makers under this label instead when their product mix leans more industrial/energy-storage than pure auto-replacement. Closest investor style: Lynch (Growth at a reasonable price (PEG < 1-1.5). Buy what you understand, in a business that's still growing.) \u2014 Growth 26.0/30 paired with valuation 15.0/20 \u2014 still growing and not overpriced for it."
+    },
+    {
       "ticker": "TCS.NS",
       "composite": 65.0,
       "hard_fail": null,
+      "theme": "IT Services",
       "sector": "Technology",
       "industry": "Information Technology Services",
       "quality": {
@@ -533,6 +809,7 @@
       "ticker": "PIDILITIND.NS",
       "composite": 65.0,
       "hard_fail": null,
+      "theme": "Chemicals",
       "sector": "Basic Materials",
       "industry": "Specialty Chemicals",
       "quality": {
@@ -557,7 +834,7 @@
         "score": 0.0,
         "of": 20,
         "reasons": [
-          "Trailing PE 66.8 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+          "Trailing PE 66.7 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
         ]
       },
       "redflags": {
@@ -599,6 +876,7 @@
       "ticker": "LT.NS",
       "composite": 63.0,
       "hard_fail": null,
+      "theme": "Infra/Capex",
       "sector": "Industrials",
       "industry": "Engineering & Construction",
       "quality": {
@@ -665,6 +943,7 @@
       "ticker": "DIVISLAB.NS",
       "composite": 61.0,
       "hard_fail": null,
+      "theme": "Pharma",
       "sector": "Healthcare",
       "industry": "Drug Manufacturers - Specialty & Generic",
       "quality": {
@@ -689,7 +968,7 @@
         "score": 0.0,
         "of": 20,
         "reasons": [
-          "Trailing PE 69.0 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+          "Trailing PE 70.0 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
         ]
       },
       "redflags": {
@@ -728,9 +1007,77 @@
       "summary": "Why: Revenue CAGR 11.3% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): High secular tailwind \u2014 Indian pharma has a durable structural role as the world's generics/API supplier, and the CDMO (contract development/manufacturing) shift away from China is a genuine multi-year tailwind on top of the base generics business. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 30.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
     },
     {
+      "ticker": "TMPV.NS",
+      "composite": 58.0,
+      "hard_fail": null,
+      "theme": "EV",
+      "sector": "Consumer Cyclical",
+      "industry": "Auto Manufacturers",
+      "quality": {
+        "score": 13.0,
+        "of": 35,
+        "reasons": [
+          "ROE decent \u2014 avg 34.9% across 4 yrs (brief's 15-18% bar), min 5.3%",
+          "D/E 0.73 \u2014 above the brief's 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 15.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR -0.9% \u2014 flat or declining",
+          "Earnings CAGR 224.4% over 3 yrs",
+          "Gross margin roughly stable \u2014 33.5% to 35.3%"
+        ]
+      },
+      "valuation": {
+        "score": 20.0,
+        "of": 20,
+        "reasons": [
+          "PEG 0.27 \u2014 growth at a genuine discount (Lynch's <1 bar)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "Medium",
+        "thesis": "India passenger-vehicle penetration (cars per capita) is still low vs comparable economies, a genuine structural runway, but the EV transition is a real disruption risk to incumbents who under-invest, not a tailwind for all players equally.",
+        "drivers": [
+          "Low car-per-capita base vs China/developed markets means unit volume growth has real runway left",
+          "Rising incomes pushing first-time buyers and premiumization (SUV mix) simultaneously"
+        ],
+        "risks": [
+          "EV transition rewards whoever executes the platform switch well and punishes whoever doesn't \u2014 incumbency is not automatically protective here",
+          "Cyclical \u2014 vehicle demand tracks rural income, financing rates, and fuel prices closely"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Graham",
+        "primary_philosophy": "Absolute cheapness + margin of safety. Balance-sheet discipline matters more than growth story.",
+        "reason": "Valuation sub-score 20.0/20 and balance-sheet cleanliness 10.0/15 carry this more than the growth story.",
+        "runner_up": "Lynch",
+        "all_fit_scores": {
+          "Buffett": 0.46,
+          "Munger": 0.52,
+          "Lynch": 0.75,
+          "Graham": 0.87,
+          "Jhunjhunwala": 0.5
+        }
+      },
+      "summary": "Why: PEG 0.27 \u2014 growth at a genuine discount (Lynch's <1 bar). Industry outlook (industry): Medium secular tailwind \u2014 India passenger-vehicle penetration (cars per capita) is still low vs comparable economies, a genuine structural runway, but the EV transition is a real disruption risk to incumbents who under-invest, not a tailwind for all players equally. Closest investor style: Graham (Absolute cheapness + margin of safety. Balance-sheet discipline matters more than growth story.) \u2014 Valuation sub-score 20.0/20 and balance-sheet cleanliness 10.0/15 carry this more than the growth story."
+    },
+    {
       "ticker": "ASIANPAINT.NS",
       "composite": 56.0,
       "hard_fail": null,
+      "theme": "Chemicals",
       "sector": "Basic Materials",
       "industry": "Specialty Chemicals",
       "quality": {
@@ -755,7 +1102,7 @@
         "score": 0.0,
         "of": 20,
         "reasons": [
-          "Trailing PE 60.9 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+          "Trailing PE 61.0 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
         ]
       },
       "redflags": {
@@ -797,6 +1144,7 @@
       "ticker": "KOTAKBANK.NS",
       "composite": 55.0,
       "hard_fail": null,
+      "theme": "Banking",
       "sector": "Financial Services",
       "industry": "Banks - Regional",
       "quality": {
@@ -863,6 +1211,7 @@
       "ticker": "BAJFINANCE.NS",
       "composite": 53.0,
       "hard_fail": null,
+      "theme": "NBFC/Credit",
       "sector": "Financial Services",
       "industry": "Credit Services",
       "quality": {
@@ -886,7 +1235,7 @@
         "score": 8.0,
         "of": 20,
         "reasons": [
-          "Trailing PE 33.3 \u2014 rich (PEG unavailable, used fixed bands not 5yr median)"
+          "Trailing PE 33.8 \u2014 rich (PEG unavailable, used fixed bands not 5yr median)"
         ]
       },
       "redflags": {
@@ -929,6 +1278,7 @@
       "ticker": "TITAN.NS",
       "composite": 50.0,
       "hard_fail": null,
+      "theme": "Consumer/Luxury",
       "sector": "Consumer Cyclical",
       "industry": "Luxury Goods",
       "quality": {
@@ -953,7 +1303,7 @@
         "score": 0.0,
         "of": 20,
         "reasons": [
-          "Trailing PE 78.4 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+          "Trailing PE 78.3 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
         ]
       },
       "redflags": {
@@ -991,6 +1341,611 @@
         }
       },
       "summary": "Why: Revenue CAGR 23.8% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): Medium secular tailwind \u2014 India's premiumization trend (more households crossing into discretionary/luxury spending) is real and structural, but jewelry/watches specifically also carries gold-price and import-duty policy sensitivity that a pure premiumization thesis glosses over. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 24.0/30 plus a 'Medium' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "IONEXCHANG.NS",
+      "composite": 49.0,
+      "hard_fail": null,
+      "theme": "Water",
+      "sector": "Industrials",
+      "industry": "Pollution & Treatment Controls",
+      "quality": {
+        "score": 18.0,
+        "of": 35,
+        "reasons": [
+          "ROE decent \u2014 avg 17.7% across 4 yrs (brief's 15-18% bar), min 10.7%",
+          "Low debt \u2014 D/E 0.36, under the 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 15.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 13.8% over 3 yrs, steady (no single lumpy year)",
+          "Earnings flat or declining",
+          "Gross margin roughly stable \u2014 37.2% to 36.4%"
+        ]
+      },
+      "valuation": {
+        "score": 8.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 35.0 \u2014 rich (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 8.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json",
+          "Penalized: 1 yr of reported profit but negative operating cash flow"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "High",
+        "thesis": "India's acute water stress is turning water treatment from optional to mandatory \u2014 tightening effluent/zero-liquid-discharge norms and national river/lake cleanup missions are structurally growing the addressable market, not just a cyclical order pickup.",
+        "drivers": [
+          "Regulatory tightening (CPCB effluent norms, mandatory ZLD in water-stressed industrial states) pushes treatment capex from discretionary to compliance-driven",
+          "Export order wins in Middle East/Africa water infrastructure add a second growth leg beyond the domestic market"
+        ],
+        "risks": [
+          "EPC-style business model \u2014 working-capital heavy, long government-client payment cycles, lumpy order-book-to-execution timing"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 15.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Buffett",
+        "all_fit_scores": {
+          "Buffett": 0.52,
+          "Munger": 0.52,
+          "Lynch": 0.45,
+          "Graham": 0.45,
+          "Jhunjhunwala": 0.75
+        }
+      },
+      "summary": "Why: ROE decent \u2014 avg 17.7% across 4 yrs (brief's 15-18% bar), min 10.7%. Industry outlook (industry): High secular tailwind \u2014 India's acute water stress is turning water treatment from optional to mandatory \u2014 tightening effluent/zero-liquid-discharge norms and national river/lake cleanup missions are structurally growing the addressable market, not just a cyclical order pickup. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 15.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "OLECTRA.NS",
+      "composite": 48.0,
+      "hard_fail": null,
+      "theme": "EV",
+      "sector": "Industrials",
+      "industry": "Farm & Heavy Construction Machinery",
+      "quality": {
+        "score": 13.0,
+        "of": 35,
+        "reasons": [
+          "ROE below the brief's 15-18% bar \u2014 avg 11.0% across 4 yrs",
+          "Low debt \u2014 D/E 0.31, under the 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 27.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 28.5% over 3 yrs, steady (no single lumpy year)",
+          "Earnings CAGR 39.3% over 3 yrs",
+          "Gross margin roughly stable \u2014 21.8% to 24.1%"
+        ]
+      },
+      "valuation": {
+        "score": 0.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 68.6 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 8.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json",
+          "Penalized: 1 yr of reported profit but negative operating cash flow"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "Medium",
+        "thesis": "Electric-bus manufacturers riding India's state-transport-undertaking EV bus tender wave (FAME-II / PM-eBus Sewa) have a real demand driver, but it's government-tender-dependent, not a broad consumer trend \u2014 lumpier and more concentrated than it looks.",
+        "drivers": [
+          "Government-funded state transport electrification mandates and growing state-level EV bus tenders"
+        ],
+        "risks": [
+          "Revenue concentration in government/STU tenders means delay-prone, lumpy order execution",
+          "Competitive intensity from other EV bus manufacturers"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 27.0/30 plus a 'Medium' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Munger",
+        "all_fit_scores": {
+          "Buffett": 0.42,
+          "Munger": 0.45,
+          "Lynch": 0.45,
+          "Graham": 0.21,
+          "Jhunjhunwala": 0.7
+        }
+      },
+      "summary": "Why: Revenue CAGR 28.5% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): Medium secular tailwind \u2014 Electric-bus manufacturers riding India's state-transport-undertaking EV bus tender wave (FAME-II / PM-eBus Sewa) have a real demand driver, but it's government-tender-dependent, not a broad consumer trend \u2014 lumpier and more concentrated than it looks. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 27.0/30 plus a 'Medium' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "WEBELSOLAR.NS",
+      "composite": 45.0,
+      "hard_fail": null,
+      "theme": "Solar",
+      "sector": "Technology",
+      "industry": "Solar",
+      "quality": {
+        "score": 13.0,
+        "of": 35,
+        "reasons": [
+          "ROE weak \u2014 avg -5.2% across 4 yrs",
+          "Very low debt \u2014 D/E 0.21 (brief's cap is 0.5)",
+          "FCF currently positive but was negative in an earlier year (capex cycle or one-off)"
+        ]
+      },
+      "growth": {
+        "score": 8.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 293.5% over 3 yrs \u2014 one year looks lumpy vs the trend",
+          "Earnings: fewer than 3 usable positive-base years from yfinance",
+          "Gross margin volatile \u2014 ranged 17.5% to 69.2%"
+        ]
+      },
+      "valuation": {
+        "score": 14.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 15.3 \u2014 reasonable (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "High",
+        "thesis": "India's PLI (production-linked incentive) scheme for solar cells/modules plus a 500GW non-fossil-capacity-by-2030 target is driving a genuine domestic manufacturing buildout, not just import substitution \u2014 anti-dumping duties on Chinese panels add a second tailwind via export potential.",
+        "drivers": [
+          "PLI-scheme-backed domestic cell/module manufacturing capacity additions",
+          "Corporate RE100/ESG-driven captive and merchant solar demand",
+          "US anti-dumping duties on Chinese panels create export opportunity for Indian manufacturers"
+        ],
+        "risks": [
+          "Capex-cycle/order-book exposure \u2014 cyclical, not a steady compounder",
+          "Industry-wide capacity additions risk module oversupply and margin compression unless a manufacturer has genuine tech/scale moat"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Graham",
+        "primary_philosophy": "Absolute cheapness + margin of safety. Balance-sheet discipline matters more than growth story.",
+        "reason": "Valuation sub-score 14.0/20 and balance-sheet cleanliness 10.0/15 carry this more than the growth story.",
+        "runner_up": "Jhunjhunwala",
+        "all_fit_scores": {
+          "Buffett": 0.46,
+          "Munger": 0.52,
+          "Lynch": 0.48,
+          "Graham": 0.69,
+          "Jhunjhunwala": 0.63
+        }
+      },
+      "summary": "Why: Trailing PE 15.3 \u2014 reasonable (PEG unavailable, used fixed bands not 5yr median). Industry outlook (industry): High secular tailwind \u2014 India's PLI (production-linked incentive) scheme for solar cells/modules plus a 500GW non-fossil-capacity-by-2030 target is driving a genuine domestic manufacturing buildout, not just import substitution \u2014 anti-dumping duties on Chinese panels add a second tailwind via export potential. Closest investor style: Graham (Absolute cheapness + margin of safety. Balance-sheet discipline matters more than growth story.) \u2014 Valuation sub-score 14.0/20 and balance-sheet cleanliness 10.0/15 carry this more than the growth story."
+    },
+    {
+      "ticker": "EXIDEIND.NS",
+      "composite": 45.0,
+      "hard_fail": null,
+      "theme": "EV",
+      "sector": "Consumer Cyclical",
+      "industry": "Auto Parts",
+      "quality": {
+        "score": 13.0,
+        "of": 35,
+        "reasons": [
+          "ROE weak \u2014 avg 6.5% across 4 yrs",
+          "Very low debt \u2014 D/E 0.11 (brief's cap is 0.5)",
+          "FCF currently positive but was negative in an earlier year (capex cycle or one-off)"
+        ]
+      },
+      "growth": {
+        "score": 18.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 6.1% over 3 yrs",
+          "Earnings growing slowly \u2014 CAGR 1.3% over 3 yrs",
+          "Gross margin stable/expanding \u2014 29.7% to 30.7%"
+        ]
+      },
+      "valuation": {
+        "score": 4.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 41.7 \u2014 expensive (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "Medium",
+        "thesis": "Traditional lead-acid battery replacement demand is steady but mature \u2014 the real optionality for incumbents is their pivot into lithium-ion/EV battery manufacturing (both major Indian players have announced gigafactory investments), a genuine but not-yet-proven transition.",
+        "drivers": [
+          "Steady replacement-cycle demand for lead-acid batteries (2-wheeler/4-wheeler/UPS)",
+          "Emerging lithium-ion/EV cell manufacturing capacity being built by incumbents"
+        ],
+        "risks": [
+          "Lithium-ion transition requires large capex with uncertain payback if EV adoption or cell-localization economics disappoint",
+          "Commoditized replacement-battery segment has thin pricing power"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 18.0/30 plus a 'Medium' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Munger",
+        "all_fit_scores": {
+          "Buffett": 0.46,
+          "Munger": 0.52,
+          "Lynch": 0.4,
+          "Graham": 0.39,
+          "Jhunjhunwala": 0.55
+        }
+      },
+      "summary": "Why: Revenue CAGR 6.1% over 3 yrs. Industry outlook (industry): Medium secular tailwind \u2014 Traditional lead-acid battery replacement demand is steady but mature \u2014 the real optionality for incumbents is their pivot into lithium-ion/EV battery manufacturing (both major Indian players have announced gigafactory investments), a genuine but not-yet-proven transition. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 18.0/30 plus a 'Medium' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "PREMIERENE.NS",
+      "composite": 43.0,
+      "hard_fail": null,
+      "theme": "Solar",
+      "sector": "Technology",
+      "industry": "Solar",
+      "quality": {
+        "score": 13.0,
+        "of": 35,
+        "reasons": [
+          "ROE decent \u2014 avg 25.2% across 4 yrs (brief's 15-18% bar), min -3.1%",
+          "D/E 0.86 \u2014 above the brief's 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 12.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 76.3% over 3 yrs, steady (no single lumpy year)",
+          "Earnings: fewer than 3 usable positive-base years from yfinance",
+          "Gross margin volatile \u2014 ranged 16.0% to 39.6%"
+        ]
+      },
+      "valuation": {
+        "score": 8.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 30.8 \u2014 rich (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "High",
+        "thesis": "India's PLI (production-linked incentive) scheme for solar cells/modules plus a 500GW non-fossil-capacity-by-2030 target is driving a genuine domestic manufacturing buildout, not just import substitution \u2014 anti-dumping duties on Chinese panels add a second tailwind via export potential.",
+        "drivers": [
+          "PLI-scheme-backed domestic cell/module manufacturing capacity additions",
+          "Corporate RE100/ESG-driven captive and merchant solar demand",
+          "US anti-dumping duties on Chinese panels create export opportunity for Indian manufacturers"
+        ],
+        "risks": [
+          "Capex-cycle/order-book exposure \u2014 cyclical, not a steady compounder",
+          "Industry-wide capacity additions risk module oversupply and margin compression unless a manufacturer has genuine tech/scale moat"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 12.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Munger",
+        "all_fit_scores": {
+          "Buffett": 0.46,
+          "Munger": 0.52,
+          "Lynch": 0.4,
+          "Graham": 0.51,
+          "Jhunjhunwala": 0.7
+        }
+      },
+      "summary": "Why: Revenue CAGR 76.3% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): High secular tailwind \u2014 India's PLI (production-linked incentive) scheme for solar cells/modules plus a 500GW non-fossil-capacity-by-2030 target is driving a genuine domestic manufacturing buildout, not just import substitution \u2014 anti-dumping duties on Chinese panels add a second tailwind via export potential. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 12.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "ADANIGREEN.NS",
+      "composite": 39.0,
+      "hard_fail": null,
+      "theme": "Green/Renewable",
+      "sector": "Utilities",
+      "industry": "Utilities - Renewable",
+      "quality": {
+        "score": 5.0,
+        "of": 35,
+        "reasons": [
+          "ROE below the brief's 15-18% bar \u2014 avg 11.0% across 4 yrs",
+          "D/E 5.08 \u2014 high leverage, well above the 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 24.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 16.6% over 3 yrs, steady (no single lumpy year)",
+          "Earnings CAGR 19.3% over 3 yrs",
+          "Gross margin volatile \u2014 ranged 74.1% to 89.9%"
+        ]
+      },
+      "valuation": {
+        "score": 0.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 158.8 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "High",
+        "thesis": "Long-tenure power purchase agreements (PPAs) give renewable generation assets real revenue visibility, and India's 500GW-by-2030 renewable capacity target is a sustained multi-year national priority, not a one-off push.",
+        "drivers": [
+          "Long-tenure PPAs lock in revenue visibility years in advance",
+          "Continued policy support for renewable capacity addition"
+        ],
+        "risks": [
+          "High leverage typical of capital-intensive power-generation assets",
+          "Tariff/PPA-renegotiation regulatory risk, execution risk on capacity-addition timelines"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 24.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Munger",
+        "all_fit_scores": {
+          "Buffett": 0.3,
+          "Munger": 0.4,
+          "Lynch": 0.4,
+          "Graham": 0.27,
+          "Jhunjhunwala": 0.9
+        }
+      },
+      "summary": "Why: Revenue CAGR 16.6% over 3 yrs, steady (no single lumpy year). Industry outlook (industry): High secular tailwind \u2014 Long-tenure power purchase agreements (PPAs) give renewable generation assets real revenue visibility, and India's 500GW-by-2030 renewable capacity target is a sustained multi-year national priority, not a one-off push. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 24.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "JSWENERGY.NS",
+      "composite": 34.0,
+      "hard_fail": null,
+      "theme": "Green/Renewable",
+      "sector": "Utilities",
+      "industry": "Utilities - Independent Power Producers",
+      "quality": {
+        "score": 0.0,
+        "of": 35,
+        "reasons": [
+          "ROE weak \u2014 avg 7.7% across 4 yrs",
+          "D/E 2.50 \u2014 high leverage, well above the 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 20.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 23.6% over 3 yrs \u2014 one year looks lumpy vs the trend",
+          "Earnings CAGR 14.9% over 3 yrs",
+          "Gross margin volatile \u2014 ranged 36.7% to 64.0%"
+        ]
+      },
+      "valuation": {
+        "score": 4.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 43.8 \u2014 expensive (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "Medium",
+        "thesis": "Rising India power demand (AC penetration, data centers, EV charging load) benefits diversified generators, and both major players here are actively pivoting their capacity mix toward renewables \u2014 but thermal exposure carries longer-term transition risk.",
+        "drivers": [
+          "Rising overall India electricity demand across residential, commercial, and data-center load",
+          "Active renewable capacity mix expansion at both major diversified generators"
+        ],
+        "risks": [
+          "Thermal generation exposure carries stranded-asset/transition risk over the long term",
+          "High leverage typical of power-generation capex"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 20.0/30 plus a 'Medium' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Lynch",
+        "all_fit_scores": {
+          "Buffett": 0.2,
+          "Munger": 0.33,
+          "Lynch": 0.43,
+          "Graham": 0.39,
+          "Jhunjhunwala": 0.58
+        }
+      },
+      "summary": "Why: Revenue CAGR 23.6% over 3 yrs \u2014 one year looks lumpy vs the trend. Industry outlook (industry): Medium secular tailwind \u2014 Rising India power demand (AC penetration, data centers, EV charging load) benefits diversified generators, and both major players here are actively pivoting their capacity mix toward renewables \u2014 but thermal exposure carries longer-term transition risk. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 20.0/30 plus a 'Medium' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "NTPCGREEN.NS",
+      "composite": 33.0,
+      "hard_fail": null,
+      "theme": "Green/Renewable",
+      "sector": "Utilities",
+      "industry": "Utilities - Renewable",
+      "quality": {
+        "score": 0.0,
+        "of": 35,
+        "reasons": [
+          "ROE weak \u2014 avg 3.6% across 4 yrs",
+          "D/E 1.67 \u2014 high leverage, well above the 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 23.0,
+        "of": 30,
+        "reasons": [
+          "Revenue CAGR 158.9% over 3 yrs \u2014 one year looks lumpy vs the trend",
+          "Earnings CAGR 45.1% over 3 yrs",
+          "Gross margin roughly stable \u2014 94.4% to 90.0%"
+        ]
+      },
+      "valuation": {
+        "score": 0.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 154.2 \u2014 very expensive (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "High",
+        "thesis": "Long-tenure power purchase agreements (PPAs) give renewable generation assets real revenue visibility, and India's 500GW-by-2030 renewable capacity target is a sustained multi-year national priority, not a one-off push.",
+        "drivers": [
+          "Long-tenure PPAs lock in revenue visibility years in advance",
+          "Continued policy support for renewable capacity addition"
+        ],
+        "risks": [
+          "High leverage typical of capital-intensive power-generation assets",
+          "Tariff/PPA-renegotiation regulatory risk, execution risk on capacity-addition timelines"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Jhunjhunwala",
+        "primary_philosophy": "Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.",
+        "reason": "Growth 23.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation.",
+        "runner_up": "Lynch",
+        "all_fit_scores": {
+          "Buffett": 0.2,
+          "Munger": 0.33,
+          "Lynch": 0.38,
+          "Graham": 0.27,
+          "Jhunjhunwala": 0.88
+        }
+      },
+      "summary": "Why: Revenue CAGR 158.9% over 3 yrs \u2014 one year looks lumpy vs the trend. Industry outlook (industry): High secular tailwind \u2014 Long-tenure power purchase agreements (PPAs) give renewable generation assets real revenue visibility, and India's 500GW-by-2030 renewable capacity target is a sustained multi-year national priority, not a one-off push. Closest investor style: Jhunjhunwala (Long-runway India growth story, held with conviction through volatility \u2014 the industry tailwind matters as much as this quarter's numbers.) \u2014 Growth 23.0/30 plus a 'High' secular industry tailwind \u2014 the long-runway story outweighs this quarter's valuation."
+    },
+    {
+      "ticker": "TATAPOWER.NS",
+      "composite": 31.0,
+      "hard_fail": null,
+      "theme": "Green/Renewable",
+      "sector": "Utilities",
+      "industry": "Utilities - Independent Power Producers",
+      "quality": {
+        "score": 5.0,
+        "of": 35,
+        "reasons": [
+          "ROE below the brief's 15-18% bar \u2014 avg 10.9% across 4 yrs",
+          "D/E 2.02 \u2014 high leverage, well above the 0.5 cap",
+          "FCF currently negative"
+        ]
+      },
+      "growth": {
+        "score": 8.0,
+        "of": 30,
+        "reasons": [
+          "Revenue growing slowly \u2014 CAGR 4.1% over 3 yrs",
+          "Earnings growing slowly \u2014 CAGR 3.9% over 3 yrs",
+          "Gross margin volatile \u2014 ranged 24.2% to 32.5%"
+        ]
+      },
+      "valuation": {
+        "score": 8.0,
+        "of": 20,
+        "reasons": [
+          "Trailing PE 32.3 \u2014 rich (PEG unavailable, used fixed bands not 5yr median)"
+        ]
+      },
+      "redflags": {
+        "score": 10.0,
+        "of": 15,
+        "reasons": [
+          "PENDING_MANUAL_CHECK: promoter pledging/holding trend not yet entered in manual_redflags.json"
+        ]
+      },
+      "industry_outlook": {
+        "rating": "Medium",
+        "thesis": "Rising India power demand (AC penetration, data centers, EV charging load) benefits diversified generators, and both major players here are actively pivoting their capacity mix toward renewables \u2014 but thermal exposure carries longer-term transition risk.",
+        "drivers": [
+          "Rising overall India electricity demand across residential, commercial, and data-center load",
+          "Active renewable capacity mix expansion at both major diversified generators"
+        ],
+        "risks": [
+          "Thermal generation exposure carries stranded-asset/transition risk over the long term",
+          "High leverage typical of power-generation capex"
+        ],
+        "source": "industry"
+      },
+      "investor_style_match": {
+        "primary": "Graham",
+        "primary_philosophy": "Absolute cheapness + margin of safety. Balance-sheet discipline matters more than growth story.",
+        "reason": "Valuation sub-score 8.0/20 and balance-sheet cleanliness 10.0/15 carry this more than the growth story.",
+        "runner_up": "Munger",
+        "all_fit_scores": {
+          "Buffett": 0.3,
+          "Munger": 0.4,
+          "Lynch": 0.33,
+          "Graham": 0.51,
+          "Jhunjhunwala": 0.38
+        }
+      },
+      "summary": "Why: Trailing PE 32.3 \u2014 rich (PEG unavailable, used fixed bands not 5yr median). Industry outlook (industry): Medium secular tailwind \u2014 Rising India power demand (AC penetration, data centers, EV charging load) benefits diversified generators, and both major players here are actively pivoting their capacity mix toward renewables \u2014 but thermal exposure carries longer-term transition risk. Closest investor style: Graham (Absolute cheapness + margin of safety. Balance-sheet discipline matters more than growth story.) \u2014 Valuation sub-score 8.0/20 and balance-sheet cleanliness 10.0/15 carry this more than the growth story."
     }
   ],
   "fetch_failed": []
