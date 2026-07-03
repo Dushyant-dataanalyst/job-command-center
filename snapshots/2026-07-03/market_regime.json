@@ -8,7 +8,7 @@
       "atr_percentile_6mo": 0.0,
       "volume_behavior": "Normal",
       "rel_volume": 0.96,
-      "spot": 24348.15,
+      "spot": 24356.05,
       "data_as_of": "2026-07-03"
     },
     "BANKNIFTY": {
@@ -19,7 +19,7 @@
       "atr_percentile_6mo": 5.0,
       "volume_behavior": "Decreasing",
       "rel_volume": 0.78,
-      "spot": 58096.75,
+      "spot": 58089.75,
       "data_as_of": "2026-07-03"
     }
   },
@@ -39,5 +39,5 @@
   },
   "method": "Trend = EMA18/EMA50 stack direction, gated by ADX>=20 (below that = Sideways/Choppy regardless of EMA stack). Volatility = current ATR% ranked against its own trailing 6-month distribution (percentile), not a fixed threshold. Volume behavior = today's volume vs 20-day average.",
   "disclaimer": "Educational regime classification only, not investment advice. Recommendation logic is a heuristic mapping from regime to strategy fit \u2014 not a verified backtest of which strategy performs best in which regime.",
-  "fetched_at": "03 Jul 2026 09:35 IST"
+  "fetched_at": "03 Jul 2026 09:41 IST"
 }
