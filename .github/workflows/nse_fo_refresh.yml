@@ -1,8 +1,14 @@
-name: NSE FO Refresh Every 5 Min
+name: NSE FO Refresh (5-min market hours, hourly off-hours)
 
 on:
   schedule:
-    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 07:30-16:25 IST (02:00-10:55 UTC)
+    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 07:30-16:25 IST (02:00-10:55 UTC), market hours
+    - cron: '0 * * * *'           # Every hour, every day (incl. weekends) — off-hours/off-days baseline.
+                                    # Overlaps the market-hours cron at the top of each hour on weekdays;
+                                    # harmless (concurrency queues rather than collides). The `gate` job
+                                    # below is what actually enforces "hourly off-hours" even though an
+                                    # external trigger (cron-job.org) also fires every 5 min around the
+                                    # clock regardless of this native schedule.
     - cron: '30 15 * * 1-5'       # Once at 9:00 PM IST (15:30 UTC) — next-day prep
   workflow_dispatch:               # Manual trigger from GitHub UI — hit "Run workflow" any time to force a fresh pull
 
@@ -19,7 +25,50 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Runs on EVERY trigger, regardless of cadence or source (native schedule
+  # above, or the external cron-job.org ping that fires every 5 min around
+  # the clock) -- decides whether this trigger should do a full refresh, or
+  # just heartbeat and stop. Deliberately its own job (not a step in
+  # fo-refresh) so `if: needs.gate.outputs.should_run` can skip the ENTIRE
+  # heavy job cleanly, and so the heartbeat always fires even when the rest
+  # is skipped -- the dead-man's-switch cares "is the trigger itself alive",
+  # not "did we choose to do work this time".
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Market hours = always run (as live as possible). Off-hours/weekends
+      # = only run if >= 55 min since the last recorded run, throttling
+      # down to roughly hourly regardless of how often this job itself
+      # gets triggered. See should_run_full_refresh.py for the exact logic
+      # (tested against market-open/close edges, weekday/weekend, and the
+      # 55-min boundary before being wired in here).
+      - name: Decide whether to run full refresh this trigger
+        id: check
+        run: |
+          cd nse-trading-bot
+          python should_run_full_refresh.py
+
+      - name: Heartbeat ping (always, independent of the run/skip decision)
+        if: always()
+        run: |
+          curl -fsS --retry 3 --max-time 10 "${{ secrets.HEALTHCHECK_PING_URL }}" > /dev/null || true
+
   fo-refresh:
+    needs: gate
+    if: needs.gate.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     # 8 min, not the tighter 3-4 min originally suggested — market_mood_refresh.py alone
     # checks ~50 stocks for breadth and sector_rotation_refresh.py adds ~20 more, each with
@@ -245,12 +294,6 @@ jobs:
             git push origin master
             echo "✅ Pushed — Vercel will redeploy"
           fi
-
-      # Independent of GitHub Actions itself working — this is the whole point.
-      # If the scheduled trigger silently stops firing (exactly what happened
-      # earlier today), no ping arrives, and healthchecks.io alerts by email
-      # on its own, without depending on anything in this repo/workflow.
-      - name: Heartbeat ping (independent of GitHub Actions scheduling)
-        if: always()
-        run: |
-          curl -fsS --retry 3 --max-time 10 "${{ secrets.HEALTHCHECK_PING_URL }}" > /dev/null || true
+      # Heartbeat moved to the `gate` job above — it needs to fire on every
+      # trigger (including ones gate decides to skip), not just when this
+      # job actually runs.
