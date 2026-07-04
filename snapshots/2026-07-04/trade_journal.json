@@ -21,7 +21,7 @@
       "exit_premium": null,
       "exit_reason": null,
       "pnl_pct": null,
-      "last_checked": "04 Jul 2026 11:21 IST"
+      "last_checked": "04 Jul 2026 11:25 IST"
     },
     {
       "id": "NIFTY50-2026-07-02-BUY_CE-02Jul20261132IST",
@@ -38,32 +38,45 @@
       "target1_premium": 431.0,
       "target2_premium": 616.0,
       "opened_at": "02 Jul 2026 11:32 IST",
-      "status": "open",
-      "current_premium": 286.0,
-      "closed_at": null,
-      "exit_premium": null,
-      "exit_reason": null,
-      "pnl_pct": null,
-      "last_checked": "04 Jul 2026 11:21 IST"
+      "status": "closed",
+      "current_premium": 457.0,
+      "closed_at": "04 Jul 2026 11:25 IST",
+      "exit_premium": 457.0,
+      "exit_reason": "target1_hit",
+      "pnl_pct": 48.4,
+      "last_checked": "04 Jul 2026 11:25 IST",
+      "result": "win"
     }
   ],
   "stats": {
-    "total_closed": 0,
-    "open_count": 2,
-    "wins": 0,
+    "total_closed": 1,
+    "open_count": 1,
+    "wins": 1,
     "losses": 0,
-    "win_rate": 0.0,
-    "avg_win_pct": 0.0,
+    "win_rate": 100.0,
+    "avg_win_pct": 48.4,
     "avg_loss_pct": 0.0,
-    "expectancy_pct": null,
-    "by_instrument": {},
-    "by_votes": {},
+    "expectancy_pct": 48.4,
+    "by_instrument": {
+      "NIFTY50": {
+        "total": 1,
+        "wins": 1,
+        "win_rate": 100.0
+      }
+    },
+    "by_votes": {
+      "5/5": {
+        "total": 1,
+        "wins": 1,
+        "win_rate": 100.0
+      }
+    },
     "loss_by_votes": {},
     "loss_by_instrument": {},
     "insight": "Not enough closed trades yet to draw a conclusion.",
-    "loss_diagnostic": "Only 0 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
+    "loss_diagnostic": "Only 1 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
   },
   "_meta": {
-    "generated_at": "04 Jul 2026 11:21 IST"
+    "generated_at": "04 Jul 2026 11:25 IST"
   }
 }
