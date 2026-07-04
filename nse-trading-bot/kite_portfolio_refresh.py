@@ -27,6 +27,8 @@ from equity_brain import _merged_tracked_positions
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 OUT_FILE = REPO_ROOT / "kite_portfolio.json"
+TRADE_HISTORY_FILE = REPO_ROOT / "kite_trade_history.json"
+TRADE_HISTORY_MAX = 2000  # generous cap for a personal account's trade volume over years, not just recent runs
 
 
 def _num(x):
@@ -34,6 +36,41 @@ def _num(x):
         return float(x)
     except (TypeError, ValueError):
         return 0.0
+
+
+def _append_trade_history(trades_raw):
+    """Kite's own /trades API only ever returns TODAY's fills -- confirmed
+    against Kite's docs ("order history... only lives for a day in the
+    system"), no date-range parameter exists. So there is no way to ever
+    retroactively recover a past week's real trades via the API; the only
+    way to build genuine broker-confirmed trade history is to persist each
+    day's real fills ourselves, starting now. This runs every 5 min (same
+    cadence as the rest of the CI cron) and appends any trade_id not
+    already logged, so a real trade is captured within minutes of
+    executing, then never touched again (Kite fills don't change after
+    the fact). Always writes the file (even [] on a no-trade day) so it
+    exists reliably from the first run — matching every other JSON feed in
+    this project and letting validate_json_outputs.py check it like any
+    other. Returns the number of newly-logged trades."""
+    try:
+        history = json.loads(TRADE_HISTORY_FILE.read_text(encoding="utf-8")) if TRADE_HISTORY_FILE.exists() else []
+        if not isinstance(history, list):
+            history = []
+    except Exception:
+        history = []
+
+    known_ids = {t.get("trade_id") for t in history if t.get("trade_id")}
+    new_count = 0
+    for t in (trades_raw or []):
+        tid = t.get("trade_id")
+        if tid and tid not in known_ids:
+            history.append({**t, "logged_at": now_ist_str()})
+            known_ids.add(tid)
+            new_count += 1
+
+    history = history[-TRADE_HISTORY_MAX:]
+    TRADE_HISTORY_FILE.write_text(json.dumps(history, indent=2), encoding="utf-8")
+    return new_count
 
 
 def _reconcile(holdings):
@@ -151,6 +188,10 @@ def main():
     print(f"  holdings={len(holdings)} value=Rs{total_value} pnl=Rs{total_pnl} ({total_pnl_pct}%) margin=Rs{margin_available}")
     print(f"  reconcile: held_not_tracked={recon['held_but_not_tracked']} tracked_not_held={recon['tracked_but_not_held']}")
     print(f"  Wrote {OUT_FILE}")
+
+    new_trades = _append_trade_history(trades_raw)
+    if new_trades:
+        print(f"  logged {new_trades} new real trade(s) to {TRADE_HISTORY_FILE}")
 
 
 if __name__ == "__main__":
