@@ -1,15 +1,90 @@
 {
-  "session_live": false,
-  "fetched_at": "04 Jul 2026 10:46 IST",
-  "message": "Kite session expired or not set up \u2014 refresh your token (kite_auth_refresh workflow) to see live holdings.",
-  "reason": "no valid same-day kite_session.json",
-  "holdings": [],
-  "positions": [],
-  "margin_available": null,
+  "session_live": true,
+  "fetched_at": "04 Jul 2026 10:51 IST",
+  "holdings": [
+    {
+      "tradingsymbol": "DLF",
+      "exchange": "NSE",
+      "quantity": 0.0,
+      "average_price": 667.1,
+      "last_price": 675.9,
+      "pnl": 264.0,
+      "day_change_percentage": 2.69,
+      "value": 0.0,
+      "invested": 0.0
+    },
+    {
+      "tradingsymbol": "ICICIBANK",
+      "exchange": "NSE",
+      "quantity": 25.0,
+      "average_price": 1387.46,
+      "last_price": 1411.4,
+      "pnl": 598.5,
+      "day_change_percentage": 0.81,
+      "value": 35285.0,
+      "invested": 34686.5
+    },
+    {
+      "tradingsymbol": "SUNPHARMA",
+      "exchange": "NSE",
+      "quantity": 0.0,
+      "average_price": 1909.93,
+      "last_price": 1904.8,
+      "pnl": -15.4,
+      "day_change_percentage": 1.81,
+      "value": 0.0,
+      "invested": 0.0
+    }
+  ],
+  "stats": {
+    "total_value": 35285.0,
+    "total_invested": 34686.5,
+    "total_pnl": 847.1,
+    "total_pnl_pct": 2.44,
+    "holdings_count": 3
+  },
+  "positions": [
+    {
+      "tradingsymbol": "NIFTY26JUL24300CE",
+      "exchange": "NFO",
+      "instrument_token": 16371458,
+      "product": "NRML",
+      "segment": "FO",
+      "quantity": 130,
+      "overnight_quantity": 130,
+      "multiplier": 1,
+      "average_price": 319.8,
+      "close_price": 279.45,
+      "last_price": 313.45,
+      "value": -41574,
+      "pnl": -825.5,
+      "m2m": 4420,
+      "unrealised": -825.5,
+      "realised": 0,
+      "buy_quantity": 130,
+      "buy_price": 319.8,
+      "buy_value": 41574,
+      "buy_m2m": 36328.5,
+      "sell_quantity": 0,
+      "sell_price": 0,
+      "sell_value": 0,
+      "sell_m2m": 0,
+      "day_buy_quantity": 0,
+      "day_buy_price": 0,
+      "day_buy_value": 0,
+      "day_sell_quantity": 0,
+      "day_sell_price": 0,
+      "day_sell_value": 0
+    }
+  ],
+  "margin_available": 34686.7,
   "today_trades": [],
   "today_orders": [],
   "reconciliation": {
-    "held_but_not_tracked": [],
+    "held_but_not_tracked": [
+      "ICICIBANK"
+    ],
     "tracked_but_not_held": []
-  }
+  },
+  "disclaimer": "Real Zerodha account data via Kite Connect. Read-only \u2014 no orders placed. Verify in your Kite terminal before acting."
 }
