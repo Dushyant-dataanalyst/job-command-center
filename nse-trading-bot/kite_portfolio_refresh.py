@@ -49,13 +49,20 @@ def _reconcile(holdings):
 
 
 def _slim_holding(h):
-    qty = _num(h.get("quantity"))
+    # Kite's "quantity" is settled/free shares only -- a same-day buy sits in
+    # "t1_quantity" (T+1 settlement) and would show quantity=0 despite being
+    # a real, owned position with real P&L. Total actual holding is the sum;
+    # Kite's own `pnl` already accounts for the full position either way.
+    settled = _num(h.get("quantity"))
+    pending = _num(h.get("t1_quantity"))
+    qty = settled + pending
     avg = _num(h.get("average_price"))
     ltp = _num(h.get("last_price"))
     return {
         "tradingsymbol": h.get("tradingsymbol"),
         "exchange": h.get("exchange"),
         "quantity": qty,
+        "pending_settlement": pending if pending else None,
         "average_price": round(avg, 2),
         "last_price": round(ltp, 2),
         "pnl": round(_num(h.get("pnl")), 2),

@@ -28,6 +28,14 @@ jobs:
     timeout-minutes: 8
     permissions:
       contents: write
+    env:
+      # Verified 04-Jul-2026 against a live token: Kite historical candles
+      # match yfinance exactly on close/volume, indicators agree within
+      # rounding noise (see market_data.py). Every call site still falls
+      # back to yfinance automatically on any Kite failure (no session, no
+      # token, network error) -- flip to "false" here to revert instantly,
+      # no code change needed.
+      USE_KITE_HISTORICAL: "true"
 
     steps:
       - name: Checkout repo
