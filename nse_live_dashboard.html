@@ -378,6 +378,7 @@ let SCAN_DATA = {};
 let SCAN_META = null;
 let LT_DATA = {}; // System B quality-growth screen, keyed by bare NSE symbol (no .NS) — see _loadLongTerm()
 const LT_QUALITY_THRESHOLD = 65; // composite score above which a swing BUY also gets the "long-term quality" badge
+let KITE_HELD_SYMBOLS = new Set(); // real Zerodha holdings, populated once /kite_portfolio.json loads — lets the manual "My Positions" cards skip anything already shown (with real data) in the Real Portfolio panel, instead of showing the same stock twice with two different entry prices
 </script>
 
 <!-- Inline equity-tab positions block removed — tracked exclusively in the My Positions tab now -->
@@ -1114,6 +1115,8 @@ function updateEquityCounts(){
     if (!box) return;
 
     if (!d || d.session_live === false){
+      KITE_HELD_SYMBOLS = new Set();
+      if (typeof renderPositions === 'function') renderPositions();
       box.innerHTML =
         '<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 16px">' +
           '<div style="font-size:13px;font-weight:800;color:#b45309">💼 Real Portfolio — Kite session not live</div>' +
@@ -1127,11 +1130,24 @@ function updateEquityCounts(){
     const pnlColor = (s.total_pnl||0) >= 0 ? '#059669' : '#dc2626';
     const recon = d.reconciliation || {held_but_not_tracked:[], tracked_but_not_held:[]};
 
+    // Real Kite data is the source of truth for price/qty/P&L for anything
+    // held — the manual "My Positions" card list (further down this tab)
+    // used to ALSO show these same stocks with a separately-entered entry
+    // price, so the same stock showed two different, conflicting numbers
+    // in the same tab. KITE_HELD_SYMBOLS lets that list skip anything
+    // already shown here; we fold its SL/T1/T2 signal targets into this
+    // row instead, so nothing is lost, just not duplicated.
+    KITE_HELD_SYMBOLS = new Set((d.holdings||[]).map(h => h.tradingsymbol));
+
     let rows = (d.holdings||[]).map(function(h){
       const pc = (h.pnl||0) >= 0 ? '#059669' : '#dc2626';
       const dc = (h.day_change_percentage||0) >= 0 ? '#059669' : '#dc2626';
+      const manual = (typeof positions !== 'undefined') ? positions.find(p => p.name === h.tradingsymbol) : null;
+      const targetsLine = manual
+        ? '<div style="font-size:9px;color:#64748b;margin-top:2px">SL ₹'+manual.sl+' · T1 ₹'+manual.t1+(manual.t2?' · T2 ₹'+manual.t2:'')+'</div>'
+        : '';
       return '<tr style="border-bottom:1px solid #1e293b">' +
-        '<td style="padding:6px 8px;font-weight:700;color:#e2e8f0">'+h.tradingsymbol+'</td>' +
+        '<td style="padding:6px 8px;font-weight:700;color:#e2e8f0">'+h.tradingsymbol+targetsLine+'</td>' +
         '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+h.quantity+(h.pending_settlement?' <span style="color:#d97706;font-size:9px" title="Bought today, still settling (T+1)">('+h.pending_settlement+' settling)</span>':'')+'</td>' +
         '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+INR(h.average_price)+'</td>' +
         '<td style="padding:6px 8px;text-align:right;font-weight:700;color:#e2e8f0">'+INR(h.last_price)+'</td>' +
@@ -1171,6 +1187,10 @@ function updateEquityCounts(){
       const cap = document.getElementById('ps-capital');
       if (cap && !cap.dataset.userEdited) cap.value = Math.round(d.margin_available);
     }
+
+    // Re-render the manual positions list now that KITE_HELD_SYMBOLS is
+    // known, so any card duplicating a real holding above drops out.
+    if (typeof renderPositions === 'function') renderPositions();
   }
   fetch('/kite_portfolio.json?v=' + Date.now())
     .then(function(r){ return r.ok ? r.json() : null; })
@@ -2650,9 +2670,21 @@ function renderPositions(){
   const posSummary = document.getElementById('pos-summary');
   if(!posCards) { _updateBuyBtns(); return; }
 
-  if(!positions.length){
+  // Anything already shown (with real Kite data) in the Real Portfolio panel
+  // above is excluded here — its SL/T1/T2 targets are folded into that
+  // panel's row instead, so the same stock never shows twice with two
+  // different entry prices in this tab.
+  const visiblePositions = positions.filter(p => !KITE_HELD_SYMBOLS.has(p.name));
+  const hiddenByKite = positions.length - visiblePositions.length;
+
+  if(!visiblePositions.length){
     posCards.style.display='none';
-    if(posEmpty)   posEmpty.style.display='block';
+    if(posEmpty){
+      posEmpty.style.display='block';
+      posEmpty.innerHTML = hiddenByKite
+        ? 'All ' + hiddenByKite + ' of your tracked position(s) are real Zerodha holdings — shown with live data in the <b>💼 Real Portfolio</b> panel above instead of here.'
+        : 'No positions yet. Click <b>📌 I BOUGHT</b> on any stock in the Equity tab, or use <b>+ Add Position</b> above.';
+    }
     if(posSummary) posSummary.innerHTML='';
     _updateBuyBtns(); return;
   }
@@ -2662,7 +2694,7 @@ function renderPositions(){
   let holdCount=0, monCount=0, exitCount=0;
   const isDefault = n => DEFAULT_POSITIONS.some(d=>d.name===n);
 
-  posCards.innerHTML = positions.map(p=>{
+  posCards.innerHTML = visiblePositions.map(p=>{
     const cur      = SCAN_DATA[p.name] || {};
     const curSig   = cur.signal || 'NO_SIGNAL';
     const curVotes = cur.buy_votes || 0;
