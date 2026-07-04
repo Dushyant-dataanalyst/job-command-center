@@ -46,13 +46,31 @@ def _next_monthly_expiry(weekday):
 def _atm(spot, step):
     return int(round(spot / step) * step)
 
-def _premium_estimate(spot, strike, ann_vol, days):
+def _premium_estimate(spot, strike, ann_vol, days, option_type="CE"):
+    """Simplified premium approximation: intrinsic value (real, grows as the
+    option moves ITM) plus a vol-based extrinsic/time-value estimate that
+    itself shrinks the further the option sits from the strike in EITHER
+    direction (a real option-pricing property — deep ITM/OTM options carry
+    little time value).
+
+    BUG FIXED 04-Jul-2026: the "moneyness haircut" below used to discount the
+    ENTIRE premium (not just the extrinsic component), which meant an option
+    moving further ITM — genuinely good news, intrinsic value rising — could
+    show a falling estimated premium instead. Verified against a real trade:
+    NIFTY spot moved +0.78% in the favorable direction for an open CE
+    position, yet the old formula showed the premium (and P&L) dropping.
+    Confirmed the corrected math no longer does this.
+    """
     T = max(days, 1) / 365.0
+    if option_type == "PE":
+        intrinsic = max(0.0, strike - spot)
+    else:
+        intrinsic = max(0.0, spot - strike)
     mono = abs(spot - strike) / spot
-    p = 0.4 * ann_vol * spot * math.sqrt(T)
+    extrinsic = 0.4 * ann_vol * spot * math.sqrt(T)
     if mono > 0.002:
-        p *= max(0.3, 1 - mono * 8)
-    return round(p, 0)
+        extrinsic *= max(0.3, 1 - mono * 8)
+    return round(intrinsic + extrinsic, 0)
 
 def _get_indicators(ticker):
     df, data_source = get_ohlcv(ticker, period="6mo")
@@ -141,7 +159,7 @@ def _fo_signal(instrument):
     strike  = _atm(spot, step) if consensus != "WAIT" else 0
     opt     = "CE" if consensus == "BUY_CE" else "PE" if consensus == "BUY_PE" else ""
     nse_sym = "NIFTY" if instrument == "NIFTY50" else "BANKNIFTY"
-    prem    = _premium_estimate(spot, strike, v["ann_vol"], days_to) if opt else 0
+    prem    = _premium_estimate(spot, strike, v["ann_vol"], days_to, opt) if opt else 0
     sl      = round(prem * 0.70, 0)   # exit at 70% of entry = 30% loss
     t1      = round(prem * 1.40, 0)
     t2      = round(prem * 2.00, 0)

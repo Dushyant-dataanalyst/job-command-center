@@ -69,7 +69,7 @@ def _atm(spot, step):
 
 
 def _single_leg(spot, strike, opt, ann_vol, days):
-    prem = _premium_estimate(spot, strike, ann_vol, days)
+    prem = _premium_estimate(spot, strike, ann_vol, days, opt)
     return {
         "type": "single_leg",
         "action": f"BUY {strike} {opt}",
@@ -82,8 +82,8 @@ def _single_leg(spot, strike, opt, ann_vol, days):
 
 
 def _spread(spot, atm_strike, otm_strike, opt, ann_vol, days):
-    long_prem = _premium_estimate(spot, atm_strike, ann_vol, days)
-    short_prem = _premium_estimate(spot, otm_strike, ann_vol, days)
+    long_prem = _premium_estimate(spot, atm_strike, ann_vol, days, opt)
+    short_prem = _premium_estimate(spot, otm_strike, ann_vol, days, opt)
     net_debit = round(long_prem - short_prem, 1)
     width = abs(otm_strike - atm_strike)
     max_profit = round(width - net_debit, 1)

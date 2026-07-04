@@ -2493,8 +2493,21 @@ function removePosition(name){
   }
 
   if (p) {
-    const suggestedExit = (SCAN_DATA[name] && SCAN_DATA[name].entry) || p.entry;
-    const exitStr = prompt('Exit price for ' + name + ' (₹) — what you actually got when you closed this in your broker:', suggestedExit);
+    // BUG FIXED 04-Jul-2026: this used to fall back to p.entry (the ORIGINAL
+    // buy price) as the pre-filled suggestion whenever the symbol wasn't in
+    // today's live SCAN_DATA (e.g. PAGEIND, not part of the tracked
+    // universe) -- if you clicked through without editing it, that silently
+    // recorded a fake "0% no change" outcome that polluted the closed-trade
+    // journal (and would eventually distort per-voter win-rate learning).
+    // Now: only pre-fill when we actually have a live price; otherwise
+    // leave it blank and say so explicitly, so a 0% result only happens if
+    // you deliberately type one in.
+    const hasLivePrice = !!(SCAN_DATA[name] && SCAN_DATA[name].entry);
+    const suggestedExit = hasLivePrice ? SCAN_DATA[name].entry : '';
+    const promptMsg = hasLivePrice
+      ? 'Exit price for ' + name + ' (₹) — what you actually got when you closed this in your broker:'
+      : 'No live price available for ' + name + ' — enter your ACTUAL exit price from your broker (₹):';
+    const exitStr = prompt(promptMsg, suggestedExit);
     const exit = parseFloat(exitStr);
     if (exitStr && !isNaN(exit)) {
       closedEquityTrades.push({

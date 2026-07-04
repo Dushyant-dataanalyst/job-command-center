@@ -34,14 +34,28 @@ MIN_WEIGHT_FLOOR = 0.05    # no voter's weight goes to exactly 0 off a bad early
 
 
 def _load_closed_trades():
+    """Filters out entry==exit exact-match trades — the dashboard's
+    removePosition() used to pre-fill the exit-price prompt with the
+    original entry price whenever a symbol wasn't in the live-tracked
+    universe (fixed 04-Jul-2026), so an unedited prompt silently recorded a
+    fake "0% no change" outcome rather than a real one. A genuine trade
+    closing at exactly its entry price is possible but rare; excluding it
+    from a small sample costs far less than letting an artifact distort
+    per-voter learning. Excluded count is logged, not silently dropped."""
     if not POSITIONS_FILE.exists():
         return []
     try:
         data = json.loads(POSITIONS_FILE.read_text(encoding="utf-8"))
         trades = data.get("closedTrades", []) if isinstance(data, dict) else []
-        return trades if isinstance(trades, list) else []
+        trades = trades if isinstance(trades, list) else []
     except Exception:
         return []
+
+    real_trades = [t for t in trades if t.get("entry") != t.get("exit")]
+    excluded = len(trades) - len(real_trades)
+    if excluded:
+        print(f"  excluded {excluded} closed trade(s) with entry==exit exactly (likely unedited exit-price prompt, not a real 0% outcome)")
+    return real_trades
 
 
 def _voter_stats(trades, voter):

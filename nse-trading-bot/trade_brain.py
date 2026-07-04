@@ -75,7 +75,7 @@ def _mark_to_market(trade, sig, now_str):
     expiry_dt = _next_monthly_expiry(cfg["expiry_day"])
     days_remaining = (expiry_dt - date.today()).days
 
-    cur_premium = _premium_estimate(sig["spot"], trade["strike"], sig["ann_vol"], max(days_remaining, 1))
+    cur_premium = _premium_estimate(sig["spot"], trade["strike"], sig["ann_vol"], max(days_remaining, 1), trade["option_type"])
     trade["current_premium"] = cur_premium
     trade["last_checked"] = now_str
 
