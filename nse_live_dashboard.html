@@ -1130,11 +1130,11 @@ function updateEquityCounts(){
     let rows = (d.holdings||[]).map(function(h){
       const pc = (h.pnl||0) >= 0 ? '#059669' : '#dc2626';
       const dc = (h.day_change_percentage||0) >= 0 ? '#059669' : '#dc2626';
-      return '<tr style="border-bottom:1px solid #f1f5f9">' +
-        '<td style="padding:6px 8px;font-weight:700;color:#0f172a">'+h.tradingsymbol+'</td>' +
-        '<td style="padding:6px 8px;text-align:right;color:#475569">'+h.quantity+(h.pending_settlement?' <span style="color:#d97706;font-size:9px" title="Bought today, still settling (T+1)">('+h.pending_settlement+' settling)</span>':'')+'</td>' +
-        '<td style="padding:6px 8px;text-align:right;color:#475569">'+INR(h.average_price)+'</td>' +
-        '<td style="padding:6px 8px;text-align:right;font-weight:700;color:#0f172a">'+INR(h.last_price)+'</td>' +
+      return '<tr style="border-bottom:1px solid #1e293b">' +
+        '<td style="padding:6px 8px;font-weight:700;color:#e2e8f0">'+h.tradingsymbol+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+h.quantity+(h.pending_settlement?' <span style="color:#d97706;font-size:9px" title="Bought today, still settling (T+1)">('+h.pending_settlement+' settling)</span>':'')+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+INR(h.average_price)+'</td>' +
+        '<td style="padding:6px 8px;text-align:right;font-weight:700;color:#e2e8f0">'+INR(h.last_price)+'</td>' +
         '<td style="padding:6px 8px;text-align:right;font-weight:700;color:'+pc+'">'+INR(h.pnl)+'</td>' +
         '<td style="padding:6px 8px;text-align:right;color:'+dc+'">'+(h.day_change_percentage>=0?'+':'')+h.day_change_percentage+'%</td>' +
       '</tr>';
