@@ -1,5 +1,5 @@
 {
-  "fetched_at": "04 Jul 2026 10:55 IST",
+  "fetched_at": "04 Jul 2026 11:01 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
   "all_sectors_ranked": [
@@ -44,16 +44,6 @@
       "score": 0.46
     },
     {
-      "sector": "Banking",
-      "roc5_pct": -0.41,
-      "rel_volume": 0.94,
-      "bullish_trend": true,
-      "last_close": 57938.5,
-      "data_as_of": "2026-07-03",
-      "data_source": "yfinance",
-      "score": -0.39
-    },
-    {
       "sector": "FMCG",
       "roc5_pct": -0.47,
       "rel_volume": 0.86,
@@ -95,6 +85,7 @@
     }
   ],
   "sectors_with_errors": {
+    "Banking": "insufficient data",
     "Media": "insufficient data"
   },
   "top_sectors": [
@@ -112,7 +103,7 @@
         "bullish_trend": true,
         "last_close": 1620.5,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 5.88
       },
       {
@@ -122,7 +113,7 @@
         "bullish_trend": true,
         "last_close": 1904.8,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 2.41
       },
       {
@@ -132,7 +123,7 @@
         "bullish_trend": true,
         "last_close": 1374.1,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 1.31
       }
     ],
@@ -144,7 +135,7 @@
         "bullish_trend": true,
         "last_close": 14366.0,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 3.03
       },
       {
@@ -154,18 +145,18 @@
         "bullish_trend": false,
         "last_close": 9785.5,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": -0.22
       },
       {
         "symbol": "M&M",
-        "roc5_pct": -0.37,
+        "roc5_pct": -1.42,
         "rel_volume": 0.78,
         "bullish_trend": true,
         "last_close": 3136.9,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
-        "score": -0.29
+        "data_source": "kite",
+        "score": -1.11
       }
     ],
     "Realty": [
@@ -176,7 +167,7 @@
         "bullish_trend": true,
         "last_close": 1934.4,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 17.05
       },
       {
@@ -186,7 +177,7 @@
         "bullish_trend": true,
         "last_close": 675.9,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 13.87
       },
       {
@@ -196,7 +187,7 @@
         "bullish_trend": true,
         "last_close": 1996.4,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 12.92
       }
     ]
