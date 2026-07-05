@@ -1,5 +1,5 @@
 {
-  "fetched_at": "05 Jul 2026 06:36 IST",
+  "fetched_at": "05 Jul 2026 06:41 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
   "all_sectors_ranked": [
@@ -12,6 +12,16 @@
       "data_as_of": "2026-07-03",
       "data_source": "yfinance",
       "score": 6.06
+    },
+    {
+      "sector": "Auto",
+      "roc5_pct": 0.86,
+      "rel_volume": 2.11,
+      "bullish_trend": true,
+      "last_close": 26977.75,
+      "data_as_of": "2026-06-25",
+      "data_source": "yfinance",
+      "score": 1.81
     },
     {
       "sector": "IT",
@@ -32,12 +42,20 @@
       "data_as_of": "2026-07-03",
       "data_source": "yfinance",
       "score": -0.39
+    },
+    {
+      "sector": "Metal",
+      "roc5_pct": -4.34,
+      "rel_volume": 0.78,
+      "bullish_trend": false,
+      "last_close": 12445.65,
+      "data_as_of": "2026-06-25",
+      "data_source": "yfinance",
+      "score": -3.39
     }
   ],
   "sectors_with_errors": {
-    "Auto": "insufficient data",
     "FMCG": "insufficient data",
-    "Metal": "insufficient data",
     "Energy": "insufficient data",
     "Realty": "insufficient data",
     "PSU Bank": "insufficient data",
@@ -45,8 +63,8 @@
   },
   "top_sectors": [
     "Pharma",
-    "IT",
-    "Banking"
+    "Auto",
+    "IT"
   ],
   "building_momentum": [],
   "stock_picks_by_sector": {
@@ -82,6 +100,38 @@
         "score": 1.31
       }
     ],
+    "Auto": [
+      {
+        "symbol": "MARUTI",
+        "roc5_pct": 4.52,
+        "rel_volume": 0.67,
+        "bullish_trend": true,
+        "last_close": 14366.0,
+        "data_as_of": "2026-07-03",
+        "data_source": "yfinance",
+        "score": 3.03
+      },
+      {
+        "symbol": "BAJAJ-AUTO",
+        "roc5_pct": -0.58,
+        "rel_volume": 0.38,
+        "bullish_trend": false,
+        "last_close": 9785.5,
+        "data_as_of": "2026-07-03",
+        "data_source": "yfinance",
+        "score": -0.22
+      },
+      {
+        "symbol": "M&M",
+        "roc5_pct": -0.39,
+        "rel_volume": 0.78,
+        "bullish_trend": true,
+        "last_close": 3136.9,
+        "data_as_of": "2026-07-03",
+        "data_source": "yfinance",
+        "score": -0.3
+      }
+    ],
     "IT": [
       {
         "symbol": "HCLTECH",
@@ -112,38 +162,6 @@
         "data_as_of": "2026-07-03",
         "data_source": "yfinance",
         "score": 0.64
-      }
-    ],
-    "Banking": [
-      {
-        "symbol": "ICICIBANK",
-        "roc5_pct": 1.72,
-        "rel_volume": 0.83,
-        "bullish_trend": true,
-        "last_close": 1411.4,
-        "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
-        "score": 1.43
-      },
-      {
-        "symbol": "HDFCBANK",
-        "roc5_pct": 0.6,
-        "rel_volume": 0.74,
-        "bullish_trend": true,
-        "last_close": 801.05,
-        "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
-        "score": 0.44
-      },
-      {
-        "symbol": "SBIN",
-        "roc5_pct": -0.52,
-        "rel_volume": 0.8,
-        "bullish_trend": true,
-        "last_close": 1040.0,
-        "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
-        "score": -0.42
       }
     ]
   },
