@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "05 Jul 2026 05:26 IST",
+    "generated_at": "05 Jul 2026 05:32 IST",
     "method": "Same 3-factor consensus as refresh_fo_cloud.py (EMA alignment, MACD, pivot breakout, ROC5). votes==6 -> single-leg, votes in [4,5] -> capped-risk spread.",
     "errors": {}
   },
@@ -12,18 +12,18 @@
     "pe_votes": 0,
     "votes": 6,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "single_leg",
       "action": "BUY 1400 CE",
       "strike": 1400,
-      "entry_premium": 37.0,
-      "sl_premium": 25.9,
-      "target1_premium": 51.8,
-      "target2_premium": 74.0,
+      "entry_premium": 36.0,
+      "sl_premium": 25.2,
+      "target1_premium": 50.4,
+      "target2_premium": 72.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 50
     }
   },
@@ -35,21 +35,21 @@
     "pe_votes": 4,
     "votes": 4,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "spread",
       "action": "Bear Put Spread: BUY 1350PE + SELL 1250PE",
       "long_strike": 1350,
       "short_strike": 1250,
-      "long_premium": 34.0,
+      "long_premium": 33.0,
       "short_premium": 12.0,
-      "net_debit": 22.0,
-      "max_profit": 78.0,
-      "max_loss": 22.0,
-      "breakeven": 1328.0,
+      "net_debit": 21.0,
+      "max_profit": 79.0,
+      "max_loss": 21.0,
+      "breakeven": 1329.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 50
     }
   },
@@ -60,7 +60,7 @@
     "ce_votes": 0,
     "pe_votes": 2,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -72,7 +72,7 @@
     "pe_votes": 0,
     "votes": 6,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "single_leg",
@@ -83,7 +83,7 @@
       "target1_premium": 39.2,
       "target2_premium": 56.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 50
     }
   },
@@ -95,7 +95,7 @@
     "pe_votes": 0,
     "votes": 4,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "spread",
@@ -109,7 +109,7 @@
       "max_loss": 17.0,
       "breakeven": 1067.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 50
     }
   },
@@ -121,21 +121,21 @@
     "pe_votes": 0,
     "votes": 4,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "spread",
       "action": "Bull Call Spread: BUY 4500CE + SELL 4700CE",
       "long_strike": 4500,
       "short_strike": 4700,
-      "long_premium": 111.0,
-      "short_premium": 68.0,
-      "net_debit": 43.0,
-      "max_profit": 157.0,
-      "max_loss": 43.0,
-      "breakeven": 4543.0,
+      "long_premium": 109.0,
+      "short_premium": 67.0,
+      "net_debit": 42.0,
+      "max_profit": 158.0,
+      "max_loss": 42.0,
+      "breakeven": 4542.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 100
     }
   },
@@ -146,7 +146,7 @@
     "ce_votes": 0,
     "pe_votes": 2,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -158,21 +158,21 @@
     "pe_votes": 0,
     "votes": 4,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "spread",
       "action": "Bull Call Spread: BUY 14400CE + SELL 14600CE",
       "long_strike": 14400,
       "short_strike": 14600,
-      "long_premium": 398.0,
-      "short_premium": 353.0,
-      "net_debit": 45.0,
-      "max_profit": 155.0,
-      "max_loss": 45.0,
-      "breakeven": 14445.0,
+      "long_premium": 390.0,
+      "short_premium": 346.0,
+      "net_debit": 44.0,
+      "max_profit": 156.0,
+      "max_loss": 44.0,
+      "breakeven": 14444.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 100
     }
   },
@@ -183,7 +183,7 @@
     "ce_votes": 3,
     "pe_votes": 2,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -194,7 +194,7 @@
     "ce_votes": 3,
     "pe_votes": 0,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -205,7 +205,7 @@
     "ce_votes": 1,
     "pe_votes": 2,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -216,7 +216,7 @@
     "ce_votes": 0,
     "pe_votes": 3,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -227,7 +227,7 @@
     "ce_votes": 0,
     "pe_votes": 3,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -238,7 +238,7 @@
     "ce_votes": 1,
     "pe_votes": 0,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -249,7 +249,7 @@
     "ce_votes": 1,
     "pe_votes": 2,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -261,7 +261,7 @@
     "pe_votes": 0,
     "votes": 6,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "single_leg",
@@ -272,7 +272,7 @@
       "target1_premium": 58.8,
       "target2_premium": 84.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 50
     }
   },
@@ -283,7 +283,7 @@
     "ce_votes": 1,
     "pe_votes": 0,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Verify in Kite before trading.",
     "trade": null
   },
@@ -295,18 +295,18 @@
     "pe_votes": 0,
     "votes": 6,
     "data_as_of": "2026-07-03",
-    "fetched_at": "05 Jul 2026 05:26 IST",
+    "fetched_at": "05 Jul 2026 05:32 IST",
     "data_warning": "Signals based on 2026-07-03 close (yfinance EOD). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "single_leg",
       "action": "BUY 1450 CE",
       "strike": 1450,
-      "entry_premium": 40.0,
-      "sl_premium": 28.0,
-      "target1_premium": 56.0,
-      "target2_premium": 80.0,
+      "entry_premium": 39.0,
+      "sl_premium": 27.3,
+      "target1_premium": 54.6,
+      "target2_premium": 78.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 26,
+      "days_to_exp": 25,
       "strike_step_used": 50
     }
   }
