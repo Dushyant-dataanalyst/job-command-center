@@ -1,5 +1,5 @@
 {
-  "fetched_at": "05 Jul 2026 13:31 IST",
+  "fetched_at": "05 Jul 2026 13:35 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
   "all_sectors_ranked": [
@@ -64,16 +64,6 @@
       "score": 0.03
     },
     {
-      "sector": "Banking",
-      "roc5_pct": -0.41,
-      "rel_volume": 0.94,
-      "bullish_trend": true,
-      "last_close": 57938.5,
-      "data_as_of": "2026-07-03",
-      "data_source": "yfinance",
-      "score": -0.39
-    },
-    {
       "sector": "Energy",
       "roc5_pct": -1.16,
       "rel_volume": 0.76,
@@ -95,6 +85,7 @@
     }
   ],
   "sectors_with_errors": {
+    "Banking": "insufficient data",
     "Media": "insufficient data"
   },
   "top_sectors": [
@@ -112,7 +103,7 @@
         "bullish_trend": true,
         "last_close": 1934.4,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 17.05
       },
       {
@@ -122,7 +113,7 @@
         "bullish_trend": true,
         "last_close": 675.9,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 13.87
       },
       {
@@ -132,7 +123,7 @@
         "bullish_trend": true,
         "last_close": 1996.4,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 12.92
       }
     ],
@@ -144,7 +135,7 @@
         "bullish_trend": true,
         "last_close": 1620.5,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 5.88
       },
       {
@@ -154,7 +145,7 @@
         "bullish_trend": true,
         "last_close": 1904.8,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 2.41
       },
       {
@@ -164,7 +155,7 @@
         "bullish_trend": true,
         "last_close": 1374.1,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 1.31
       }
     ],
@@ -176,7 +167,7 @@
         "bullish_trend": true,
         "last_close": 444.35,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 4.72
       },
       {
@@ -186,7 +177,7 @@
         "bullish_trend": true,
         "last_close": 1459.8,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 4.04
       },
       {
@@ -196,7 +187,7 @@
         "bullish_trend": true,
         "last_close": 5379.0,
         "data_as_of": "2026-07-03",
-        "data_source": "yfinance",
+        "data_source": "kite",
         "score": 2.11
       }
     ]
