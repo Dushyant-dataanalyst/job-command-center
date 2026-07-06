@@ -1,16 +1,29 @@
-name: NSE FO Refresh (5-min market hours, hourly off-hours)
+name: NSE FO Refresh (MANUAL ONLY — GH Actions minutes exhausted 05-Jul-2026)
 
+# EMERGENCY CHANGE 05-Jul-2026: the account hit 100% of its 2,000 free
+# Actions minutes/month days into the cycle (resets 01-Aug-2026). Root
+# cause: the external cron-job.org trigger fires every 5 min, 24/7,
+# unrestricted, and GitHub bills each job invocation rounded UP to a full
+# minute -- so even a `gate` job that correctly decided to skip real work
+# off-hours still cost a full billed minute, ~180 times/day, on top of the
+# market-hours runs. ~800+ min/day, several days to exhaust 2000.
+#
+# `schedule:` triggers are removed entirely below so GitHub's native cron
+# can't fire at all. This does NOT stop cron-job.org, which calls the
+# workflow_dispatch REST API directly regardless of what's in this file --
+# that external job must be paused/deleted on cron-job.org's own site, or
+# it will keep hitting this endpoint (and keep costing minutes on whatever
+# budget is set) even with schedule: gone.
+#
+# The gate/should_run_full_refresh.py throttling logic (nse-trading-bot/
+# should_run_full_refresh.py) is intentionally NOT deleted -- it's still
+# correct, just not currently wired to a `schedule:` trigger to gate. Before
+# re-enabling any automatic trigger post-reset, that decision should move
+# OFF GitHub Actions entirely (e.g. a Vercel serverless function checking
+# time-of-day before ever calling workflow_dispatch) so a "decide to skip"
+# doesn't cost a GitHub Actions minute the way this design did.
 on:
-  schedule:
-    - cron: '*/5 2-10 * * 1-5'   # Every 5 min, 07:30-16:25 IST (02:00-10:55 UTC), market hours
-    - cron: '0 * * * *'           # Every hour, every day (incl. weekends) — off-hours/off-days baseline.
-                                    # Overlaps the market-hours cron at the top of each hour on weekdays;
-                                    # harmless (concurrency queues rather than collides). The `gate` job
-                                    # below is what actually enforces "hourly off-hours" even though an
-                                    # external trigger (cron-job.org) also fires every 5 min around the
-                                    # clock regardless of this native schedule.
-    - cron: '30 15 * * 1-5'       # Once at 9:00 PM IST (15:30 UTC) — next-day prep
-  workflow_dispatch:               # Manual trigger from GitHub UI — hit "Run workflow" any time to force a fresh pull
+  workflow_dispatch:               # Manual trigger from GitHub UI ONLY — hit "Run workflow" to force a fresh pull
 
 # cancel-in-progress was true until 02-Jul-2026 — reverted after finding it was
 # likely the actual cause of near-zero commits that day. logs/run_history.json
@@ -20,55 +33,14 @@ on:
 # run got killed by the next tick before it ever reached the commit step. A
 # queued run (this setting) can finish and commit even if a slower predecessor
 # is still running; a genuinely hung run is still bounded by timeout-minutes below.
+# Less critical now that triggers are manual-only (no more overlapping runs),
+# but left as-is since it's still correct and there's no reason to touch it.
 concurrency:
   group: nse-fo-refresh
   cancel-in-progress: false
 
 jobs:
-  # Runs on EVERY trigger, regardless of cadence or source (native schedule
-  # above, or the external cron-job.org ping that fires every 5 min around
-  # the clock) -- decides whether this trigger should do a full refresh, or
-  # just heartbeat and stop. Deliberately its own job (not a step in
-  # fo-refresh) so `if: needs.gate.outputs.should_run` can skip the ENTIRE
-  # heavy job cleanly, and so the heartbeat always fires even when the rest
-  # is skipped -- the dead-man's-switch cares "is the trigger itself alive",
-  # not "did we choose to do work this time".
-  gate:
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    outputs:
-      should_run: ${{ steps.check.outputs.should_run }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      # Market hours = always run (as live as possible). Off-hours/weekends
-      # = only run if >= 55 min since the last recorded run, throttling
-      # down to roughly hourly regardless of how often this job itself
-      # gets triggered. See should_run_full_refresh.py for the exact logic
-      # (tested against market-open/close edges, weekday/weekend, and the
-      # 55-min boundary before being wired in here).
-      - name: Decide whether to run full refresh this trigger
-        id: check
-        run: |
-          cd nse-trading-bot
-          python should_run_full_refresh.py
-
-      - name: Heartbeat ping (always, independent of the run/skip decision)
-        if: always()
-        run: |
-          curl -fsS --retry 3 --max-time 10 "${{ secrets.HEALTHCHECK_PING_URL }}" > /dev/null || true
-
   fo-refresh:
-    needs: gate
-    if: needs.gate.outputs.should_run == 'true'
     runs-on: ubuntu-latest
     # 8 min, not the tighter 3-4 min originally suggested — market_mood_refresh.py alone
     # checks ~50 stocks for breadth and sector_rotation_refresh.py adds ~20 more, each with
@@ -91,6 +63,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+
+      # Was in the now-removed `gate` job (fired on every trigger, even
+      # skipped ones). Now that this job only runs on manual workflow_dispatch,
+      # "every trigger" and "every job run" are the same thing, so it just
+      # lives here. if: always() so a failure in an earlier step (there are
+      # none before this) still wouldn't block the dead-man's-switch ping.
+      - name: Heartbeat ping (always, independent of run outcome)
+        if: always()
+        run: |
+          curl -fsS --retry 3 --max-time 10 "${{ secrets.HEALTHCHECK_PING_URL }}" > /dev/null || true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -294,6 +276,3 @@ jobs:
             git push origin master
             echo "✅ Pushed — Vercel will redeploy"
           fi
-      # Heartbeat moved to the `gate` job above — it needs to fire on every
-      # trigger (including ones gate decides to skip), not just when this
-      # job actually runs.
