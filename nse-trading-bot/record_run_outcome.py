@@ -1,11 +1,14 @@
 """
 Records this CI run's step-by-step outcome to logs/run_history.json (capped
-at the last 200 entries) and sends a Telegram alert on EVERY run — success or
-failure — via the shared alerts.send_alert() primitive. Previously this only
-alerted on failure; changed to alert every time so there's a live pulse of
-the pipeline actually executing, rather than "phone stays silent = probably
-fine" — which is exactly the assumption that let the earlier refresh gap
-go unnoticed for hours.
+at the last 200 entries) and sends a Telegram alert ONLY on failure
+(CRITICAL). The every-run INFO success ping that briefly lived here was
+removed 06-Jul-2026 at the user's explicit request ("don't message me each
+refresh") — with the 5-min market-hours cadence it meant 100+ pings/day of
+pure noise. The two things that ping-per-run was protecting against are
+covered elsewhere now: "pipeline broke loudly" -> the CRITICAL alert below;
+"pipeline went silent" -> the healthchecks.io dead-man's-switch heartbeat
+in the workflow's gate job. Actionable signal alerts (new strong buys,
+exit triggers) live in signal_alerts.py, deduped via logs/alert_state.json.
 
 Step outcomes are passed in as STEP_<name>=<success|failure|skipped|cancelled>
 env vars by the workflow (GitHub Actions' own `steps.<id>.outcome` context,
@@ -72,8 +75,9 @@ def main():
         )
         send_alert(text, level="CRITICAL")
     else:
-        text = f"Refresh OK — all {len(outcomes)} steps succeeded at {now_str}"
-        send_alert(text, level="INFO")
+        # Deliberately NO Telegram on success — see docstring (user request
+        # 06-Jul-2026). Run history + Actions logs keep the full record.
+        print(f"  All {len(outcomes)} steps succeeded — no alert sent (by design)")
 
 
 if __name__ == "__main__":

@@ -247,6 +247,22 @@ jobs:
           cd nse-trading-bot
           python snapshot_daily.py
 
+      # Telegram: ONLY actionable events — new strong-buy signals and exit
+      # triggers on open trades — batched into one message per run, deduped
+      # across runs via logs/alert_state.json. Per user request 06-Jul-2026
+      # ("don't message me each refresh"): the every-run INFO success ping
+      # was removed from record_run_outcome.py the same day (CRITICAL
+      # failure alerts remain there). Runs after all feeds above are fresh.
+      - name: Send signal alerts (new strong buys / exits only)
+        id: signal_alerts
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          cd nse-trading-bot
+          python signal_alerts.py
+
       # Runs right before commit — catches a truncated/corrupted write from
       # any step above before it can ever reach git history. Loose validation
       # (parseable + right top-level shape), not a strict schema, since these
@@ -276,6 +292,7 @@ jobs:
           STEP_EQUITY_SCAN: ${{ steps.equity_scan.outcome }}
           STEP_VOTER_WEIGHTS: ${{ steps.voter_weights.outcome }}
           STEP_SNAPSHOT_DAILY: ${{ steps.snapshot_daily.outcome }}
+          STEP_SIGNAL_ALERTS: ${{ steps.signal_alerts.outcome }}
           STEP_VALIDATE_JSON: ${{ steps.validate_json.outcome }}
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -300,7 +317,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json logs/run_history.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json logs/run_history.json logs/alert_state.json
           if [ -d snapshots ]; then git add snapshots/; fi
 
           if git diff --staged --quiet; then
