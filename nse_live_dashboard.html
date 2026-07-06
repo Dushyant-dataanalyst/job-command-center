@@ -392,6 +392,64 @@ function _foMatch(kiteSymbol, fp){
       && kiteSymbol.indexOf(String(fp.strike)) !== -1
       && kiteSymbol.slice(-2) === fp.option_type;
 }
+
+// Which fo_latest.json signal key covers this Kite F&O contract symbol.
+function _foSignalKey(sym){
+  if (!sym) return null;
+  if (sym.indexOf('BANKNIFTY') === 0) return 'BANKNIFTY';
+  if (sym.indexOf('NIFTY') === 0) return 'NIFTY50';
+  return null; // stock options not covered by the index signal engine
+}
+
+// Honest, rule-based read + prediction for a real Kite F&O position. NOTHING
+// here is a fabricated price call — every number is derived: P&L from the
+// broker, thesis from the live signal's own consensus/votes, moneyness from
+// spot-vs-strike, and the prediction is break-even-at-expiry arithmetic plus
+// theta/days-left. Returns {commentary, prediction} strings (prediction ''
+// when there's no matching signal, e.g. a stock option).
+function _foReadAndPredict(pos, sig){
+  const sym = pos.tradingsymbol || '';
+  const otype = sym.slice(-2);                       // CE / PE
+  const sm = sym.slice(0, -2).match(/(\d+)$/);       // trailing strike digits
+  const strike = sm ? parseInt(sm[1], 10) : null;
+  const avg = pos.average_price || 0;
+  const pnl = pos.pnl || 0;
+  const INRr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+
+  // ---- commentary ----
+  const parts = [ pnl >= 0 ? 'In profit ' + INRr(pnl) : 'Underwater ' + INRr(pnl) ];
+  if (sig && !sig.error){
+    const bullishOpt = otype === 'CE';
+    const votes = sig.consensus === 'BUY_CE' ? sig.ce_votes : sig.consensus === 'BUY_PE' ? sig.pe_votes : 0;
+    if ((bullishOpt && sig.consensus === 'BUY_CE') || (!bullishOpt && sig.consensus === 'BUY_PE')){
+      parts.push('signal still backs this (' + sig.consensus + ', ' + votes + ' votes) — thesis intact');
+    } else if (sig.consensus === 'WAIT' || sig.consensus == null){
+      parts.push('signal now neutral (WAIT) — momentum stalled, tighten your stop');
+    } else {
+      parts.push('⚠ signal flipped to ' + sig.consensus + ' — now against your position, review exit');
+    }
+    if (strike && sig.spot){
+      const itm = otype === 'CE' ? sig.spot >= strike : sig.spot <= strike;
+      const gapPct = Math.abs(sig.spot - strike) / sig.spot * 100;
+      parts.push(itm ? gapPct.toFixed(1) + '% in-the-money' : gapPct.toFixed(1) + '% out-of-the-money');
+    }
+  }
+  const commentary = parts.join(' · ') + '.';
+
+  // ---- prediction (break-even arithmetic + theta, not a price call) ----
+  let prediction = '';
+  if (sig && !sig.error && strike && sig.spot){
+    const be = otype === 'CE' ? strike + avg : strike - avg;
+    const beGap = otype === 'CE' ? be - sig.spot : sig.spot - be;
+    const beGapPct = sig.spot ? (beGap / sig.spot * 100) : 0;
+    const dte = (sig.trade && sig.trade.days_to_exp != null) ? sig.trade.days_to_exp : null;
+    const pp = ['Break-even at expiry ≈ ' + Math.round(be).toLocaleString('en-IN') +
+                ' (spot ' + (beGap >= 0 ? 'needs +' : 'already past by ') + Math.abs(beGapPct).toFixed(1) + '%)'];
+    if (dte != null) pp.push(dte + ' days left' + (dte <= 10 ? ' — theta bleeds faster now, option can fall even if spot holds' : ''));
+    prediction = pp.join(' · ') + '. Rule-based, not a guarantee — verify live.';
+  }
+  return { commentary: commentary, prediction: prediction };
+}
 </script>
 
 <!-- Inline equity-tab positions block removed — tracked exclusively in the My Positions tab now -->
@@ -1123,7 +1181,7 @@ function updateEquityCounts(){
   function pill(txt, color){
     return '<span style="background:'+color+'1a;color:'+color+';border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;white-space:nowrap">'+txt+'</span>';
   }
-  function render(d){
+  function render(d, foLatest){
     const box = document.getElementById('kite-portfolio-panel');
     if (!box) return;
 
@@ -1192,13 +1250,20 @@ function updateEquityCounts(){
         const tgt = manual
           ? '<div style="font-size:9px;color:#64748b;margin-top:2px">SL ₹'+manual.sl_premium+' · T1 ₹'+manual.t1_premium+(manual.t2_premium?' · T2 ₹'+manual.t2_premium:'')+'</div>'
           : '';
-        return '<tr style="border-bottom:1px solid #1e293b">' +
-          '<td style="padding:6px 8px;font-weight:700;color:#e2e8f0">'+p.tradingsymbol+' <span style="color:#64748b;font-weight:400;font-size:9px">'+(p.product||'')+'</span>'+tgt+'</td>' +
-          '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+p.quantity+'</td>' +
-          '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+INR(p.average_price)+'</td>' +
-          '<td style="padding:6px 8px;text-align:right;font-weight:700;color:#e2e8f0">'+INR(p.last_price)+'</td>' +
-          '<td style="padding:6px 8px;text-align:right;font-weight:700;color:'+pc+'">'+INR(p.pnl)+(pnlPct!=null?' <span style="font-size:9px">('+(pnlPct>=0?'+':'')+pnlPct.toFixed(1)+'%)</span>':'')+'</td>' +
-        '</tr>';
+        const sig = foLatest ? foLatest[_foSignalKey(p.tradingsymbol)] : null;
+        const read = _foReadAndPredict(p, sig);
+        const noteRow =
+          '<tr><td colspan="5" style="padding:0 8px 8px;font-size:10px;color:#94a3b8;line-height:1.5">' +
+            '💬 ' + read.commentary +
+            (read.prediction ? '<br>🔮 ' + read.prediction : '') +
+          '</td></tr>';
+        return '<tr>' +
+          '<td style="padding:6px 8px 2px;font-weight:700;color:#e2e8f0">'+p.tradingsymbol+' <span style="color:#64748b;font-weight:400;font-size:9px">'+(p.product||'')+'</span>'+tgt+'</td>' +
+          '<td style="padding:6px 8px 2px;text-align:right;color:#94a3b8">'+p.quantity+'</td>' +
+          '<td style="padding:6px 8px 2px;text-align:right;color:#94a3b8">'+INR(p.average_price)+'</td>' +
+          '<td style="padding:6px 8px 2px;text-align:right;font-weight:700;color:#e2e8f0">'+INR(p.last_price)+'</td>' +
+          '<td style="padding:6px 8px 2px;text-align:right;font-weight:700;color:'+pc+'">'+INR(p.pnl)+(pnlPct!=null?' <span style="font-size:9px">('+(pnlPct>=0?'+':'')+pnlPct.toFixed(1)+'%)</span>':'')+'</td>' +
+        '</tr>' + noteRow;
       }).join('');
       foSection =
         '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #1e293b">' +
@@ -1251,10 +1316,14 @@ function updateEquityCounts(){
     // Same for the manual F&O cards now that KITE_FO_HELD is known.
     if (typeof renderFOPositions === 'function') renderFOPositions();
   }
-  fetch('/kite_portfolio.json?v=' + Date.now())
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(d){ render(d); })
-    .catch(function(){ render(null); });
+  // Fetch the live signal feed alongside the portfolio so each F&O position
+  // can carry a commentary + rule-based prediction line (signal thesis,
+  // moneyness, break-even-at-expiry, theta) — the signal engine's read on
+  // the SAME instrument the user is actually holding.
+  Promise.all([
+    fetch('/kite_portfolio.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+    fetch('/fo_latest.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
+  ]).then(function(res){ render(res[0], res[1]); });
 })();
 </script>
 
