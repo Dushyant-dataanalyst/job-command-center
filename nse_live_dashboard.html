@@ -379,6 +379,19 @@ let SCAN_META = null;
 let LT_DATA = {}; // System B quality-growth screen, keyed by bare NSE symbol (no .NS) — see _loadLongTerm()
 const LT_QUALITY_THRESHOLD = 65; // composite score above which a swing BUY also gets the "long-term quality" badge
 let KITE_HELD_SYMBOLS = new Set(); // real Zerodha holdings, populated once /kite_portfolio.json loads — lets the manual "My Positions" cards skip anything already shown (with real data) in the Real Portfolio panel, instead of showing the same stock twice with two different entry prices
+let KITE_FO_HELD = []; // real Zerodha F&O positions (kite_portfolio.json .positions), same idea for the F&O side — the manual "My F&O Positions" cards skip anything shown with real broker avg/LTP here, since those manual entries were the signal's *suggested* premium, not the actual fill (BANKNIFTY tracked at 941 vs real 820.70 = a winner shown as a loser).
+
+// Does a real Kite F&O contract symbol (e.g. "BANKNIFTY26JUL58400CE")
+// correspond to a manual foPositions entry ({instrument,strike,option_type})?
+// NIFTY50 maps to the "NIFTY" symbol root; BANKNIFTY stays. startsWith is
+// unambiguous ("BANKNIFTY..." never startsWith "NIFTY", and vice-versa).
+function _foMatch(kiteSymbol, fp){
+  if (!kiteSymbol || !fp) return false;
+  const root = fp.instrument === 'NIFTY50' ? 'NIFTY' : fp.instrument;
+  return kiteSymbol.indexOf(root) === 0
+      && kiteSymbol.indexOf(String(fp.strike)) !== -1
+      && kiteSymbol.slice(-2) === fp.option_type;
+}
 </script>
 
 <!-- Inline equity-tab positions block removed — tracked exclusively in the My Positions tab now -->
@@ -1116,7 +1129,9 @@ function updateEquityCounts(){
 
     if (!d || d.session_live === false){
       KITE_HELD_SYMBOLS = new Set();
+      KITE_FO_HELD = [];
       if (typeof renderPositions === 'function') renderPositions();
+      if (typeof renderFOPositions === 'function') renderFOPositions();
       box.innerHTML =
         '<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 16px">' +
           '<div style="font-size:13px;font-weight:800;color:#b45309">💼 Real Portfolio — Kite session not live</div>' +
@@ -1157,6 +1172,47 @@ function updateEquityCounts(){
     }).join('');
     if (!rows) rows = '<tr><td colspan="6" style="padding:10px;color:#94a3b8;font-size:12px">No delivery holdings in your Kite account.</td></tr>';
 
+    // F&O positions (NRML/MIS) — the real-money options/futures book. Kept
+    // separate from holdings because they're not demat shares (no day-change
+    // %, different product tag) and Kite returns them in a different array.
+    // These are the source of truth for the manual "My F&O Positions" panel,
+    // which is de-duped against KITE_FO_HELD below.
+    const foPos = d.positions || [];
+    KITE_FO_HELD = foPos;
+    let foSection = '';
+    if (foPos.length){
+      const foPnl = foPos.reduce(function(a,p){ return a + (p.pnl||0); }, 0);
+      const foPnlColor = foPnl >= 0 ? '#059669' : '#dc2626';
+      const foRows = foPos.map(function(p){
+        const pnl = p.pnl||0;
+        const pc = pnl >= 0 ? '#059669' : '#dc2626';
+        const invested = (p.average_price||0) * Math.abs(p.quantity||0);
+        const pnlPct = invested ? (pnl / invested * 100) : null;
+        const manual = (typeof foPositions !== 'undefined') ? foPositions.find(function(fp){ return _foMatch(p.tradingsymbol, fp); }) : null;
+        const tgt = manual
+          ? '<div style="font-size:9px;color:#64748b;margin-top:2px">SL ₹'+manual.sl_premium+' · T1 ₹'+manual.t1_premium+(manual.t2_premium?' · T2 ₹'+manual.t2_premium:'')+'</div>'
+          : '';
+        return '<tr style="border-bottom:1px solid #1e293b">' +
+          '<td style="padding:6px 8px;font-weight:700;color:#e2e8f0">'+p.tradingsymbol+' <span style="color:#64748b;font-weight:400;font-size:9px">'+(p.product||'')+'</span>'+tgt+'</td>' +
+          '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+p.quantity+'</td>' +
+          '<td style="padding:6px 8px;text-align:right;color:#94a3b8">'+INR(p.average_price)+'</td>' +
+          '<td style="padding:6px 8px;text-align:right;font-weight:700;color:#e2e8f0">'+INR(p.last_price)+'</td>' +
+          '<td style="padding:6px 8px;text-align:right;font-weight:700;color:'+pc+'">'+INR(p.pnl)+(pnlPct!=null?' <span style="font-size:9px">('+(pnlPct>=0?'+':'')+pnlPct.toFixed(1)+'%)</span>':'')+'</td>' +
+        '</tr>';
+      }).join('');
+      foSection =
+        '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #1e293b">' +
+          '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">' +
+            '<span style="font-size:12px;font-weight:800;color:#e2e8f0">F&amp;O Positions</span>' +
+            '<span style="font-size:12px;font-weight:800;color:'+foPnlColor+'">'+INR(foPnl)+'</span>' +
+            '<span style="font-size:9px;color:#64748b">NRML/MIS — options &amp; futures, not demat</span>' +
+          '</div>' +
+          '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px;color:#cbd5e1">' +
+            '<thead><tr style="color:#64748b;font-size:10px;text-align:right"><th style="text-align:left;padding:4px 8px">Contract</th><th style="padding:4px 8px">Qty</th><th style="padding:4px 8px">Avg</th><th style="padding:4px 8px">LTP</th><th style="padding:4px 8px">P&amp;L</th></tr></thead>' +
+            '<tbody>'+foRows+'</tbody></table></div>' +
+        '</div>';
+    }
+
     let reconHtml = '';
     if ((recon.held_but_not_tracked||[]).length)
       reconHtml += '<div style="font-size:11px;color:#2563eb;margin-top:6px">🆕 In your Zerodha account but not on your dashboard: <b>'+recon.held_but_not_tracked.join(', ')+'</b> — add them?</div>';
@@ -1178,6 +1234,7 @@ function updateEquityCounts(){
         '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px;color:#cbd5e1">' +
           '<thead><tr style="color:#64748b;font-size:10px;text-align:right"><th style="text-align:left;padding:4px 8px">Stock</th><th style="padding:4px 8px">Qty</th><th style="padding:4px 8px">Avg</th><th style="padding:4px 8px">LTP</th><th style="padding:4px 8px">P&L</th><th style="padding:4px 8px">Day</th></tr></thead>' +
           '<tbody>'+rows+'</tbody></table></div>' +
+          foSection +
           reconHtml +
         '<div style="font-size:10px;color:#475569;margin-top:10px">'+(d.disclaimer||'')+'</div>' +
       '</div>';
@@ -1191,6 +1248,8 @@ function updateEquityCounts(){
     // Re-render the manual positions list now that KITE_HELD_SYMBOLS is
     // known, so any card duplicating a real holding above drops out.
     if (typeof renderPositions === 'function') renderPositions();
+    // Same for the manual F&O cards now that KITE_FO_HELD is known.
+    if (typeof renderFOPositions === 'function') renderFOPositions();
   }
   fetch('/kite_portfolio.json?v=' + Date.now())
     .then(function(r){ return r.ok ? r.json() : null; })
@@ -1720,7 +1779,19 @@ function updateEquityCounts(){
     const box = document.getElementById('fo-positions-panel');
     if (!box) return;
     const INR2 = n => '₹' + Math.round(n).toLocaleString('en-IN');
-    box.innerHTML = foPositions.map(function(p, idx){
+    // Hide any OPEN manual card whose contract is now shown with REAL broker
+    // avg/LTP in the Real Portfolio panel above — the manual entry was the
+    // signal's *suggested* premium (often nowhere near the actual fill), so
+    // showing both side by side gave two conflicting P&Ls for one trade.
+    // Closed cards stay (they're your own exit-price history, not live).
+    // hiddenIdx keys off the ORIGINAL index so close/removeFOPosition(idx)
+    // still point at the right entry.
+    const hiddenIdx = new Set();
+    foPositions.forEach(function(p, idx){
+      if (p.status === 'open' && (KITE_FO_HELD||[]).some(function(k){ return _foMatch(k.tradingsymbol, p); })) hiddenIdx.add(idx);
+    });
+    const cards = foPositions.map(function(p, idx){
+      if (hiddenIdx.has(idx)) return '';
       const live = liveData[p.instrument];
       let curPremium = null, pnlPct = null, status = 'open';
       if (p.status === 'closed') {
@@ -1756,6 +1827,10 @@ function updateEquityCounts(){
         '<div style="font-size:9px;color:#94a3b8;margin-top:6px">Estimated premium (same model the signal engine uses) — yfinance has no real NSE option-chain feed. Verify actual premium in your broker before acting.</div>' +
       '</div>';
     }).join('');
+    const note = hiddenIdx.size
+      ? '<div style="font-size:11px;color:#64748b;padding:4px 0 10px">' + hiddenIdx.size + ' open position(s) now shown with <b>real Zerodha data</b> (live avg &amp; LTP) in the 💼 Real Portfolio panel above — hidden here so you don\'t see two conflicting P&Ls for the same trade.</div>'
+      : '';
+    box.innerHTML = note + cards;
   }
 
   renderFOPositions();
