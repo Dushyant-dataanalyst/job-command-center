@@ -1,0 +1,50 @@
+name: Premium Formula Parity Check
+
+# Guards the twin option-premium implementations against drifting apart --
+# the bug class that misprized a real position on 06-Jul-2026 (Python
+# _premium_estimate was fixed on 04-Jul, the JS _estimatePremium copy in the
+# dashboard was forgotten, and for two days a +28% ITM winner displayed as
+# a -9% loser). check_premium_parity.py extracts the ACTUAL JS from the HTML,
+# runs it in Node, and compares against the ACTUAL Python function across a
+# 122-case grid, plus asserts premium >= intrinsic in both languages.
+#
+# Runs only when code that defines either implementation changes -- NOT on
+# the every-5-min data refresh pushes (the CI bot only commits *.json, which
+# never matches these paths).
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'nse_live_dashboard.html'
+      - 'nse-trading-bot/refresh_fo_cloud.py'
+      - 'nse-trading-bot/check_premium_parity.py'
+      - '.github/workflows/premium_parity.yml'
+  workflow_dispatch:
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      # Full pinned deps only because importing refresh_fo_cloud pulls in
+      # market_data -> yf_retry -> yfinance/pandas. If _premium_estimate is
+      # ever refactored into a dependency-free module (worthwhile), this
+      # shrinks to nothing. Node is preinstalled on ubuntu-latest.
+      - name: Install dependencies
+        run: pip install --quiet yfinance==1.4.1 pandas==2.2.3 numpy==2.1.2 requests==2.34.2
+
+      - name: Run parity check
+        run: |
+          cd nse-trading-bot
+          python check_premium_parity.py
