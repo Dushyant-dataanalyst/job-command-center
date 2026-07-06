@@ -59,6 +59,7 @@ FO_FILE = REPO_ROOT / "fo_latest.json"
 SCAN_FILE = REPO_ROOT / "equity_scan.json"
 PAPER_FILE = REPO_ROOT / "trade_journal.json"
 EQUITY_FILE = REPO_ROOT / "equity_journal.json"
+KITE_PORTFOLIO_FILE = REPO_ROOT / "kite_portfolio.json"
 
 ALERTED_TRADE_IDS_MAX = 500
 ACTIONABLE_POSITION_STATUSES = ("below_sl", "target1_hit", "target2_hit")
@@ -154,6 +155,57 @@ def _paper_exit_events(journal, state):
     return events
 
 
+def _kite_fo_watch_events(kite, fo, state):
+    """'Keep close watch' on the user's REAL held F&O positions (from
+    kite_portfolio.json's positions[]): alert when the underlying index
+    signal stops backing the direction they hold — i.e. holding a CE while
+    consensus flips to WAIT or BUY_PE. That's the system's own thesis
+    reversing on a live real-money position: a "time to exit" event.
+
+    This is the only F&O-exit signal we can raise server-side: the user's
+    own SL/T1/T2 premium targets live in browser localStorage (foPositions),
+    never synced here, so an exact "hit your stop" alert isn't possible from
+    CI yet. Signal-flip is the honest, data-backed proxy.
+
+    Dedup: state['fo_position_signal'][symbol] stores the last consensus
+    seen for that contract, so a persistent non-supportive signal alerts
+    once, not every run; a flip away and back re-alerts (a genuinely new
+    event). Symbols no longer held are pruned so a re-entry alerts fresh.
+    Post-market Kite sometimes returns an empty positions[] even with a live
+    session (seen 06-Jul-2026) — that just yields no events this run, and
+    the prune step is skipped so state survives the blip rather than
+    forgetting a still-open position."""
+    events = []
+    positions = (kite or {}).get("positions")
+    if not isinstance(positions, list) or not isinstance(fo, dict):
+        return events
+    watched = state.setdefault("fo_position_signal", {})
+    seen = set()
+    for p in positions:
+        sym = p.get("tradingsymbol", "")
+        key = "BANKNIFTY" if sym.startswith("BANKNIFTY") else "NIFTY50" if sym.startswith("NIFTY") else None
+        if not key:
+            continue
+        sig = fo.get(key)
+        if not isinstance(sig, dict) or "error" in sig:
+            continue
+        seen.add(sym)
+        held_dir = "BUY_CE" if sym.endswith("CE") else "BUY_PE"
+        consensus = sig.get("consensus")
+        supportive = (consensus == held_dir)
+        prev = watched.get(sym)
+        if not supportive and prev != consensus:
+            reason = "is now neutral (WAIT)" if consensus == "WAIT" else f"flipped to {consensus}"
+            events.append(f"- {sym} (your live position): underlying signal {reason} — no longer backing your "
+                          f"{sym[-2:]}. The system's thesis has reversed here; review your exit.")
+        watched[sym] = consensus
+    # Only prune when Kite actually returned positions -- an empty post-market
+    # response shouldn't wipe state for positions the user still holds.
+    if positions:
+        state["fo_position_signal"] = {k: v for k, v in watched.items() if k in seen}
+    return events
+
+
 def _real_position_events(equity, state):
     events = []
     positions = (equity or {}).get("positions")
@@ -188,10 +240,12 @@ def _real_position_events(equity, state):
 def main():
     state = _load_state()
 
-    buy_events = (_fo_buy_events(_load_json(FO_FILE), state)
+    fo = _load_json(FO_FILE)
+    buy_events = (_fo_buy_events(fo, state)
                   + _equity_strong_buy_events(_load_json(SCAN_FILE), state))
     exit_events = (_paper_exit_events(_load_json(PAPER_FILE), state)
-                   + _real_position_events(_load_json(EQUITY_FILE), state))
+                   + _real_position_events(_load_json(EQUITY_FILE), state)
+                   + _kite_fo_watch_events(_load_json(KITE_PORTFOLIO_FILE), fo, state))
 
     _save_state(state)
 
