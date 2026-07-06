@@ -16,12 +16,12 @@
       "target2_premium": 2058.0,
       "opened_at": "01 Jul 2026 06:36 IST",
       "status": "open",
-      "current_premium": 1155.0,
+      "current_premium": 1180.0,
       "closed_at": null,
       "exit_premium": null,
       "exit_reason": null,
       "pnl_pct": null,
-      "last_checked": "06 Jul 2026 11:56 IST"
+      "last_checked": "06 Jul 2026 12:01 IST"
     },
     {
       "id": "NIFTY50-2026-07-02-BUY_CE-02Jul20261132IST",
@@ -62,44 +62,45 @@
       "target1_premium": 454.0,
       "target2_premium": 648.0,
       "opened_at": "04 Jul 2026 11:31 IST",
-      "status": "open",
-      "current_premium": 449.0,
-      "closed_at": null,
-      "exit_premium": null,
-      "exit_reason": null,
-      "pnl_pct": null,
-      "last_checked": "06 Jul 2026 11:56 IST"
+      "status": "closed",
+      "current_premium": 460.0,
+      "closed_at": "06 Jul 2026 12:01 IST",
+      "exit_premium": 460.0,
+      "exit_reason": "target1_hit",
+      "pnl_pct": 42.0,
+      "last_checked": "06 Jul 2026 12:01 IST",
+      "result": "win"
     }
   ],
   "stats": {
-    "total_closed": 1,
-    "open_count": 2,
-    "wins": 1,
+    "total_closed": 2,
+    "open_count": 1,
+    "wins": 2,
     "losses": 0,
     "win_rate": 100.0,
-    "avg_win_pct": 48.4,
+    "avg_win_pct": 45.2,
     "avg_loss_pct": 0.0,
-    "expectancy_pct": 48.4,
+    "expectancy_pct": 45.2,
     "by_instrument": {
       "NIFTY50": {
-        "total": 1,
-        "wins": 1,
+        "total": 2,
+        "wins": 2,
         "win_rate": 100.0
       }
     },
     "by_votes": {
       "5/5": {
-        "total": 1,
-        "wins": 1,
+        "total": 2,
+        "wins": 2,
         "win_rate": 100.0
       }
     },
     "loss_by_votes": {},
     "loss_by_instrument": {},
     "insight": "Not enough closed trades yet to draw a conclusion.",
-    "loss_diagnostic": "Only 1 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
+    "loss_diagnostic": "Only 2 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
   },
   "_meta": {
-    "generated_at": "06 Jul 2026 11:56 IST"
+    "generated_at": "06 Jul 2026 12:01 IST"
   }
 }
