@@ -1678,15 +1678,23 @@ function updateEquityCounts(){
     renderFOPositions();
   }
 
-  /* Same Black-Scholes-ish estimate as refresh_fo_cloud.py's _premium_estimate()
-     — yfinance has no real NSE option-chain quotes, so this re-prices open
-     positions using the identical model the signal engine itself trades on. */
-  function _estimatePremium(spot, strike, annVol, days){
+  /* Same model as refresh_fo_cloud.py's _premium_estimate() — yfinance has no
+     real NSE option-chain quotes, so this re-prices open positions using the
+     identical model the signal engine itself trades on. FIXED 06-Jul-2026:
+     this JS copy still had the pre-04-Jul-2026 bug (moneyness haircut applied
+     to the WHOLE premium, no intrinsic-value floor) after the Python original
+     was fixed — an ITM position moving further ITM could show a FALLING
+     estimated premium, or even a fake loss, instead of the real gain from
+     rising intrinsic value. Now matches Python: intrinsic (direction-aware)
+     computed separately and added back after the haircut, which only ever
+     applies to the extrinsic/time-value component. */
+  function _estimatePremium(spot, strike, annVol, days, optionType){
     const T = Math.max(days, 1) / 365.0;
+    const intrinsic = optionType === 'PE' ? Math.max(0, strike - spot) : Math.max(0, spot - strike);
     const mono = Math.abs(spot - strike) / spot;
-    let p = 0.4 * annVol * spot * Math.sqrt(T);
-    if (mono > 0.002) p *= Math.max(0.3, 1 - mono * 8);
-    return Math.round(p);
+    let extrinsic = 0.4 * annVol * spot * Math.sqrt(T);
+    if (mono > 0.002) extrinsic *= Math.max(0.3, 1 - mono * 8);
+    return Math.round(intrinsic + extrinsic);
   }
 
   function _daysToExpiry(expiryStr){
@@ -1719,7 +1727,7 @@ function updateEquityCounts(){
         curPremium = p.exit_premium;
         pnlPct = p.entry_premium ? Math.round((p.exit_premium - p.entry_premium) / p.entry_premium * 100) : null;
       } else if (live && !live.error) {
-        curPremium = _estimatePremium(live.spot, p.strike, live.ann_vol, _daysToExpiry(p.expiry));
+        curPremium = _estimatePremium(live.spot, p.strike, live.ann_vol, _daysToExpiry(p.expiry), p.option_type);
         pnlPct = p.entry_premium ? Math.round((curPremium - p.entry_premium) / p.entry_premium * 100) : null;
         if (p.sl_premium && curPremium <= p.sl_premium) status = 'below_sl';
         else if (p.t2_premium && curPremium >= p.t2_premium) status = 'target2_hit';
