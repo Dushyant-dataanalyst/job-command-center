@@ -16,12 +16,12 @@
       "target2_premium": 2058.0,
       "opened_at": "01 Jul 2026 06:36 IST",
       "status": "open",
-      "current_premium": 1180.0,
+      "current_premium": 1204.0,
       "closed_at": null,
       "exit_premium": null,
       "exit_reason": null,
       "pnl_pct": null,
-      "last_checked": "06 Jul 2026 12:01 IST"
+      "last_checked": "06 Jul 2026 12:05 IST"
     },
     {
       "id": "NIFTY50-2026-07-02-BUY_CE-02Jul20261132IST",
@@ -70,11 +70,33 @@
       "pnl_pct": 42.0,
       "last_checked": "06 Jul 2026 12:01 IST",
       "result": "win"
+    },
+    {
+      "id": "NIFTY50-2026-07-06-BUY_CE-06Jul20261205IST",
+      "instrument": "NIFTY50",
+      "consensus": "BUY_CE",
+      "option_type": "CE",
+      "votes": "6/5",
+      "votes_n": 6,
+      "strike": 24450,
+      "expiry": "30 Jul 2026",
+      "entry_spot": 24425.85,
+      "entry_premium": 296.0,
+      "sl_premium": 207.0,
+      "target1_premium": 414.0,
+      "target2_premium": 592.0,
+      "opened_at": "06 Jul 2026 12:05 IST",
+      "status": "open",
+      "current_premium": 296.0,
+      "closed_at": null,
+      "exit_premium": null,
+      "exit_reason": null,
+      "pnl_pct": null
     }
   ],
   "stats": {
     "total_closed": 2,
-    "open_count": 1,
+    "open_count": 2,
     "wins": 2,
     "losses": 0,
     "win_rate": 100.0,
@@ -101,6 +123,6 @@
     "loss_diagnostic": "Only 2 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
   },
   "_meta": {
-    "generated_at": "06 Jul 2026 12:01 IST"
+    "generated_at": "06 Jul 2026 12:05 IST"
   }
 }
