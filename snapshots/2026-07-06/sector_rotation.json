@@ -1,5 +1,5 @@
 {
-  "fetched_at": "06 Jul 2026 17:46 IST",
+  "fetched_at": "06 Jul 2026 17:51 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
   "all_sectors_ranked": [
@@ -54,6 +54,16 @@
       "score": 1.01
     },
     {
+      "sector": "Banking",
+      "roc5_pct": 0.98,
+      "rel_volume": 0.94,
+      "bullish_trend": true,
+      "last_close": 58291.5,
+      "data_as_of": "2026-07-06",
+      "data_source": "yfinance",
+      "score": 0.92
+    },
+    {
       "sector": "Metal",
       "roc5_pct": 1.41,
       "rel_volume": 0.5,
@@ -85,7 +95,6 @@
     }
   ],
   "sectors_with_errors": {
-    "Banking": "insufficient data",
     "Media": "insufficient data"
   },
   "top_sectors": [
@@ -97,34 +106,34 @@
   "stock_picks_by_sector": {
     "Realty": [
       {
-        "symbol": "PHOENIXLTD",
-        "roc5_pct": 10.62,
-        "rel_volume": 2.94,
+        "symbol": "OBEROIRLTY",
+        "roc5_pct": 11.36,
+        "rel_volume": 2.68,
         "bullish_trend": true,
-        "last_close": 2115.0,
+        "last_close": 1953.4,
         "data_as_of": "2026-07-06",
-        "data_source": "kite",
-        "score": 31.22
+        "data_source": "yfinance",
+        "score": 30.44
       },
       {
-        "symbol": "OBEROIRLTY",
-        "roc5_pct": 11.16,
-        "rel_volume": 2.67,
+        "symbol": "PHOENIXLTD",
+        "roc5_pct": 10.14,
+        "rel_volume": 2.95,
         "bullish_trend": true,
-        "last_close": 1949.9,
+        "last_close": 2105.8,
         "data_as_of": "2026-07-06",
-        "data_source": "kite",
-        "score": 29.8
+        "data_source": "yfinance",
+        "score": 29.91
       },
       {
         "symbol": "GODREJPROP",
-        "roc5_pct": 11.85,
-        "rel_volume": 2.15,
+        "roc5_pct": 11.82,
+        "rel_volume": 2.16,
         "bullish_trend": true,
-        "last_close": 2047.0,
+        "last_close": 2046.4,
         "data_as_of": "2026-07-06",
-        "data_source": "kite",
-        "score": 25.48
+        "data_source": "yfinance",
+        "score": 25.53
       }
     ],
     "Pharma": [
