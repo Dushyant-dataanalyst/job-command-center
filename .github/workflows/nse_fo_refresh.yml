@@ -282,6 +282,24 @@ jobs:
           cd nse-trading-bot
           python strategy_performance.py
 
+      # Daily Trading Brain progress report -> ONE Telegram message per day.
+      # Gated to the once-daily 9pm IST prep run (+ manual dispatch), same as
+      # equity_scan/snapshot — NOT the 5-min cadence (this is a deliberate
+      # daily digest the user opted into, not a per-run ping). daily_report.py
+      # is idempotent per day (dedups on logs/daily_report_state.json's date),
+      # so a manual dispatch after the 9pm run won't double-send. Runs after
+      # strategy_performance (reads the journals + the perf report).
+      - name: Send daily Trading Brain report (once/day)
+        id: daily_report
+        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          cd nse-trading-bot
+          python daily_report.py
+
       # Telegram: ONLY actionable events — new strong-buy signals and exit
       # triggers on open trades — batched into one message per run, deduped
       # across runs via logs/alert_state.json. Per user request 06-Jul-2026
@@ -330,6 +348,7 @@ jobs:
           STEP_EXPERT_GATE: ${{ steps.expert_gate.outcome }}
           STEP_RECOMMENDATION_TRACKER: ${{ steps.recommendation_tracker.outcome }}
           STEP_STRATEGY_PERFORMANCE: ${{ steps.strategy_performance.outcome }}
+          STEP_DAILY_REPORT: ${{ steps.daily_report.outcome }}
           STEP_SIGNAL_ALERTS: ${{ steps.signal_alerts.outcome }}
           STEP_VALIDATE_JSON: ${{ steps.validate_json.outcome }}
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -355,7 +374,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json recommendation_journal.json expert_gate.json strategy_performance.json logs/run_history.json logs/alert_state.json logs/expert_gate_state.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json recommendation_journal.json expert_gate.json strategy_performance.json logs/run_history.json logs/alert_state.json logs/expert_gate_state.json logs/daily_report_state.json
           if [ -d snapshots ]; then git add snapshots/; fi
 
           if git diff --staged --quiet; then
