@@ -35,6 +35,11 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent
 TRADE_JOURNAL = REPO_ROOT / "trade_journal.json"
 REC_JOURNAL = REPO_ROOT / "recommendation_journal.json"
 STRATEGY_PERF = REPO_ROOT / "strategy_performance.json"
+MARKET_REGIME = REPO_ROOT / "market_regime.json"
+MARKET_MOOD = REPO_ROOT / "market_mood.json"
+SECTOR_ROTATION = REPO_ROOT / "sector_rotation.json"
+EXPERT_GATE = REPO_ROOT / "expert_gate.json"
+EQUITY_SCAN = REPO_ROOT / "equity_scan.json"
 STATE_FILE = REPO_ROOT / "logs" / "daily_report_state.json"
 
 
@@ -122,6 +127,69 @@ def _strategy_perf_section(sp):
     return "\n".join(lines)
 
 
+def _next_session_outlook(regime, mood, sectors, gate, equity):
+    """Honest, rule-based next-session outlook -- NOT a fabricated price
+    forecast. Everything here is derived from today's real computed data:
+    the regime classification, the ATR-based typical daily range (a
+    statistical spread, NOT a direction call), the expert-gate posture, and
+    the mood/sector context. This is what the system already knows, projected
+    one session forward -- the disciplined 'set up for tomorrow' read, with no
+    invented numbers."""
+    insts = (regime or {}).get("instruments", {})
+    rec = (regime or {}).get("recommendation", {})
+    gate_insts = (gate or {}).get("instruments", {})
+    lines = ["NEXT SESSION OUTLOOK (rule-based from today's close -- NOT a price forecast)"]
+
+    for sym in ("NIFTY50", "BANKNIFTY"):
+        v = insts.get(sym)
+        if not isinstance(v, dict):
+            continue
+        spot = v.get("spot")
+        atr_pct = v.get("atr_pct")
+        rng = round(spot * atr_pct / 100) if (spot and atr_pct) else None
+        g = gate_insts.get(sym) or {}
+        gate_txt = g.get("state", "?")
+        if g.get("direction"):
+            gate_txt += " " + g["direction"]
+        rng_txt = (f", typical 1-day range +/-~{rng} ({atr_pct}% ATR)" if rng else "")
+        lines.append(f"- {sym}: {v.get('trend', '?')} (ADX {v.get('adx', '?')}). "
+                     f"Close ~{round(spot):,}{rng_txt}. Gate: {gate_txt}.")
+
+    best = rec.get("best_fit_strategies") or []
+    avoid = rec.get("avoid") or []
+    if best or avoid:
+        lines.append(f"- Strategy fit: favor {', '.join(best) if best else 'none flagged'}"
+                     + (f"; avoid {', '.join(avoid)}" if avoid else "; nothing to avoid"))
+    reasoning = rec.get("reasoning") or []
+    if reasoning:
+        lines.append("  Why: " + reasoning[0])
+
+    mood_txt = ""
+    if isinstance(mood, dict) and mood.get("composite_score") is not None:
+        mood_txt = f"Mood {mood['composite_score']} ({mood.get('label', '?')})"
+    top = (sectors or {}).get("top_sectors") or []
+    sec_txt = ("Momentum sectors: " + ", ".join(top[:3])) if top else ""
+    sb = (((equity or {}).get("_meta") or {}).get("counts") or {}).get("strong_buy")
+    ctx = " · ".join([p for p in [mood_txt, sec_txt, (f"{sb} equity strong-buy(s)" if sb else "")] if p])
+    if ctx:
+        lines.append("- Context: " + ctx)
+
+    # Rule-based plan line (synthesis of gate + regime, not a prediction)
+    states = [((gate_insts.get(s) or {}).get("state")) for s in ("NIFTY50", "BANKNIFTY")]
+    choppy = any((insts.get(s) or {}).get("trend") == "Sideways/Choppy" for s in ("NIFTY50", "BANKNIFTY"))
+    if any(st in ("CONFIRMED_ENTRY", "IN_TRADE") for st in states):
+        plan = "An index setup is confirmed/held by the gate -- act on the confirmed side, respect the stop."
+    elif any(st in ("EXIT_WATCH", "EXIT_CONFIRMED") for st in states):
+        plan = "Gate is in exit-watch on a held setup -- be ready to exit, don't add."
+    elif any(st == "SETUP_FORMING" for st in states):
+        plan = ("Signals are forming but not gate-confirmed" + (" (choppy regime holding them back)" if choppy else "") +
+                " -- wait for confirmation, don't chase the raw CE/PE flip.")
+    else:
+        plan = "No index setup right now -- stay patient; watch the momentum sectors for equity rotation."
+    lines.append("- Plan: " + plan)
+    return "\n".join(lines)
+
+
 def main():
     state = _load(STATE_FILE, {})
     if not isinstance(state, dict):
@@ -135,6 +203,11 @@ def main():
     tj = _load(TRADE_JOURNAL, {})
     rj = _load(REC_JOURNAL, {})
     sp = _load(STRATEGY_PERF, {})
+    regime = _load(MARKET_REGIME, {})
+    mood = _load(MARKET_MOOD, {})
+    sectors = _load(SECTOR_ROTATION, {})
+    gate = _load(EXPERT_GATE, {})
+    equity = _load(EQUITY_SCAN, {})
 
     brain_txt, brain_metrics = _trading_brain_section(tj, state)
     message = (
@@ -142,7 +215,8 @@ def main():
         + brain_txt + "\n\n"
         + _rec_journal_section(rj) + "\n\n"
         + _strategy_perf_section(sp) + "\n\n"
-        + "Educational paper/virtual track record, not advice. Verify in Kite before acting."
+        + _next_session_outlook(regime, mood, sectors, gate, equity) + "\n\n"
+        + "Educational paper/virtual track record + rule-based outlook, not advice or a price forecast. Verify in Kite before acting."
     )
 
     print("  Composed daily report:")
