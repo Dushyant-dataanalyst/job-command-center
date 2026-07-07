@@ -1,5 +1,5 @@
 {
-  "fetched_at": "07 Jul 2026 07:01 IST",
+  "fetched_at": "07 Jul 2026 07:05 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
   "all_sectors_ranked": [
@@ -15,13 +15,13 @@
     },
     {
       "sector": "Pharma",
-      "roc5_pct": 3.11,
-      "rel_volume": 1.95,
+      "roc5_pct": 2.53,
+      "rel_volume": 0.81,
       "bullish_trend": true,
-      "last_close": 25745.15,
-      "data_as_of": "2026-07-03",
+      "last_close": 25866.25,
+      "data_as_of": "2026-07-06",
       "data_source": "yfinance",
-      "score": 6.06
+      "score": 2.05
     },
     {
       "sector": "FMCG",
@@ -32,6 +32,16 @@
       "data_as_of": "2026-07-03",
       "data_source": "yfinance",
       "score": 1.05
+    },
+    {
+      "sector": "Banking",
+      "roc5_pct": 0.98,
+      "rel_volume": 0.81,
+      "bullish_trend": true,
+      "last_close": 58291.5,
+      "data_as_of": "2026-07-06",
+      "data_source": "yfinance",
+      "score": 0.79
     },
     {
       "sector": "Metal",
@@ -45,13 +55,13 @@
     },
     {
       "sector": "IT",
-      "roc5_pct": 0.4,
-      "rel_volume": 1.15,
+      "roc5_pct": 0.88,
+      "rel_volume": 0.39,
       "bullish_trend": false,
-      "last_close": 27439.4,
-      "data_as_of": "2026-07-03",
+      "last_close": 27276.45,
+      "data_as_of": "2026-07-06",
       "data_source": "yfinance",
-      "score": 0.46
+      "score": 0.34
     },
     {
       "sector": "Auto",
@@ -62,16 +72,6 @@
       "data_as_of": "2026-07-03",
       "data_source": "yfinance",
       "score": 0.03
-    },
-    {
-      "sector": "Banking",
-      "roc5_pct": -0.41,
-      "rel_volume": 0.94,
-      "bullish_trend": true,
-      "last_close": 57938.5,
-      "data_as_of": "2026-07-03",
-      "data_source": "yfinance",
-      "score": -0.39
     },
     {
       "sector": "Energy",
