@@ -109,12 +109,25 @@ def _stock_signal(name):
     spot = v["spot"]
     now_str = now_ist_str()
 
+    # FIXED 07-Jul-2026: this used to hardcode "yfinance EOD" unconditionally,
+    # same bug already fixed the same day in refresh_fo_cloud.py/equity_scan_core.py/
+    # sector_rotation_core.py (found and left unfixed here during the audit
+    # compilation pass, now closed). v["data_source"] ("kite"/"yfinance") was
+    # already being computed by _get_indicators() this whole time -- just never
+    # surfaced in the output.
+    warning_prefix = (
+        f"Signals based on {v['data_date']} Kite historical data (official, live session) — still end-of-day candles, not tick-level."
+        if v["data_source"] == "kite" else
+        f"Signals based on {v['data_date']} close (yfinance EOD, delayed/unofficial)."
+    )
+
     if consensus == "WAIT":
         return {
             "name": name, "spot": spot, "consensus": "WAIT",
             "ce_votes": ce_v, "pe_votes": pe_v,
             "data_as_of": v["data_date"], "fetched_at": now_str,
-            "data_warning": f"Signals based on {v['data_date']} close (yfinance EOD). Verify in Kite before trading.",
+            "data_source": v["data_source"],
+            "data_warning": f"{warning_prefix} Verify in Kite before trading.",
             "trade": None,
         }
 
@@ -139,7 +152,8 @@ def _stock_signal(name):
         "name": name, "spot": spot, "consensus": consensus,
         "ce_votes": ce_v, "pe_votes": pe_v, "votes": votes,
         "data_as_of": v["data_date"], "fetched_at": now_str,
-        "data_warning": f"Signals based on {v['data_date']} close (yfinance EOD). Strike interval is an approximation — verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) — figures are per-share, not total cost.",
+        "data_source": v["data_source"],
+        "data_warning": f"{warning_prefix} Strike interval is an approximation — verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) — figures are per-share, not total cost.",
         "trade": trade,
     }
 
@@ -160,6 +174,20 @@ def main():
             errors[name] = str(e)
             print(f"  {name} ERROR: {e}")
 
+    # Real aggregate across whatever each stock actually used this run --
+    # same pattern as fo_latest.json/equity_scan.json/sector_rotation.json's
+    # _meta.source (fixed the same day, this file was the one instance missed).
+    sources = [r["data_source"] for r in results.values() if isinstance(r, dict) and r.get("data_source")]
+    kite_n, yf_n = sources.count("kite"), sources.count("yfinance")
+    if sources and yf_n == 0:
+        source_label = "kite (official, live session)"
+    elif sources and kite_n == 0:
+        source_label = "yfinance EOD (delayed/unofficial)"
+    elif sources:
+        source_label = f"mixed: {kite_n} kite (live) / {yf_n} yfinance EOD (delayed)"
+    else:
+        source_label = "unknown (no stock returned data_source)"
+    results["_meta"]["source"] = source_label
     results["_meta"]["errors"] = errors
     OUT_FILE.write_text(json.dumps(results, indent=2), encoding="utf-8")
     print(f"  Wrote {OUT_FILE}")
