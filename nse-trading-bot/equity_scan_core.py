@@ -262,6 +262,7 @@ def scan_one(symbol, sector, fetch_peg=True):
         "strategies": strategies,
         "sector": sector,
         "data_as_of": v["data_date"],
+        "data_source": v["data_source"],
     }
 
 

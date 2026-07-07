@@ -171,7 +171,13 @@ def _fo_signal(instrument):
         "instrument": instrument, "spot": spot, "ann_vol": v["ann_vol"],
         "consensus": consensus, "ce_votes": ce_v, "pe_votes": pe_v,
         "data_as_of": v["data_date"], "fetched_at": now_str,
-        "data_warning": f"Signals based on {v['data_date']} close (yfinance EOD). Verify in Kite before trading.",
+        "data_source": v["data_source"],
+        "data_warning": (
+            f"Signals based on {v['data_date']} Kite historical data (official, live session) — "
+            "still end-of-day candles, not tick-level. Verify in Kite before trading."
+            if v["data_source"] == "kite" else
+            f"Signals based on {v['data_date']} close (yfinance EOD, delayed/unofficial). Verify in Kite before trading."
+        ),
         "trade": {
             "action": f"BUY {nse_sym} {strike} {opt}" if opt else "WAIT — No Trade",
             "zerodha_symbol": zs, "zerodha_search": zs_search,
@@ -225,14 +231,30 @@ def _alert_fo_signal_changes(fo_exact):
 def main():
     now_str = now_ist_str()
     print(f"[{now_str}] Cloud F&O refresh starting...")
-    fo_exact = {"_meta": {"generated_at": now_str, "source": "yfinance EOD"}}
+    fo_exact = {}
+    sources_used = []
     for inst in ["NIFTY50", "BANKNIFTY"]:
         try:
             r = _fo_signal(inst)
             fo_exact[inst] = r
-            print(f"  {inst}: {r.get('consensus')} | spot={r.get('spot')}")
+            if r.get("data_source"):
+                sources_used.append(r["data_source"])
+            print(f"  {inst}: {r.get('consensus')} | spot={r.get('spot')} | source={r.get('data_source', '?')}")
         except Exception as e:
             print(f"  {inst} ERROR: {e}")
+    # Real aggregate, not a hardcoded guess -- built AFTER the loop so it
+    # reflects what each instrument actually used this run (FIXED 07-Jul-2026:
+    # this used to hardcode "yfinance EOD" unconditionally even on runs where
+    # Kite's live historical API was actually used for both instruments).
+    if sources_used and all(s == "kite" for s in sources_used):
+        source_label = "kite (official, live session)"
+    elif sources_used and all(s == "yfinance" for s in sources_used):
+        source_label = "yfinance EOD (delayed/unofficial)"
+    elif sources_used:
+        source_label = "mixed: " + ", ".join(f"{inst}={fo_exact[inst].get('data_source', '?')}" for inst in fo_exact if fo_exact[inst].get("data_source"))
+    else:
+        source_label = "unknown (no instrument returned data_source)"
+    fo_exact["_meta"] = {"generated_at": now_str, "source": source_label}
     # Write the sidecar that the dashboard fetches at /fo_latest.json (repo root = Vercel site root)
     SIDECAR_FILE.write_text(json.dumps(fo_exact, indent=2), encoding="utf-8")
     print(f"  Wrote {SIDECAR_FILE}")

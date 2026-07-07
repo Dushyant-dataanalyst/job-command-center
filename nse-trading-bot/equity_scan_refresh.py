@@ -69,10 +69,25 @@ def main():
         watch = sum(1 for r in results.values() if r["signal"] == "WATCH")
         _update_history(strong_buy, buy, watch)
 
+        # Real aggregate across whatever each stock actually used this run
+        # (FIXED 07-Jul-2026: this used to hardcode "yfinance EOD" regardless
+        # of how many stocks actually resolved via Kite's live historical API).
+        sources = [r["data_source"] for r in results.values() if r.get("data_source")]
+        kite_n = sources.count("kite")
+        yf_n = sources.count("yfinance")
+        if sources and yf_n == 0:
+            source_label = "kite (official, live session)"
+        elif sources and kite_n == 0:
+            source_label = "yfinance EOD (delayed/unofficial)"
+        elif sources:
+            source_label = f"mixed: {kite_n} kite (live) / {yf_n} yfinance EOD (delayed)"
+        else:
+            source_label = "unknown (no stock returned data_source)"
+
         out = {
             "_meta": {
                 "generated_at": now_str,
-                "source": "yfinance EOD",
+                "source": source_label,
                 "universe": "SECTOR_STOCKS (sector_rotation_core.py) — 46 stocks / 10 sectors",
                 "strategy_note": "Inna/Pham/Cianni/Unger reconstructed from short tooltip descriptions, "
                                   "not verified against an original spec. Educational signal engine only, "

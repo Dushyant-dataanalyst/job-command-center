@@ -131,9 +131,28 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
         picks.sort(key=lambda p: p["score"], reverse=True)
         stock_picks[sector_name] = picks[:stocks_per_sector]
 
+    # Real aggregate across every sector-index + stock fetch this call actually
+    # made (FIXED 07-Jul-2026: this used to hardcode "yfinance" unconditionally
+    # even when Kite's live historical API was used for some or all of them —
+    # each per-sector/per-stock dict already carries its own real data_source
+    # via the **m spread above, this just summarizes them honestly).
+    all_sources = [v["data_source"] for v in sector_results.values() if "data_source" in v]
+    for picks in stock_picks.values():
+        all_sources.extend(p["data_source"] for p in picks if "data_source" in p)
+    kite_n = all_sources.count("kite")
+    yf_n = all_sources.count("yfinance")
+    if all_sources and yf_n == 0:
+        source_label = "kite (official, live session)"
+    elif all_sources and kite_n == 0:
+        source_label = "yfinance (NSE EOD/delayed quotes, fetched live at call time)"
+    elif all_sources:
+        source_label = f"mixed: {kite_n} kite (live) / {yf_n} yfinance (EOD/delayed) fetches"
+    else:
+        source_label = "unknown (no fetch returned data_source)"
+
     return {
         "fetched_at": fetched_at,
-        "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
+        "data_source": source_label,
         "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
         "all_sectors_ranked": [{"sector": k, **v} for k, v in ranked_sectors],
         "sectors_with_errors": {k: v["error"] for k, v in sector_results.items() if "error" in v},
