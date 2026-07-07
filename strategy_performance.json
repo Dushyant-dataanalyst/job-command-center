@@ -1,0 +1,32 @@
+{
+  "generated_at": "07 Jul 2026 18:20 IST",
+  "recommendations_total": 14,
+  "open": 14,
+  "closed": 0,
+  "overall": {
+    "decisive": 0,
+    "won": 0,
+    "lost": 0,
+    "win_rate_pct": null,
+    "expectancy_pct": null,
+    "avg_win_pct": null,
+    "avg_loss_pct": null,
+    "profit_factor": null,
+    "max_drawdown_pct": null
+  },
+  "avg_hold_days": null,
+  "by_kind": {},
+  "by_vote_count": {},
+  "by_direction": {},
+  "by_regime": {},
+  "by_voter": {},
+  "by_time_of_day": {},
+  "flip_diagnostics": {
+    "expired_count": 0,
+    "invalidated_count": 0,
+    "invalidated_while_in_profit": 0,
+    "note": "invalidated_while_in_profit is a PROXY for false flips (bailed on a green rec when the signal flipped) -- NOT the true 'did it later hit target' metric, which needs post-invalidation tracking the journal doesn't do yet."
+  },
+  "sample_size_warning": "Fewer than 20 decisive recommendations -- these numbers are noise, not signal. Treat as 'still accumulating', same threshold discipline as the rest of this system.",
+  "disclaimer": "Forward performance of the engine's OWN recommendations (recommendation_journal.json), all kinds. F&O outcomes use estimated premiums; see recommendation_tracker.py for per-kind scoring method + limits. Educational only, not investment advice."
+}

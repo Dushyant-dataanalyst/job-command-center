@@ -60,6 +60,7 @@ SCAN_FILE = REPO_ROOT / "equity_scan.json"
 PAPER_FILE = REPO_ROOT / "trade_journal.json"
 EQUITY_FILE = REPO_ROOT / "equity_journal.json"
 KITE_PORTFOLIO_FILE = REPO_ROOT / "kite_portfolio.json"
+EXPERT_GATE_FILE = REPO_ROOT / "expert_gate.json"
 
 ALERTED_TRADE_IDS_MAX = 500
 ACTIONABLE_POSITION_STATUSES = ("below_sl", "target1_hit", "target2_hit")
@@ -89,26 +90,49 @@ def _save_state(state):
     STATE_FILE.write_text(json.dumps(state, indent=2), encoding="utf-8")
 
 
-def _fo_buy_events(fo, state):
-    """Consensus transitions into BUY_CE/BUY_PE. State updated to the
-    current consensus either way, so a flip away and back re-alerts."""
+def _fo_buy_events(fo, gate, state):
+    """Index-F&O ENTRY alerts. Behavior 07-Jul-2026: prefer the expert gate's
+    CONFIRMED entries (persisted + regime-checked + cooldown-respected) over
+    raw consensus flips -- that's the whole point of the gate, to stop pinging
+    the user on every 1-tick CE/PE whipsaw.
+
+    FAILS OPEN, deliberately: if expert_gate.json is missing/empty/broken for
+    an instrument, this reverts to the original raw-flip alert for THAT
+    instrument. A gate bug can make alerts NOISIER (back to raw), never
+    SILENT -- missing a real entry is the worse failure, so the fallback
+    errs loud. state['fo_consensus'] is still updated every run regardless of
+    mode, so switching between gated/fail-open never re-fires a stale flip."""
     events = []
     if not isinstance(fo, dict):
         return events
+    gate_instruments = (gate or {}).get("instruments", {}) if isinstance(gate, dict) else {}
+
+    def _trade_detail(sig):
+        t = sig.get("trade") or {}
+        if not t:
+            return ""
+        return (f" -> {t.get('action', '')} ~Rs.{t.get('entry_premium', '?')}"
+                f" | SL {t.get('sl_premium', '?')} | T1 {t.get('target1_premium', '?')}"
+                f" | T2 {t.get('target_premium', '?')} | exp {t.get('expiry', '?')}")
+
     for inst, sig in fo.items():
         if inst == "_meta" or not isinstance(sig, dict) or "error" in sig:
             continue
         cur = sig.get("consensus")
         prev = state["fo_consensus"].get(inst)
-        if cur in ("BUY_CE", "BUY_PE") and cur != prev:
-            t = sig.get("trade") or {}
-            detail = ""
-            if t:
-                detail = (f" -> {t.get('action', '')} ~Rs.{t.get('entry_premium', '?')}"
-                          f" | SL {t.get('sl_premium', '?')} | T1 {t.get('target1_premium', '?')}"
-                          f" | T2 {t.get('target_premium', '?')} | exp {t.get('expiry', '?')}")
-            votes = sig.get("ce_votes") if cur == "BUY_CE" else sig.get("pe_votes")
-            events.append(f"- {inst}: {cur} ({votes} votes){detail}")
+        g = gate_instruments.get(inst)
+
+        if isinstance(g, dict):  # gated mode -- alert only on a CONFIRMED entry
+            if g.get("entry_confirmed_this_run"):
+                direction = g.get("direction") or cur
+                votes = sig.get("ce_votes") if direction == "BUY_CE" else sig.get("pe_votes")
+                events.append(f"- {inst}: {direction} CONFIRMED by expert gate "
+                              f"({votes} votes, {g.get('reason', 'persisted+regime-checked')}){_trade_detail(sig)}")
+        else:  # fail-open -- gate data unavailable for this instrument
+            if cur in ("BUY_CE", "BUY_PE") and cur != prev:
+                votes = sig.get("ce_votes") if cur == "BUY_CE" else sig.get("pe_votes")
+                events.append(f"- {inst}: {cur} ({votes} votes) [raw signal -- expert gate unavailable]{_trade_detail(sig)}")
+
         state["fo_consensus"][inst] = cur
     return events
 
@@ -241,7 +265,8 @@ def main():
     state = _load_state()
 
     fo = _load_json(FO_FILE)
-    buy_events = (_fo_buy_events(fo, state)
+    gate = _load_json(EXPERT_GATE_FILE)
+    buy_events = (_fo_buy_events(fo, gate, state)
                   + _equity_strong_buy_events(_load_json(SCAN_FILE), state))
     exit_events = (_paper_exit_events(_load_json(PAPER_FILE), state)
                    + _real_position_events(_load_json(EQUITY_FILE), state)

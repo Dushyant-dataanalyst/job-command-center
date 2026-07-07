@@ -247,6 +247,18 @@ jobs:
           cd nse-trading-bot
           python snapshot_daily.py
 
+      # Expert gate — confirmation/cooldown state machine over the raw index
+      # F&O signal (reduces CE/PE whipsaw). Writes expert_gate.json, which the
+      # signal-alerts step below consults for CONFIRMED entries. Runs BEFORE
+      # signal_alerts (so the gate feed is fresh) and reads fo_latest.json +
+      # market_regime.json written by the steps above.
+      - name: Run expert gate (writes expert_gate.json to repo root)
+        id: expert_gate
+        continue-on-error: true
+        run: |
+          cd nse-trading-bot
+          python expert_gate.py
+
       # Recommendation journal + outcome tracker — scores the engine's OWN
       # signals (index F&O / stock F&O / equity), whether or not the user
       # acted on them, into recommendation_journal.json. Runs EVERY refresh
@@ -259,6 +271,16 @@ jobs:
         run: |
           cd nse-trading-bot
           python recommendation_tracker.py
+
+      # Strategy performance report — unified win/loss/expectancy scoreboard
+      # over the recommendation journal, sliced by kind/vote/regime/voter/time.
+      # Read-only; runs AFTER recommendation_tracker (reads the journal it wrote).
+      - name: Compute strategy performance (writes strategy_performance.json)
+        id: strategy_performance
+        continue-on-error: true
+        run: |
+          cd nse-trading-bot
+          python strategy_performance.py
 
       # Telegram: ONLY actionable events — new strong-buy signals and exit
       # triggers on open trades — batched into one message per run, deduped
@@ -305,7 +327,9 @@ jobs:
           STEP_EQUITY_SCAN: ${{ steps.equity_scan.outcome }}
           STEP_VOTER_WEIGHTS: ${{ steps.voter_weights.outcome }}
           STEP_SNAPSHOT_DAILY: ${{ steps.snapshot_daily.outcome }}
+          STEP_EXPERT_GATE: ${{ steps.expert_gate.outcome }}
           STEP_RECOMMENDATION_TRACKER: ${{ steps.recommendation_tracker.outcome }}
+          STEP_STRATEGY_PERFORMANCE: ${{ steps.strategy_performance.outcome }}
           STEP_SIGNAL_ALERTS: ${{ steps.signal_alerts.outcome }}
           STEP_VALIDATE_JSON: ${{ steps.validate_json.outcome }}
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -331,7 +355,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json recommendation_journal.json logs/run_history.json logs/alert_state.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json recommendation_journal.json expert_gate.json strategy_performance.json logs/run_history.json logs/alert_state.json logs/expert_gate_state.json
           if [ -d snapshots ]; then git add snapshots/; fi
 
           if git diff --staged --quiet; then

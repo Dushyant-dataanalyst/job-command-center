@@ -1,0 +1,46 @@
+{
+  "generated_at": "07 Jul 2026 18:20 IST",
+  "refresh_counter": 2,
+  "instruments": {
+    "NIFTY50": {
+      "state": "SETUP_FORMING",
+      "direction": "BUY_CE",
+      "persist_count": 2,
+      "exit_persist_count": 0,
+      "cooldown_until": 0,
+      "entry_votes": null,
+      "entered_at": null,
+      "last_update": "07 Jul 2026 18:20 IST",
+      "reason": "BUY_CE forming -- waiting on: choppy/sideways regime; outside entry time window",
+      "entry_confirmed_this_run": false,
+      "exit_confirmed_this_run": false,
+      "raw_consensus": "BUY_CE",
+      "adx": 13.2,
+      "regime_trend": "Sideways/Choppy"
+    },
+    "BANKNIFTY": {
+      "state": "WATCH",
+      "direction": null,
+      "persist_count": 0,
+      "exit_persist_count": 0,
+      "cooldown_until": 0,
+      "entry_votes": null,
+      "entered_at": null,
+      "last_update": "07 Jul 2026 18:20 IST",
+      "reason": "signal WAIT/none",
+      "entry_confirmed_this_run": false,
+      "exit_confirmed_this_run": false,
+      "raw_consensus": "WAIT",
+      "adx": 20.9,
+      "regime_trend": "Bullish"
+    }
+  },
+  "params": {
+    "entry_persist_refreshes": 2,
+    "exit_persist_refreshes": 2,
+    "cooldown_refreshes": 3,
+    "min_adx_for_entry": 20,
+    "min_votes_for_entry": 4
+  },
+  "disclaimer": "Confirmation-and-cooldown state machine over the raw index-F&O signal, to reduce CE/PE whipsaw. Does NOT place/size/authorize any trade (no executor exists -- SEBI static-IP block). Educational signal-lifecycle layer only."
+}

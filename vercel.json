@@ -19,6 +19,8 @@
     { "src": "kite_portfolio.json",     "use": "@vercel/static" },
     { "src": "kite_trade_history.json", "use": "@vercel/static" },
     { "src": "recommendation_journal.json", "use": "@vercel/static" },
+    { "src": "expert_gate.json",        "use": "@vercel/static" },
+    { "src": "strategy_performance.json", "use": "@vercel/static" },
     { "src": "api/save-positions.js",   "use": "@vercel/node" }
   ],
   "routes": [
@@ -105,6 +107,16 @@
       "src": "/recommendation_journal.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/recommendation_journal.json"
+    },
+    {
+      "src": "/expert_gate.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/expert_gate.json"
+    },
+    {
+      "src": "/strategy_performance.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/strategy_performance.json"
     },
     {
       "src": "/nse_live_dashboard.html",

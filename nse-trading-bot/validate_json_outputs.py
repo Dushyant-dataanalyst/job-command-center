@@ -33,6 +33,8 @@ SCHEMA = {
     "kite_portfolio.json":       (dict, ["session_live", "fetched_at"]),
     "kite_trade_history.json":   (list, []),
     "recommendation_journal.json": (dict, ["recommendations", "summary"]),
+    "expert_gate.json":          (dict, ["instruments"]),
+    "strategy_performance.json": (dict, ["overall"]),
 }
 
 
