@@ -469,6 +469,9 @@ function _foReadAndPredict(pos, sig){
 <div id="overview" class="panel active">
   <div id="ov-circuit-breaker" style="margin-bottom:14px"></div>
   <div id="ov-action" style="margin-bottom:14px"></div>
+  <!-- Trading Brain surfaced on the front page (also renders in the F&O tab).
+       The buildTradingBrain IIFE writes to both containers if present. -->
+  <div id="ov-trading-brain" style="margin-bottom:14px"></div>
   <div id="ov-health" class="kpis" style="margin-bottom:14px"></div>
   <div class="charts" style="margin-bottom:14px">
     <div class="chart-card" id="ov-mood"></div>
@@ -1426,8 +1429,6 @@ function updateEquityCounts(){
   <script>
   (function buildTradingBrain(){
     function render(j){
-      var box = document.getElementById('trading-brain-panel');
-      if (!box) return;
       var s = (j && j.stats) || {total_closed:0, open_count:0, wins:0, losses:0, win_rate:0, by_votes:{}, insight:'No data yet.'};
       var trades = (j && j.trades) || [];
       var recent = trades.slice().reverse().slice(0, 6);
@@ -1446,7 +1447,7 @@ function updateEquityCounts(){
         '</tr>';
       }).join('');
 
-      box.innerHTML =
+      var html =
         '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' +
           '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
             '<span style="font-size:14px;font-weight:800">🧠 Trading Brain</span>' +
@@ -1478,6 +1479,11 @@ function updateEquityCounts(){
           ) : '') +
           '<div style="font-size:10px;color:#475569;margin-top:10px">Paper trades only — simulated using the same premium model as the live signals. Not a recommendation. Track record, not financial advice.</div>' +
         '</div>';
+      // Render into BOTH the front-page (Overview) and F&O-tab containers if present.
+      ['trading-brain-panel','ov-trading-brain'].forEach(function(id){
+        var box = document.getElementById(id);
+        if (box) box.innerHTML = html;
+      });
     }
 
     fetch('/trade_journal.json?v=' + Date.now())
