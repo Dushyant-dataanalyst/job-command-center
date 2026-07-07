@@ -1487,6 +1487,158 @@ function updateEquityCounts(){
   })();
   </script>
 
+  <!-- LEARNING ENGINE — expert gate + recommendation journal + strategy
+       performance, fetched from /expert_gate.json, /recommendation_journal.json,
+       /strategy_performance.json. Scores the engine's OWN signals; no trades. -->
+  <div id="expert-gate-panel" style="margin-bottom:14px"></div>
+  <div id="strategy-perf-panel" style="margin-bottom:14px"></div>
+  <div id="rec-journal-panel" style="margin-bottom:14px"></div>
+  <script>
+  (function buildLearningEngine(){
+    var INR2 = function(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); };
+    var pill = function(txt, color){
+      return '<span style="background:#1e293b;color:' + color + ';font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap">' + txt + '</span>';
+    };
+    var card = function(inner){
+      return '<div style="background:#0f172a;border-radius:12px;padding:16px 18px;color:#e2e8f0">' + inner + '</div>';
+    };
+
+    /* ---------- 1. Expert Gate ---------- */
+    function gateStyle(state){
+      switch(state){
+        case 'CONFIRMED_ENTRY': return {c:'#4ade80', l:'✅ CONFIRMED ENTRY'};
+        case 'IN_TRADE':        return {c:'#38bdf8', l:'📈 IN TRADE'};
+        case 'SETUP_FORMING':   return {c:'#fbbf24', l:'⏳ SETUP FORMING'};
+        case 'EXIT_WATCH':      return {c:'#fb923c', l:'👀 EXIT WATCH'};
+        case 'EXIT_CONFIRMED':  return {c:'#f87171', l:'🔴 EXIT CONFIRMED'};
+        case 'COOLDOWN':        return {c:'#94a3b8', l:'❄️ COOLDOWN'};
+        default:                return {c:'#64748b', l:'· WATCH'};
+      }
+    }
+    function renderGate(d){
+      var box = document.getElementById('expert-gate-panel');
+      if (!box) return;
+      var insts = (d && d.instruments) || {};
+      var rows = Object.keys(insts).map(function(name){
+        var o = insts[name] || {};
+        var st = gateStyle(o.state);
+        var flags = (o.entry_confirmed_this_run ? ' ' + pill('ENTRY NOW', '#4ade80') : '') +
+                    (o.exit_confirmed_this_run ? ' ' + pill('EXIT NOW', '#f87171') : '');
+        return '<div style="background:#1e293b;border-radius:10px;padding:10px 12px;margin-bottom:8px">' +
+          '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">' +
+            '<span style="font-weight:800;font-size:13px">' + name + '</span>' +
+            '<span style="font-weight:800;font-size:12px;color:' + st.c + '">' + st.l + '</span>' +
+            (o.direction ? '<span style="font-size:11px;color:#94a3b8">' + o.direction + '</span>' : '') +
+            flags +
+          '</div>' +
+          '<div style="font-size:11px;color:#94a3b8;margin-top:4px">' + (o.reason || '') + '</div>' +
+          '<div style="font-size:10px;color:#64748b;margin-top:2px">raw signal: ' + (o.raw_consensus || '—') +
+            ' · regime: ' + (o.regime_trend || '?') + ' (ADX ' + (o.adx != null ? o.adx : '?') + ')</div>' +
+        '</div>';
+      }).join('');
+      box.innerHTML = card(
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+          '<span style="font-size:14px;font-weight:800">🚦 Expert Gate</span>' +
+          pill('confirmation + cooldown', '#38bdf8') +
+          (d && d.generated_at ? '<span style="font-size:11px;color:#64748b;margin-left:auto">' + d.generated_at + '</span>' : '') +
+        '</div>' +
+        '<div style="font-size:11px;color:#94a3b8;margin-bottom:10px">A raw BUY_CE/BUY_PE only becomes a <b>confirmed entry</b> after it holds ' +
+          ((d && d.params && d.params.entry_persist_refreshes) || 2) + ' refreshes in a non-choppy regime — this is what stops the CE/PE whipsaw. Your Telegram entry alerts fire on CONFIRMED, not raw flips.</div>' +
+        (rows || '<div style="font-size:12px;color:#64748b">No gate data yet.</div>') +
+        '<div style="font-size:10px;color:#475569;margin-top:8px">Signal-lifecycle layer only. Does not place, size, or authorize any trade.</div>'
+      );
+    }
+    fetch('/expert_gate.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ renderGate(d); }).catch(function(){});
+
+    /* ---------- 2. Strategy Performance ---------- */
+    function renderPerf(d){
+      var box = document.getElementById('strategy-perf-panel');
+      if (!box) return;
+      var o = (d && d.overall) || {};
+      var head = '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+          '<span style="font-size:14px;font-weight:800">📊 Strategy Performance</span>' +
+          pill('the engine\'s own track record', '#a78bfa') +
+          (d && d.generated_at ? '<span style="font-size:11px;color:#64748b;margin-left:auto">' + d.generated_at + '</span>' : '') +
+        '</div>';
+      var body;
+      if (!o.decisive) {
+        body = '<div style="font-size:12px;color:#fbbf24;background:#1e293b;border-radius:8px;padding:10px 12px">' +
+          '⏳ No decisive recommendations closed yet — <b>' + ((d && d.open) || 0) + ' open</b>, accumulating. ' +
+          'Win/loss stats appear here once recs hit a target or stop. This is expected: the track record has to be earned, not assumed.</div>';
+      } else {
+        var wr = o.win_rate_pct, wrColor = wr >= 55 ? '#4ade80' : wr >= 45 ? '#fbbf24' : '#f87171';
+        body = '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">' +
+            pill(wr + '% win · ' + o.decisive + ' decisive', wrColor) +
+            pill('expectancy ' + (o.expectancy_pct > 0 ? '+' : '') + o.expectancy_pct + '%', o.expectancy_pct > 0 ? '#4ade80' : '#f87171') +
+            pill('PF ' + (o.profit_factor == null ? '—' : o.profit_factor), '#38bdf8') +
+            pill('maxDD ' + o.max_drawdown_pct + '%', '#f87171') +
+          '</div>';
+        var byKind = (d && d.by_kind) || {};
+        var kindRows = Object.keys(byKind).map(function(k){
+          var s = byKind[k];
+          return '<tr><td style="padding:4px 8px">' + k + '</td>' +
+            '<td style="padding:4px 8px;text-align:right">' + s.won + 'W/' + s.lost + 'L</td>' +
+            '<td style="padding:4px 8px;text-align:right;color:' + (s.win_rate_pct >= 50 ? '#4ade80' : '#f87171') + '">' + s.win_rate_pct + '%</td></tr>';
+        }).join('');
+        if (kindRows) body += '<table style="width:100%;border-collapse:collapse;font-size:12px;color:#cbd5e1">' +
+          '<thead><tr style="color:#64748b;text-align:left"><th style="padding:4px 8px">By kind</th><th style="padding:4px 8px;text-align:right">W/L</th><th style="padding:4px 8px;text-align:right">Win%</th></tr></thead><tbody>' + kindRows + '</tbody></table>';
+      }
+      if (d && d.sample_size_warning) body += '<div style="font-size:10px;color:#fbbf24;margin-top:8px">⚠ ' + d.sample_size_warning + '</div>';
+      box.innerHTML = card(head + body +
+        '<div style="font-size:10px;color:#475569;margin-top:8px">Forward score of the engine\'s recommendations (F&O marks are estimated premiums). Not advice.</div>');
+    }
+    fetch('/strategy_performance.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ renderPerf(d); }).catch(function(){});
+
+    /* ---------- 3. Recommendation Journal (open + recent closed) ---------- */
+    function statusColor(s){
+      return s === 'won' ? '#4ade80' : s === 'lost' ? '#f87171' : s === 'open' ? '#38bdf8' : '#94a3b8';
+    }
+    function renderJournal(d){
+      var box = document.getElementById('rec-journal-panel');
+      if (!box) return;
+      var recs = (d && d.recommendations) || [];
+      var sm = (d && d.summary) || {};
+      var open = recs.filter(function(r){ return r.status === 'open'; });
+      var closed = recs.filter(function(r){ return r.status !== 'open'; })
+                       .sort(function(a, b){ return (b.closed_at || '').localeCompare(a.closed_at || ''); }).slice(0, 8);
+      var show = open.slice(0, 10).concat(closed);
+      var rows = show.map(function(r){
+        var pct = r.outcome_pct != null ? (r.outcome_pct > 0 ? '+' : '') + r.outcome_pct + '%' : '—';
+        return '<tr>' +
+          '<td style="padding:5px 8px;font-weight:600">' + r.symbol + '</td>' +
+          '<td style="padding:5px 8px;color:#94a3b8">' + (r.kind || '').replace('fo_', 'F&O ').replace('_', ' ') + '</td>' +
+          '<td style="padding:5px 8px">' + r.direction + '</td>' +
+          '<td style="padding:5px 8px;text-align:right;color:#94a3b8">' + (r.entry != null ? r.entry : '—') + '</td>' +
+          '<td style="padding:5px 8px;text-align:right;font-weight:700;color:' + statusColor(r.status) + '">' + r.status.toUpperCase() + '</td>' +
+          '<td style="padding:5px 8px;text-align:right">' + pct + '</td>' +
+        '</tr>';
+      }).join('');
+      box.innerHTML = card(
+        '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">' +
+          '<span style="font-size:14px;font-weight:800">📒 Recommendation Journal</span>' +
+          pill((sm.open_count || 0) + ' open', '#38bdf8') +
+          pill((sm.decisive_count || 0) + ' decisive · ' + (sm.win_rate_pct == null ? '—' : sm.win_rate_pct + '%') + ' win', '#a78bfa') +
+          (d && d.generated_at ? '<span style="font-size:11px;color:#64748b;margin-left:auto">' + d.generated_at + '</span>' : '') +
+        '</div>' +
+        '<div style="font-size:11px;color:#94a3b8;margin-bottom:10px">Every actionable signal the engine emits is tracked here — whether or not you took it — so we learn what actually works. Estimated marks for F&O.</div>' +
+        (rows ?
+          '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px;color:#cbd5e1">' +
+            '<thead><tr style="color:#64748b;text-align:left"><th style="padding:4px 8px">Symbol</th><th style="padding:4px 8px">Kind</th><th style="padding:4px 8px">Dir</th><th style="padding:4px 8px;text-align:right">Entry</th><th style="padding:4px 8px;text-align:right">Status</th><th style="padding:4px 8px;text-align:right">P&amp;L</th></tr></thead>' +
+            '<tbody>' + rows + '</tbody></table></div>'
+          : '<div style="font-size:12px;color:#64748b">No recommendations tracked yet — opens automatically when a signal turns actionable.</div>') +
+        '<div style="font-size:10px;color:#475569;margin-top:8px">Virtual track record of signals, not trades you placed. Educational only.</div>'
+      );
+    }
+    fetch('/recommendation_journal.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){ renderJournal(d); }).catch(function(){});
+  })();
+  </script>
+
   <script>
   (function buildFOIntel(){
     const INR=n=>'₹'+Math.round(n).toLocaleString('en-IN');
