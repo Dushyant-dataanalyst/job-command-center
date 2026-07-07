@@ -125,6 +125,7 @@ def _stock_signal(name):
         return {
             "name": name, "spot": spot, "consensus": "WAIT",
             "ce_votes": ce_v, "pe_votes": pe_v,
+            "ann_vol": v["ann_vol"],
             "data_as_of": v["data_date"], "fetched_at": now_str,
             "data_source": v["data_source"],
             "data_warning": f"{warning_prefix} Verify in Kite before trading.",
@@ -151,6 +152,7 @@ def _stock_signal(name):
     return {
         "name": name, "spot": spot, "consensus": consensus,
         "ce_votes": ce_v, "pe_votes": pe_v, "votes": votes,
+        "ann_vol": v["ann_vol"],  # surfaced so recommendation_tracker.py can re-price single-leg stock F&O recs (same as the index engine already exposes)
         "data_as_of": v["data_date"], "fetched_at": now_str,
         "data_source": v["data_source"],
         "data_warning": f"{warning_prefix} Strike interval is an approximation — verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) — figures are per-share, not total cost.",

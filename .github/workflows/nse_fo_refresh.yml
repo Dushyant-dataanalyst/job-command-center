@@ -247,6 +247,19 @@ jobs:
           cd nse-trading-bot
           python snapshot_daily.py
 
+      # Recommendation journal + outcome tracker — scores the engine's OWN
+      # signals (index F&O / stock F&O / equity), whether or not the user
+      # acted on them, into recommendation_journal.json. Runs EVERY refresh
+      # (not once-daily gated) so F&O recs get marked-to-market frequently;
+      # equity recs re-mark when equity_scan.json refreshes daily. Reads the
+      # signal files written by the steps above, so it runs after them.
+      - name: Track recommendation outcomes (writes recommendation_journal.json)
+        id: recommendation_tracker
+        continue-on-error: true
+        run: |
+          cd nse-trading-bot
+          python recommendation_tracker.py
+
       # Telegram: ONLY actionable events — new strong-buy signals and exit
       # triggers on open trades — batched into one message per run, deduped
       # across runs via logs/alert_state.json. Per user request 06-Jul-2026
@@ -292,6 +305,7 @@ jobs:
           STEP_EQUITY_SCAN: ${{ steps.equity_scan.outcome }}
           STEP_VOTER_WEIGHTS: ${{ steps.voter_weights.outcome }}
           STEP_SNAPSHOT_DAILY: ${{ steps.snapshot_daily.outcome }}
+          STEP_RECOMMENDATION_TRACKER: ${{ steps.recommendation_tracker.outcome }}
           STEP_SIGNAL_ALERTS: ${{ steps.signal_alerts.outcome }}
           STEP_VALIDATE_JSON: ${{ steps.validate_json.outcome }}
           GITHUB_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -317,7 +331,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json logs/run_history.json logs/alert_state.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json recommendation_journal.json logs/run_history.json logs/alert_state.json
           if [ -d snapshots ]; then git add snapshots/; fi
 
           if git diff --staged --quiet; then

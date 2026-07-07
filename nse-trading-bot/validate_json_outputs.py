@@ -32,6 +32,7 @@ SCHEMA = {
     "voter_weights.json":        (dict, ["voters"]),
     "kite_portfolio.json":       (dict, ["session_live", "fetched_at"]),
     "kite_trade_history.json":   (list, []),
+    "recommendation_journal.json": (dict, ["recommendations", "summary"]),
 }
 
 
