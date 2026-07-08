@@ -1,41 +1,41 @@
 {
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 24398.7,
-    "ann_vol": 0.1183,
-    "consensus": "BUY_CE",
-    "ce_votes": 4,
-    "pe_votes": 0,
-    "data_as_of": "2026-07-07",
-    "fetched_at": "08 Jul 2026 09:05 IST",
+    "spot": 24259.55,
+    "ann_vol": 0.1139,
+    "consensus": "WAIT",
+    "ce_votes": 3,
+    "pe_votes": 2,
+    "data_as_of": "2026-07-08",
+    "fetched_at": "08 Jul 2026 09:11 IST",
     "data_source": "yfinance",
-    "data_warning": "Signals based on 2026-07-07 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
+    "data_warning": "Signals based on 2026-07-08 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
-      "action": "BUY NIFTY 24400 CE",
-      "zerodha_symbol": "NIFTY26JUL24400CE",
-      "zerodha_search": "NIFTY JUL 24400 CE",
-      "strike": 24400,
+      "action": "WAIT \u2014 No Trade",
+      "zerodha_symbol": "\u2014",
+      "zerodha_search": "\u2014",
+      "strike": 0,
       "expiry": "30 Jul 2026",
       "days_to_exp": 22,
       "lot_size": 75,
-      "entry_premium": 283.0,
-      "sl_premium": 198.0,
-      "target1_premium": 396.0,
-      "target_premium": 566.0,
-      "cost_1_lot": 21225.0
+      "entry_premium": 0,
+      "sl_premium": 0.0,
+      "target1_premium": 0.0,
+      "target_premium": 0.0,
+      "cost_1_lot": 0
     }
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 58200.7,
-    "ann_vol": 0.1586,
+    "spot": 57918.25,
+    "ann_vol": 0.1476,
     "consensus": "WAIT",
     "ce_votes": 2,
-    "pe_votes": 1,
-    "data_as_of": "2026-07-07",
-    "fetched_at": "08 Jul 2026 09:05 IST",
+    "pe_votes": 3,
+    "data_as_of": "2026-07-08",
+    "fetched_at": "08 Jul 2026 09:11 IST",
     "data_source": "yfinance",
-    "data_warning": "Signals based on 2026-07-07 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
+    "data_warning": "Signals based on 2026-07-08 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "zerodha_symbol": "\u2014",
@@ -52,7 +52,7 @@
     }
   },
   "_meta": {
-    "generated_at": "08 Jul 2026 09:05 IST",
+    "generated_at": "08 Jul 2026 09:11 IST",
     "source": "yfinance EOD (delayed/unofficial)"
   }
 }
