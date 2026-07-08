@@ -1,6 +1,6 @@
 {
   "session_live": true,
-  "fetched_at": "08 Jul 2026 13:42 IST",
+  "fetched_at": "08 Jul 2026 13:47 IST",
   "holdings": [
     {
       "tradingsymbol": "DLF",
@@ -292,6 +292,43 @@
       },
       "tag": null,
       "guid": "1783487505-650257-TC0390-ADMINAPI-SiloJ2-orders"
+    },
+    {
+      "account_id": "TC0390",
+      "placed_by": "TC0390",
+      "order_id": "260708170650733",
+      "exchange_order_id": null,
+      "parent_order_id": null,
+      "status": "REJECTED",
+      "status_message": "Insufficient funds. Margin required: 361782.62. Margin available: 78030.50. Check orderbook for open orders.",
+      "status_message_raw": "RMS:Margin Exceeds,Required:361782.62, Available:78030.50 for entity account-TC0390 across exchange across segment across product ",
+      "order_timestamp": "2026-07-08 13:46:39",
+      "exchange_update_timestamp": null,
+      "exchange_timestamp": null,
+      "variety": "regular",
+      "modified": false,
+      "exchange": "NFO",
+      "tradingsymbol": "NIFTY26JUL24300CE",
+      "instrument_token": 16371458,
+      "order_type": "LIMIT",
+      "transaction_type": "SELL",
+      "validity": "DAY",
+      "validity_ttl": 0,
+      "product": "NRML",
+      "quantity": 130,
+      "disclosed_quantity": 0,
+      "price": 288,
+      "trigger_price": 0,
+      "average_price": 0,
+      "filled_quantity": 0,
+      "pending_quantity": 0,
+      "cancelled_quantity": 0,
+      "market_protection": 0,
+      "meta": {
+        "gtt": true
+      },
+      "tag": null,
+      "guid": "1783498599-851131-TC0390-ADMINAPI-SiloJ2-orders"
     }
   ],
   "reconciliation": {
