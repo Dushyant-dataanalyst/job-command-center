@@ -1,32 +1,21 @@
 {
-  "fetched_at": "08 Jul 2026 11:13 IST",
-  "risk_score": 47,
+  "fetched_at": "08 Jul 2026 11:16 IST",
+  "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
-  "confidence": 0.75,
+  "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.28% vs previous close (74.16 -> 76.59)",
+      "evidence": "BZ=F moved +3.18% vs previous close (74.16 -> 76.52)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 76.59,
+      "last": 76.52,
       "previous": 74.16,
-      "pct_change": 3.28,
+      "pct_change": 3.18,
       "evidence_class": "official"
-    },
-    {
-      "name": "Geopolitical escalation",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "3 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Oil prices surge as US strikes Iran, reversing slide to pre-war levels\"",
-      "source": "https://www.aljazeera.com/news/2026/7/8/oil-prices-surge-as-us-strikes-iran-reversing-fall-to-pre-war-levels?traffic_source=rss",
-      "published_at": "08 Jul 2026 09:32 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
-      "news_source": "rss_fallback"
     }
   ],
   "stock_specific_alerts": [],
@@ -42,7 +31,6 @@
       "OMC"
     ],
     "watch_sectors": [
-      "Defence",
       "Energy"
     ],
     "blocked_tickers": []
@@ -50,21 +38,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 76.59,
+      "last": 76.52,
       "previous": 74.16,
-      "pct_change": 3.28
+      "pct_change": 3.18
     },
     "usdinr": {
       "ticker": "INR=X",
       "last": 95.15,
       "previous": 95.6,
-      "pct_change": -0.47
+      "pct_change": -0.48
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.14,
+      "last": 12.13,
       "previous": 11.65,
-      "pct_change": 4.21
+      "pct_change": 4.12
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -92,9 +80,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4135.7,
+      "last": 4136.8,
       "previous": 4145.3,
-      "pct_change": -0.23
+      "pct_change": -0.21
     }
   },
   "regime_context": {
@@ -109,7 +97,7 @@
       "volatility": "Low"
     }
   },
-  "geopolitical_feed_status": "ok (rss_fallback)",
+  "geopolitical_feed_status": "fetch_failed: ConnectTimeout: HTTPSConnectionPool(host='api.gdeltproject.org', port=443): Max retries exceeded with url: /api/v2/doc/doc?query=%28%22war%22+OR+%22invasion%22+OR+%22military+escalation%22+OR+%22missile+strike%22+OR+%22armed+conflict%22+OR+%22sanctions%22%29+sourcelang%3Aenglish&mode=artlist&format=json&maxrecords=20&sort=datedesc&timespan=2days (Caused by ConnectTimeoutError(<HTTPSConnection(host='api.gdeltproject.org', port=443) at 0x7f5e9bebe1d0>, 'Connection to api.gdeltproject.org timed out. (connect timeout=25)'))",
   "data_unavailable": {
     "fii_dii_flows": "No free, non-scraped source found -- NSE's FII/DII page blocks non-browser requests. TODO if a reliable API surfaces.",
     "gift_nifty": "No stable free source verified yet.",
