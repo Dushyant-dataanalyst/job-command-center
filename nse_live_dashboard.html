@@ -478,6 +478,7 @@ function _foReadAndPredict(pos, sig){
     <div class="chart-card" id="ov-sectors"></div>
   </div>
   <div id="ov-regime" style="margin-bottom:14px"></div>
+  <div id="ov-macro-risk" style="margin-bottom:14px"></div>
 </div>
 <script>
 (function buildOverview(){
@@ -486,14 +487,16 @@ function _foReadAndPredict(pos, sig){
     fetch('/market_mood.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
     fetch('/trade_journal.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
     fetch('/sector_rotation.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
-    fetch('/market_regime.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
+    fetch('/market_regime.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+    fetch('/macro_risk.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
   ]).then(function(results){
-    var eqJ = results[0], mood = results[1], tradeJ = results[2], sector = results[3], regime = results[4];
+    var eqJ = results[0], mood = results[1], tradeJ = results[2], sector = results[3], regime = results[4], macro = results[5];
     renderHealth(eqJ, mood, tradeJ);
     renderAction(eqJ);
     renderMood(mood);
     renderSectors(sector);
     renderRegime(regime);
+    renderMacroRisk(macro);
     // renderHealth()/renderAction() read the global SCAN_DATA for the
     // Strong-Buy count and untracked-signal list — that's populated by a
     // separate async fetch (_loadEquityScan()) with no ordering guarantee
@@ -624,6 +627,59 @@ function _foReadAndPredict(pos, sig){
         '<ul style="font-size:11px;color:#64748b;margin:0;padding-left:18px;line-height:1.7">' +
           rec.reasoning.map(function(r){ return '<li>' + r + '</li>'; }).join('') +
         '</ul>' +
+      '</div>';
+  }
+
+  function renderMacroRisk(macro){
+    var box = document.getElementById('ov-macro-risk');
+    if (!box) return;
+    if (!macro || macro.risk_score == null) {
+      box.innerHTML = '<div class="sec" style="margin-bottom:0"><div class="sec-ttl"><span class="sec-ttl-dot" style="background:#be123c"></span>🌍 Macro Risk</div><div style="font-size:12px;color:#94a3b8">No data yet.</div></div>';
+      return;
+    }
+    var levelColor = {LOW:'#15803d', MODERATE:'#d97706', HIGH:'#ea580c', EXTREME:'#dc2626'}[macro.risk_level] || '#64748b';
+    var biasColor = {BEARISH:'#dc2626', BULLISH:'#15803d', NEUTRAL:'#64748b'}[macro.bias] || '#64748b';
+    var factors = macro.factors || [];
+    var adj = macro.trade_adjustments || {};
+    var alerts = macro.stock_specific_alerts || [];
+
+    var factorRows = factors.length
+      ? factors.map(function(f){
+          var impactColor = f.impact === 'bearish' ? '#dc2626' : f.impact === 'bullish' ? '#15803d' : '#64748b';
+          var classTag = f.evidence_class === 'rumor' ? '<span style="color:#d97706;font-weight:700">[unconfirmed]</span> ' : '';
+          var link = f.source && /^https?:\/\//.test(f.source) ? '<a href="' + f.source + '" target="_blank" rel="noopener" style="color:#4f46e5">source</a>' : '';
+          return '<div style="background:#f8fafc;border-left:3px solid ' + impactColor + ';border-radius:6px;padding:6px 10px;margin-bottom:5px;font-size:11px;color:#0f172a">' +
+            '<b>' + f.name + '</b> <span style="color:' + impactColor + '">(' + f.impact + ', sev ' + f.severity + ')</span><br>' +
+            '<span style="color:#64748b">' + classTag + f.evidence + '</span> ' + link +
+          '</div>';
+        }).join('')
+      : '<div style="font-size:12px;color:#94a3b8">No active risk factors this run.</div>';
+
+    var alertRows = alerts.length
+      ? '<div style="margin-top:8px"><b style="font-size:11px;color:#dc2626">⚠ Stock-specific regulatory alerts:</b>' +
+          alerts.map(function(a){ return '<div style="font-size:11px;color:#0f172a;margin-top:3px">' + a.ticker + ' — "' + a.headline + '" (' + a.matched_keyword + ')</div>'; }).join('') +
+        '</div>'
+      : '';
+
+    var sectorChips = function(list, bg, fg, prefix){
+      return (list || []).map(function(s){ return '<span style="background:' + bg + ';color:' + fg + ';border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700">' + prefix + ' ' + s + '</span>'; }).join(' ');
+    };
+
+    box.innerHTML =
+      '<div class="sec" style="margin-bottom:0">' +
+        '<div class="sec-ttl"><span class="sec-ttl-dot" style="background:' + levelColor + '"></span>🌍 Macro Risk Overlay</div>' +
+        '<div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;flex-wrap:wrap">' +
+          '<div style="font-size:32px;font-weight:900;color:' + levelColor + '">' + macro.risk_score + '</div>' +
+          '<div><div style="font-size:14px;font-weight:800;color:' + levelColor + '">' + macro.risk_level + '</div>' +
+          '<div style="font-size:11px;font-weight:700;color:' + biasColor + '">' + macro.bias + ' bias · confidence ' + macro.confidence + '</div></div>' +
+          '<div style="margin-left:auto;font-size:10px;color:#94a3b8;text-align:right">as of ' + (macro.fetched_at || '—') + '<br>size×' + adj.position_size_multiplier + (adj.min_votes_required != null ? ' · min votes ' + adj.min_votes_required : '') + '</div>' +
+        '</div>' +
+        factorRows +
+        alertRows +
+        (sectorChips(adj.avoid_sectors, '#fef2f2', '#dc2626', '⚠ Avoid') || sectorChips(adj.watch_sectors, '#fffbeb', '#d97706', '👁 Watch')
+          ? '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">' + sectorChips(adj.avoid_sectors, '#fef2f2', '#dc2626', '⚠ Avoid') + ' ' + sectorChips(adj.watch_sectors, '#fffbeb', '#d97706', '👁 Watch') + '</div>'
+          : '') +
+        '<div style="font-size:10px;color:#94a3b8;margin-top:8px">' + (macro.disclaimer || '') + '</div>' +
       '</div>';
   }
 })();

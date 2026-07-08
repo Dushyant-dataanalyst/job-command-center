@@ -180,6 +180,22 @@ jobs:
           python news_refresh.py
           echo "✅ news_refresh.py succeeded"
 
+      # Macro risk overlay — geopolitics/crude/USD-INR/VIX/global-markets read
+      # that the technical engine has no visibility into. Placed here (after
+      # market_mood AND news_refresh, both already run above) so its
+      # stock-specific regulatory-alert factor can use this run's OWN fresh
+      # news_feed.json position_news, not a stale one from the prior run.
+      # Risk overlay only — does not place/size any trade itself; only
+      # future expert_gate.py wiring (not built yet) will consume it.
+      - name: Run macro risk overlay (writes macro_risk.json to repo root)
+        id: macro_risk
+        continue-on-error: true
+        run: |
+          set -e
+          cd nse-trading-bot
+          python macro_risk_refresh.py
+          echo "✅ macro_risk_refresh.py succeeded"
+
       - name: Run equity brain (writes equity_journal.json to repo root)
         id: equity_brain
         continue-on-error: true
@@ -339,6 +355,7 @@ jobs:
           STEP_SECTOR_ROTATION: ${{ steps.sector_rotation.outcome }}
           STEP_MARKET_MOOD: ${{ steps.market_mood.outcome }}
           STEP_NEWS_REFRESH: ${{ steps.news_refresh.outcome }}
+          STEP_MACRO_RISK: ${{ steps.macro_risk.outcome }}
           STEP_EQUITY_BRAIN: ${{ steps.equity_brain.outcome }}
           STEP_STOCK_FO: ${{ steps.stock_fo.outcome }}
           STEP_KITE_PORTFOLIO: ${{ steps.kite_portfolio.outcome }}
@@ -374,7 +391,7 @@ jobs:
           git fetch origin master
           git reset --mixed origin/master
 
-          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json recommendation_journal.json expert_gate.json strategy_performance.json logs/run_history.json logs/alert_state.json logs/expert_gate_state.json logs/daily_report_state.json
+          git add fo_latest.json trade_journal.json sector_rotation.json market_mood.json news_feed.json equity_journal.json stock_fo.json equity_scan.json equity_scan_history.json market_regime.json voter_weights.json kite_portfolio.json kite_trade_history.json recommendation_journal.json expert_gate.json strategy_performance.json macro_risk.json logs/run_history.json logs/alert_state.json logs/expert_gate_state.json logs/daily_report_state.json
           if [ -d snapshots ]; then git add snapshots/; fi
 
           if git diff --staged --quiet; then

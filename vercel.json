@@ -21,6 +21,7 @@
     { "src": "recommendation_journal.json", "use": "@vercel/static" },
     { "src": "expert_gate.json",        "use": "@vercel/static" },
     { "src": "strategy_performance.json", "use": "@vercel/static" },
+    { "src": "macro_risk.json",         "use": "@vercel/static" },
     { "src": "api/save-positions.js",   "use": "@vercel/node" }
   ],
   "routes": [
@@ -117,6 +118,11 @@
       "src": "/strategy_performance.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/strategy_performance.json"
+    },
+    {
+      "src": "/macro_risk.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/macro_risk.json"
     },
     {
       "src": "/nse_live_dashboard.html",

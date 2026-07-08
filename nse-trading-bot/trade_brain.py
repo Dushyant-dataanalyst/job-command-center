@@ -16,6 +16,16 @@ so a human (or a future Claude session) can see empirically which setups this
 signal engine actually gets right before risking real capital.
 
 Runs after refresh_fo_cloud.py in the same CI step, reusing its signal math.
+
+MACRO WIRING (added 08-Jul-2026): a new-trade open (fresh or on signal-flip
+reopen) is skipped when macro_risk.json's trade_adjustments blocks that
+direction (allow_new_longs=false blocks BUY_CE, allow_new_shorts=false
+blocks BUY_PE -- see macro_gate.py). Existing open trades still mark-to-
+market and exit on SL/target/expiry/flip exactly as before; macro only ever
+gates NEW entries, never forces an exit. Fails open if macro_risk.json is
+missing/unreadable. Every opened trade also carries a macro_context snapshot
+(risk_level/bias/risk_score/position_size_multiplier at open time) for later
+backtest/analysis, even on runs where nothing was blocked.
 """
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
@@ -23,6 +33,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from datetime import date
 from ist_time import now_ist_str
 from refresh_fo_cloud import INSTRUMENTS, _next_monthly_expiry, _atm, _premium_estimate
+from macro_gate import load_macro_risk, direction_blocked, macro_context
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 SIGNAL_FILE = REPO_ROOT / "fo_latest.json"
@@ -40,7 +51,7 @@ def _load_journal():
     return {"trades": [], "stats": {}}
 
 
-def _open_trade(inst_name, sig, now_str):
+def _open_trade(inst_name, sig, now_str, macro):
     t = sig["trade"]
     consensus = sig["consensus"]
     opt = "CE" if consensus == "BUY_CE" else "PE"
@@ -66,6 +77,7 @@ def _open_trade(inst_name, sig, now_str):
         "exit_premium": None,
         "exit_reason": None,
         "pnl_pct": None,
+        "macro_context": macro_context(macro),
     }
 
 
@@ -186,6 +198,7 @@ def main():
     signals = json.loads(SIGNAL_FILE.read_text(encoding="utf-8"))
     journal = _load_journal()
     trades = journal.get("trades", [])
+    macro = load_macro_risk()
 
     for inst_name in INSTRUMENTS:
         sig = signals.get(inst_name)
@@ -193,19 +206,26 @@ def main():
             continue
 
         open_trade = next((t for t in trades if t["instrument"] == inst_name and t["status"] == "open"), None)
+        blocked, block_reason = direction_blocked(macro, sig["consensus"])
 
         if open_trade:
             _mark_to_market(open_trade, sig, now_str)
             print(f"  {inst_name}: marked open trade {open_trade['id']} -> {open_trade['status']} ({open_trade.get('exit_reason', 'still open')})")
             # signal flip immediately opens a fresh trade in the new direction
             if open_trade["status"] == "closed" and open_trade["exit_reason"] == "signal_flip" and sig["consensus"] != "WAIT":
-                new_trade = _open_trade(inst_name, sig, now_str)
-                trades.append(new_trade)
-                print(f"  {inst_name}: opened {new_trade['id']} (signal flip)")
+                if blocked:
+                    print(f"  {inst_name}: signal flipped to {sig['consensus']} but NOT reopened -- {block_reason}")
+                else:
+                    new_trade = _open_trade(inst_name, sig, now_str, macro)
+                    trades.append(new_trade)
+                    print(f"  {inst_name}: opened {new_trade['id']} (signal flip)")
         elif sig["consensus"] != "WAIT":
-            new_trade = _open_trade(inst_name, sig, now_str)
-            trades.append(new_trade)
-            print(f"  {inst_name}: opened {new_trade['id']}")
+            if blocked:
+                print(f"  {inst_name}: {sig['consensus']} signal present but NOT opened -- {block_reason}")
+            else:
+                new_trade = _open_trade(inst_name, sig, now_str, macro)
+                trades.append(new_trade)
+                print(f"  {inst_name}: opened {new_trade['id']}")
         else:
             print(f"  {inst_name}: WAIT - no open trade, nothing to do")
 

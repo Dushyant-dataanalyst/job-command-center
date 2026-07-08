@@ -1,0 +1,108 @@
+{
+  "fetched_at": "08 Jul 2026 10:48 IST",
+  "risk_score": 30,
+  "risk_level": "LOW",
+  "bias": "BEARISH",
+  "confidence": 0.9,
+  "factors": [
+    {
+      "name": "Crude oil spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "BZ=F moved +2.86% vs previous close (74.16 -> 76.28)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 76.28,
+      "previous": 74.16,
+      "pct_change": 2.86,
+      "evidence_class": "official"
+    }
+  ],
+  "stock_specific_alerts": [],
+  "trade_adjustments": {
+    "allow_new_longs": true,
+    "allow_new_shorts": true,
+    "min_votes_required": null,
+    "confirmation_refreshes": null,
+    "position_size_multiplier": 1.0,
+    "avoid_sectors": [
+      "Auto",
+      "Aviation",
+      "OMC"
+    ],
+    "watch_sectors": [
+      "Energy"
+    ],
+    "blocked_tickers": []
+  },
+  "market_snapshot": {
+    "crude_brent": {
+      "ticker": "BZ=F",
+      "last": 76.28,
+      "previous": 74.16,
+      "pct_change": 2.86
+    },
+    "usdinr": {
+      "ticker": "INR=X",
+      "last": 95.11,
+      "previous": 95.6,
+      "pct_change": -0.52
+    },
+    "india_vix": {
+      "ticker": "^INDIAVIX",
+      "last": 12.14,
+      "previous": 11.65,
+      "pct_change": 4.21
+    },
+    "us_vix": {
+      "ticker": "^VIX",
+      "last": 16.13,
+      "previous": 15.57,
+      "pct_change": 3.6
+    },
+    "sp500": {
+      "ticker": "^GSPC",
+      "last": 7503.85,
+      "previous": 7537.43,
+      "pct_change": -0.45
+    },
+    "nasdaq": {
+      "ticker": "^IXIC",
+      "last": 25818.69,
+      "previous": 26121.16,
+      "pct_change": -1.16
+    },
+    "dow": {
+      "ticker": "^DJI",
+      "last": 52925.15,
+      "previous": 53055.91,
+      "pct_change": -0.25
+    },
+    "gold": {
+      "ticker": "GC=F",
+      "last": 4142.8,
+      "previous": 4145.3,
+      "pct_change": -0.06
+    }
+  },
+  "regime_context": {
+    "NIFTY50": {
+      "trend": "Sideways/Choppy",
+      "adx": 13.1,
+      "volatility": "Low"
+    },
+    "BANKNIFTY": {
+      "trend": "Bullish",
+      "adx": 20.4,
+      "volatility": "Low"
+    }
+  },
+  "geopolitical_feed_status": "fetch_failed",
+  "data_unavailable": {
+    "fii_dii_flows": "No free, non-scraped source found -- NSE's FII/DII page blocks non-browser requests. TODO if a reliable API surfaces.",
+    "gift_nifty": "No stable free source verified yet.",
+    "rbi_fed_calendar": "Deferred per build brief ('later')."
+  },
+  "method": "risk_score = baseline(15) + sum of factor points, clamped 0-100. Market-data factors are tiered on % move vs previous close (thresholds are named constants in source, see MARKET-DATA TIERS). News factors require a real source URL + timestamp -- no source, no factor; news older than 48h is excluded outright. Geopolitical severity is capped when only one source domain corroborates it (rumor-tier, cannot alone reach HIGH). bias = BEARISH/BULLISH/NEUTRAL by sign of net points (>+10 / <-10 / between). confidence = 0.5 + 0.4*(market-data fetch completeness), shaved 0.15 if any factor is rumor-class.",
+  "disclaimer": "Macro risk overlay only. Does NOT generate trades by itself and does not replace the technical signal engine -- it is a risk-adjustment layer for the future expert gate to blend with technical_signal + market_regime + recommendation_history. Deterministic scoring only, no LLM interpretation of headlines anywhere in this module. Educational use only, not investment advice."
+}

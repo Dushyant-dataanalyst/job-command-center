@@ -25,6 +25,16 @@ KNOWN LIMITATION — no lot size: NSE F&O lot sizes are revised periodically
 and aren't available from any live source here, so cost-per-lot is
 intentionally omitted (not guessed). All premium/SL/target figures are in
 ₹-per-share and %, not total position cost.
+
+MACRO WIRING (added 08-Jul-2026): every actionable signal is annotated with
+macro_context (risk_level/bias/risk_score/position_size_multiplier at
+generation time) and macro_blocked (true when macro_risk.json's
+trade_adjustments blocks that direction — see macro_gate.py). Unlike
+trade_brain.py/expert_gate.py, a macro block does NOT suppress the trade
+suggestion here — there's no automated open on this path, a human decides
+manually, and hiding the raw technical signal would contradict the macro
+overlay's own "does not replace the technical signal" disclaimer. It's
+flagged loudly in data_warning instead.
 """
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
@@ -33,6 +43,7 @@ from datetime import date
 
 from ist_time import now_ist_str
 from refresh_fo_cloud import _get_indicators, _signals, _premium_estimate, _next_monthly_expiry
+from macro_gate import load_macro_risk, direction_blocked, macro_context
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 OUT_FILE = REPO_ROOT / "stock_fo.json"
@@ -101,7 +112,7 @@ def _spread(spot, atm_strike, otm_strike, opt, ann_vol, days):
     }
 
 
-def _stock_signal(name):
+def _stock_signal(name, macro):
     v = _get_indicators(name + ".NS")
     if not v:
         return {"error": f"No data for {name}"}
@@ -130,6 +141,7 @@ def _stock_signal(name):
             "data_source": v["data_source"],
             "data_warning": f"{warning_prefix} Verify in Kite before trading.",
             "trade": None,
+            "macro_context": macro_context(macro),
         }
 
     opt = "CE" if consensus == "BUY_CE" else "PE"
@@ -149,29 +161,39 @@ def _stock_signal(name):
     trade["days_to_exp"] = days_to
     trade["strike_step_used"] = step
 
+    macro_blocked, macro_reason = direction_blocked(macro, consensus)
+    warning = f"{warning_prefix} Strike interval is an approximation — verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) — figures are per-share, not total cost."
+    if macro_blocked:
+        warning = f"⚠ {macro_reason}. This is still the raw technical signal (not suppressed — a human decides manually here), but treat it as a NO-GO until macro risk eases. {warning}"
+
     return {
         "name": name, "spot": spot, "consensus": consensus,
         "ce_votes": ce_v, "pe_votes": pe_v, "votes": votes,
         "ann_vol": v["ann_vol"],  # surfaced so recommendation_tracker.py can re-price single-leg stock F&O recs (same as the index engine already exposes)
         "data_as_of": v["data_date"], "fetched_at": now_str,
         "data_source": v["data_source"],
-        "data_warning": f"{warning_prefix} Strike interval is an approximation — verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) — figures are per-share, not total cost.",
+        "data_warning": warning,
         "trade": trade,
+        "macro_context": macro_context(macro),
+        "macro_blocked": macro_blocked,
     }
 
 
 def main():
     now_str = now_ist_str()
-    results = {"_meta": {"generated_at": now_str, "method": "Same 3-factor consensus as refresh_fo_cloud.py (EMA alignment, MACD, pivot breakout, ROC5). votes==6 -> single-leg, votes in [4,5] -> capped-risk spread."}}
+    macro = load_macro_risk()
+    results = {"_meta": {"generated_at": now_str, "method": "Same 3-factor consensus as refresh_fo_cloud.py (EMA alignment, MACD, pivot breakout, ROC5). votes==6 -> single-leg, votes in [4,5] -> capped-risk spread.",
+                          "macro_feed_available": macro is not None}}
     errors = {}
     for name in TRACKED_STOCKS:
         try:
-            r = _stock_signal(name)
+            r = _stock_signal(name, macro)
             if "error" in r:
                 errors[name] = r["error"]
             else:
                 results[name] = r
-                print(f"  {name}: {r['consensus']} | spot={r['spot']}" + (f" | {r['trade']['type']}" if r.get('trade') else ""))
+                print(f"  {name}: {r['consensus']} | spot={r['spot']}" + (f" | {r['trade']['type']}" if r.get('trade') else "")
+                      + (" [MACRO BLOCKED]" if r.get('macro_blocked') else ""))
         except Exception as e:
             errors[name] = str(e)
             print(f"  {name} ERROR: {e}")

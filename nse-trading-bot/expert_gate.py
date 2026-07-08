@@ -49,6 +49,15 @@ State persists in logs/expert_gate_state.json (committed CI state, NOT a
 dashboard feed -- same status as logs/alert_state.json). The advance() core
 is pure (all inputs passed in) so the state machine is unit-testable without
 live data, same pattern as should_run_full_refresh.decide().
+
+MACRO WIRING (added 08-Jul-2026, closing build-order item 6 of the macro
+overlay -- see macro_risk_refresh.py): advance() now takes an optional
+macro=macro_risk.json dict. It can (a) BLOCK a CONFIRMED_ENTRY outright when
+macro_risk.json's trade_adjustments say allow_new_longs/allow_new_shorts is
+false for that direction, and (b) ESCALATE (never loosen) MIN_VOTES_FOR_ENTRY
+/ ENTRY_PERSIST_REFRESHES via macro_gate.escalated(). Fails open identically
+to the regime-missing case -- macro=None just reproduces pre-08-Jul-2026
+behavior exactly.
 """
 import sys, os, json, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
@@ -57,6 +66,7 @@ from datetime import time as dtime
 
 from ist_time import now_ist, now_ist_str
 import config
+from macro_gate import load_macro_risk, direction_blocked, escalated, macro_context
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 FO_FILE = REPO_ROOT / "fo_latest.json"
@@ -120,12 +130,16 @@ def _blank_state():
             "entered_at": None, "last_update": None, "reason": "initial"}
 
 
-def advance(raw_consensus, votes, regime_inst, now, st, refresh_counter):
+def advance(raw_consensus, votes, regime_inst, now, st, refresh_counter, macro=None):
     """PURE state-machine step. Returns (new_state_dict, entry_confirmed,
     exit_confirmed). raw_consensus in {BUY_CE, BUY_PE, WAIT}; votes is
     {ce, pe}; regime_inst is market_regime.json's dict for this instrument;
     now is an IST datetime; st is this instrument's prior state dict;
-    refresh_counter is the monotonic gate-run count."""
+    refresh_counter is the monotonic gate-run count. macro is
+    macro_risk.json's dict (or None -- fails open, see macro_gate.py) --
+    it can BLOCK an entry direction outright (allow_new_longs/shorts) and
+    can only ever escalate (never loosen) MIN_VOTES_FOR_ENTRY /
+    ENTRY_PERSIST_REFRESHES via macro_gate.escalated()."""
     s = dict(st)
     entry_confirmed = False
     exit_confirmed = False
@@ -158,19 +172,23 @@ def advance(raw_consensus, votes, regime_inst, now, st, refresh_counter):
                 s["persist_count"] = 1
             reg_ok, reg_why = _regime_ok(regime_inst)
             time_ok = _within_entry_time_window(now)
-            votes_ok = (cur_votes or 0) >= MIN_VOTES_FOR_ENTRY
-            persist_ok = s["persist_count"] >= ENTRY_PERSIST_REFRESHES
-            if persist_ok and reg_ok and time_ok and votes_ok:
+            min_votes = escalated(macro, MIN_VOTES_FOR_ENTRY, "min_votes_required")
+            min_persist = escalated(macro, ENTRY_PERSIST_REFRESHES, "confirmation_refreshes")
+            votes_ok = (cur_votes or 0) >= min_votes
+            persist_ok = s["persist_count"] >= min_persist
+            macro_blocked, macro_why = direction_blocked(macro, raw_consensus)
+            if persist_ok and reg_ok and time_ok and votes_ok and not macro_blocked:
                 set_state("CONFIRMED_ENTRY",
                           f"confirmed: {raw_consensus} held {s['persist_count']} refreshes, {reg_why}, {cur_votes} votes",
                           entry_votes=cur_votes, entered_at=now_ist_str(), exit_persist_count=0)
                 entry_confirmed = True
             else:
                 blocks = []
-                if not persist_ok: blocks.append(f"persist {s['persist_count']}/{ENTRY_PERSIST_REFRESHES}")
+                if not persist_ok: blocks.append(f"persist {s['persist_count']}/{min_persist}")
                 if not reg_ok: blocks.append(reg_why)
                 if not time_ok: blocks.append("outside entry time window")
-                if not votes_ok: blocks.append(f"{cur_votes} < {MIN_VOTES_FOR_ENTRY} votes")
+                if not votes_ok: blocks.append(f"{cur_votes} < {min_votes} votes")
+                if macro_blocked: blocks.append(macro_why)
                 set_state("SETUP_FORMING", f"{raw_consensus} forming -- waiting on: " + "; ".join(blocks))
 
     elif s["state"] == "CONFIRMED_ENTRY":
@@ -225,6 +243,7 @@ def main():
 
     refresh_counter = int(state.get("_refresh_counter", 0)) + 1
     regimes = regime.get("instruments", {}) if isinstance(regime, dict) else {}
+    macro = load_macro_risk()
 
     out_instruments = {}
     for inst in INSTRUMENTS:
@@ -238,7 +257,7 @@ def main():
         raw = sig.get("consensus")
         votes = {"ce": sig.get("ce_votes"), "pe": sig.get("pe_votes")}
         st = state.get(inst, _blank_state())
-        new_st, entered, exited = advance(raw, votes, regimes.get(inst), now, st, refresh_counter)
+        new_st, entered, exited = advance(raw, votes, regimes.get(inst), now, st, refresh_counter, macro=macro)
         state[inst] = new_st
         out_instruments[inst] = {**new_st, "entry_confirmed_this_run": entered,
                                  "exit_confirmed_this_run": exited, "raw_consensus": raw,
@@ -260,9 +279,14 @@ def main():
             "min_adx_for_entry": MIN_ADX_FOR_ENTRY,
             "min_votes_for_entry": MIN_VOTES_FOR_ENTRY,
         },
+        "macro_context": macro_context(macro),
+        "macro_feed_available": macro is not None,
         "disclaimer": "Confirmation-and-cooldown state machine over the raw index-F&O signal, "
                       "to reduce CE/PE whipsaw. Does NOT place/size/authorize any trade (no executor "
-                      "exists -- SEBI static-IP block). Educational signal-lifecycle layer only.",
+                      "exists -- SEBI static-IP block). Educational signal-lifecycle layer only. "
+                      "Entries can additionally be blocked or escalated (min votes/persistence) by "
+                      "macro_risk.json's trade_adjustments -- see macro_gate.py; fails open if that "
+                      "feed is missing.",
     }
     OUT_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
     for inst, o in out_instruments.items():
