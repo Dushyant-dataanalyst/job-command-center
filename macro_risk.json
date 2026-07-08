@@ -1,7 +1,7 @@
 {
-  "fetched_at": "08 Jul 2026 18:26 IST",
-  "risk_score": 86,
-  "risk_level": "EXTREME",
+  "fetched_at": "08 Jul 2026 19:26 IST",
+  "risk_score": 80,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +4.45% vs previous close (74.16 -> 77.46)",
+      "evidence": "BZ=F moved +4.73% vs previous close (74.16 -> 77.67)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 77.46,
+      "last": 77.67,
       "previous": 74.16,
-      "pct_change": 4.45,
+      "pct_change": 4.73,
       "evidence_class": "official"
     },
     {
@@ -30,22 +30,10 @@
       "evidence_class": "official"
     },
     {
-      "name": "US VIX spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "^VIX moved +8.37% vs previous close (16.13 -> 17.48)",
-      "source": "market_data",
-      "ticker": "^VIX",
-      "last": 17.48,
-      "previous": 16.13,
-      "pct_change": 8.37,
-      "evidence_class": "official"
-    },
-    {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russian fuel shortages bite – but will Putin change tack in Ukraine war?\"",
+      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russian fuel shortages bite – but will Putin change tack in Ukraine war?\"",
       "source": "https://www.bbc.co.uk/news/articles/cr7xk8j0j2do?at_medium=RSS&at_campaign=rss",
       "published_at": "08 Jul 2026 10:35 IST",
       "evidence_class": "reported",
@@ -57,9 +45,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 6,
-    "confirmation_refreshes": 4,
-    "position_size_multiplier": 0.25,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -74,15 +62,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 77.46,
+      "last": 77.67,
       "previous": 74.16,
-      "pct_change": 4.45
+      "pct_change": 4.73
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.54,
+      "last": 95.48,
       "previous": 95.6,
-      "pct_change": -0.06
+      "pct_change": -0.13
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -92,33 +80,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.48,
+      "last": 17.08,
       "previous": 16.13,
-      "pct_change": 8.37
+      "pct_change": 5.89
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7503.85,
-      "previous": 7537.43,
-      "pct_change": -0.45
+      "last": 7461.59,
+      "previous": 7503.85,
+      "pct_change": -0.56
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25818.69,
-      "previous": 26121.16,
-      "pct_change": -1.16
+      "last": 25715.6,
+      "previous": 25818.69,
+      "pct_change": -0.4
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52925.15,
-      "previous": 53055.91,
-      "pct_change": -0.25
+      "last": 52380.42,
+      "previous": 52925.15,
+      "pct_change": -1.03
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4087.8,
+      "last": 4088.5,
       "previous": 4145.3,
-      "pct_change": -1.39
+      "pct_change": -1.37
     }
   },
   "regime_context": {
