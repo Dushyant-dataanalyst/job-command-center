@@ -1,6 +1,6 @@
 {
-  "fetched_at": "08 Jul 2026 14:51 IST",
-  "risk_score": 91,
+  "fetched_at": "08 Jul 2026 14:56 IST",
+  "risk_score": 95,
   "risk_level": "EXTREME",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,36 +9,36 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +6.15% vs previous close (74.16 -> 78.72)",
+      "evidence": "BZ=F moved +6.45% vs previous close (74.16 -> 78.94)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 78.72,
+      "last": 78.94,
       "previous": 74.16,
-      "pct_change": 6.15,
+      "pct_change": 6.45,
       "evidence_class": "official"
     },
     {
       "name": "India VIX spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "^INDIAVIX moved +29.42% vs previous close (11.65 -> 15.08)",
+      "evidence": "^INDIAVIX moved +29.48% vs previous close (11.65 -> 15.09)",
       "source": "market_data",
       "ticker": "^INDIAVIX",
-      "last": 15.08,
+      "last": 15.09,
       "previous": 11.65,
-      "pct_change": 29.42,
+      "pct_change": 29.48,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "^VIX moved +14.69% vs previous close (16.13 -> 18.5)",
+      "severity": 3,
+      "evidence": "^VIX moved +15.81% vs previous close (16.13 -> 18.68)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.5,
+      "last": 18.68,
       "previous": 16.13,
-      "pct_change": 14.69,
+      "pct_change": 15.81,
       "evidence_class": "official"
     },
     {
@@ -74,27 +74,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.72,
+      "last": 78.94,
       "previous": 74.16,
-      "pct_change": 6.15
+      "pct_change": 6.45
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.6,
+      "last": 95.59,
       "previous": 95.6,
       "pct_change": -0.01
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 15.08,
+      "last": 15.09,
       "previous": 11.65,
-      "pct_change": 29.42
+      "pct_change": 29.48
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.5,
+      "last": 18.68,
       "previous": 16.13,
-      "pct_change": 14.69
+      "pct_change": 15.81
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -116,9 +116,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4064.0,
+      "last": 4067.9,
       "previous": 4145.3,
-      "pct_change": -1.96
+      "pct_change": -1.87
     }
   },
   "regime_context": {
@@ -129,7 +129,7 @@
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 20.0,
+      "adx": 20.1,
       "volatility": "Low"
     }
   },
