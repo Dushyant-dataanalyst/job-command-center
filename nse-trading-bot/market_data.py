@@ -33,7 +33,7 @@ USE_KITE_HISTORICAL = os.environ.get("USE_KITE_HISTORICAL", "false").lower() == 
 KITE_HISTORICAL_URL = "https://api.kite.trade/instruments/historical/{token}/{interval}"
 
 # yfinance period string -> lookback days for Kite's from/to window.
-_PERIOD_DAYS = {"5d": 7, "1mo": 32, "2mo": 62, "3mo": 95, "6mo": 190, "1y": 370}
+_PERIOD_DAYS = {"5d": 7, "1mo": 32, "2mo": 62, "3mo": 95, "6mo": 190, "1y": 370, "3y": 1100}
 
 
 def _kite_ohlcv(yf_ticker, period, interval):
@@ -50,7 +50,18 @@ def _kite_ohlcv(yf_ticker, period, interval):
     if token is None:
         return None
 
-    days = _PERIOD_DAYS.get(period, 190)
+    # An unmapped period used to silently default to 190 days (~6mo) instead
+    # of the actually-requested range -- e.g. a "3y" backtest pull would get
+    # a truncated-but-real-looking Kite result back and never know it was
+    # wrong. Returning None here instead routes it through the SAME
+    # already-correct fallback-to-yfinance path every other failure mode in
+    # this function uses (no session, no token, bad status, empty candles),
+    # so the "never worse than yfinance" contract this module promises still
+    # holds -- it's the only fix that doesn't need every failure mode to
+    # raise.
+    days = _PERIOD_DAYS.get(period)
+    if days is None:
+        return None
     to_dt = now_ist().date()
     from_dt = to_dt - timedelta(days=days)
     try:

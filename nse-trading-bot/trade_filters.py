@@ -124,13 +124,20 @@ def _recent_results_from_trade_journal(limit=10):
     """Convenience loader — most-recent-first list of {"result": "win"/"loss"}
     from trade_journal.json's closed F&O paper trades. Not the only valid
     source (equity's closedTrades in my_positions.json is another) — callers
-    can build their own recent_trades list and pass it in directly instead."""
+    can build their own recent_trades list and pass it in directly instead.
+
+    Returns [] when the file genuinely doesn't exist yet (no history = safe
+    to pass), but None when it exists and failed to read/parse — those are
+    NOT the same thing. filter_loss_streak must fail CLOSED on None, not
+    silently treat a corrupt journal as "no losses ever" (this used to
+    collapse both cases to [], which fails open on data corruption — not a
+    safety filter at that point)."""
     if not TRADE_JOURNAL_FILE.exists():
         return []
     try:
         journal = json.loads(TRADE_JOURNAL_FILE.read_text(encoding="utf-8"))
     except Exception:
-        return []
+        return None
     closed = [t for t in journal.get("trades", []) if t.get("status") == "closed" and t.get("result")]
     closed.sort(key=lambda t: t.get("closed_at") or "", reverse=True)
     return closed[:limit]
@@ -139,6 +146,8 @@ def _recent_results_from_trade_journal(limit=10):
 def filter_loss_streak(recent_trades):
     if not config.FILTERS_ENABLED["loss_streak"]:
         return _result("loss_streak", True, "disabled in config")
+    if recent_trades is None:
+        return _result("loss_streak", False, "trade_journal.json unavailable/corrupt — fail closed, not fail open")
     if not recent_trades:
         return _result("loss_streak", True, "no trade history available yet")
 
@@ -162,8 +171,24 @@ def filter_risk_reward(candidate):
 
     entry, stop, target = candidate.get("entry"), candidate.get("stop"), candidate.get("target")
     product = (candidate.get("product") or "MIS").upper()
+    direction = (candidate.get("direction") or "BUY").upper()
     if entry is None or stop is None or target is None:
         return _result("risk_reward", False, "missing entry/stop/target — cannot evaluate R:R, fail closed")
+
+    # abs()-based risk/reward below is direction-agnostic by construction, which
+    # means on its own it can't catch a candidate with stop/target on the wrong
+    # side of entry for the stated direction (e.g. a BUY with its stop ABOVE
+    # entry) -- it would still compute a "passing" ratio for a nonsensical
+    # trade. Validate geometry explicitly, per direction, before trusting the
+    # ratio.
+    if direction == "BUY":
+        if not (stop < entry < target):
+            return _result("risk_reward", False, f"BUY candidate geometry invalid (stop={stop}, entry={entry}, target={target}) — expected stop < entry < target, fail closed")
+    elif direction == "SELL":
+        if not (target < entry < stop):
+            return _result("risk_reward", False, f"SELL candidate geometry invalid (stop={stop}, entry={entry}, target={target}) — expected target < entry < stop, fail closed")
+    else:
+        return _result("risk_reward", False, f"unknown direction '{direction}' — fail closed")
 
     risk = abs(entry - stop)
     reward = abs(target - entry)
@@ -193,10 +218,11 @@ def _append_filter_log(entry):
 
 
 def evaluate_trade(candidate, regime=None, recent_trades=None, now_dt=None):
-    """candidate: {"symbol", "strategy", "product" ("MIS"/"CNC"), "entry",
-    "stop", "target"}. Returns {"passed": bool, "results": [...]} and logs
-    every evaluation (pass or block) to logs/filter_log.json, alerting on
-    WARNING for any block per the Brief's alert-level spec."""
+    """candidate: {"symbol", "strategy", "product" ("MIS"/"CNC"), "direction"
+    ("BUY"/"SELL", defaults to "BUY" if omitted), "entry", "stop", "target"}.
+    Returns {"passed": bool, "results": [...]} and logs every evaluation
+    (pass or block) to logs/filter_log.json, alerting on WARNING for any
+    block per the Brief's alert-level spec."""
     results = [
         filter_market_regime(candidate, regime),
         filter_time_window(now_dt),

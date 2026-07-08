@@ -27,7 +27,7 @@ missing/unreadable. Every opened trade also carries a macro_context snapshot
 (risk_level/bias/risk_score/position_size_multiplier at open time) for later
 backtest/analysis, even on runs where nothing was blocked.
 """
-import sys, os, json, pathlib
+import sys, os, json, math, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import date
@@ -43,12 +43,16 @@ MIN_VOTES = 4  # matches the BUY_CE/BUY_PE consensus threshold in refresh_fo_clo
 
 
 def _load_journal():
-    if JOURNAL_FILE.exists():
-        try:
-            return json.loads(JOURNAL_FILE.read_text(encoding="utf-8"))
-        except Exception:
-            pass
-    return {"trades": [], "stats": {}}
+    if not JOURNAL_FILE.exists():
+        return {"trades": [], "stats": {}}
+    # A parse failure used to silently fall through to an empty journal here
+    # -- which main() then WRITES BACK to disk, permanently wiping the real
+    # trade history under a transient read glitch (same bug class as the
+    # NaN-token corruption fixed in recommendation_tracker.py). Let it raise
+    # instead: record_run_outcome.py already alerts CRITICAL on step
+    # failures, so this now fails loud through an existing channel rather
+    # than silently destroying data.
+    return json.loads(JOURNAL_FILE.read_text(encoding="utf-8"))
 
 
 def _open_trade(inst_name, sig, now_str, macro):
@@ -87,7 +91,16 @@ def _mark_to_market(trade, sig, now_str):
     expiry_dt = _next_monthly_expiry(cfg["expiry_day"])
     days_remaining = (expiry_dt - date.today()).days
 
-    cur_premium = _premium_estimate(sig["spot"], trade["strike"], sig["ann_vol"], max(days_remaining, 1), trade["option_type"])
+    # Same NaN-corruption class fixed in recommendation_tracker.py: a NaN
+    # spot from an upstream data glitch would poison _premium_estimate's
+    # output (still a valid float, just non-finite) and get written straight
+    # into trade_journal.json -- guard it at the same point, same fix.
+    spot = sig["spot"]
+    if spot is None or not math.isfinite(spot):
+        trade["last_checked"] = now_str
+        return
+
+    cur_premium = _premium_estimate(spot, trade["strike"], sig["ann_vol"], max(days_remaining, 1), trade["option_type"])
     trade["current_premium"] = cur_premium
     trade["last_checked"] = now_str
 
@@ -233,7 +246,11 @@ def main():
     journal["stats"] = _compute_stats(trades)
     journal["_meta"] = {"generated_at": now_str}
 
-    JOURNAL_FILE.write_text(json.dumps(journal, indent=2), encoding="utf-8")
+    # allow_nan=False: this file is parsed by browser JSON.parse (which
+    # rejects the NaN token Python's json module would otherwise happily
+    # write) -- fail loudly here rather than shipping a broken feed, same
+    # fix as recommendation_tracker.py's write.
+    JOURNAL_FILE.write_text(json.dumps(journal, indent=2, allow_nan=False), encoding="utf-8")
     print(f"  Wrote {JOURNAL_FILE} — {journal['stats']['total_closed']} closed, {journal['stats']['open_count']} open, {journal['stats']['win_rate']}% win rate")
     print("Done.")
 

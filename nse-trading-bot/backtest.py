@@ -66,11 +66,13 @@ explicitly so nobody mistakes them for verified behavior):
 
 8. Bulk historical data is fetched via yfinance directly (yf_retry), not
    market_data.get_ohlcv()'s Kite-preferring path -- a backtest doesn't need
-   live-data preference, needs a long (3y) consistent pull, and Kite's own
-   period-to-lookback map (market_data._PERIOD_DAYS) doesn't currently define
-   anything past "1y" (would silently truncate to its 190-day default if
-   asked for "3y" on a live Kite session -- a real gap in that map, noted
-   here rather than fixed, since fixing it isn't this module's job).
+   live-data preference, it needs a long (3y) consistent pull. Kite's own
+   period-to-lookback map (market_data._PERIOD_DAYS) used to have no "3y"
+   entry and would silently truncate to its 190-day default instead of
+   raising or falling back -- fixed (added the "3y" entry, and an unmapped
+   period now returns None to force the existing yfinance-fallback path
+   rather than guessing), so this bypass is now belt-and-suspenders rather
+   than a workaround for a live bug.
 
 Output: nse-trading-bot/backtest_results.json (NOT wired into any CI cron,
 NOT a dashboard feed, NOT registered in vercel.json/validate_json_outputs.py

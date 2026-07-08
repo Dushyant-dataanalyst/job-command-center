@@ -55,15 +55,23 @@ def direction_blocked(macro, consensus):
     return False, None
 
 
-def escalated(macro, default, key):
-    """max(default, macro override) -- macro can only ever tighten a
-    threshold, never loosen it below the caller's own default."""
+def escalated(macro, default, key, tighten="up"):
+    """Macro can only ever move a threshold in the MORE conservative
+    direction, never loosen it below the caller's own default -- but which
+    direction is "more conservative" depends on the key. tighten="up"
+    (default, matches min_votes_required/confirmation_refreshes, the only
+    keys this is called with today) uses max(); tighten="down" (for a key
+    like position_size_multiplier, where SMALLER is more conservative) uses
+    min() instead. Pass the wrong direction and this silently loosens
+    instead of tightening -- an earlier version only ever did max(), which
+    was correct for both current call sites but would have been silently
+    backwards for position_size_multiplier had anyone reused it there."""
     if macro is None:
         return default
     override = (macro.get("trade_adjustments") or {}).get(key)
     if override is None:
         return default
-    return max(default, override)
+    return max(default, override) if tighten == "up" else min(default, override)
 
 
 def macro_context(macro):
