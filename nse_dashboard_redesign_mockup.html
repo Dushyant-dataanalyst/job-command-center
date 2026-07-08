@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NSE Cockpit — Redesign Mockup</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg-page:#f1f5f9;
+  --surface:#fff;
+  --surface-alt:#f8fafc;
+  --surface-sunk:#f1f5f9;
+  --border:#e2e8f0;
+  --border-strong:#cbd5e1;
+  --text-primary:#0f172a;
+  --text-secondary:#64748b;
+  --text-muted:#94a3b8;
+  --accent:#4f46e5;
+  --accent-hover:#4338ca;
+  --accent-soft:#eef2ff;
+  --good:#15803d;
+  --good-soft:#f0fdf4;
+  --good-border:#bbf7d0;
+  --warning:#d97706;
+  --warning-soft:#fffbeb;
+  --serious:#ea580c;
+  --critical:#dc2626;
+  --critical-soft:#fef2f2;
+  --safe-mode:#334155;
+  --safe-mode-soft:#f1f5f9;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.04),0 1px 1px rgba(15,23,42,.03);
+  --shadow-md:0 4px 14px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.04);
+  --shadow-lg:0 12px 28px rgba(15,23,42,.12),0 3px 8px rgba(15,23,42,.06);
+  --radius-lg:14px;
+  --radius-md:12px;
+  --radius-sm:8px;
+  --mono:ui-monospace,SFMono-Regular,'SF Mono',Consolas,'Liberation Mono',monospace;
+}
+:root[data-theme="dark"]{
+  --bg-page:#0b0f16; --surface:#141a24; --surface-alt:#0f151e; --surface-sunk:#0b0f16;
+  --border:#232b38; --border-strong:#2f3a4a;
+  --text-primary:#e7ecf3; --text-secondary:#93a1b5; --text-muted:#5f6c80;
+  --accent:#7c8cf5; --accent-hover:#93a0f7; --accent-soft:#1a2036;
+  --good:#34d399; --good-soft:#0d1f19; --good-border:#155e45;
+  --warning:#fbbf24; --warning-soft:#241d0d;
+  --serious:#fb923c; --critical:#f87171; --critical-soft:#2a1414;
+  --safe-mode:#93a1b5; --safe-mode-soft:#1a2029;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow-md:0 4px 14px rgba(0,0,0,.4); --shadow-lg:0 14px 30px rgba(0,0,0,.5);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg-page:#0b0f16; --surface:#141a24; --surface-alt:#0f151e; --surface-sunk:#0b0f16;
+    --border:#232b38; --border-strong:#2f3a4a;
+    --text-primary:#e7ecf3; --text-secondary:#93a1b5; --text-muted:#5f6c80;
+    --accent:#7c8cf5; --accent-hover:#93a0f7; --accent-soft:#1a2036;
+    --good:#34d399; --good-soft:#0d1f19; --good-border:#155e45;
+    --warning:#fbbf24; --warning-soft:#241d0d;
+    --serious:#fb923c; --critical:#f87171; --critical-soft:#2a1414;
+    --safe-mode:#93a1b5; --safe-mode-soft:#1a2029;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow-md:0 4px 14px rgba(0,0,0,.4); --shadow-lg:0 14px 30px rgba(0,0,0,.5);
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg-page);color:var(--text-primary);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:13px;line-height:1.45}
+.wrap{max-width:1680px;margin:0 auto;padding:0 16px 40px}
+.num{font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ── Review-mode control strip (NOT part of the real product) ── */
+.review-strip{background:#1e293b;color:#cbd5e1;font-size:11px;padding:8px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:40}
+.review-strip b{color:#fbbf24;font-weight:700}
+.review-strip button{background:#334155;color:#e2e8f0;border:1px solid #475569;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer}
+.review-strip button:hover{background:#475569}
+.review-strip button.on{background:var(--accent);border-color:var(--accent)}
+
+/* ── Tier 1: risk header, sticky, cannot scroll away ── */
+.risk-header{position:sticky;top:33px;z-index:30;padding:14px 16px 10px;background:var(--bg-page)}
+.mode-banner{border-radius:var(--radius-md);padding:12px 20px;margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:var(--shadow-md);transition:background .2s,color .2s;cursor:help}
+.mode-banner.paper{background:var(--safe-mode);color:#fff}
+.mode-banner.live{background:var(--critical);color:#fff;animation:livePulse 1.6s ease-in-out infinite}
+@keyframes livePulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.5)}50%{box-shadow:0 0 0 10px rgba(220,38,38,0)}}
+.mode-banner .mb-icon{font-size:22px;line-height:1}
+.mode-banner .mb-title{font-size:15px;font-weight:900;letter-spacing:.2px}
+.mode-banner .mb-sub{font-size:11px;opacity:.85;margin-top:1px}
+.mode-banner .mb-right{margin-left:auto;font-size:11px;opacity:.9;text-align:right}
+
+.kill-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:760px){.kill-row{grid-template-columns:1fr}}
+.kill-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:12px 16px;box-shadow:var(--shadow-sm);transition:border-color .2s,box-shadow .2s;cursor:help}
+.kill-card.tripped{border-color:var(--critical);box-shadow:0 0 0 3px rgba(220,38,38,.15),var(--shadow-md)}
+.kill-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.kill-label{font-size:10px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.6px}
+.kill-status{font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px}
+.kill-status.ok{background:var(--good-soft);color:var(--good)}
+.kill-status.warn{background:var(--warning-soft);color:var(--warning)}
+.kill-status.trip{background:var(--critical);color:#fff}
+.kill-num{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.kill-num .used{font-size:24px;font-weight:900;line-height:1}
+.kill-num .cap{font-size:12px;color:var(--text-muted)}
+.kill-bar{height:8px;border-radius:8px;background:var(--surface-sunk);overflow:hidden;position:relative}
+.kill-bar-fill{height:100%;border-radius:8px;transition:width .4s ease,background .3s}
+.kill-fresh{font-size:9px;color:var(--text-muted);margin-top:5px;display:flex;align-items:center;gap:4px}
+
+/* ── Freshness system ── */
+.fresh-dot{width:6px;height:6px;border-radius:50%;background:var(--good);flex-shrink:0}
+.stale .fresh-dot{background:var(--warning);animation:staleBlink 1s ease-in-out infinite}
+@keyframes staleBlink{0%,100%{opacity:1}50%{opacity:.3}}
+.stale-value{filter:grayscale(.6);opacity:.5;transition:filter .3s,opacity .3s}
+[data-live]{transition:opacity .3s}
+
+/* ── Layout: main column + persistent Macro Pulse sidebar ── */
+.layout-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start;padding:0 16px}
+/* .panel min-height is set live via JS (ensurePanelHeight()), not a CSS
+   calc() guess here -- a calc(100vh - offset) guess landed almost exactly
+   EQUAL to the sidebar's own rendered height, leaving zero scroll buffer,
+   so short tabs (Long Term, Setups Forming, Overview) still ran out of
+   sticky room almost immediately (caught during verification: overlap at
+   scrollY=150). The real fix needs the sidebar's actual measured height
+   plus a real scroll buffer, which only JS can compute reliably. */
+.main-col{min-width:0}
+@media(max-width:1150px){.layout-grid{grid-template-columns:1fr}}
+/* --sticky-offset is measured live from the risk-header's actual rendered
+   height (see measureStickyOffset() below) -- a hardcoded px guess here
+   drifted out of sync with the header's real height (mode-banner + kill-row
+   wrap differently depending on content/viewport) and let the sidebar slide
+   UNDER the sticky header on scroll. Falls back to 210px only before JS runs. */
+.sidebar-col{position:sticky;top:var(--sticky-offset,210px);max-height:calc(100vh - var(--sticky-offset,210px) - 16px);overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+@media(max-width:1150px){.sidebar-col{position:static;max-height:none}}
+.mp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);border-top:3px solid var(--card-accent,var(--border));padding:12px 14px;box-shadow:var(--shadow-sm)}
+.mp-ttl{font-size:10px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+/* Was 56px/11px -- too cramped to read a 2-line headline comfortably (the
+   complaint that prompted this). Taller box, bigger type, room to breathe. */
+.mp-ticker{overflow:hidden;position:relative;height:78px}
+.mp-ticker-item{position:absolute;inset:0;padding:10px 12px;font-size:12.5px;line-height:1.5;color:var(--text-primary);background:var(--surface-alt);border-radius:var(--radius-sm);border-left:3px solid var(--border-strong);opacity:0;transition:opacity .5s ease;overflow:hidden}
+.mp-ticker-item.show{opacity:1}
+@media(prefers-reduced-motion:reduce){.mp-ticker{height:auto}.mp-ticker-item{position:static;opacity:1;margin-bottom:6px}}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:2px;margin:4px 16px 14px;background:var(--surface-sunk);border:1px solid var(--border);border-radius:11px;padding:3px;width:fit-content;flex-wrap:wrap}
+.tab{padding:8px 16px;cursor:pointer;font-size:12px;font-weight:700;color:var(--text-secondary);border-radius:8px;transition:all .15s;white-space:nowrap}
+.tab.active{background:var(--surface);color:var(--accent);box-shadow:var(--shadow-sm)}
+.tab:not(.active):hover{background:rgba(255,255,255,.5);color:var(--text-primary)}
+.panel{display:none}
+.panel.active{display:block;animation:panelIn .25s ease}
+@keyframes panelIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Tier 2: active data, bold ── */
+.tier2-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:16px}
+.card2{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px;box-shadow:var(--shadow-md)}
+.card2-label{font-size:10px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.card2-value{font-size:26px;font-weight:900;line-height:1}
+.card2-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
+
+.sec2{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px 20px;box-shadow:var(--shadow-md);margin-bottom:16px;overflow-x:auto}
+.sec2-ttl{font-size:14px;font-weight:800;color:var(--text-primary);margin-bottom:14px;display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.sec2-ttl .ttl-main{display:flex;align-items:center;gap:8px}
+.sec2-ttl-dot{width:8px;height:8px;border-radius:50%}
+
+table{width:100%;border-collapse:collapse}
+th{padding:8px 10px;text-align:left;font-size:9px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--surface-sunk);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--surface-alt);vertical-align:middle;font-size:12px}
+tr:last-child td{border-bottom:none}
+.pos-row:hover td{background:var(--surface-alt)}
+
+/* Company/stock name legibility — deliberately its own scale, not just td text */
+.co-name{font-weight:800;font-size:14px;color:var(--text-primary);letter-spacing:-.1px;line-height:1.25}
+.co-sector{font-size:10px;color:var(--text-muted);margin-top:1px;font-weight:600}
+
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:800;white-space:nowrap}
+.pill.ce{background:var(--good-soft);color:var(--good)}
+.pill.pe{background:var(--critical-soft);color:var(--critical)}
+.pill.cnc{background:var(--accent-soft);color:var(--accent)}
+.pill.mis{background:var(--warning-soft);color:var(--warning)}
+.pill.avoid{background:var(--critical-soft);color:var(--critical)}
+.pill.watch{background:var(--warning-soft);color:var(--warning)}
+.pill.strong{background:var(--good);color:#fff}
+.pill.buy{background:var(--good-soft);color:var(--good)}
+.pill.watchsig{background:var(--warning-soft);color:var(--warning)}
+.dte{font-weight:800;padding:2px 8px;border-radius:6px;font-size:11px;display:inline-block}
+.dte.calm{background:var(--good-soft);color:var(--good)}
+.dte.soon{background:var(--warning-soft);color:var(--warning)}
+.dte.urgent{background:var(--critical);color:#fff}
+
+.vote-badge{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:5px;font-size:10px;font-weight:900;color:#fff;margin-right:2px;cursor:help}
+
+.act-btn{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap}
+.act-btn:hover{background:var(--accent-hover)}
+.act-btn.outline{background:none;border:1px solid var(--border-strong);color:var(--text-secondary)}
+.act-btn.outline:hover{border-color:var(--critical);color:var(--critical)}
+
+.chart-box{position:relative;height:220px}
+
+/* ── Tier 3: slow-changing / reference, visually receded ── */
+.tier3{margin-top:24px;padding-top:4px}
+.tier3-hint{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin:0 2px 8px}
+.sec3{background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;box-shadow:none;margin-bottom:10px;overflow-x:auto}
+.sec3-ttl{font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:10px}
+.sec3 table th{font-size:9px;color:var(--text-muted)}
+.sec3 table td{font-size:11px;color:var(--text-secondary);padding:7px 10px}
+
+.footer-note{font-size:10px;color:var(--text-muted);text-align:center;padding:20px 0 4px;line-height:1.8}
+.action-item{background:var(--warning-soft);border-left:3px solid var(--warning);border-radius:6px;padding:8px 12px;margin-bottom:6px;font-size:12px}
+.action-item.good{background:var(--good-soft);border-left-color:var(--good)}
+</style>
+</head>
+<body>
+
+<!-- REVIEW-MODE CONTROL STRIP — lets you see every visual state without me
+     building separate files. Delete this whole div when wiring to Kite. -->
+<div class="review-strip">
+  <span><b>REVIEW MODE</b> — not part of the shipped product</span>
+  <button id="btn-mode" onclick="toggleMode()" title="Flips the whole cockpit between DRY_RUN (paper — nothing below is real) and LIVE (real orders) so you can see both banner treatments. In the real product this reflects config.py's actual DRY_RUN value, not a click.">Toggle: DRY_RUN / LIVE</button>
+  <button id="btn-daily" onclick="toggleDailyTrip()" title="Simulates today's realized+unrealized loss crossing the 2% daily cap, so you can see the tripped/red state of the daily kill-switch card. In the real product this comes from actual P&L, not a click.">Toggle: Daily cap breach</button>
+  <button id="btn-weekly" onclick="toggleWeeklyTrip()" title="Simulates this week's loss crossing the 5% weekly cap. Same idea as the daily toggle, one week's worth of P&L instead of one day's.">Toggle: Weekly cap breach</button>
+  <button id="btn-stale" onclick="toggleStale()" title="Freezes the simulated data feed so every live number greys out and its 'updated Xs ago' caption climbs past 10s — this is what a real outage or a dead Kite session would look like.">Toggle: Force stale data</button>
+  <span style="margin-left:auto;color:#94a3b8">Sample data only — see footer</span>
+</div>
+
+<!-- TIER 1 — RISK STATUS. Sticky. The one thing you cannot scroll past. -->
+<div class="risk-header">
+  <div class="mode-banner paper" id="mode-banner" title="Mirrors config.py's DRY_RUN flag. PAPER MODE means kite_executor.py (not yet built) would refuse to place any real order even if everything else says 'buy' — LIVE means a real order would actually reach your broker.">
+    <span class="mb-icon" id="mode-icon">🧪</span>
+    <div>
+      <div class="mb-title" id="mode-title">DRY_RUN — PAPER MODE</div>
+      <div class="mb-sub" id="mode-sub">No real orders can be placed. Every fill below is simulated.</div>
+    </div>
+    <div class="mb-right">
+      <div>config.py: <span class="mono" id="mode-flag">DRY_RUN = True</span></div>
+      <div id="mode-updated">checked 2s ago</div>
+    </div>
+  </div>
+
+  <div class="kill-row">
+    <div class="kill-card" id="daily-card" title="Master Brief kill switch: if today's realized+unrealized loss reaches 2% of capital, no new entries are allowed for the rest of the day (Module 3, safety_layer.py — not yet built, so this isn't enforced anywhere yet). Distinct from the dashboard's own -3% circuit breaker.">
+      <div class="kill-head">
+        <span class="kill-label">⛔ Daily Kill-Switch</span>
+        <span class="kill-status ok" id="daily-status">Normal</span>
+      </div>
+      <div class="kill-num"><span class="num used" id="daily-used">0.61%</span><span class="cap">of 2.00% daily cap</span></div>
+      <div class="kill-bar"><div class="kill-bar-fill" id="daily-fill" style="width:30%;background:var(--good)"></div></div>
+      <div class="kill-fresh"><span class="fresh-dot"></span><span id="daily-fresh">updated 1s ago</span></div>
+    </div>
+    <div class="kill-card" id="weekly-card" title="Same idea as the daily switch, over a rolling week: 5% of capital lost this week halts new entries until next week. Also Module 3 — not enforced anywhere yet, shown here as the intended UI once it is.">
+      <div class="kill-head">
+        <span class="kill-label">⛔ Weekly Kill-Switch</span>
+        <span class="kill-status ok" id="weekly-status">Normal</span>
+      </div>
+      <div class="kill-num"><span class="num used" id="weekly-used">2.08%</span><span class="cap">of 5.00% weekly cap</span></div>
+      <div class="kill-bar"><div class="kill-bar-fill" id="weekly-fill" style="width:42%;background:var(--good)"></div></div>
+      <div class="kill-fresh"><span class="fresh-dot"></span><span id="weekly-fresh">updated 1s ago</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs" style="margin-left:32px">
+  <div class="tab active" onclick="showTab('ov',this)" title="One-glance health check: is anything broken, what needs a decision today, how has the Trading Brain's paper track record been doing.">🏠 Overview</div>
+  <div class="tab" onclick="showTab('eq',this)" title="Stocks the 4-voter system currently rates BUY or STRONG_BUY — candidates to consider, not things you already own.">📈 Equity BUY</div>
+  <div class="tab" onclick="showTab('pos',this)" title="What you actually hold right now, marked to the live price, with your own entry/stop/target.">📌 My Positions</div>
+  <div class="tab" onclick="showTab('fo',this)" title="Open index/stock option positions with Greeks, plus the strike-wise OI picture for whichever underlying you pick.">⚡ F&amp;O</div>
+  <div class="tab" onclick="showTab('wl',this)" title="Stocks with only 1 strategy interested so far — not yet a strong enough setup to act on, worth watching for the next signal to confirm.">👁 Setups Forming</div>
+  <div class="tab" onclick="showTab('lt',this)" title="System B: a separate quality-growth screen for stocks worth holding beyond the swing target if the long-term thesis is intact. Never places orders.">🌱 Long Term</div>
+  <div class="tab" onclick="showTab('guide',this)" title="Static reference: what each of the 4 strategies actually does, in plain terms.">📋 Strategy Guide</div>
+</div>
+
+<div class="layout-grid">
+<div class="main-col">
+
+  <!-- ══════════════════════ OVERVIEW TAB ══════════════════════ -->
+  <div id="ov" class="panel active">
+    <div class="tier2-grid">
+      <div class="card2">
+        <div class="card2-label">Portfolio P&amp;L</div>
+        <div class="card2-value num" style="color:var(--good)">+0.87%</div>
+        <div class="card2-sub">Equity + F&amp;O combined, today</div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">Market Mood</div>
+        <div class="card2-value num" style="color:var(--warning)">59</div>
+        <div class="card2-sub">Neutral · VIX + breadth + momentum composite</div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">F&amp;O Win Rate</div>
+        <div class="card2-value num">75%</div>
+        <div class="card2-sub">4 closed paper trades — too few to trust yet</div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">Today's Strong Buys</div>
+        <div class="card2-value num" style="color:var(--accent)">3</div>
+        <div class="card2-sub">See Equity BUY tab</div>
+      </div>
+    </div>
+
+    <div class="sec2">
+      <div class="sec2-ttl"><span class="ttl-main"><span class="sec2-ttl-dot" style="background:var(--warning)"></span>⚡ Action Needed</span></div>
+      <div class="action-item"><b>DLF</b> is below stop loss (-5.01%) — review your exit.</div>
+      <div class="action-item good">🎯 <b>ICICIBANK</b> hit Target 1 (+2.6%) — consider booking partial profit.</div>
+      <div class="action-item">📌 2 new high-conviction signals not in your positions: <b>MARUTI, TCS</b>.</div>
+    </div>
+
+    <div class="sec2">
+      <div class="sec2-ttl">
+        <span class="ttl-main"><span class="sec2-ttl-dot" style="background:#a855f7"></span>🧠 Trading Brain — Paper Track Record</span>
+        <span style="font-size:10px;color:var(--text-muted);font-weight:600">4 closed · 2 open</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary);margin-bottom:4px">
+          <span>Track-record progress</span><span>4/10 closed trades for statistical significance</span>
+        </div>
+        <div style="background:var(--surface-sunk);border-radius:20px;height:6px;overflow:hidden">
+          <div style="height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent),#22d3ee);width:40%"></div>
+        </div>
+      </div>
+      <div class="chart-box" style="height:120px"><canvas id="brainChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ EQUITY BUY TAB ══════════════════════ -->
+  <div id="eq" class="panel">
+    <div class="sec2">
+      <div class="sec2-ttl">
+        <span class="ttl-main"><span class="sec2-ttl-dot" style="background:var(--accent)"></span>Equity BUY Signals</span>
+        <span style="font-size:10px;color:var(--text-muted);font-weight:600" data-live data-ts="now">🟢 live · <span id="eqbuy-fresh">updated 1s ago</span></span>
+      </div>
+      <table>
+        <thead><tr><th>Stock</th><th>Signal</th><th>Votes</th><th>Entry</th><th>SL</th><th>T1</th><th>T2</th><th>T3</th><th>R:R</th><th>Macro</th><th></th></tr></thead>
+        <tbody id="eqbuy-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ MY POSITIONS TAB ══════════════════════ -->
+  <div id="pos" class="panel">
+    <div class="tier2-grid">
+      <div class="card2">
+        <div class="card2-label">Day P&amp;L <span data-live data-ts="now">●</span></div>
+        <div class="card2-value num" style="color:var(--good)" data-live data-ts="now">+₹4,280</div>
+        <div class="card2-sub">+0.87% on deployed capital · <span id="eq-pnl-fresh">updated 1s ago</span></div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">Open Positions</div>
+        <div class="card2-value num">4</div>
+        <div class="card2-sub">3 CNC · 1 MIS</div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">Deployed Capital</div>
+        <div class="card2-value num">₹4.92L</div>
+        <div class="card2-sub">of ₹6.5L available</div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">CNC / MIS Split</div>
+        <div class="chart-box" style="height:70px"><canvas id="cncMisChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="sec2">
+      <div class="sec2-ttl">
+        <span class="ttl-main"><span class="sec2-ttl-dot" style="background:var(--accent)"></span>Open Equity Positions</span>
+        <span style="font-size:10px;color:var(--text-muted);font-weight:600" data-live data-ts="now">🟢 live · <span id="eq-table-fresh">updated 1s ago</span></span>
+      </div>
+      <table>
+        <thead><tr><th>Stock</th><th>Product</th><th>Entry</th><th>LTP</th><th>Qty</th><th>P&amp;L</th><th>SL</th><th>Target</th><th></th></tr></thead>
+        <tbody id="eq-positions-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ F&O TAB ══════════════════════ -->
+  <div id="fo" class="panel">
+    <div class="tier2-grid">
+      <div class="card2">
+        <div class="card2-label">F&amp;O Day P&amp;L <span data-live data-ts="now">●</span></div>
+        <div class="card2-value num" style="color:var(--critical)" data-live data-ts="now">-₹1,150</div>
+        <div class="card2-sub">-0.31% on premium deployed · <span id="fo-pnl-fresh">updated 1s ago</span></div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">Open Option Positions</div>
+        <div class="card2-value num">2</div>
+        <div class="card2-sub">1 NIFTY · 1 BANKNIFTY</div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">Nearest Expiry</div>
+        <div class="card2-value num">12d</div>
+        <div class="card2-sub">30 Jul 2026 · monthly</div>
+      </div>
+      <div class="card2">
+        <div class="card2-label">Net Premium at Risk</div>
+        <div class="card2-value num">₹68,250</div>
+        <div class="card2-sub">across both legs</div>
+      </div>
+    </div>
+
+    <div class="sec2">
+      <div class="sec2-ttl">
+        <span class="ttl-main"><span class="sec2-ttl-dot" style="background:var(--accent)"></span>Open Option Positions — Greeks</span>
+        <span style="font-size:10px;color:var(--text-muted);font-weight:600" data-live data-ts="now">🟢 live · <span id="fo-table-fresh">updated 1s ago</span></span>
+      </div>
+      <table class="mono">
+        <thead><tr><th>Instrument</th><th>Strike</th><th>Type</th><th>Entry</th><th>LTP</th><th>P&amp;L</th><th>Delta</th><th>Theta</th><th>IV</th><th>Expiry</th></tr></thead>
+        <tbody id="fo-positions-body"></tbody>
+      </table>
+    </div>
+
+    <div class="sec2">
+      <div class="sec2-ttl">
+        <span class="ttl-main"><span class="sec2-ttl-dot" style="background:#7c3aed"></span>Strike-wise Open Interest</span>
+        <select id="oi-underlying" onchange="renderOIChart()" title="Switches the chart below to a different underlying's OI distribution. Purely a display filter — doesn't change any position or place any order." style="font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text-primary)">
+          <option value="NIFTY">NIFTY</option>
+          <option value="BANKNIFTY">BANKNIFTY</option>
+          <option value="SUNPHARMA">SUNPHARMA</option>
+        </select>
+      </div>
+      <div style="font-size:10px;color:var(--text-muted);margin-bottom:10px;background:var(--warning-soft);color:var(--warning);border-radius:6px;padding:6px 10px;display:inline-block">
+        ⚠ SAMPLE DATA — no real option-chain OI feed exists in the current system yet. This chart shows the intended shape/interaction; real values arrive once wired to Kite's option-chain endpoint.
+      </div>
+      <div class="chart-box" style="height:260px"><canvas id="oiChart"></canvas></div>
+    </div>
+
+    <div class="tier3">
+      <div class="tier3-hint">Reference · changes only at expiry</div>
+      <div class="sec3">
+        <div class="sec3-ttl">🗓 Expiry Calendar</div>
+        <table>
+          <thead><tr><th>Underlying</th><th>Expiry</th><th>Days Left</th><th>Type</th></tr></thead>
+          <tbody id="expiry-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ SETUPS FORMING TAB ══════════════════════ -->
+  <div id="wl" class="panel">
+    <div class="sec2">
+      <div class="sec2-ttl"><span class="ttl-main"><span class="sec2-ttl-dot" style="background:var(--warning)"></span>Setups Forming — 1 Strategy Active</span></div>
+      <table>
+        <thead><tr><th>Stock</th><th>Votes</th><th>Price</th><th>Who's Watching</th><th>Macro</th></tr></thead>
+        <tbody id="wl-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ LONG TERM TAB ══════════════════════ -->
+  <div id="lt" class="panel">
+    <div class="sec2">
+      <div class="sec2-ttl"><span class="ttl-main"><span class="sec2-ttl-dot" style="background:var(--good)"></span>🌱 System B — Quality-Growth Screen</span></div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px">Separate from the swing engine above — never places or suggests an order. A quality/fundamentals screen for a longer holding horizon.</div>
+      <table>
+        <thead><tr><th>Stock</th><th>Composite Score</th><th>Investor Style</th><th>Also Swing Signal?</th></tr></thead>
+        <tbody id="lt-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════ STRATEGY GUIDE TAB ══════════════════════ -->
+  <div id="guide" class="panel">
+    <div class="tier3">
+      <div class="tier3-hint">Reference · static, doesn't change with the market</div>
+      <div class="sec3">
+        <div class="sec3-ttl">4-Strategy System — Full Guide</div>
+        <table>
+          <thead><tr><th>Code</th><th>Trader</th><th>Core Logic</th><th>Entry Trigger</th><th>Stop Loss</th><th>Exit</th></tr></thead>
+          <tbody>
+            <tr><td style="font-weight:900;color:var(--good)">I</td><td class="co-name" style="font-size:12px">Inna Rosputnia</td><td>18-MA pullback in uptrend</td><td>Bounce off MA18 with volume on daily chart</td><td>1.5 × ATR below entry</td><td>Tiered 40/40/20 at T1/T2/T3</td></tr>
+            <tr><td style="font-weight:900;color:var(--accent)">P</td><td class="co-name" style="font-size:12px">Thanh Nam Pham</td><td>RSI recovery + EMA stack + PEG filter</td><td>EMA9&gt;20&gt;50, RSI 35–60, ADX&gt;20, PEG&lt;2.5</td><td>1.2 × ATR</td><td>Tiered + profit factor tracking</td></tr>
+            <tr><td style="font-weight:900;color:#7c3aed">C</td><td class="co-name" style="font-size:12px">Victor Cianni</td><td>20/50-day breakout + ADX trend</td><td>New 20-day high with ADX&gt;22 and volume surge</td><td>Max(2×ATR, 20-day low)</td><td>ATR trail — let winners run</td></tr>
+            <tr><td style="font-weight:900;color:var(--warning)">U</td><td class="co-name" style="font-size:12px">Andrea Unger</td><td>3 sub-systems vote (breakout + trend + MR)</td><td>2 of 3 sub-systems trigger simultaneously</td><td>1.5 × ATR</td><td>Best sub-system exit rule</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-col -->
+
+<!-- MACRO PULSE SIDEBAR — consolidated 08-Jul-2026 from 6 separate cards down
+     to 3: Mood/Risk/Regime/Sectors used to each get their own bordered,
+     shadowed box, which read as "too much" stacked in a 300px column. Same
+     information, grouped into one compact "Market Conditions" card. The news
+     ticker was last in the stack (read as "way below" and hard to notice) --
+     moved up to the 2nd position, right after the one thing that's genuinely
+     different in kind (live index prices), and given more room (see the
+     taller/larger-type .mp-ticker CSS above). -->
+<div class="sidebar-col">
+  <div class="mp-card" id="mp-index" style="--card-accent:var(--warning)">
+    <div class="mp-ttl">📡 Live Indices &amp; Gate</div>
+    <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:11px"><span style="font-weight:800">NIFTY</span><span style="color:var(--text-muted)">23,882</span><span style="font-weight:700;color:var(--text-muted)">WATCH</span></div>
+    <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:11px"><span style="font-weight:800">BANKNIFTY</span><span style="color:var(--text-muted)">56,743</span><span style="font-weight:700;color:var(--warning)">SETUP FORMING ▼PE</span></div>
+  </div>
+  <div class="mp-card" style="--card-accent:var(--accent)">
+    <div class="mp-ttl">📰 Live Factors &amp; News</div>
+    <div class="mp-ticker" id="mp-ticker"></div>
+  </div>
+  <div class="mp-card" id="mp-conditions" style="--card-accent:var(--critical)">
+    <div class="mp-ttl">🌍 Market Conditions</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;text-align:center">
+      <div><div style="font-size:20px;font-weight:900;color:var(--warning)">59</div><div style="font-size:9px;color:var(--text-muted);font-weight:700">MOOD</div></div>
+      <div><div style="font-size:20px;font-weight:900;color:var(--critical)">100</div><div style="font-size:9px;color:var(--text-muted);font-weight:700">RISK</div></div>
+      <div><div style="font-size:13px;font-weight:900;color:var(--warning);margin-top:3px">Choppy</div><div style="font-size:9px;color:var(--text-muted);font-weight:700">REGIME</div></div>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:var(--critical);margin-bottom:8px">EXTREME · BEARISH · position size ×0.25</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">
+      <span class="pill avoid">⚠ Auto</span><span class="pill avoid">⚠ Aviation</span><span class="pill avoid">⚠ OMC</span>
+      <span class="pill watch">👁 Defence</span><span class="pill watch">👁 Energy</span>
+    </div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">
+      <span class="pill" style="background:var(--good-soft);color:var(--good)">✅ Unger fits regime</span><span class="pill avoid">⚠ Cianni avoid</span>
+    </div>
+    <div style="font-size:9px;color:var(--text-muted);font-weight:700;margin-bottom:4px">TOP SECTORS TODAY</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill" style="background:var(--accent-soft);color:var(--accent)">Realty</span><span class="pill" style="background:var(--accent-soft);color:var(--accent)">IT</span><span class="pill" style="background:var(--accent-soft);color:var(--accent)">Auto</span></div>
+  </div>
+</div>
+
+</div><!-- /layout-grid -->
+
+<div class="footer-note">
+  NSE Cockpit redesign — review mockup, 08 Jul 2026. All position/Greeks/OI/signal figures are illustrative sample data, not live Kite feeds. Sidebar mirrors real current macro state observed in the live dashboard at build time.<br>
+  Kill-switch/DRY_RUN structure mirrors config.py's real values (DRY_RUN, DAILY_LOSS_CAP_PCT=2.0, WEEKLY_DRAWDOWN_CAP_PCT=5.0) — Module 3 (safety_layer.py) enforcement doesn't exist yet, so nothing here is wired to a real breaker.
+</div>
+
+<script>
+const STATUS = {good:'#15803d', warning:'#d97706', serious:'#ea580c', critical:'#dc2626'};
+
+// ───────────────────────── Sample data (clearly illustrative) ─────────────────────────
+const EQBUY_SIGNALS = [
+  {name:'MARUTI', sector:'Auto', signal:'STRONG_BUY', votes:{I:'STRONG_BUY',P:'BUY',C:'BUY',U:'BUY'}, entry:13951, sl:13520, t1:14380, t2:14950, t3:15600, rr:1.8, macro:'avoid'},
+  {name:'TCS', sector:'IT', signal:'STRONG_BUY', votes:{I:'BUY',P:'STRONG_BUY',C:'STRONG_BUY',U:'BUY'}, entry:3402, sl:3315, t1:3475, t2:3560, t3:3660, rr:1.6, macro:null},
+  {name:'TITAN', sector:'FMCG', signal:'STRONG_BUY', votes:{I:'STRONG_BUY',P:'BUY',C:'STRONG_BUY',U:'STRONG_BUY'}, entry:3612, sl:3480, t1:3705, t2:3820, t3:3960, rr:1.7, macro:null},
+  {name:'INFY', sector:'IT', signal:'BUY', votes:{I:'BUY',P:'BUY',C:'NO_SIGNAL',U:'WATCH'}, entry:1602, sl:1565, t1:1642, t2:1690, t3:1745, rr:1.3, macro:null},
+  {name:'SUNPHARMA', sector:'Pharma', signal:'BUY', votes:{I:'WATCH',P:'BUY',C:'BUY',U:'WATCH'}, entry:1888, sl:1842, t1:1935, t2:1990, t3:2050, rr:1.4, macro:null},
+  {name:'RELIANCE', sector:'Energy', signal:'BUY', votes:{I:'BUY',P:'WATCH',C:'BUY',U:'BUY'}, entry:1451, sl:1418, t1:1489, t2:1535, t3:1588, rr:1.5, macro:'watch'},
+];
+
+const EQ_POSITIONS = [
+  {name:'ICICIBANK', sector:'Banking', product:'CNC', entry:1180.50, ltp:1211.30, qty:40, sl:1155.00, target:1245.00},
+  {name:'SBIN',      sector:'PSU Bank', product:'CNC', entry:798.20,  ltp:812.65,  qty:60, sl:780.00,  target:845.00},
+  {name:'HDFCBANK',  sector:'Banking', product:'CNC', entry:1642.00, ltp:1628.40, qty:30, sl:1605.00, target:1710.00},
+  {name:'AXISBANK',  sector:'Banking', product:'MIS', entry:1105.00, ltp:1097.20, qty:50, sl:1085.00, target:1135.00},
+];
+
+const FO_POSITIONS = [
+  {inst:'NIFTY', strike:24500, type:'CE', entry:142.00, ltp:118.50, delta:0.42, theta:-9.6, iv:13.8, expiry:'30 Jul 2026', dte:12},
+  {inst:'BANKNIFTY', strike:56800, type:'PE', entry:310.00, ltp:356.20, delta:-0.55, theta:-14.2, iv:16.1, expiry:'30 Jul 2026', dte:12},
+];
+
+const WATCH_LIST = [
+  {name:'WIPRO', sector:'IT', votes:{I:'NO_SIGNAL',P:'WATCH',C:'NO_SIGNAL',U:'NO_SIGNAL'}, price:172.72, watching:'Pham', macro:null},
+  {name:'ITC', sector:'FMCG', votes:{I:'WATCH',P:'NO_SIGNAL',C:'NO_SIGNAL',U:'NO_SIGNAL'}, price:280.65, watching:'Inna', macro:null},
+  {name:'TATASTEEL', sector:'Metal', votes:{I:'NO_SIGNAL',P:'NO_SIGNAL',C:'WATCH',U:'NO_SIGNAL'}, price:168.40, watching:'Cianni', macro:null},
+  {name:'ONGC', sector:'Energy', votes:{I:'NO_SIGNAL',P:'NO_SIGNAL',C:'NO_SIGNAL',U:'WATCH'}, price:247.00, watching:'Unger', macro:'watch'},
+];
+
+const LONG_TERM = [
+  {name:'HDFCBANK', sector:'Banking', score:78, style:'Quality-Growth', alsoSwing:true},
+  {name:'TCS', sector:'IT', score:82, style:'Quality-Growth', alsoSwing:true},
+  {name:'NESTLEIND', sector:'FMCG', score:74, style:'Defensive-Quality', alsoSwing:false},
+];
+
+const EXPIRY_CALENDAR = [
+  {u:'NIFTY', expiry:'30 Jul 2026', dte:12, type:'Monthly'},
+  {u:'BANKNIFTY', expiry:'30 Jul 2026', dte:12, type:'Monthly'},
+  {u:'SUNPHARMA', expiry:'30 Jul 2026', dte:12, type:'Monthly (stock F&O)'},
+];
+
+const OI_SAMPLE = {
+  NIFTY: {strikes:[23600,23700,23800,23900,24000,24100,24200,24300,24400,24500,24600],
+    ce:[8.2,11.4,15.9,22.1,31.5,28.8,19.2,14.0,9.8,6.5,4.1], pe:[5.1,7.8,12.3,18.9,26.4,35.2,24.7,16.3,10.9,7.2,4.8]},
+  BANKNIFTY: {strikes:[55800,56000,56200,56400,56600,56800,57000,57200,57400,57600,57800],
+    ce:[6.5,9.1,13.2,18.7,24.9,21.3,15.8,11.2,7.9,5.3,3.4], pe:[4.2,6.8,10.5,16.1,22.8,29.6,20.4,14.1,9.5,6.2,4.0]},
+  SUNPHARMA: {strikes:[1820,1840,1860,1880,1900,1920,1940,1960,1980,2000,2020],
+    ce:[3.1,4.5,6.2,8.9,12.4,10.1,7.3,5.2,3.6,2.4,1.6], pe:[2.4,3.6,5.1,7.8,11.2,14.6,9.8,6.7,4.5,3.0,2.0]}
+};
+
+const TICKER_ITEMS = [
+  {color:STATUS.critical, html:'<b>India VIX spike</b> <span style="color:'+STATUS.critical+'">(bearish)</span><br><span style="color:var(--text-secondary)">^INDIAVIX moved +25.82% vs previous close (11.65 → 14.66)</span>'},
+  {color:STATUS.warning, html:'<b>Asian Paints Limited</b><br><span style="color:var(--text-secondary)">Disclosure under SEBI Takeover Regulations</span>'},
+];
+
+const STRATEGY_DESC = {
+  I:'Inna — 18-MA pullback in uptrend', P:'Pham — RSI recovery + EMA stack + PEG filter',
+  C:'Cianni — 20/50-day breakout + ADX trend', U:'Unger — 3 sub-systems vote'
+};
+const VOTE_COLOR = {STRONG_BUY:'#15803d', BUY:'#4f46e5', WATCH:'#d97706', NO_SIGNAL:'#94a3b8'};
+
+// ───────────────────────── Freshness watchdog ─────────────────────────
+const STALE_THRESHOLD_MS = 10000;
+let lastRefresh = Date.now();
+let forcedStale = false;
+
+function fmtAge(ms){ const s = Math.round(ms/1000); return s < 1 ? 'just now' : s + 's ago'; }
+
+function tickFreshness(){
+  const age = forcedStale ? STALE_THRESHOLD_MS + 5000 : Date.now() - lastRefresh;
+  const stale = age > STALE_THRESHOLD_MS;
+  document.querySelectorAll('[data-live]').forEach(el => el.classList.toggle('stale-value', stale));
+  ['eq-pnl-fresh','eq-table-fresh','fo-pnl-fresh','fo-table-fresh','daily-fresh','weekly-fresh','eqbuy-fresh'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = 'updated ' + fmtAge(age);
+  });
+  document.querySelectorAll('.kill-fresh').forEach(el => el.parentElement.classList.toggle('stale', stale));
+}
+setInterval(tickFreshness, 1000);
+// Simulates a live tick every ~3.5s so the page doesn't go permanently stale
+// after 10s with no way back (see review-mode "Force stale data" toggle).
+setInterval(() => { if (!forcedStale) lastRefresh = Date.now(); }, 3500);
+
+// ───────────────────────── Shared render helpers ─────────────────────────
+function voteBadges(votes){
+  return Object.entries(votes).map(([k,v]) =>
+    `<span class="vote-badge" style="background:${VOTE_COLOR[v]}" title="${k} — ${STRATEGY_DESC[k]}: ${v}">${k}</span>`
+  ).join('');
+}
+function macroPill(flag, sector){
+  if (!flag) return '<span style="color:var(--text-muted);font-size:10px">—</span>';
+  return flag === 'avoid'
+    ? `<span class="pill avoid" title="Macro risk overlay currently lists ${sector} in avoid_sectors — treat new entries here as a NO-GO until macro risk eases.">⚠ avoid</span>`
+    : `<span class="pill watch" title="Macro risk overlay currently lists ${sector} in watch_sectors — not blocked, but worth extra caution.">👁 watch</span>`;
+}
+function dteClass(dte){ return dte <= 1 ? 'urgent' : dte <= 5 ? 'soon' : 'calm'; }
+
+// ───────────────────────── Renderers ─────────────────────────
+function renderEqBuy(){
+  const tbody = document.getElementById('eqbuy-body');
+  tbody.innerHTML = EQBUY_SIGNALS.map(s => {
+    const sigClass = s.signal === 'STRONG_BUY' ? 'strong' : 'buy';
+    return `<tr class="pos-row">
+      <td><div class="co-name">${s.name}</div><div class="co-sector">${s.sector}</div></td>
+      <td><span class="pill ${sigClass}">${s.signal === 'STRONG_BUY' ? '🔥 STRONG BUY' : '✅ BUY'}</span></td>
+      <td>${voteBadges(s.votes)}</td>
+      <td class="num" style="font-weight:700">₹${s.entry.toLocaleString('en-IN')}</td>
+      <td class="num" style="color:var(--critical)">₹${s.sl.toLocaleString('en-IN')}</td>
+      <td class="num" style="color:var(--good)">₹${s.t1.toLocaleString('en-IN')}</td>
+      <td class="num" style="color:var(--accent)">₹${s.t2.toLocaleString('en-IN')}</td>
+      <td class="num" style="color:#7c3aed">₹${s.t3.toLocaleString('en-IN')}</td>
+      <td class="num">${s.rr}</td>
+      <td>${macroPill(s.macro, s.sector)}</td>
+      <td><button class="act-btn" title="Marks ${s.name} as a tracked position in My Positions using this entry/SL/target. Does NOT place a real order — SEBI rules require you to place it manually in Zerodha Kite; this just starts tracking it here." onclick="alert('Mockup only — would add ${s.name} to My Positions.')">📌 I Bought</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderEqPositions(){
+  const tbody = document.getElementById('eq-positions-body');
+  tbody.innerHTML = EQ_POSITIONS.map(p => {
+    const pnlPct = ((p.ltp - p.entry) / p.entry * 100);
+    const pnlColor = pnlPct >= 0 ? 'var(--good)' : 'var(--critical)';
+    return `<tr class="pos-row">
+      <td><div class="co-name">${p.name}</div><div class="co-sector">${p.sector}</div></td>
+      <td><span class="pill ${p.product.toLowerCase()}" title="${p.product === 'CNC' ? 'Delivery — held beyond today, settles to your demat.' : 'Intraday — must be squared off before market close today.'}">${p.product}</span></td>
+      <td class="num">₹${p.entry.toFixed(2)}</td>
+      <td class="num">₹${p.ltp.toFixed(2)}</td>
+      <td class="num">${p.qty}</td>
+      <td class="num" style="color:${pnlColor};font-weight:700">${pnlPct >= 0 ? '+' : ''}${pnlPct.toFixed(2)}%</td>
+      <td class="num" style="color:var(--critical)">₹${p.sl.toFixed(2)}</td>
+      <td class="num" style="color:var(--good)">₹${p.target.toFixed(2)}</td>
+      <td><button class="act-btn outline" title="Removes ${p.name} from your tracked positions once you've manually closed it in Kite. Does NOT place a real order — this only updates your position log here." onclick="alert('Mockup only — would remove ${p.name} from tracking.')">Exit</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderFoPositions(){
+  const tbody = document.getElementById('fo-positions-body');
+  tbody.innerHTML = FO_POSITIONS.map(p => {
+    const pnl = (p.ltp - p.entry);
+    const pnlColor = pnl >= 0 ? 'var(--good)' : 'var(--critical)';
+    return `<tr class="pos-row">
+      <td><div class="co-name" style="font-size:13px">${p.inst}</div></td>
+      <td class="num">${p.strike}</td>
+      <td><span class="pill ${p.type.toLowerCase()}" title="${p.type === 'CE' ? 'Call option — long/bullish bet.' : 'Put option — short/bearish bet.'}">${p.type}</span></td>
+      <td class="num">₹${p.entry.toFixed(2)}</td>
+      <td class="num">₹${p.ltp.toFixed(2)}</td>
+      <td class="num" style="color:${pnlColor};font-weight:700">${pnl >= 0 ? '+' : ''}₹${pnl.toFixed(2)}</td>
+      <td class="num" title="Delta — how much the premium moves per ₹1 move in the underlying.">${p.delta.toFixed(2)}</td>
+      <td class="num" style="color:var(--critical)" title="Theta — premium lost per day to time decay, all else equal.">${p.theta.toFixed(1)}</td>
+      <td class="num" title="Implied volatility priced into this option.">${p.iv.toFixed(1)}%</td>
+      <td><span class="dte ${dteClass(p.dte)}">${p.dte}d</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderWatchlist(){
+  const tbody = document.getElementById('wl-body');
+  tbody.innerHTML = WATCH_LIST.map(s => `<tr class="pos-row">
+    <td><div class="co-name">${s.name}</div><div class="co-sector">${s.sector}</div></td>
+    <td>${voteBadges(s.votes)}</td>
+    <td class="num">₹${s.price.toLocaleString('en-IN')}</td>
+    <td><span class="pill watchsig">👁 ${s.watching}</span></td>
+    <td>${macroPill(s.macro, s.sector)}</td>
+  </tr>`).join('');
+}
+
+function renderLongTerm(){
+  const tbody = document.getElementById('lt-body');
+  tbody.innerHTML = LONG_TERM.map(s => `<tr class="pos-row">
+    <td><div class="co-name">${s.name}</div><div class="co-sector">${s.sector}</div></td>
+    <td class="num" style="font-weight:800;color:var(--good)">${s.score}/100</td>
+    <td>${s.style}</td>
+    <td>${s.alsoSwing ? '<span class="pill buy">✅ Yes</span>' : '<span style="color:var(--text-muted)">—</span>'}</td>
+  </tr>`).join('');
+}
+
+function renderExpiryCalendar(){
+  const tbody = document.getElementById('expiry-body');
+  tbody.innerHTML = EXPIRY_CALENDAR.map(e => `<tr>
+    <td style="font-weight:700">${e.u}</td>
+    <td>${e.expiry}</td>
+    <td><span class="dte ${dteClass(e.dte)}">${e.dte}d</span></td>
+    <td>${e.type}</td>
+  </tr>`).join('');
+}
+
+let cncMisChartInst, oiChartInst, brainChartInst;
+
+function renderCncMisChart(){
+  const ctx = document.getElementById('cncMisChart');
+  if (cncMisChartInst) cncMisChartInst.destroy();
+  cncMisChartInst = new Chart(ctx, {
+    type: 'doughnut',
+    data: { labels: ['CNC','MIS'], datasets: [{ data: [78, 22], backgroundColor: ['#4f46e5','#d97706'], borderWidth: 0 }] },
+    options: { responsive:true, maintainAspectRatio:false, cutout:'68%',
+      plugins:{ legend:{ position:'right', labels:{ boxWidth:8, font:{size:10}, color: getComputedStyle(document.body).getPropertyValue('--text-secondary') } } } }
+  });
+}
+
+function renderOIChart(){
+  const underlying = document.getElementById('oi-underlying').value;
+  const d = OI_SAMPLE[underlying];
+  const ctx = document.getElementById('oiChart');
+  if (oiChartInst) oiChartInst.destroy();
+  const ink = getComputedStyle(document.body).getPropertyValue('--text-muted');
+  const grid = getComputedStyle(document.body).getPropertyValue('--border');
+  oiChartInst = new Chart(ctx, {
+    type: 'bar',
+    data: { labels: d.strikes, datasets: [
+      { label: 'Call OI (L)', data: d.ce, backgroundColor: '#15803dCC', borderRadius: 3, barPercentage: 0.85 },
+      { label: 'Put OI (L)', data: d.pe.map(v=>-v), backgroundColor: '#dc2626CC', borderRadius: 3, barPercentage: 0.85 },
+    ]},
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position:'top', labels:{ usePointStyle:true, boxWidth:8, font:{size:10}, color: ink } },
+        tooltip: { callbacks: { label: c => c.dataset.label + ': ' + Math.abs(c.parsed.y).toFixed(1) + 'L' } } },
+      scales: { x: { grid:{ display:false }, ticks:{ color: ink, font:{size:9} } },
+        y: { grid:{ color: grid }, ticks:{ color: ink, font:{size:9}, callback:v=>Math.abs(v)+'L' } } } }
+  });
+}
+
+function renderBrainChart(){
+  const ctx = document.getElementById('brainChart');
+  if (brainChartInst) brainChartInst.destroy();
+  const ink = getComputedStyle(document.body).getPropertyValue('--text-muted');
+  brainChartInst = new Chart(ctx, {
+    type: 'line',
+    data: { labels: ['T1','T2','T3','T4'], datasets: [{ data: [41.5, 88.9, 137.3, 113.8], borderColor:'#22d3ee', backgroundColor:'rgba(34,211,238,.12)', fill:true, tension:.3, pointRadius:3, borderWidth:2 }] },
+    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ x:{display:false}, y:{ticks:{color:ink,font:{size:9}},grid:{color:'var(--border)'}} } }
+  });
+}
+
+// ───────────────────────── Moving ticker ─────────────────────────
+let tickerIdx = 0, tickerTimer;
+function paintTicker(){
+  const box = document.getElementById('mp-ticker');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce){ box.innerHTML = TICKER_ITEMS.map(it => `<div class="mp-ticker-item show" style="border-left-color:${it.color}">${it.html}</div>`).join(''); return; }
+  const it = TICKER_ITEMS[tickerIdx];
+  const el = document.createElement('div');
+  el.className = 'mp-ticker-item'; el.style.borderLeftColor = it.color; el.innerHTML = it.html;
+  box.innerHTML = ''; box.appendChild(el);
+  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
+}
+function startTicker(){
+  paintTicker();
+  tickerTimer = setInterval(() => { tickerIdx = (tickerIdx + 1) % TICKER_ITEMS.length; paintTicker(); }, 6000);
+}
+
+// ───────────────────────── Tabs ─────────────────────────
+function showTab(id, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id).classList.add('active');
+  ensurePanelHeight(); // sidebar height can differ once its live data/charts settle
+}
+
+// ───────────────────────── Review-mode toggles ─────────────────────────
+let isLive = false;
+function toggleMode(){
+  isLive = !isLive;
+  const banner = document.getElementById('mode-banner');
+  document.getElementById('btn-mode').classList.toggle('on', isLive);
+  if (isLive){
+    banner.className = 'mode-banner live';
+    document.getElementById('mode-icon').textContent = '🔴';
+    document.getElementById('mode-title').textContent = 'LIVE TRADING — REAL ORDERS ENABLED';
+    document.getElementById('mode-sub').textContent = 'DRY_RUN is OFF. Every action below places a real order with real capital.';
+    document.getElementById('mode-flag').textContent = 'DRY_RUN = False';
+  } else {
+    banner.className = 'mode-banner paper';
+    document.getElementById('mode-icon').textContent = '🧪';
+    document.getElementById('mode-title').textContent = 'DRY_RUN — PAPER MODE';
+    document.getElementById('mode-sub').textContent = 'No real orders can be placed. Every fill below is simulated.';
+    document.getElementById('mode-flag').textContent = 'DRY_RUN = True';
+  }
+}
+
+function setKillCard(prefix, pct, cap, tripped){
+  const card = document.getElementById(prefix+'-card');
+  const status = document.getElementById(prefix+'-status');
+  const fill = document.getElementById(prefix+'-fill');
+  const used = document.getElementById(prefix+'-used');
+  const usedPct = (pct/cap*100);
+  used.textContent = pct.toFixed(2) + '%';
+  fill.style.width = Math.min(usedPct,100) + '%';
+  card.classList.toggle('tripped', tripped);
+  if (tripped){ status.className = 'kill-status trip'; status.textContent = '⛔ TRIPPED — STOP'; fill.style.background = 'var(--critical)'; }
+  else if (usedPct >= 70){ status.className = 'kill-status warn'; status.textContent = 'Approaching'; fill.style.background = 'var(--warning)'; }
+  else { status.className = 'kill-status ok'; status.textContent = 'Normal'; fill.style.background = 'var(--good)'; }
+}
+
+let dailyTripped = false, weeklyTripped = false;
+function toggleDailyTrip(){
+  dailyTripped = !dailyTripped;
+  document.getElementById('btn-daily').classList.toggle('on', dailyTripped);
+  setKillCard('daily', dailyTripped ? 2.15 : 0.61, 2.0, dailyTripped);
+}
+function toggleWeeklyTrip(){
+  weeklyTripped = !weeklyTripped;
+  document.getElementById('btn-weekly').classList.toggle('on', weeklyTripped);
+  setKillCard('weekly', weeklyTripped ? 5.40 : 2.08, 5.0, weeklyTripped);
+}
+function toggleStale(){
+  forcedStale = !forcedStale;
+  document.getElementById('btn-stale').classList.toggle('on', forcedStale);
+  tickFreshness();
+}
+
+// ───────────────────────── Sticky offset measurement ─────────────────────────
+// TWO sticky elements stack at the top (.review-strip then .risk-header), so
+// the sidebar needs to clear BOTH, not just the risk-header. First attempt
+// only measured the header's own height via getBoundingClientRect(), which
+// (a) omitted the review-strip's height entirely and (b) is scroll-position-
+// dependent, not a stable layout measurement -- both caused the sidebar to
+// still slide under the header on scroll, caught during verification.
+// offsetHeight is scroll-independent and this now sums both elements.
+function measureStickyOffset(){
+  const strip = document.querySelector('.review-strip');
+  const header = document.querySelector('.risk-header');
+  if (!header) return;
+  const total = (strip ? strip.offsetHeight : 0) + header.offsetHeight + 12;
+  document.documentElement.style.setProperty('--sticky-offset', total + 'px');
+}
+
+// A sticky sidebar can only stay stuck while its own containing block
+// (.main-col, since align-items:start on the grid means row height follows
+// content) still has room below it -- if a tab's content is shorter than
+// the sidebar, the sidebar runs out of track almost immediately (measured:
+// overlap appeared at scrollY=150 on the Long Term tab). Force every panel
+// to be at least (sidebar height + a full viewport) tall so there's always
+// real scroll room, regardless of which tab is short. Applied to every
+// .panel (not just the active one) since offsetHeight is only meaningful
+// on visible elements -- re-measures whenever the active tab or viewport
+// changes, since the sidebar's own height can vary as its cards re-flow.
+function ensurePanelHeight(){
+  const sidebar = document.querySelector('.sidebar-col');
+  if (!sidebar) return;
+  const needed = sidebar.offsetHeight + window.innerHeight;
+  document.querySelectorAll('.panel').forEach(p => { p.style.minHeight = needed + 'px'; });
+}
+window.addEventListener('resize', measureStickyOffset);
+window.addEventListener('resize', ensurePanelHeight);
+
+// ───────────────────────── Init ─────────────────────────
+renderEqBuy();
+renderEqPositions();
+renderFoPositions();
+renderWatchlist();
+renderLongTerm();
+renderExpiryCalendar();
+renderCncMisChart();
+renderOIChart();
+renderBrainChart();
+setKillCard('daily', 0.61, 2.0, false);
+setKillCard('weekly', 2.08, 5.0, false);
+tickFreshness();
+startTicker();
+measureStickyOffset();
+ensurePanelHeight();
+</script>
+</body>
+</html>
