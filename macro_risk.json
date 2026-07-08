@@ -1,6 +1,6 @@
 {
-  "fetched_at": "08 Jul 2026 20:26 IST",
-  "risk_score": 91,
+  "fetched_at": "08 Jul 2026 21:26 IST",
+  "risk_score": 100,
   "risk_level": "EXTREME",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +7.15% vs previous close (74.16 -> 79.46)",
+      "evidence": "BZ=F moved +8.24% vs previous close (74.16 -> 80.27)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 79.46,
+      "last": 80.27,
       "previous": 74.16,
-      "pct_change": 7.15,
+      "pct_change": 8.24,
       "evidence_class": "official"
     },
     {
@@ -33,12 +33,21 @@
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +10.91% vs previous close (16.13 -> 17.89)",
+      "evidence": "^VIX moved +12.65% vs previous close (16.13 -> 18.17)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 17.89,
+      "last": 18.17,
       "previous": 16.13,
-      "pct_change": 10.91,
+      "pct_change": 12.65,
+      "evidence_class": "official"
+    },
+    {
+      "name": "US markets selloff (last close)",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "Composite avg -1.21% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.00%, NASDAQ -1.07%, DOW -1.56%)",
+      "source": "market_data",
+      "pct_change": -1.21,
       "evidence_class": "official"
     },
     {
@@ -74,9 +83,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 79.46,
+      "last": 80.27,
       "previous": 74.16,
-      "pct_change": 7.15
+      "pct_change": 8.24
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -92,33 +101,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.89,
+      "last": 18.17,
       "previous": 16.13,
-      "pct_change": 10.91
+      "pct_change": 12.65
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7453.4,
+      "last": 7428.92,
       "previous": 7503.85,
-      "pct_change": -0.67
+      "pct_change": -1.0
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25701.42,
+      "last": 25542.96,
       "previous": 25818.69,
-      "pct_change": -0.45
+      "pct_change": -1.07
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52188.79,
+      "last": 52100.5,
       "previous": 52925.15,
-      "pct_change": -1.39
+      "pct_change": -1.56
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4048.8,
+      "last": 4041.8,
       "previous": 4145.3,
-      "pct_change": -2.33
+      "pct_change": -2.5
     }
   },
   "regime_context": {
