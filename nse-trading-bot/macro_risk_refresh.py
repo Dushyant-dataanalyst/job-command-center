@@ -47,6 +47,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import datetime, timezone
 
+import time
+
 import pandas as pd
 import requests
 
@@ -201,25 +203,53 @@ def _parse_gdelt_date(s):
 
 
 def _fetch_geopolitical_articles():
-    """Returns a list of fresh (<= NEWS_STALE_HOURS old) matching articles,
-    or None if the GDELT request itself failed -- None is deliberately
-    distinct from [] (fetched fine, nothing matched) so the caller can
-    report an honest 'fetch_failed' vs 'no_matches' status rather than
-    conflating the two into a fake zero. GDELT is a free public API with no
-    uptime SLA -- one retry on a transient failure, then give up cleanly."""
+    """Returns (articles, error_detail). articles is a list of fresh
+    (<= NEWS_STALE_HOURS old) matching articles, or None if the GDELT
+    request itself failed -- None is deliberately distinct from []
+    (fetched fine, nothing matched) so the caller can report an honest
+    'fetch_failed' vs 'no_matches' status rather than conflating the two
+    into a fake zero. error_detail carries the actual exception/status so a
+    'fetch_failed' in macro_risk.json is diagnosable from the committed
+    JSON alone, without needing GitHub Actions log access. GDELT is a free
+    public API with no uptime SLA -- one retry on a transient failure, then
+    give up cleanly."""
     articles = None
+    last_error = None
     for attempt in range(2):
+        if attempt > 0:
+            # GDELT's own published limit is "one request per 5 seconds" --
+            # retrying immediately on failure would violate that on our OWN
+            # request, not just risk hitting someone else's. 8s comfortably
+            # clears it. (A 429 witnessed 08-Jul-2026 during manual testing
+            # traced to this -- the retry had no backoff at all.)
+            time.sleep(8)
         try:
             resp = requests.get(GDELT_URL, params={
                 "query": GEOPOLITICAL_QUERY, "mode": "artlist", "format": "json",
                 "maxrecords": 20, "sort": "datedesc", "timespan": "2days",
-            }, headers={"User-Agent": "Mozilla/5.0"}, timeout=20)
-            resp.raise_for_status()
-            articles = resp.json().get("articles", [])
+            }, headers={"User-Agent": "Mozilla/5.0"}, timeout=25)
+            if resp.status_code != 200:
+                last_error = f"HTTP {resp.status_code}: {resp.text[:200]!r}"
+                if attempt == 1:
+                    return None, last_error
+                continue
+            try:
+                articles = resp.json().get("articles", [])
+            except ValueError:
+                # GDELT returns HTTP 200 with a plain-text/HTML error page
+                # (not JSON) when it rejects a query's syntax -- this is a
+                # DIFFERENT failure mode than an unreachable host, and would
+                # otherwise be silently indistinguishable from a timeout.
+                last_error = f"non-JSON 200 response (likely query rejected): {resp.text[:200]!r}"
+                if attempt == 1:
+                    return None, last_error
+                continue
+            last_error = None
             break
-        except Exception:
+        except Exception as e:
+            last_error = f"{type(e).__name__}: {e}"
             if attempt == 1:
-                return None
+                return None, last_error
 
     now = now_ist()
     fresh = []
@@ -234,18 +264,18 @@ def _fetch_geopolitical_articles():
             "title": a.get("title"), "url": a.get("url"), "domain": a.get("domain"),
             "published_at": pub.strftime("%d %b %Y %H:%M IST"), "age_hours": round(age_hours, 1),
         })
-    return fresh
+    return fresh, None
 
 
-def _geopolitical_factor(articles):
-    """articles is None (fetch failed), [] (fetched, no matches), or a list
-    of fresh matches. Severity/points scale with the number of DISTINCT
-    corroborating source domains, never a single headline's wording -- a
-    lone unconfirmed report is capped 'rumor'-class (severity 2, 12 points)
-    and can never alone reach the HIGH-risk point range, per the brief's
-    anti-hallucination rule."""
+def _geopolitical_factor(articles, fetch_error):
+    """articles is None (fetch failed -- see fetch_error), [] (fetched, no
+    matches), or a list of fresh matches. Severity/points scale with the
+    number of DISTINCT corroborating source domains, never a single
+    headline's wording -- a lone unconfirmed report is capped 'rumor'-class
+    (severity 2, 12 points) and can never alone reach the HIGH-risk point
+    range, per the brief's anti-hallucination rule."""
     if not articles:
-        status = "fetch_failed" if articles is None else "no_matches"
+        status = f"fetch_failed: {fetch_error}" if articles is None else "no_matches"
         return 0, None, status
 
     domains = sorted({a["domain"] for a in articles if a.get("domain")})
@@ -326,8 +356,8 @@ def main():
             factors.append(f)
             net_points += pts
 
-    geo_articles = _fetch_geopolitical_articles()
-    geo_points, geo_factor, geo_status = _geopolitical_factor(geo_articles)
+    geo_articles, geo_fetch_error = _fetch_geopolitical_articles()
+    geo_points, geo_factor, geo_status = _geopolitical_factor(geo_articles, geo_fetch_error)
     if geo_factor:
         factors.append(geo_factor)
         net_points += geo_points
