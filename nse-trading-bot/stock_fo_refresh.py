@@ -8,12 +8,28 @@ SCAN_DATA). Rather than guess at reproducing an unknown scoring system,
 this reuses the SAME transparent 3-factor consensus already proven for
 NIFTY/BANKNIFTY in refresh_fo_cloud.py — documented, not invented.
 
-Strategy selection (a documented rule, not a guess):
-  - ce_votes/pe_votes == 6 (max conviction, all 4 factors agree): single-leg
-    BUY CE/PE — full premium exposure for the highest-confidence setups.
-  - ce_votes/pe_votes in [4, 5] (actionable but not max): a capped-risk
-    spread — Bull Call Spread (long ATM CE + short OTM CE) for bullish,
-    Bear Put Spread (long ATM PE + short OTM PE) for bearish.
+Strategy selection -- CHANGED 08-Jul-2026, was a documented rule that turned
+out to be backwards, not a guess:
+  - Previously: ce_votes/pe_votes == 6 (max conviction, all 4 factors agree)
+    routed to single-leg BUY CE/PE ("full premium exposure for the highest-
+    confidence setups"); 4-5 votes routed to a capped-risk spread.
+  - backtest_fo_results.json (3y, run 08-Jul-2026) showed this was backwards:
+    the 6-vote single-leg bucket has the WORST risk-adjusted numbers of any
+    vote bucket (846 trades, 39.7% win, Sharpe 2.71, avg return 10.95%) --
+    worse than BOTH spread buckets it was supposedly a step up from (4-vote:
+    601 trades, 41.9% win, Sharpe 4.83, avg 92.84%; 5-vote: 170 trades, 45.3%
+    win, Sharpe 3.04, avg 110.85%). "Reward higher conviction with full
+    exposure" was the design intent; the data says full exposure is where
+    this system's edge is weakest, not strongest.
+  - Now: ALL actionable signals (any vote count that reaches consensus) route
+    to the capped-risk spread. Single-leg generation is disabled, not
+    deleted -- _single_leg() is still defined below in case a proper
+    vote-count-vs-structure backtest (the current data confounds the two:
+    single-leg was only ever tested AT 6 votes, never at 4-5, so we don't
+    have a clean "6-vote spread" comparison either) later justifies bringing
+    it back for a specific bucket. Until then, defaulting to the ONLY
+    structure with ANY evidenced support, at every vote level, is the
+    capital-protective choice under incomplete evidence -- not a coin flip.
 
 KNOWN LIMITATION — strike intervals: NSE sets per-stock strike intervals
 that vary by price band and aren't available from any source in this repo.
@@ -153,11 +169,11 @@ def _stock_signal(name, macro):
     step = _strike_step(spot)
     atm = _atm(spot, step)
 
-    if votes >= 6:
-        trade = _single_leg(spot, atm, opt, v["ann_vol"], days_to)
-    else:
-        otm = atm + 2 * step if opt == "CE" else atm - 2 * step
-        trade = _spread(spot, atm, otm, opt, v["ann_vol"], days_to)
+    # Single-leg routing at votes>=6 disabled 08-Jul-2026 -- see module
+    # docstring. Every actionable signal now gets the capped-risk spread,
+    # the only structure with backtested support at any vote level tested.
+    otm = atm + 2 * step if opt == "CE" else atm - 2 * step
+    trade = _spread(spot, atm, otm, opt, v["ann_vol"], days_to)
 
     trade["expiry"] = expiry.strftime("%d %b %Y")
     trade["days_to_exp"] = days_to
@@ -183,14 +199,18 @@ def _stock_signal(name, macro):
     if near_expiry:
         warning = f"⚠ EXPIRY-DAY CAUTION — expires in {days_to}d, extreme gamma/theta risk for a NEW position. {warning}"
     if votes >= 6:
-        # Real backtest_fo_results.json numbers (3y, run 08-Jul-2026), not an
-        # estimate: 6-vote "max conviction" single-leg trades actually have
-        # the WORST risk-adjusted numbers of any vote bucket, not the best.
-        # Said here because a vote count alone otherwise reads as "strongest
-        # setup" when the system's own backtest says the opposite.
-        warning = (f"⚠ VOTE COUNT ≠ EDGE HERE — this system's own 3-year backtest (backtest_fo_results.json) found "
-                   f"6-vote single-leg trades win LESS often (39.7%, Sharpe 2.71, avg return 11.0%) than 4-5 vote spread "
-                   f"trades (41.9-45.3% win, Sharpe 3.0-4.8, avg return 93-111%). Don't read '6/6' as higher conviction. {warning}")
+        # NOT an active warning anymore -- informational context for WHY
+        # every vote level gets the same spread structure now (see module
+        # docstring: single-leg routing at votes>=6 was disabled 08-Jul-2026
+        # because backtest_fo_results.json showed it was this system's
+        # worst-performing bucket). The routing fix already addresses the
+        # risk this used to warn about; this note explains the history so
+        # "6/6" still isn't misread as extra conviction deserving anything
+        # different from a 4/6 or 5/6 signal.
+        warning = (f"ℹ 6/6 still gets the same capped-risk spread as every other vote level, not extra exposure — "
+                   f"this system's own 3-year backtest found the old \"6-vote = single-leg\" rule was actually its "
+                   f"worst-performing bucket (39.7% win, Sharpe 2.71 vs 41.9-45.3% win, Sharpe 3.0-4.8 for spreads). "
+                   f"Don't read '6/6' as higher conviction than a 4/6 or 5/6 signal. {warning}")
 
     return {
         "name": name, "spot": spot, "consensus": consensus,

@@ -302,7 +302,16 @@ def scan_one(symbol, sector, fetch_peg=True, macro=None):
     automated equity trade-opening code to gate (manual "I bought" only),
     so this FLAGS like stock F&O does, never suppresses the signal -- always
     attached, even when macro is calm, so the current backdrop is visible
-    next to every signal, not just conditionally on a crisis day."""
+    next to every signal, not just conditionally on a crisis day.
+
+    sector_macro_flag (added 08-Jul-2026): macro_risk.json's avoid_sectors/
+    watch_sectors were already computed but never cross-referenced against
+    any equity signal's own sector -- a generic "macro is EXTREME" banner
+    doesn't tell you WHICH stocks that actually touches. Exact-string match
+    only; macro_risk_refresh.py's sector taxonomy (e.g. Aviation, OMC,
+    Defence) only partially overlaps this 10-sector equity universe (e.g.
+    Auto, Energy do match) -- a stock in a sector macro doesn't track at all
+    correctly gets no flag, not a guessed one."""
     ticker = symbol + ".NS"
     v = _extended_indicators(ticker)
     if v is None:
@@ -342,6 +351,13 @@ def scan_one(symbol, sector, fetch_peg=True, macro=None):
     t3 = round(entry + 3.75 * risk, 2)
     pct_t1 = round((t1 - entry) / entry * 100, 1) if buy_votes >= 1 else 0
 
+    adj = (macro or {}).get("trade_adjustments") or {}
+    sector_macro_flag = (
+        "avoid" if sector in (adj.get("avoid_sectors") or []) else
+        "watch" if sector in (adj.get("watch_sectors") or []) else
+        None
+    )
+
     return {
         "signal": signal,
         "buy_votes": buy_votes,
@@ -354,6 +370,7 @@ def scan_one(symbol, sector, fetch_peg=True, macro=None):
         "data_as_of": v["data_date"],
         "data_source": v["data_source"],
         "macro_context": macro_context(macro),
+        "sector_macro_flag": sector_macro_flag,
     }
 
 

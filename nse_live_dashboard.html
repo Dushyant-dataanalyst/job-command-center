@@ -1033,6 +1033,19 @@ function _longTermBadge(name){
   return `<div title="${title.replace(/"/g,'&quot;')}" style="margin-top:4px;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:5px;padding:2px 6px;font-size:9px;font-weight:700;display:inline-block;cursor:help">🌱 Also Long-Term (${lt.composite})</div>`;
 }
 
+/* sector_macro_flag (08-Jul-2026): macro_risk.json's avoid/watch sectors
+   cross-referenced against this stock's own sector -- unlike the banner-
+   level facts (same for every row), this genuinely varies per stock, so it
+   gets its own always-visible per-row badge, not folded into the banner. */
+function _sectorMacroBadge(s){
+  if (!s.sector_macro_flag) return '';
+  const avoid = s.sector_macro_flag === 'avoid';
+  const bg = avoid ? '#fef2f2' : '#fffbeb';
+  const color = avoid ? '#991b1b' : '#92400e';
+  const label = avoid ? '⚠ Macro: avoid ' + s.sector : '👁 Macro: watch ' + s.sector;
+  return `<div style="margin-top:4px;background:${bg};color:${color};border-radius:5px;padding:2px 6px;font-size:9px;font-weight:700;display:inline-block">${label}</div>`;
+}
+
 /* One visible line combining the reasoning from whichever voters actually
    agreed (BUY/STRONG_BUY) — the "why is this suggested" the full per-voter
    breakdown lives in each badge's hover tooltip via _voteBadges(). */
@@ -1094,6 +1107,7 @@ function renderEquityRows(){
         <div style="font-weight:700;font-size:13px;color:#0f172a">${name}</div>
         <div style="color:#94a3b8;font-size:10px;margin-top:1px">${s.sector || ''}</div>
         ${_longTermBadge(name)}
+        ${_sectorMacroBadge(s)}
         ${btnHtml}
         ${why ? `<div style="font-size:10px;color:#64748b;margin-top:6px;line-height:1.4;max-width:320px">💬 ${why}</div>` : ''}
       </td>
@@ -1132,7 +1146,7 @@ function renderWatchlist(){
       .filter(k => s.strategies[k] === 'BUY' || s.strategies[k] === 'STRONG_BUY')
       .join(', ') || '—';
     return `<tr>
-      <td style="font-weight:700;color:#0f172a">${name}</td>
+      <td style="font-weight:700;color:#0f172a">${name}${_sectorMacroBadge(s)}</td>
       <td style="color:#64748b;font-size:11px">${s.sector || 'Other'}</td>
       <td>${_voteBadges(s.strategies, s.commentary)}</td>
       <td style="font-weight:600;color:#0f172a">₹${Number(s.entry).toLocaleString('en-IN')}</td>
@@ -2291,7 +2305,11 @@ function updateEquityCounts(){
         // exists anywhere in this system), not an exceptional elevated-risk
         // case. Styling every row red for a universally-true caveat would
         // drown out the rows that actually ARE more urgent than the rest.
-        var isUrgent = (r.trade && r.trade.near_expiry_caution) || /VOTE COUNT|NO-GO/.test(warnText);
+        // "VOTE COUNT" no longer matched here -- single-leg routing at
+        // votes>=6 was disabled (08-Jul-2026, see stock_fo_refresh.py), so
+        // that line is now informational context ("ℹ"), not an active
+        // warning about ongoing risk -- the routing fix already addressed it.
+        var isUrgent = (r.trade && r.trade.near_expiry_caution) || /NO-GO/.test(warnText);
         var warnRowHtml = warnText
           ? '<tr><td colspan="7" style="padding:6px 10px;font-size:10px;line-height:1.5;' +
             (isUrgent ? 'background:#fef2f2;color:#991b1b;font-weight:600;border-left:3px solid #dc2626'
