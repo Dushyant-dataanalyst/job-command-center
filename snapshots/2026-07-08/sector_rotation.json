@@ -1,87 +1,87 @@
 {
-  "fetched_at": "08 Jul 2026 13:11 IST",
+  "fetched_at": "08 Jul 2026 13:16 IST",
   "data_source": "mixed: 9 kite (live) / 8 yfinance (EOD/delayed) fetches",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
   "all_sectors_ranked": [
     {
       "sector": "Realty",
-      "roc5_pct": 9.84,
+      "roc5_pct": 9.93,
       "rel_volume": 1.89,
       "bullish_trend": true,
-      "last_close": 899.4,
+      "last_close": 900.15,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": 18.6
+      "score": 18.77
     },
     {
       "sector": "IT",
-      "roc5_pct": 7.7,
+      "roc5_pct": 7.79,
       "rel_volume": 1.02,
       "bullish_trend": false,
-      "last_close": 27752.8,
+      "last_close": 27778.55,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": 7.85
+      "score": 7.95
     },
     {
       "sector": "Auto",
-      "roc5_pct": 3.45,
+      "roc5_pct": 3.47,
       "rel_volume": 0.65,
       "bullish_trend": true,
-      "last_close": 27329.95,
+      "last_close": 27333.2,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": 2.24
+      "score": 2.26
     },
     {
       "sector": "Pharma",
-      "roc5_pct": 1.69,
+      "roc5_pct": 1.63,
       "rel_volume": 0.72,
       "bullish_trend": true,
-      "last_close": 25609.15,
+      "last_close": 25592.95,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": 1.22
+      "score": 1.17
     },
     {
       "sector": "FMCG",
-      "roc5_pct": 1.01,
+      "roc5_pct": 1.0,
       "rel_volume": 0.77,
       "bullish_trend": true,
-      "last_close": 49622.15,
+      "last_close": 49621.3,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": 0.78
+      "score": 0.77
     },
     {
       "sector": "Metal",
-      "roc5_pct": 0.47,
+      "roc5_pct": 0.46,
       "rel_volume": 0.5,
       "bullish_trend": false,
-      "last_close": 12604.5,
+      "last_close": 12602.15,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
       "score": 0.23
     },
     {
       "sector": "Energy",
-      "roc5_pct": -1.66,
+      "roc5_pct": -1.65,
       "rel_volume": 0.76,
       "bullish_trend": false,
-      "last_close": 39058.5,
+      "last_close": 39061.8,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": -1.26
+      "score": -1.25
     },
     {
       "sector": "PSU Bank",
-      "roc5_pct": -3.62,
+      "roc5_pct": -3.65,
       "rel_volume": 1.22,
       "bullish_trend": false,
-      "last_close": 8244.1,
+      "last_close": 8241.3,
       "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": -4.42
+      "score": -4.45
     }
   ],
   "sectors_with_errors": {
@@ -98,97 +98,97 @@
     "Realty": [
       {
         "symbol": "GODREJPROP",
-        "roc5_pct": 4.91,
-        "rel_volume": 0.67,
+        "roc5_pct": 4.99,
+        "rel_volume": 0.68,
         "bullish_trend": true,
-        "last_close": 2055.9,
+        "last_close": 2057.4,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 3.29
+        "score": 3.39
       },
       {
         "symbol": "OBEROIRLTY",
-        "roc5_pct": 5.4,
-        "rel_volume": 0.4,
+        "roc5_pct": 5.43,
+        "rel_volume": 0.41,
         "bullish_trend": true,
-        "last_close": 1902.0,
+        "last_close": 1902.6,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 2.16
+        "score": 2.23
       },
       {
         "symbol": "PRESTIGE",
-        "roc5_pct": 2.33,
+        "roc5_pct": 2.74,
         "rel_volume": 0.43,
         "bullish_trend": true,
-        "last_close": 1663.2,
+        "last_close": 1669.9,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 1.0
+        "score": 1.18
       }
     ],
     "IT": [
       {
         "symbol": "HCLTECH",
-        "roc5_pct": 11.92,
+        "roc5_pct": 11.96,
         "rel_volume": 0.39,
         "bullish_trend": false,
-        "last_close": 1157.5,
+        "last_close": 1157.9,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 4.65
+        "score": 4.66
       },
       {
         "symbol": "INFY",
-        "roc5_pct": 8.89,
-        "rel_volume": 0.38,
+        "roc5_pct": 9.0,
+        "rel_volume": 0.39,
         "bullish_trend": false,
-        "last_close": 1072.9,
+        "last_close": 1074.0,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 3.38
+        "score": 3.51
       },
       {
         "symbol": "TECHM",
-        "roc5_pct": 7.92,
-        "rel_volume": 0.33,
+        "roc5_pct": 8.04,
+        "rel_volume": 0.34,
         "bullish_trend": true,
-        "last_close": 1432.9,
+        "last_close": 1434.5,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 2.61
+        "score": 2.73
       }
     ],
     "Auto": [
       {
         "symbol": "EICHERMOT",
-        "roc5_pct": 6.23,
+        "roc5_pct": 6.29,
         "rel_volume": 0.89,
         "bullish_trend": true,
-        "last_close": 7584.0,
+        "last_close": 7588.0,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 5.54
+        "score": 5.6
       },
       {
         "symbol": "BAJAJ-AUTO",
-        "roc5_pct": 4.08,
-        "rel_volume": 0.33,
+        "roc5_pct": 4.12,
+        "rel_volume": 0.34,
         "bullish_trend": false,
-        "last_close": 10243.5,
+        "last_close": 10247.0,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 1.35
+        "score": 1.4
       },
       {
         "symbol": "M&M",
-        "roc5_pct": 1.69,
-        "rel_volume": 0.45,
+        "roc5_pct": 1.62,
+        "rel_volume": 0.46,
         "bullish_trend": true,
-        "last_close": 3183.0,
+        "last_close": 3180.8,
         "data_as_of": "2026-07-08",
         "data_source": "kite",
-        "score": 0.76
+        "score": 0.75
       }
     ]
   },
