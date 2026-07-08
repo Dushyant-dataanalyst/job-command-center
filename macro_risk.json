@@ -1,6 +1,6 @@
 {
-  "fetched_at": "08 Jul 2026 17:26 IST",
-  "risk_score": 91,
+  "fetched_at": "08 Jul 2026 18:26 IST",
+  "risk_score": 86,
   "risk_level": "EXTREME",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -8,13 +8,13 @@
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 5,
-      "evidence": "BZ=F moved +5.26% vs previous close (74.16 -> 78.06)",
+      "severity": 4,
+      "evidence": "BZ=F moved +4.45% vs previous close (74.16 -> 77.46)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 78.06,
+      "last": 77.46,
       "previous": 74.16,
-      "pct_change": 5.26,
+      "pct_change": 4.45,
       "evidence_class": "official"
     },
     {
@@ -33,12 +33,12 @@
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +13.27% vs previous close (16.13 -> 18.27)",
+      "evidence": "^VIX moved +8.37% vs previous close (16.13 -> 17.48)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.27,
+      "last": 17.48,
       "previous": 16.13,
-      "pct_change": 13.27,
+      "pct_change": 8.37,
       "evidence_class": "official"
     },
     {
@@ -74,15 +74,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.06,
+      "last": 77.46,
       "previous": 74.16,
-      "pct_change": 5.26
+      "pct_change": 4.45
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.56,
+      "last": 95.54,
       "previous": 95.6,
-      "pct_change": -0.05
+      "pct_change": -0.06
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -92,9 +92,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.27,
+      "last": 17.48,
       "previous": 16.13,
-      "pct_change": 13.27
+      "pct_change": 8.37
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -116,9 +116,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4079.8,
+      "last": 4087.8,
       "previous": 4145.3,
-      "pct_change": -1.58
+      "pct_change": -1.39
     }
   },
   "regime_context": {
