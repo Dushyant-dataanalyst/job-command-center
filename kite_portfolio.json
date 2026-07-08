@@ -1,6 +1,6 @@
 {
   "session_live": true,
-  "fetched_at": "08 Jul 2026 10:36 IST",
+  "fetched_at": "08 Jul 2026 10:41 IST",
   "holdings": [
     {
       "tradingsymbol": "DLF",
@@ -8,10 +8,10 @@
       "quantity": 30.0,
       "pending_settlement": null,
       "average_price": 667.1,
-      "last_price": 660.6,
-      "pnl": -195.0,
-      "day_change_percentage": 1.45,
-      "value": 19818.0,
+      "last_price": 658.85,
+      "pnl": -247.5,
+      "day_change_percentage": 1.18,
+      "value": 19765.5,
       "invested": 20013.0
     },
     {
@@ -20,10 +20,10 @@
       "quantity": 25.0,
       "pending_settlement": null,
       "average_price": 1387.46,
-      "last_price": 1416.2,
-      "pnl": 718.5,
-      "day_change_percentage": 0.11,
-      "value": 35405.0,
+      "last_price": 1416.9,
+      "pnl": 736.0,
+      "day_change_percentage": 0.16,
+      "value": 35422.5,
       "invested": 34686.5
     },
     {
@@ -32,18 +32,18 @@
       "quantity": 3.0,
       "pending_settlement": null,
       "average_price": 1909.93,
-      "last_price": 1914.3,
-      "pnl": 13.1,
-      "day_change_percentage": 0.57,
-      "value": 5742.9,
+      "last_price": 1914.0,
+      "pnl": 12.2,
+      "day_change_percentage": 0.56,
+      "value": 5742.0,
       "invested": 5729.8
     }
   ],
   "stats": {
-    "total_value": 60965.9,
+    "total_value": 60930.0,
     "total_invested": 60429.3,
-    "total_pnl": 536.6,
-    "total_pnl_pct": 0.89,
+    "total_pnl": 500.7,
+    "total_pnl_pct": 0.83,
     "holdings_count": 3
   },
   "positions": [],
@@ -255,6 +255,43 @@
         "mktp:2.00"
       ],
       "guid": "3106Xgfrciziguktm"
+    },
+    {
+      "account_id": "TC0390",
+      "placed_by": "TC0390",
+      "order_id": "260708170334040",
+      "exchange_order_id": null,
+      "parent_order_id": null,
+      "status": "REJECTED",
+      "status_message": "Insufficient funds. Margin required: 173320.31. Margin available: 78030.50. Check orderbook for open orders.",
+      "status_message_raw": "RMS:Margin Exceeds,Required:173320.31, Available:78030.50 for entity account-TC0390 across exchange across segment across product ",
+      "order_timestamp": "2026-07-08 10:41:45",
+      "exchange_update_timestamp": null,
+      "exchange_timestamp": null,
+      "variety": "regular",
+      "modified": false,
+      "exchange": "NFO",
+      "tradingsymbol": "NIFTY26JUL24500PE",
+      "instrument_token": 16373762,
+      "order_type": "LIMIT",
+      "transaction_type": "SELL",
+      "validity": "DAY",
+      "validity_ttl": 0,
+      "product": "NRML",
+      "quantity": 65,
+      "disclosed_quantity": 0,
+      "price": 357.25,
+      "trigger_price": 0,
+      "average_price": 0,
+      "filled_quantity": 0,
+      "pending_quantity": 0,
+      "cancelled_quantity": 0,
+      "market_protection": 0,
+      "meta": {
+        "gtt": true
+      },
+      "tag": null,
+      "guid": "1783487505-650257-TC0390-ADMINAPI-SiloJ2-orders"
     }
   ],
   "reconciliation": {
