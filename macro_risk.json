@@ -1,20 +1,20 @@
 {
-  "fetched_at": "08 Jul 2026 10:58 IST",
-  "risk_score": 30,
-  "risk_level": "LOW",
+  "fetched_at": "08 Jul 2026 11:01 IST",
+  "risk_score": 35,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +2.99% vs previous close (74.16 -> 76.38)",
+      "severity": 4,
+      "evidence": "BZ=F moved +3.33% vs previous close (74.16 -> 76.63)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 76.38,
+      "last": 76.63,
       "previous": 74.16,
-      "pct_change": 2.99,
+      "pct_change": 3.33,
       "evidence_class": "official"
     }
   ],
@@ -24,7 +24,7 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 1.0,
+    "position_size_multiplier": 0.85,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -38,9 +38,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 76.38,
+      "last": 76.63,
       "previous": 74.16,
-      "pct_change": 2.99
+      "pct_change": 3.33
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -50,9 +50,9 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.13,
+      "last": 12.11,
       "previous": 11.65,
-      "pct_change": 4.14
+      "pct_change": 3.99
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -80,9 +80,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4137.6,
+      "last": 4135.6,
       "previous": 4145.3,
-      "pct_change": -0.19
+      "pct_change": -0.23
     }
   },
   "regime_context": {

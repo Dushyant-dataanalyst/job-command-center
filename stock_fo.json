@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "08 Jul 2026 10:58 IST",
+    "generated_at": "08 Jul 2026 11:02 IST",
     "method": "Same 3-factor consensus as refresh_fo_cloud.py (EMA alignment, MACD, pivot breakout, ROC5). votes==6 -> single-leg, votes in [4,5] -> capped-risk spread.",
     "macro_feed_available": true,
     "source": "kite (official, live session)",
@@ -8,14 +8,14 @@
   },
   "ICICIBANK": {
     "name": "ICICIBANK",
-    "spot": 1416.3,
+    "spot": 1416.1,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
     "ann_vol": 0.176,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -23,72 +23,88 @@
       "action": "Bull Call Spread: BUY 1400CE + SELL 1500CE",
       "long_strike": 1400,
       "short_strike": 1500,
-      "long_premium": 39.0,
+      "long_premium": 38.0,
       "short_premium": 13.0,
-      "net_debit": 26.0,
-      "max_profit": 74.0,
-      "max_loss": 26.0,
-      "breakeven": 1426.0,
+      "net_debit": 25.0,
+      "max_profit": 75.0,
+      "max_loss": 25.0,
+      "breakeven": 1425.0,
       "expiry": "30 Jul 2026",
       "days_to_exp": 22,
       "strike_step_used": 50
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "AXISBANK": {
     "name": "AXISBANK",
-    "spot": 1333.0,
-    "consensus": "WAIT",
+    "spot": 1332.3,
+    "consensus": "BUY_PE",
     "ce_votes": 0,
-    "pe_votes": 2,
-    "ann_vol": 0.184,
+    "pe_votes": 4,
+    "votes": 4,
+    "ann_vol": 0.1842,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
-    "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
-    "trade": null,
+    "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
+    "trade": {
+      "type": "spread",
+      "action": "Bear Put Spread: BUY 1350PE + SELL 1250PE",
+      "long_strike": 1350,
+      "short_strike": 1250,
+      "long_premium": 39.0,
+      "short_premium": 12.0,
+      "net_debit": 27.0,
+      "max_profit": 73.0,
+      "max_loss": 27.0,
+      "breakeven": 1323.0,
+      "expiry": "30 Jul 2026",
+      "days_to_exp": 22,
+      "strike_step_used": 50
+    },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
-    }
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
+    },
+    "macro_blocked": false
   },
   "LT": {
     "name": "LT",
-    "spot": 3980.0,
+    "spot": 3981.7,
     "consensus": "WAIT",
     "ce_votes": 0,
     "pe_votes": 2,
-    "ann_vol": 0.212,
+    "ann_vol": 0.2119,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": null,
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     }
   },
   "SUNPHARMA": {
     "name": "SUNPHARMA",
-    "spot": 1913.6,
+    "spot": 1912.8,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
-    "ann_vol": 0.1195,
+    "ann_vol": 0.1194,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -96,34 +112,34 @@
       "action": "Bull Call Spread: BUY 1900CE + SELL 2000CE",
       "long_strike": 1900,
       "short_strike": 2000,
-      "long_premium": 35.0,
+      "long_premium": 34.0,
       "short_premium": 14.0,
-      "net_debit": 21.0,
-      "max_profit": 79.0,
-      "max_loss": 21.0,
-      "breakeven": 1921.0,
+      "net_debit": 20.0,
+      "max_profit": 80.0,
+      "max_loss": 20.0,
+      "breakeven": 1920.0,
       "expiry": "30 Jul 2026",
       "days_to_exp": 22,
       "strike_step_used": 50
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "BAJFINANCE": {
     "name": "BAJFINANCE",
-    "spot": 1031.4,
+    "spot": 1031.0,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
-    "ann_vol": 0.2721,
+    "ann_vol": 0.2723,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -142,23 +158,23 @@
       "strike_step_used": 50
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "TITAN": {
     "name": "TITAN",
-    "spot": 4596.3,
+    "spot": 4596.0,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
     "ann_vol": 0.2553,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -177,23 +193,23 @@
       "strike_step_used": 100
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "KOTAKBANK": {
     "name": "KOTAKBANK",
-    "spot": 378.75,
+    "spot": 379.0,
     "consensus": "BUY_PE",
     "ce_votes": 0,
     "pe_votes": 4,
     "votes": 4,
-    "ann_vol": 0.2209,
+    "ann_vol": 0.2207,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -212,61 +228,61 @@
       "strike_step_used": 10
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "MARUTI": {
     "name": "MARUTI",
-    "spot": 14307.0,
+    "spot": 14330.0,
     "consensus": "WAIT",
     "ce_votes": 3,
     "pe_votes": 2,
-    "ann_vol": 0.2682,
+    "ann_vol": 0.2673,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": null,
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     }
   },
   "SBIN": {
     "name": "SBIN",
-    "spot": 1033.5,
+    "spot": 1034.7,
     "consensus": "WAIT",
-    "ce_votes": 2,
-    "pe_votes": 1,
-    "ann_vol": 0.1534,
+    "ce_votes": 3,
+    "pe_votes": 0,
+    "ann_vol": 0.153,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": null,
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     }
   },
   "HDFCBANK": {
     "name": "HDFCBANK",
-    "spot": 828.75,
+    "spot": 828.95,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
     "ann_vol": 0.2298,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -285,23 +301,23 @@
       "strike_step_used": 20
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "RELIANCE": {
     "name": "RELIANCE",
-    "spot": 1293.3,
+    "spot": 1293.0,
     "consensus": "BUY_PE",
     "ce_votes": 1,
     "pe_votes": 4,
     "votes": 4,
-    "ann_vol": 0.173,
+    "ann_vol": 0.1731,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -320,61 +336,61 @@
       "strike_step_used": 50
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "TCS": {
     "name": "TCS",
-    "spot": 2095.8,
+    "spot": 2091.8,
     "consensus": "WAIT",
     "ce_votes": 2,
     "pe_votes": 2,
-    "ann_vol": 0.4202,
+    "ann_vol": 0.4201,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": null,
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     }
   },
   "INFY": {
     "name": "INFY",
-    "spot": 1070.1,
+    "spot": 1070.3,
     "consensus": "WAIT",
     "ce_votes": 2,
     "pe_votes": 0,
     "ann_vol": 0.4231,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": null,
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     }
   },
   "ITC": {
     "name": "ITC",
-    "spot": 282.3,
+    "spot": 282.05,
     "consensus": "BUY_PE",
     "ce_votes": 0,
     "pe_votes": 6,
     "votes": 6,
-    "ann_vol": 0.168,
+    "ann_vol": 0.1689,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -390,42 +406,42 @@
       "strike_step_used": 10
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "WIPRO": {
     "name": "WIPRO",
-    "spot": 174.69,
+    "spot": 174.75,
     "consensus": "WAIT",
     "ce_votes": 2,
     "pe_votes": 2,
-    "ann_vol": 0.3277,
+    "ann_vol": 0.3279,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": null,
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     }
   },
   "BHARTIARTL": {
     "name": "BHARTIARTL",
-    "spot": 1917.3,
+    "spot": 1918.6,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
-    "ann_vol": 0.1662,
+    "ann_vol": 0.166,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
@@ -433,8 +449,8 @@
       "action": "Bull Call Spread: BUY 1900CE + SELL 2000CE",
       "long_strike": 1900,
       "short_strike": 2000,
-      "long_premium": 46.0,
-      "short_premium": 20.0,
+      "long_premium": 47.0,
+      "short_premium": 21.0,
       "net_debit": 26.0,
       "max_profit": 74.0,
       "max_loss": 26.0,
@@ -444,65 +460,65 @@
       "strike_step_used": 50
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "HINDUNILVR": {
     "name": "HINDUNILVR",
-    "spot": 2175.0,
+    "spot": 2174.2,
     "consensus": "BUY_PE",
     "ce_votes": 1,
     "pe_votes": 4,
     "votes": 4,
-    "ann_vol": 0.2152,
+    "ann_vol": 0.2154,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost.",
     "trade": {
       "type": "spread",
-      "action": "Bear Put Spread: BUY 2200PE + SELL 2100PE",
-      "long_strike": 2200,
-      "short_strike": 2100,
-      "long_premium": 67.0,
-      "short_premium": 33.0,
-      "net_debit": 34.0,
-      "max_profit": 66.0,
-      "max_loss": 34.0,
-      "breakeven": 2166.0,
+      "action": "Bear Put Spread: BUY 2150PE + SELL 2050PE",
+      "long_strike": 2150,
+      "short_strike": 2050,
+      "long_premium": 42.0,
+      "short_premium": 25.0,
+      "net_debit": 17.0,
+      "max_profit": 83.0,
+      "max_loss": 17.0,
+      "breakeven": 2133.0,
       "expiry": "30 Jul 2026",
       "days_to_exp": 22,
       "strike_step_used": 50
     },
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     },
     "macro_blocked": false
   },
   "NESTLEIND": {
     "name": "NESTLEIND",
-    "spot": 1467.1,
+    "spot": 1469.4,
     "consensus": "WAIT",
     "ce_votes": 3,
     "pe_votes": 0,
-    "ann_vol": 0.2053,
+    "ann_vol": 0.2051,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:58 IST",
+    "fetched_at": "08 Jul 2026 11:02 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": null,
     "macro_context": {
-      "risk_level": "LOW",
+      "risk_level": "MODERATE",
       "bias": "BEARISH",
-      "risk_score": 30,
-      "position_size_multiplier": 1.0
+      "risk_score": 35,
+      "position_size_multiplier": 0.85
     }
   }
 }
