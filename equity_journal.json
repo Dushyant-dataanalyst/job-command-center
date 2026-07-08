@@ -1,5 +1,5 @@
 {
-  "fetched_at": "08 Jul 2026 23:27 IST",
+  "fetched_at": "09 Jul 2026 00:27 IST",
   "positions": [
     {
       "name": "DLF",
@@ -7,9 +7,9 @@
       "sl": 642.62,
       "t1": 698.04,
       "t2": 728.83,
-      "current_price": 634.0,
-      "pnl_pct": -4.98,
-      "status": "below_sl",
+      "current_price": NaN,
+      "pnl_pct": NaN,
+      "status": "healthy",
       "bought_at": "3 Jul 2026",
       "source": "synced",
       "price_source": "yfinance"
@@ -20,8 +20,8 @@
       "sl": 1871.09,
       "t1": 1960.21,
       "t2": 2009.73,
-      "current_price": 1888.2,
-      "pnl_pct": -1.18,
+      "current_price": NaN,
+      "pnl_pct": NaN,
       "status": "healthy",
       "bought_at": "3 Jul 2026",
       "source": "synced",
@@ -31,17 +31,17 @@
   "errors": {},
   "stats": {
     "total_tracked": 2,
-    "total_pnl_pct": -3.08,
+    "total_pnl_pct": NaN,
     "best": {
-      "name": "SUNPHARMA",
-      "pnl_pct": -1.18
+      "name": "DLF",
+      "pnl_pct": NaN
     },
     "worst": {
       "name": "DLF",
-      "pnl_pct": -4.98
+      "pnl_pct": NaN
     },
-    "below_sl_count": 1,
-    "diagnostic": "Only 2 tracked positions \u2014 too few to draw a pattern, but here's where things stand: DLF -4.98%, SUNPHARMA -1.18%."
+    "below_sl_count": 0,
+    "diagnostic": "Only 2 tracked positions \u2014 too few to draw a pattern, but here's where things stand: DLF nan%, SUNPHARMA nan%."
   },
   "disclaimer": "Real positions, real prices \u2014 not paper trades. yfinance EOD/delayed quotes; verify live price in your broker terminal before acting."
 }
