@@ -55,7 +55,7 @@ Output: recommendation_journal.json at repo root (a real dashboard feed --
 registered in validate_json_outputs.py SCHEMA and vercel.json). Runs each
 refresh, after the signal files it reads are freshly written.
 """
-import sys, os, json, pathlib
+import sys, os, json, math, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import datetime
@@ -266,6 +266,13 @@ def _flip_is_against(rec, consensus):
 
 def _mark_open_rec(rec, fo, stock_fo, equity, now_str):
     cur_spot = _current_spot(rec, fo, stock_fo, equity)
+    # A NaN spot (seen from an upstream data-source glitch) is not None, so it
+    # slips past every "is not None" guard below and poisons premium/outcome_pct
+    # math with NaN, which then serializes as an invalid `NaN` JSON token no
+    # browser can parse (found corrupting recommendation_journal.json 08-Jul-2026).
+    # Treat it the same as missing data — None — right at the source.
+    if cur_spot is not None and not math.isfinite(cur_spot):
+        cur_spot = None
     consensus = _current_consensus(rec, fo, stock_fo, equity)
 
     # --- single-leg F&O (index + stock): re-estimate premium ---
@@ -418,7 +425,11 @@ def main():
                       "at expiry. See recommendation_tracker.py docstring for full method + limits. "
                       "Educational only, not investment advice.",
     }
-    JOURNAL_FILE.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    # allow_nan=False: this file is parsed by browser JSON.parse (which rejects
+    # the NaN/Infinity tokens Python's json module would otherwise happily
+    # write) -- fail loudly here in CI rather than silently shipping a broken
+    # feed, same class of bug that corrupted this file 08-Jul-2026.
+    JOURNAL_FILE.write_text(json.dumps(result, indent=2, allow_nan=False), encoding="utf-8")
     s = result["summary"]
     print(f"  opened {opened_now} new rec(s) this run | {s['open_count']} open, {s['decisive_count']} decisive "
           f"({s['won']}W/{s['lost']}L, win_rate={s['win_rate_pct']}%), "
