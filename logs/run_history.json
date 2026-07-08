@@ -4997,14 +4997,14 @@
     "any_failed": false
   },
   {
-    "timestamp": "08 Jul 2026 14:14 IST",
-    "event": "workflow_dispatch",
+    "timestamp": "08 Jul 2026 14:17 IST",
+    "event": "schedule",
     "steps": {
-      "SNAPSHOT_DAILY": "success",
+      "SNAPSHOT_DAILY": "skipped",
       "KITE_PORTFOLIO": "success",
       "NEWS_REFRESH": "success",
-      "EQUITY_SCAN": "success",
-      "VOTER_WEIGHTS": "success",
+      "EQUITY_SCAN": "skipped",
+      "VOTER_WEIGHTS": "skipped",
       "STRATEGY_PERFORMANCE": "success",
       "MACRO_RISK": "success",
       "SECTOR_ROTATION": "success",
@@ -5017,7 +5017,7 @@
       "EQUITY_BRAIN": "success",
       "STOCK_FO": "success",
       "FO_REFRESH": "success",
-      "DAILY_REPORT": "success",
+      "DAILY_REPORT": "skipped",
       "MARKET_MOOD": "success"
     },
     "any_failed": false
