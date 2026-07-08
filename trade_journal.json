@@ -93,7 +93,7 @@
       "exit_premium": null,
       "exit_reason": null,
       "pnl_pct": null,
-      "last_checked": "08 Jul 2026 14:36 IST"
+      "last_checked": "08 Jul 2026 14:41 IST"
     },
     {
       "id": "BANKNIFTY-2026-07-08-BUY_PE-08Jul20261401IST",
@@ -110,35 +110,36 @@
       "target1_premium": 1208.0,
       "target2_premium": 1726.0,
       "opened_at": "08 Jul 2026 14:01 IST",
-      "status": "open",
-      "current_premium": 1187.0,
-      "closed_at": null,
-      "exit_premium": null,
-      "exit_reason": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "current_premium": 1221.0,
+      "closed_at": "08 Jul 2026 14:41 IST",
+      "exit_premium": 1221.0,
+      "exit_reason": "target1_hit",
+      "pnl_pct": 41.5,
       "macro_context": {
         "risk_level": "HIGH",
         "bias": "BEARISH",
         "risk_score": 70,
         "position_size_multiplier": 0.5
       },
-      "last_checked": "08 Jul 2026 14:36 IST"
+      "last_checked": "08 Jul 2026 14:41 IST",
+      "result": "win"
     }
   ],
   "stats": {
-    "total_closed": 3,
-    "open_count": 2,
-    "wins": 2,
+    "total_closed": 4,
+    "open_count": 1,
+    "wins": 3,
     "losses": 1,
-    "win_rate": 66.7,
-    "avg_win_pct": 45.2,
+    "win_rate": 75.0,
+    "avg_win_pct": 44.0,
     "avg_loss_pct": -26.2,
-    "expectancy_pct": 21.42,
+    "expectancy_pct": 26.45,
     "by_instrument": {
       "BANKNIFTY": {
-        "total": 1,
-        "wins": 0,
-        "win_rate": 0.0
+        "total": 2,
+        "wins": 1,
+        "win_rate": 50.0
       },
       "NIFTY50": {
         "total": 2,
@@ -151,6 +152,11 @@
         "total": 3,
         "wins": 2,
         "win_rate": 66.7
+      },
+      "4/5": {
+        "total": 1,
+        "wins": 1,
+        "win_rate": 100.0
       }
     },
     "loss_by_votes": {
@@ -167,10 +173,10 @@
         "win_rate": 0.0
       }
     },
-    "insight": "5/5 setups: 2/3 (66.7% win)",
-    "loss_diagnostic": "Only 3 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
+    "insight": "5/5 setups: 2/3 (66.7% win) \u00b7 4/5 setups: 1/1 (100.0% win)",
+    "loss_diagnostic": "Only 4 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
   },
   "_meta": {
-    "generated_at": "08 Jul 2026 14:36 IST"
+    "generated_at": "08 Jul 2026 14:41 IST"
   }
 }
