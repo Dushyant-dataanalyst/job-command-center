@@ -1,6 +1,6 @@
 {
-  "fetched_at": "08 Jul 2026 13:51 IST",
-  "risk_score": 65,
+  "fetched_at": "08 Jul 2026 13:56 IST",
+  "risk_score": 70,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,24 +9,24 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +2.31% vs previous close (74.16 -> 75.87)",
+      "evidence": "BZ=F moved +2.39% vs previous close (74.16 -> 75.93)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 75.87,
+      "last": 75.93,
       "previous": 74.16,
-      "pct_change": 2.31,
+      "pct_change": 2.39,
       "evidence_class": "official"
     },
     {
       "name": "India VIX spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "^INDIAVIX moved +11.37% vs previous close (11.65 -> 12.98)",
+      "severity": 4,
+      "evidence": "^INDIAVIX moved +14.33% vs previous close (11.65 -> 13.32)",
       "source": "market_data",
       "ticker": "^INDIAVIX",
-      "last": 12.98,
+      "last": 13.32,
       "previous": 11.65,
-      "pct_change": 11.37,
+      "pct_change": 14.33,
       "evidence_class": "official"
     },
     {
@@ -62,27 +62,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 75.87,
+      "last": 75.93,
       "previous": 74.16,
-      "pct_change": 2.31
+      "pct_change": 2.39
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.46,
+      "last": 95.47,
       "previous": 95.6,
       "pct_change": -0.14
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.98,
+      "last": 13.32,
       "previous": 11.65,
-      "pct_change": 11.37
+      "pct_change": 14.33
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.53,
+      "last": 16.44,
       "previous": 16.13,
-      "pct_change": 2.48
+      "pct_change": 1.92
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -104,20 +104,20 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4130.1,
+      "last": 4130.7,
       "previous": 4145.3,
-      "pct_change": -0.37
+      "pct_change": -0.35
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 12.6,
+      "adx": 12.4,
       "volatility": "Low"
     },
     "BANKNIFTY": {
-      "trend": "Bullish",
-      "adx": 20.1,
+      "trend": "Sideways/Choppy",
+      "adx": 19.9,
       "volatility": "Low"
     }
   },
