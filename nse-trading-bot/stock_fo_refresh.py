@@ -42,7 +42,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from datetime import date
 
 from ist_time import now_ist_str
-from refresh_fo_cloud import _get_indicators, _signals, _signal_commentary, _premium_estimate, _next_monthly_expiry
+from refresh_fo_cloud import _get_indicators, _signals, _signal_commentary, _premium_estimate, _next_monthly_expiry, EXPIRY_ENTRY_CAUTION_DAYS
 from macro_gate import load_macro_risk, direction_blocked, macro_context
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
@@ -164,9 +164,33 @@ def _stock_signal(name, macro):
     trade["strike_step_used"] = step
 
     macro_blocked, macro_reason = direction_blocked(macro, consensus)
-    warning = f"{warning_prefix} Strike interval is an approximation — verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) — figures are per-share, not total cost."
+    near_expiry = days_to <= EXPIRY_ENTRY_CAUTION_DAYS
+    trade["near_expiry_caution"] = near_expiry
+
+    # No real option-chain data source exists anywhere in this repo (no OI,
+    # no bid-ask) -- the strike itself is chosen purely by moneyness
+    # (_atm()) against an already-approximate strike-interval guess
+    # (_strike_step()). Unlike NIFTY/BANKNIFTY (where ATM is reliably the
+    # deepest liquidity on the exchange), single-stock ATM strikes can have
+    # real OI/spread problems this system has no way to detect. Said plainly
+    # every time, not just in the module docstring.
+    warning = (f"{warning_prefix} Strike interval is an approximation — verify actual listed strikes in Kite option chain. "
+               f"No lot size shown (not available from any live source) — figures are per-share, not total cost. "
+               f"⚠ LIQUIDITY UNVERIFIED — no open-interest or bid-ask data exists anywhere in this system; "
+               f"this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.")
     if macro_blocked:
         warning = f"⚠ {macro_reason}. This is still the raw technical signal (not suppressed — a human decides manually here), but treat it as a NO-GO until macro risk eases. {warning}"
+    if near_expiry:
+        warning = f"⚠ EXPIRY-DAY CAUTION — expires in {days_to}d, extreme gamma/theta risk for a NEW position. {warning}"
+    if votes >= 6:
+        # Real backtest_fo_results.json numbers (3y, run 08-Jul-2026), not an
+        # estimate: 6-vote "max conviction" single-leg trades actually have
+        # the WORST risk-adjusted numbers of any vote bucket, not the best.
+        # Said here because a vote count alone otherwise reads as "strongest
+        # setup" when the system's own backtest says the opposite.
+        warning = (f"⚠ VOTE COUNT ≠ EDGE HERE — this system's own 3-year backtest (backtest_fo_results.json) found "
+                   f"6-vote single-leg trades win LESS often (39.7%, Sharpe 2.71, avg return 11.0%) than 4-5 vote spread "
+                   f"trades (41.9-45.3% win, Sharpe 3.0-4.8, avg return 93-111%). Don't read '6/6' as higher conviction. {warning}")
 
     return {
         "name": name, "spot": spot, "consensus": consensus,

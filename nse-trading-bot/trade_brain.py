@@ -26,6 +26,13 @@ gates NEW entries, never forces an exit. Fails open if macro_risk.json is
 missing/unreadable. Every opened trade also carries a macro_context snapshot
 (risk_level/bias/risk_score/position_size_multiplier at open time) for later
 backtest/analysis, even on runs where nothing was blocked.
+
+EXPIRY GATE (added 08-Jul-2026, same posture as the macro gate above): a
+new-trade open is also skipped when fo_latest.json flags the instrument
+near_expiry_caution (days_to_exp <= refresh_fo_cloud.EXPIRY_ENTRY_CAUTION_DAYS)
+-- gamma/theta risk peaks right at expiry, and nothing previously stopped
+opening a fresh position that same day. Same rule: only gates NEW entries,
+never forces an exit on an already-open trade.
 """
 import sys, os, json, math, pathlib
 sys.path.insert(0, os.path.dirname(__file__))
@@ -220,21 +227,32 @@ def main():
 
         open_trade = next((t for t in trades if t["instrument"] == inst_name and t["status"] == "open"), None)
         blocked, block_reason = direction_blocked(macro, sig["consensus"])
+        # Entry-side expiry gate (new 08-Jul-2026): the only days_to_exp check
+        # anywhere in this codebase used to be exit-side ("already expired,
+        # close it"). Nothing stopped OPENING a fresh paper position on
+        # expiry day itself, when gamma/theta risk is highest. This is the
+        # one place that actually commits (simulated) capital, so unlike the
+        # advisory-only fo_latest.json/stock_fo.json warnings, this actually
+        # blocks -- same "block new entries, never force an exit" posture as
+        # the macro gate right above it.
+        near_expiry = bool((sig.get("trade") or {}).get("near_expiry_caution"))
+        entry_blocked = blocked or near_expiry
+        entry_block_reason = block_reason if blocked else "expiry-day caution -- extreme gamma/theta risk for a NEW position"
 
         if open_trade:
             _mark_to_market(open_trade, sig, now_str)
             print(f"  {inst_name}: marked open trade {open_trade['id']} -> {open_trade['status']} ({open_trade.get('exit_reason', 'still open')})")
             # signal flip immediately opens a fresh trade in the new direction
             if open_trade["status"] == "closed" and open_trade["exit_reason"] == "signal_flip" and sig["consensus"] != "WAIT":
-                if blocked:
-                    print(f"  {inst_name}: signal flipped to {sig['consensus']} but NOT reopened -- {block_reason}")
+                if entry_blocked:
+                    print(f"  {inst_name}: signal flipped to {sig['consensus']} but NOT reopened -- {entry_block_reason}")
                 else:
                     new_trade = _open_trade(inst_name, sig, now_str, macro)
                     trades.append(new_trade)
                     print(f"  {inst_name}: opened {new_trade['id']} (signal flip)")
         elif sig["consensus"] != "WAIT":
-            if blocked:
-                print(f"  {inst_name}: {sig['consensus']} signal present but NOT opened -- {block_reason}")
+            if entry_blocked:
+                print(f"  {inst_name}: {sig['consensus']} signal present but NOT opened -- {entry_block_reason}")
             else:
                 new_trade = _open_trade(inst_name, sig, now_str, macro)
                 trades.append(new_trade)

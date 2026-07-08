@@ -26,6 +26,12 @@ INSTRUMENTS = {
     "BANKNIFTY": {"ticker": "^NSEBANK", "lot": 30,  "step": 100, "expiry_day": 2},
 }
 
+# days-to-expiry at/below which a NEW entry gets an unmissable warning
+# (gamma/theta risk peaks right at expiry). days_to is floored to 1 by
+# max((expiry-today).days, 1) below, so 1 covers BOTH expiry-day itself and
+# the eve of expiry -- deliberately conservative, not a bug in the floor.
+EXPIRY_ENTRY_CAUTION_DAYS = 1
+
 def _next_monthly_expiry(weekday):
     today = date.today()
     for mo_off in range(0, 3):
@@ -128,6 +134,23 @@ def _signals(v):
     return consensus, ce, pe
 
 
+# Not conditional -- ALWAYS true, every run, for every instrument: all 4
+# factors below (EMA stack, MACD, pivot R1/S1, ROC5) are computed from the
+# SAME single close-price series (_get_indicators() fetches one 6mo OHLCV
+# pull). None of them is an independent confirmation -- pivot R1/S1 is
+# yesterday's high/low/close, MACD is another EMA difference, ROC5 is raw
+# price change. A "4/4" or "6/6" reading means one strong trend measured
+# four ways, not four independent opinions agreeing. This is the documented
+# mechanism behind a real incident: NIFTY fell 1.7% intraday while PE votes
+# stayed at 2/6 for 4+ hours because MACD and the EMA18/50 stack (2 of the 4
+# "independent" factors) share the same slow clock. Appended to every
+# commentary string, not a hideable/conditional field, per explicit
+# instruction not to bury this.
+CORRELATION_DISCLAIMER = ("⚠ All 4 factors above are derived from the same single price series -- "
+                           "not independent confirmations. A high vote count means one strong trend "
+                           "measured 4 ways, not 4 separate signals agreeing.")
+
+
 def _signal_commentary(v, ce, pe, consensus):
     """Human-readable breakdown of WHY _signals() returned this consensus --
     purely additive (does not touch _signals()' own vote logic or return
@@ -168,7 +191,7 @@ def _signal_commentary(v, ce, pe, consensus):
         verdict = f"WAIT (CE {ce}/6, PE {pe}/6 -- neither side reached the 4-vote threshold): "
     else:
         verdict = f"{consensus} ({ce if consensus == 'BUY_CE' else pe}/6 votes): "
-    return verdict + " | ".join(parts)
+    return verdict + " | ".join(parts) + " " + CORRELATION_DISCLAIMER
 
 def _fo_signal(instrument):
     cfg = INSTRUMENTS[instrument]
@@ -211,6 +234,18 @@ def _fo_signal(instrument):
     zs      = f"{nse_sym}{expiry.strftime('%y%b').upper()}{strike}{opt}" if opt else "—"
     zs_search = f"{nse_sym} {expiry.strftime('%b').upper()} {strike} {opt}" if opt else "—"
     now_str = now_ist_str()
+
+    # Entry-side expiry gate -- the ONLY existing days_to_exp check anywhere
+    # in this codebase was exit-side ("already expired, close it"). Nothing
+    # blocked opening a fresh position ON expiry day itself, when gamma/theta
+    # risk is highest. This is advisory-only (nothing here auto-executes),
+    # so it's not suppressed -- prepended to the action text itself so it's
+    # impossible to miss, not a buried field only a script would read.
+    near_expiry = bool(opt) and days_to <= EXPIRY_ENTRY_CAUTION_DAYS
+    action_text = f"BUY {nse_sym} {strike} {opt}" if opt else "WAIT — No Trade"
+    if near_expiry:
+        action_text = f"⚠ EXPIRY-DAY CAUTION (expires in {days_to}d, extreme gamma/theta risk for a NEW position) — {action_text}"
+
     return {
         "instrument": instrument, "spot": spot, "ann_vol": v["ann_vol"],
         "consensus": consensus, "ce_votes": ce_v, "pe_votes": pe_v,
@@ -224,7 +259,8 @@ def _fo_signal(instrument):
             f"Signals based on {v['data_date']} close (yfinance EOD, delayed/unofficial). Verify in Kite before trading."
         ),
         "trade": {
-            "action": f"BUY {nse_sym} {strike} {opt}" if opt else "WAIT — No Trade",
+            "action": action_text,
+            "near_expiry_caution": near_expiry,
             "zerodha_symbol": zs, "zerodha_search": zs_search,
             "strike": strike, "expiry": expiry.strftime("%d %b %Y"),
             "days_to_exp": days_to, "lot_size": lot,

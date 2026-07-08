@@ -28,6 +28,7 @@ import numpy as np
 import pandas as pd
 
 from market_data import get_ohlcv
+from macro_gate import load_macro_risk, macro_context
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 VOTER_WEIGHTS_FILE = REPO_ROOT / "voter_weights.json"
@@ -249,6 +250,17 @@ def _voter_commentary(v, peg):
     c["Unger"] = ((f"{len(fired)}/3 sub-systems agree ({', '.join(fired)})" if fired else "0/3 sub-systems agree")
                   + " -- needs 2/3 for a BUY, 3/3 for STRONG_BUY")
 
+    # Not conditional -- ALWAYS true: all 4 voters are computed from the same
+    # single 6mo OHLCV pull (_extended_indicators() fetches it once per
+    # stock). Inna's uptrend, Pham's EMA stack, Cianni's breakout context,
+    # and Unger's sub_trend all substantially overlap on "price above its
+    # short/medium moving averages" -- a 4/4 agreement is one trend read 4
+    # ways, not 4 independent opinions. "_note" is not a voter name (never
+    # indexed by the dashboard's per-badge lookup, which uses explicit voter
+    # names) -- it's a standalone, always-present disclaimer key.
+    c["_note"] = ("⚠ All 4 voters score the same single price series -- not independent confirmations. "
+                  "A 4/4 STRONG_BUY means one strong trend measured 4 ways, not 4 separate signals agreeing.")
+
     return c
 
 
@@ -279,14 +291,25 @@ def _load_voter_weights():
         return equal
 
 
-def scan_one(symbol, sector, fetch_peg=True):
+def scan_one(symbol, sector, fetch_peg=True, macro=None):
     """Returns None if there wasn't enough price history to score this
-    stock — caller should skip it, not treat it as an error."""
+    stock — caller should skip it, not treat it as an error.
+
+    macro_context (added 08-Jul-2026): equity was the ONLY signal type in
+    this entire system with zero macro-risk awareness at any layer -- index
+    F&O gates trade_brain.py opens and expert_gate.py's CONFIRMED_ENTRY,
+    stock F&O flags every signal, equity flagged nothing, ever. There's no
+    automated equity trade-opening code to gate (manual "I bought" only),
+    so this FLAGS like stock F&O does, never suppresses the signal -- always
+    attached, even when macro is calm, so the current backdrop is visible
+    next to every signal, not just conditionally on a crisis day."""
     ticker = symbol + ".NS"
     v = _extended_indicators(ticker)
     if v is None:
         return None
     peg = _peg_ratio(ticker) if fetch_peg else None
+    if macro is None:
+        macro = load_macro_risk()
 
     strategies = {
         "Inna": _strategy_inna(v),
@@ -330,6 +353,7 @@ def scan_one(symbol, sector, fetch_peg=True):
         "sector": sector,
         "data_as_of": v["data_date"],
         "data_source": v["data_source"],
+        "macro_context": macro_context(macro),
     }
 
 
@@ -337,9 +361,10 @@ def scan_universe(fetch_peg=True):
     sector_map = _ticker_sector_map()
     results = {}
     errors = {}
+    macro = load_macro_risk()  # loaded once per run, not once per stock -- matches _load_voter_weights()'s per-process caching
     for symbol, sector in sector_map.items():
         try:
-            r = scan_one(symbol, sector, fetch_peg=fetch_peg)
+            r = scan_one(symbol, sector, fetch_peg=fetch_peg, macro=macro)
             if r is not None:
                 results[symbol] = r
             else:

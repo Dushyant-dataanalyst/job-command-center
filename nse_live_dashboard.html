@@ -1043,9 +1043,32 @@ function _agreeingCommentary(strategies, commentary){
   return agreeing.map(k => `<b>${k}:</b> ${commentary[k] || ''}`).join(' · ');
 }
 
+/* Equity had ZERO macro-risk visibility anywhere until 08-Jul-2026 -- every
+   stock's scan_one() now carries an identical macro_context (one macro read
+   per scan run, not per-stock), and every voter's commentary carries an
+   identical correlation disclaimer. Repeating either in all ~30 rows would
+   be noise; showing them ONCE, prominently, above the table is the actual
+   "don't hide it, but don't bury it in repetition either" answer. Pulled
+   from any one row since they're the same across the whole batch. */
+function _renderEquityMacroBanner(targetId){
+  const box = document.getElementById(targetId || 'eq-macro-banner');
+  if (!box) return;
+  const any = Object.values(SCAN_DATA)[0];
+  const macro = any && any.macro_context;
+  const levelColor = { LOW: STATUS.good, MODERATE: STATUS.warning, HIGH: STATUS.serious, EXTREME: STATUS.critical };
+  const macroHtml = macro
+    ? '<span style="font-weight:800;color:' + (levelColor[macro.risk_level] || STATUS.muted) + '">🌍 Macro backdrop: ' + macro.risk_level + ' / ' + macro.bias +
+      ' (size×' + macro.position_size_multiplier + ')</span> — equity has no automated entries to gate, this is informational only, same as every other signal here.'
+    : '🌍 Macro backdrop: unavailable this run.';
+  box.innerHTML = '<div style="background:var(--surface-alt);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;font-size:11px;color:var(--text-secondary);line-height:1.6">' +
+    macroHtml + '<br>⚠ All 4 voters (Inna/Pham/Cianni/Unger) score the same single price series per stock — a 4/4 STRONG_BUY is one strong trend measured 4 ways, not 4 independent confirmations.' +
+    '</div>';
+}
+
 function renderEquityRows(){
   const tbody = document.getElementById('eq-body');
   if (!tbody) return;
+  _renderEquityMacroBanner();
   const today = new Date();
   const rows = Object.entries(SCAN_DATA)
     .filter(([,s]) => s.signal === 'STRONG_BUY' || s.signal === 'BUY')
@@ -1099,6 +1122,7 @@ function renderEquityRows(){
 function renderWatchlist(){
   const tbody = document.getElementById('wl-body');
   if (!tbody) return;
+  _renderEquityMacroBanner('wl-macro-banner');
   const rows = Object.entries(SCAN_DATA)
     .filter(([,s]) => s.signal === 'WATCH')
     .sort(([,a],[,b]) => b.buy_votes - a.buy_votes);
@@ -1156,6 +1180,7 @@ function updateEquityCounts(){
     <div style="flex:1"></div>
     <span class="count-badge" id="eq-count">25 shown</span>
   </div>
+  <div id="eq-macro-banner" style="margin-bottom:10px"></div>
   <table id="eq-table"><thead><tr>
     <th onclick="sortEq(0)">Stock</th><th>Signal</th><th>Strategies</th>
     <th onclick="sortEq(3)">Entry ₹</th><th>SL ₹</th>
@@ -1931,8 +1956,15 @@ function updateEquityCounts(){
           var slPct = t.entry_premium ? Math.round((t.sl_premium - t.entry_premium) / t.entry_premium * 100) : 0;
           var t1Pct = t.entry_premium ? Math.round((t.target1_premium - t.entry_premium) / t.entry_premium * 100) : 0;
           var t2Pct = t.entry_premium ? Math.round((t.target_premium - t.entry_premium) / t.entry_premium * 100) : 0;
-          html += '<div style="background:#dcfce7;border-radius:8px;padding:10px 12px;margin-bottom:10px">' +
-            '<div style="font-size:13px;font-weight:900;color:#15803d">' + (t.action || '') + '</div>' +
+          // A near-expiry caution used to render inside this same "all clear"
+          // green box as a normal BUY action -- the warning text was there
+          // (prepended to t.action) but visually contradicted by its own
+          // background color. Switch to red/critical styling whenever
+          // near_expiry_caution is true so it actually reads as a warning.
+          var actionBg = t.near_expiry_caution ? '#fef2f2' : '#dcfce7';
+          var actionColor = t.near_expiry_caution ? '#991b1b' : '#15803d';
+          html += '<div style="background:' + actionBg + ';border-radius:8px;padding:10px 12px;margin-bottom:10px' + (t.near_expiry_caution ? ';border-left:3px solid #dc2626' : '') + '">' +
+            '<div style="font-size:13px;font-weight:900;color:' + actionColor + '">' + (t.action || '') + '</div>' +
             '<div style="font-size:10px;color:#374151;margin-top:2px">Expiry: ' + (t.expiry||'—') + ' (' + (t.days_to_exp||'?') + 'd) · Search in Kite: <b>' + (t.zerodha_search||'—') + '</b></div>' +
           '</div>' +
           '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:11px;margin-bottom:10px">' +
@@ -2246,11 +2278,33 @@ function updateEquityCounts(){
         var why = (r.commentary || '').replace(/"/g,'&quot;');
         var sigBadge = '<span title="' + why + '" style="cursor:help;background:' + bg + ';color:' + color + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' + sigLabel + (why ? ' 💬' : '') + '</span>';
 
+        // data_warning used to be computed but never actually shown anywhere
+        // in this table -- only the generic strike-interval line at the
+        // bottom rendered. It now carries real per-row risk flags (expiry-
+        // day caution, no-OI/liquidity-unverified, and the vote-count-vs-
+        // backtest-performance paradox for 6-vote setups) that must be
+        // visible inline, not hidden behind a hover tooltip or dropped
+        // entirely -- explicit instruction not to bury this.
+        var warnText = r.data_warning || '';
+        // LIQUIDITY UNVERIFIED deliberately excluded here -- it's a constant
+        // structural fact (true for every single stock F&O row, no OI data
+        // exists anywhere in this system), not an exceptional elevated-risk
+        // case. Styling every row red for a universally-true caveat would
+        // drown out the rows that actually ARE more urgent than the rest.
+        var isUrgent = (r.trade && r.trade.near_expiry_caution) || /VOTE COUNT|NO-GO/.test(warnText);
+        var warnRowHtml = warnText
+          ? '<tr><td colspan="7" style="padding:6px 10px;font-size:10px;line-height:1.5;' +
+            (isUrgent ? 'background:#fef2f2;color:#991b1b;font-weight:600;border-left:3px solid #dc2626'
+                      : 'background:#f8fafc;color:#64748b') +
+            '">' + warnText + '</td></tr>'
+          : '';
+
         if (!r.trade) {
           html += '<tr><td style="font-weight:700;color:#0f172a">' + r.name + '</td>' +
             '<td>' + sigBadge + '</td>' +
             '<td>' + INR4(r.spot) + '</td>' +
-            '<td colspan="4" style="font-size:11px;color:#94a3b8">No trade — consensus not reached (CE ' + r.ce_votes + ', PE ' + r.pe_votes + ')</td></tr>';
+            '<td colspan="4" style="font-size:11px;color:#94a3b8">No trade — consensus not reached (CE ' + r.ce_votes + ', PE ' + r.pe_votes + ')</td></tr>' +
+            warnRowHtml;
           return;
         }
 
@@ -2266,13 +2320,14 @@ function updateEquityCounts(){
           riskRewardCell = 'Max P ' + INR4(t.max_profit) + ' · Max L ' + INR4(t.max_loss) + ' · BE ' + INR4(t.breakeven);
         }
 
-        html += '<tr><td style="font-weight:700;color:#0f172a">' + r.name + '</td>' +
+        html += '<tr><td style="font-weight:700;color:#0f172a">' + r.name + (t.near_expiry_caution ? ' ⚠' : '') + '</td>' +
           '<td>' + sigBadge + '</td>' +
           '<td>' + INR4(r.spot) + '</td>' +
           '<td style="font-size:11px;font-weight:700;color:' + color + '">' + strategyLabel + '</td>' +
           '<td style="font-size:11px;color:#0f172a">' + strikesCell + '</td>' +
           '<td style="font-size:11px;color:#64748b">' + riskRewardCell + '</td>' +
-          '<td style="font-size:10px;color:#94a3b8">' + t.expiry + ' (' + t.days_to_exp + 'd)</td></tr>';
+          '<td style="font-size:10px;color:#94a3b8">' + t.expiry + ' (' + t.days_to_exp + 'd)</td></tr>' +
+          warnRowHtml;
       });
 
       html += '</tbody></table>' +
@@ -2299,6 +2354,7 @@ function updateEquityCounts(){
 <div id="wl" class="panel">
 <div class="sec">
   <div class="sec-ttl"><span class="sec-ttl-dot" style="background:#d97706"></span>Watch List — 1 Strategy Active, Setup Forming</div>
+  <div id="wl-macro-banner" style="margin-bottom:10px"></div>
   <table id="wl-table"><thead><tr><th>Stock</th><th>Sector</th><th>Strategies</th><th>Price ₹</th><th>Who's Watching</th></tr></thead>
   <tbody id="wl-body"></tbody></table>
 </div>
