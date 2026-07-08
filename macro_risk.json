@@ -1,5 +1,5 @@
 {
-  "fetched_at": "08 Jul 2026 11:06 IST",
+  "fetched_at": "08 Jul 2026 11:12 IST",
   "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.28% vs previous close (74.16 -> 76.59)",
+      "evidence": "BZ=F moved +3.18% vs previous close (74.16 -> 76.52)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 76.59,
+      "last": 76.52,
       "previous": 74.16,
-      "pct_change": 3.28,
+      "pct_change": 3.18,
       "evidence_class": "official"
     }
   ],
@@ -38,15 +38,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 76.59,
+      "last": 76.52,
       "previous": 74.16,
-      "pct_change": 3.28
+      "pct_change": 3.18
     },
     "usdinr": {
       "ticker": "INR=X",
       "last": 95.15,
       "previous": 95.6,
-      "pct_change": -0.47
+      "pct_change": -0.48
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -80,9 +80,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4136.3,
+      "last": 4136.6,
       "previous": 4145.3,
-      "pct_change": -0.22
+      "pct_change": -0.21
     }
   },
   "regime_context": {
@@ -97,7 +97,7 @@
       "volatility": "Low"
     }
   },
-  "geopolitical_feed_status": "fetch_failed: ConnectTimeout: HTTPSConnectionPool(host='api.gdeltproject.org', port=443): Max retries exceeded with url: /api/v2/doc/doc?query=%28%22war%22+OR+%22invasion%22+OR+%22military+escalation%22+OR+%22missile+strike%22+OR+%22armed+conflict%22+OR+%22sanctions%22%29+sourcelang%3Aenglish&mode=artlist&format=json&maxrecords=20&sort=datedesc&timespan=2days (Caused by ConnectTimeoutError(<HTTPSConnection(host='api.gdeltproject.org', port=443) at 0x7f03420b6550>, 'Connection to api.gdeltproject.org timed out. (connect timeout=25)'))",
+  "geopolitical_feed_status": "fetch_failed: HTTP 429: 'Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com for larger queries. All high-traffic users should switch to our ngrams dataset: https://blog.gdeltproject.org/using-the'",
   "data_unavailable": {
     "fii_dii_flows": "No free, non-scraped source found -- NSE's FII/DII page blocks non-browser requests. TODO if a reliable API surfaces.",
     "gift_nifty": "No stable free source verified yet.",
