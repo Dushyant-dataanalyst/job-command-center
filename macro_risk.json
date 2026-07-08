@@ -1,31 +1,31 @@
 {
-  "fetched_at": "08 Jul 2026 11:29 IST",
-  "risk_score": 47,
+  "fetched_at": "08 Jul 2026 11:32 IST",
+  "risk_score": 55,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
-  "confidence": 0.75,
+  "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.13% vs previous close (74.16 -> 76.48)",
+      "evidence": "BZ=F moved +3.17% vs previous close (74.16 -> 76.51)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 76.48,
+      "last": 76.51,
       "previous": 74.16,
-      "pct_change": 3.13,
+      "pct_change": 3.17,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "3 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Oil prices surge as US strikes Iran, reversing slide to pre-war levels\"",
-      "source": "https://www.aljazeera.com/news/2026/7/8/oil-prices-surge-as-us-strikes-iran-reversing-fall-to-pre-war-levels?traffic_source=rss",
-      "published_at": "08 Jul 2026 09:32 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
+      "severity": 3,
+      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russian fuel shortages bite – but will Putin change tack in Ukraine war?\"",
+      "source": "https://www.bbc.co.uk/news/articles/cr7xk8j0j2do?at_medium=RSS&at_campaign=rss",
+      "published_at": "08 Jul 2026 10:35 IST",
+      "evidence_class": "reported",
+      "corroborating_sources": 2,
       "news_source": "rss_fallback"
     }
   ],
@@ -50,21 +50,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 76.48,
+      "last": 76.51,
       "previous": 74.16,
-      "pct_change": 3.13
+      "pct_change": 3.17
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.18,
+      "last": 95.2,
       "previous": 95.6,
-      "pct_change": -0.45
+      "pct_change": -0.42
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.12,
+      "last": 12.13,
       "previous": 11.65,
-      "pct_change": 4.01
+      "pct_change": 4.14
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -92,9 +92,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4137.4,
+      "last": 4135.9,
       "previous": 4145.3,
-      "pct_change": -0.19
+      "pct_change": -0.23
     }
   },
   "regime_context": {
