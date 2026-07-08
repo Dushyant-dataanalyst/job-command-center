@@ -22,7 +22,18 @@ on:
                                     # external trigger (cron-job.org) also fires every 5 min around the
                                     # clock regardless of this native schedule.
     - cron: '30 15 * * 1-5'       # Once at 9:00 PM IST (15:30 UTC) — next-day prep
-  workflow_dispatch:               # Manual trigger from GitHub UI — hit "Run workflow" any time to force a fresh pull
+  workflow_dispatch:               # Manual trigger from GitHub UI — hit "Run workflow" any time to force a fresh pull.
+                                    # ALSO how cron-job.org's external 24/7-every-5-min trigger fires this workflow
+                                    # (it calls the workflow_dispatch REST API) -- that ping never sets the input
+                                    # below (default false), so should_run_full_refresh.py can tell it apart from a
+                                    # genuine human click and give it the real time-based decision instead of always
+                                    # forcing a run (see should_run_full_refresh.py's "BUG FIXED 08-Jul-2026" note --
+                                    # this used to silently defeat the off-hours throttle for every cron-job.org ping).
+    inputs:
+      force_full_refresh:
+        description: 'Force a full refresh + once-daily steps (equity scan, voter weights, snapshot, astro view, daily report) right now, regardless of time of day. Leave unchecked for a normal on-demand run.'
+        type: boolean
+        default: false
 
 # cancel-in-progress was true until 02-Jul-2026 — reverted after finding it was
 # likely the actual cause of near-zero commits that day. logs/run_history.json
@@ -52,6 +63,7 @@ jobs:
     timeout-minutes: 2
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
+      should_run_daily: ${{ steps.check.outputs.should_run_daily }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -69,11 +81,16 @@ jobs:
       # gets triggered. This is a product decision (off-hours 5-min
       # granularity has zero signal value, market's closed), not just cost
       # control -- kept even though Actions minutes are free on this public
-      # repo. See should_run_full_refresh.py for the exact logic (tested
-      # against market-open/close edges, weekday/weekend, and the 55-min
-      # boundary before being wired in here).
+      # repo. Also decides should_run_daily (the once-daily-only steps —
+      # equity scan, voter weights, snapshot, astro view, daily report) from
+      # a real IST clock-time window, not from event_name -- see
+      # should_run_full_refresh.py for why (tested against market-open/
+      # close edges, weekday/weekend, the 55-min boundary, and the daily
+      # window boundary before being wired in here).
       - name: Decide whether to run full refresh this trigger
         id: check
+        env:
+          FORCE_FULL_REFRESH: ${{ inputs.force_full_refresh }}
         run: |
           cd nse-trading-bot
           python should_run_full_refresh.py
@@ -232,7 +249,7 @@ jobs:
       # actually closed since the last run, not every 5 minutes.
       - name: Recalculate per-voter weights (writes voter_weights.json to repo root)
         id: voter_weights
-        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: needs.gate.outputs.should_run_daily == 'true'
         continue-on-error: true
         run: |
           set -e
@@ -245,7 +262,7 @@ jobs:
       # 5 minutes, and swing signals don't need that granularity.
       - name: Run equity scan (writes equity_scan.json to repo root)
         id: equity_scan
-        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: needs.gate.outputs.should_run_daily == 'true'
         continue-on-error: true
         run: |
           set -e
@@ -257,7 +274,7 @@ jobs:
       # once the day's data has settled, not every 5 minutes.
       - name: Snapshot today's JSON files (writes snapshots/YYYY-MM-DD/)
         id: snapshot_daily
-        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: needs.gate.outputs.should_run_daily == 'true'
         continue-on-error: true
         run: |
           cd nse-trading-bot
@@ -272,7 +289,7 @@ jobs:
       # recomputing this every 5 minutes.
       - name: Compute astrological market view (writes astro_view.json)
         id: astro_view
-        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: needs.gate.outputs.should_run_daily == 'true'
         continue-on-error: true
         run: |
           cd nse-trading-bot
@@ -322,7 +339,7 @@ jobs:
       # strategy_performance (reads the journals + the perf report).
       - name: Send daily Trading Brain report (once/day)
         id: daily_report
-        if: github.event.schedule == '30 15 * * 1-5' || github.event_name == 'workflow_dispatch'
+        if: needs.gate.outputs.should_run_daily == 'true'
         continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
