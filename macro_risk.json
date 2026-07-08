@@ -1,6 +1,6 @@
 {
-  "fetched_at": "08 Jul 2026 13:56 IST",
-  "risk_score": 70,
+  "fetched_at": "08 Jul 2026 14:01 IST",
+  "risk_score": 80,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -8,32 +8,32 @@
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +2.39% vs previous close (74.16 -> 75.93)",
+      "severity": 4,
+      "evidence": "BZ=F moved +4.77% vs previous close (74.16 -> 77.7)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 75.93,
+      "last": 77.7,
       "previous": 74.16,
-      "pct_change": 2.39,
+      "pct_change": 4.77,
       "evidence_class": "official"
     },
     {
       "name": "India VIX spike",
       "impact": "bearish",
-      "severity": 4,
-      "evidence": "^INDIAVIX moved +14.33% vs previous close (11.65 -> 13.32)",
+      "severity": 5,
+      "evidence": "^INDIAVIX moved +21.55% vs previous close (11.65 -> 14.16)",
       "source": "market_data",
       "ticker": "^INDIAVIX",
-      "last": 13.32,
+      "last": 14.16,
       "previous": 11.65,
-      "pct_change": 14.33,
+      "pct_change": 21.55,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "5 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russian fuel shortages bite – but will Putin change tack in Ukraine war?\"",
+      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russian fuel shortages bite – but will Putin change tack in Ukraine war?\"",
       "source": "https://www.bbc.co.uk/news/articles/cr7xk8j0j2do?at_medium=RSS&at_campaign=rss",
       "published_at": "08 Jul 2026 10:35 IST",
       "evidence_class": "reported",
@@ -62,27 +62,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 75.93,
+      "last": 77.7,
       "previous": 74.16,
-      "pct_change": 2.39
+      "pct_change": 4.77
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.47,
+      "last": 95.55,
       "previous": 95.6,
-      "pct_change": -0.14
+      "pct_change": -0.06
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.32,
+      "last": 14.16,
       "previous": 11.65,
-      "pct_change": 14.33
+      "pct_change": 21.55
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.44,
+      "last": 16.64,
       "previous": 16.13,
-      "pct_change": 1.92
+      "pct_change": 3.16
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -104,20 +104,20 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4130.7,
+      "last": 4101.1,
       "previous": 4145.3,
-      "pct_change": -0.35
+      "pct_change": -1.07
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 12.4,
+      "adx": 12.3,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 19.9,
+      "adx": 19.5,
       "volatility": "Low"
     }
   },
