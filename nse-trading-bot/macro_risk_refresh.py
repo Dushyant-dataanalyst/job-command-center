@@ -18,12 +18,22 @@ a real URL+timestamp, never a paraphrase:
      gold) -- tiered on % change vs previous close. Every such factor
      carries ticker/last/previous/pct_change, thresholds are named
      constants below (grep MARKET-DATA TIERS).
-  2. News factors -- keyword-matched against two real free sources, never
-     an LLM summary:
-       - GDELT DOC 2.0 API (free, no key) for global geopolitical keywords
-         (war/invasion/escalation/sanctions/conflict). A single corroborating
-         source is capped "rumor"-class and can never alone push a factor
-         into the HIGH-risk point range -- see _geopolitical_factor().
+  2. News factors -- keyword-matched against real free sources, never an
+     LLM summary:
+       - Global geopolitical keywords (war/invasion/escalation/sanctions/
+         conflict): GDELT DOC 2.0 API (free, no key) first -- richer,
+         many distinct outlets, best for the corroborating-source-count
+         logic below. GDELT proved unreliable in practice (08-Jul-2026: hit
+         its own "one request per 5s" 429, then separately connect-timed-out
+         from a live GitHub Actions run -- a real infra issue, not a local
+         block, confirmed from two independent networks -- see CLAUDE.md),
+         so BBC World + Al Jazeera RSS (RSS_GEOPOLITICAL_FEEDS, same proven
+         technique news_refresh.py already uses for NSE's own RSS) is a
+         same-run fallback when GDELT fails outright. Every factor records
+         which source actually supplied it (news_source: "gdelt" or
+         "rss_fallback"). A single corroborating source is capped
+         "rumor"-class and can never alone push a factor into the
+         HIGH-risk point range -- see _geopolitical_factor().
        - news_feed.json's own position_news (NSE's official corporate-
          announcement RSS, already fetched by news_refresh.py earlier in
          the same CI run) for fraud/scam/SEBI/probe keywords against
@@ -42,7 +52,7 @@ regime_context for dashboard/human context -- deliberately NOT re-scored
 here, since India VIX (below) already captures the volatility dimension and
 double-counting it would be double-dipping the same underlying signal.
 """
-import sys, os, json, pathlib
+import sys, os, json, pathlib, re
 sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import datetime, timezone
@@ -89,15 +99,29 @@ GOLD_SPIKE_TIERS      = [(3.0, 3, 10), (1.5, 2, 6)]                     # soft s
 US_SELLOFF_TIERS      = [(-3.0, 5, 20), (-2.0, 4, 15), (-1.0, 2, 10)]   # brief: US market selloff +10 to +20 (composite S&P/Nasdaq/Dow)
 US_RALLY_TIERS        = [(1.5, 2, -8)]                                  # brief: "positive global cues" reduces risk
 
-# --- GDELT (free, no API key) -------------------------------------------
+# --- geopolitical news, GDELT primary + RSS fallback (free, no API key) --
+# GDELT is the richer source (searchable, many distinct outlets -- good for
+# the corroborating-source-count logic below) but has proven unreliable in
+# practice: it 429'd during testing (its OWN documented "one request per 5s"
+# limit) and separately connect-timed-out from a live GitHub Actions run
+# (08-Jul-2026, see CLAUDE.md) -- a real infra issue, not a local block,
+# since both a home ISP and a GH-hosted runner hit it independently. RSS
+# feeds from major wire services are the fallback when GDELT fails outright
+# -- same proven technique news_refresh.py already uses successfully for
+# NSE's own RSS (plain XML + a browser User-Agent, no key, no auth dance).
+GEOPOLITICAL_KEYWORDS = ["war", "invasion", "military escalation", "missile strike", "armed conflict", "sanctions"]
 GDELT_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
-GEOPOLITICAL_QUERY = '("war" OR "invasion" OR "military escalation" OR "missile strike" OR "armed conflict" OR "sanctions") sourcelang:english'
+GEOPOLITICAL_QUERY = "(" + " OR ".join(f'"{k}"' for k in GEOPOLITICAL_KEYWORDS) + ") sourcelang:english"
+RSS_GEOPOLITICAL_FEEDS = {
+    "bbc_world": "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "aljazeera_all": "https://www.aljazeera.com/xml/rss/all.xml",
+}
 NEWS_STALE_HOURS = 48
 GEOPOLITICAL_MIN_SOURCES_FOR_HIGH = 3  # single-source hits are capped "rumor" -- can never alone reach this
 
 # --- stock-specific regulatory keywords, scanned against news_feed.json's
 # own position_news (NSE official RSS, already fetched this run) ---------
-REGULATORY_KEYWORDS = ["fraud", "scam", "probe", "sebi", "penalty", "raid", "insolvency", "default", "fir ", "cbi "]
+REGULATORY_KEYWORDS = ["fraud", "scam", "probe", "sebi", "penalty", "raid", "insolvency", "default", "fir", "cbi"]
 
 RISK_LEVEL_SIZE_MULT = {"LOW": 1.0, "MODERATE": 0.85, "HIGH": 0.5, "EXTREME": 0.25}
 RISK_LEVEL_MIN_VOTES = {"LOW": None, "MODERATE": None, "HIGH": 5, "EXTREME": 6}          # None = defer to expert_gate's own default
@@ -117,6 +141,27 @@ def _load_json(path, default):
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return default
+
+
+def _keyword_hit(text, keywords):
+    """First keyword/phrase from `keywords` found in `text` as a whole
+    word (regex word-boundary match), or None. NOT a naive substring
+    check -- `"war" in text` would false-positive on "warned"/"software"/
+    "Delaware" (a real false positive caught 08-Jul-2026: an unrelated US
+    Senate-race headline got flagged as "geopolitical escalation" this
+    way). Callers pass already-lowercased text; keywords are matched
+    case-insensitively regardless. KNOWN LIMITATION: word-boundary matching
+    fixes false positives from substrings inside unrelated words (e.g.
+    "war" inside "warned"), but a few keywords are still ambiguous even as
+    whole words ("invasion" in "invasion of privacy") -- that's an accepted
+    tradeoff of deterministic keyword-only matching (no LLM semantic
+    understanding, by design); the corroborating-source-count requirement
+    in _geopolitical_factor() is the actual backstop against one stray
+    ambiguous match driving risk up alone (capped "rumor"-class)."""
+    for kw in keywords:
+        if re.search(r"\b" + re.escape(kw.strip()) + r"\b", text, re.IGNORECASE):
+            return kw.strip()
+    return None
 
 
 def _pct_change(ticker):
@@ -202,17 +247,18 @@ def _parse_gdelt_date(s):
         return None
 
 
-def _fetch_geopolitical_articles():
-    """Returns (articles, error_detail). articles is a list of fresh
-    (<= NEWS_STALE_HOURS old) matching articles, or None if the GDELT
-    request itself failed -- None is deliberately distinct from []
+def _fetch_gdelt_articles():
+    """GDELT-only fetch. Returns (articles, error_detail): articles is a
+    list of fresh (<= NEWS_STALE_HOURS old) matching articles, or None if
+    the request itself failed -- None is deliberately distinct from []
     (fetched fine, nothing matched) so the caller can report an honest
     'fetch_failed' vs 'no_matches' status rather than conflating the two
     into a fake zero. error_detail carries the actual exception/status so a
     'fetch_failed' in macro_risk.json is diagnosable from the committed
     JSON alone, without needing GitHub Actions log access. GDELT is a free
     public API with no uptime SLA -- one retry on a transient failure, then
-    give up cleanly."""
+    give up cleanly (see _fetch_geopolitical_articles() for the RSS
+    fallback this feeds into)."""
     articles = None
     last_error = None
     for attempt in range(2):
@@ -267,15 +313,81 @@ def _fetch_geopolitical_articles():
     return fresh, None
 
 
-def _geopolitical_factor(articles, fetch_error):
-    """articles is None (fetch failed -- see fetch_error), [] (fetched, no
-    matches), or a list of fresh matches. Severity/points scale with the
-    number of DISTINCT corroborating source domains, never a single
+def _fetch_rss_geopolitical_articles():
+    """Fallback when GDELT fails outright -- scans RSS_GEOPOLITICAL_FEEDS
+    (major wire services, no key/auth) for GEOPOLITICAL_KEYWORDS in each
+    item's title+description. Same proven technique news_refresh.py already
+    uses successfully for NSE's own RSS (plain XML + browser User-Agent).
+    One dead feed doesn't kill the other -- only fails (returns None) if
+    EVERY configured feed fails. Returns (articles_or_None, error_detail)."""
+    import xml.etree.ElementTree as ET
+    from email.utils import parsedate_to_datetime
+
+    now = now_ist()
+    fresh = []
+    feed_errors = {}
+    for domain, url in RSS_GEOPOLITICAL_FEEDS.items():
+        try:
+            resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}, timeout=15)
+            resp.raise_for_status()
+            root = ET.fromstring(resp.text)
+        except Exception as e:
+            feed_errors[domain] = f"{type(e).__name__}: {e}"
+            continue
+        for item in root.findall(".//item"):
+            title = (item.findtext("title") or "").strip()
+            desc = (item.findtext("description") or "").strip()
+            link = (item.findtext("link") or "").strip()
+            pub_raw = (item.findtext("pubDate") or "").strip()
+            text = f"{title} {desc}".lower()
+            if not _keyword_hit(text, GEOPOLITICAL_KEYWORDS):
+                continue
+            try:
+                pub = parsedate_to_datetime(pub_raw)
+                if pub.tzinfo is None:
+                    pub = pub.replace(tzinfo=timezone.utc)
+                pub = pub.astimezone(IST)
+            except Exception:
+                continue
+            age_hours = (now - pub).total_seconds() / 3600
+            if age_hours > NEWS_STALE_HOURS:
+                continue
+            fresh.append({
+                "title": title, "url": link, "domain": domain,
+                "published_at": pub.strftime("%d %b %Y %H:%M IST"), "age_hours": round(age_hours, 1),
+            })
+
+    if len(feed_errors) == len(RSS_GEOPOLITICAL_FEEDS):
+        return None, f"all RSS feeds failed: {feed_errors}"
+    return fresh, None
+
+
+def _fetch_geopolitical_articles():
+    """Orchestrator: GDELT first (richer -- searchable, many distinct
+    outlets, better for the corroborating-source-count logic below), RSS as
+    fallback only if GDELT fails outright. Returns (articles_or_None,
+    source_used, error_detail) -- error_detail is only set when BOTH
+    sources fail."""
+    articles, gdelt_error = _fetch_gdelt_articles()
+    if articles is not None:
+        return articles, "gdelt", None
+    rss_articles, rss_error = _fetch_rss_geopolitical_articles()
+    if rss_articles is not None:
+        return rss_articles, "rss_fallback", None
+    return None, None, f"gdelt: {gdelt_error} | rss_fallback: {rss_error}"
+
+
+def _geopolitical_factor(articles, fetch_error, news_source):
+    """articles is None (both GDELT and the RSS fallback failed -- see
+    fetch_error), [] (fetched fine, no matches), or a list of fresh
+    matches. news_source is 'gdelt' or 'rss_fallback', for transparency on
+    which path actually supplied the evidence. Severity/points scale with
+    the number of DISTINCT corroborating source domains, never a single
     headline's wording -- a lone unconfirmed report is capped 'rumor'-class
     (severity 2, 12 points) and can never alone reach the HIGH-risk point
     range, per the brief's anti-hallucination rule."""
     if not articles:
-        status = f"fetch_failed: {fetch_error}" if articles is None else "no_matches"
+        status = f"fetch_failed: {fetch_error}" if articles is None else f"no_matches ({news_source})"
         return 0, None, status
 
     domains = sorted({a["domain"] for a in articles if a.get("domain")})
@@ -294,9 +406,9 @@ def _geopolitical_factor(articles, fetch_error):
         "evidence": f"{len(articles)} article(s) from {n_domains} distinct source(s) matching war/escalation/"
                     f"conflict keywords in the last {NEWS_STALE_HOURS}h -- most recent: \"{top['title']}\"",
         "source": top["url"], "published_at": top["published_at"], "evidence_class": cls,
-        "corroborating_sources": n_domains,
+        "corroborating_sources": n_domains, "news_source": news_source,
     }
-    return points, factor, "ok"
+    return points, factor, f"ok ({news_source})"
 
 
 def _regulatory_alerts():
@@ -310,7 +422,7 @@ def _regulatory_alerts():
         if item.get("kind") != "holding":
             continue
         text = f"{item.get('company', '')} {item.get('summary', '')}".lower()
-        hit = next((kw for kw in REGULATORY_KEYWORDS if kw in text), None)
+        hit = _keyword_hit(text, REGULATORY_KEYWORDS)
         if hit:
             alerts.append({
                 "ticker": item.get("ticker"), "matched_keyword": hit.strip(),
@@ -356,8 +468,8 @@ def main():
             factors.append(f)
             net_points += pts
 
-    geo_articles, geo_fetch_error = _fetch_geopolitical_articles()
-    geo_points, geo_factor, geo_status = _geopolitical_factor(geo_articles, geo_fetch_error)
+    geo_articles, geo_source, geo_fetch_error = _fetch_geopolitical_articles()
+    geo_points, geo_factor, geo_status = _geopolitical_factor(geo_articles, geo_fetch_error, geo_source)
     if geo_factor:
         factors.append(geo_factor)
         net_points += geo_points
