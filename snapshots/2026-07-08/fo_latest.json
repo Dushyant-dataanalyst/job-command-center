@@ -1,15 +1,15 @@
 {
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 24253.05,
-    "ann_vol": 0.1141,
+    "spot": 24230.35,
+    "ann_vol": 0.1145,
     "consensus": "WAIT",
     "ce_votes": 3,
     "pe_votes": 2,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:11 IST",
-    "data_source": "yfinance",
-    "data_warning": "Signals based on 2026-07-08 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
+    "fetched_at": "08 Jul 2026 10:15 IST",
+    "data_source": "kite",
+    "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "zerodha_symbol": "\u2014",
@@ -27,15 +27,15 @@
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 57973.4,
-    "ann_vol": 0.1473,
+    "spot": 57919.75,
+    "ann_vol": 0.1476,
     "consensus": "WAIT",
     "ce_votes": 2,
     "pe_votes": 3,
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 10:11 IST",
-    "data_source": "yfinance",
-    "data_warning": "Signals based on 2026-07-08 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
+    "fetched_at": "08 Jul 2026 10:15 IST",
+    "data_source": "kite",
+    "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "zerodha_symbol": "\u2014",
@@ -52,7 +52,7 @@
     }
   },
   "_meta": {
-    "generated_at": "08 Jul 2026 10:11 IST",
-    "source": "yfinance EOD (delayed/unofficial)"
+    "generated_at": "08 Jul 2026 10:15 IST",
+    "source": "kite (official, live session)"
   }
 }
