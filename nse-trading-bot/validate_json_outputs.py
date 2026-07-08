@@ -36,6 +36,7 @@ SCHEMA = {
     "expert_gate.json":          (dict, ["instruments"]),
     "strategy_performance.json": (dict, ["overall"]),
     "macro_risk.json":           (dict, ["fetched_at", "risk_score", "risk_level"]),
+    "astro_view.json":           (dict, ["fetched_at"]),
 }
 
 

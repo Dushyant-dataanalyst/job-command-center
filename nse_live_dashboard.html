@@ -479,6 +479,7 @@ function _foReadAndPredict(pos, sig){
   </div>
   <div id="ov-regime" style="margin-bottom:14px"></div>
   <div id="ov-macro-risk" style="margin-bottom:14px"></div>
+  <div id="ov-astro" style="margin-bottom:14px"></div>
 </div>
 <script>
 (function buildOverview(){
@@ -488,15 +489,17 @@ function _foReadAndPredict(pos, sig){
     fetch('/trade_journal.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
     fetch('/sector_rotation.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
     fetch('/market_regime.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
-    fetch('/macro_risk.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
+    fetch('/macro_risk.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; }),
+    fetch('/astro_view.json?v=' + Date.now()).then(function(r){ return r.ok ? r.json() : null; }).catch(function(){ return null; })
   ]).then(function(results){
-    var eqJ = results[0], mood = results[1], tradeJ = results[2], sector = results[3], regime = results[4], macro = results[5];
+    var eqJ = results[0], mood = results[1], tradeJ = results[2], sector = results[3], regime = results[4], macro = results[5], astro = results[6];
     renderHealth(eqJ, mood, tradeJ);
     renderAction(eqJ);
     renderMood(mood);
     renderSectors(sector);
     renderRegime(regime);
     renderMacroRisk(macro);
+    renderAstroView(astro);
     // renderHealth()/renderAction() read the global SCAN_DATA for the
     // Strong-Buy count and untracked-signal list — that's populated by a
     // separate async fetch (_loadEquityScan()) with no ordering guarantee
@@ -680,6 +683,38 @@ function _foReadAndPredict(pos, sig){
           ? '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px">' + sectorChips(adj.avoid_sectors, '#fef2f2', '#dc2626', '⚠ Avoid') + ' ' + sectorChips(adj.watch_sectors, '#fffbeb', '#d97706', '👁 Watch') + '</div>'
           : '') +
         '<div style="font-size:10px;color:#94a3b8;margin-top:8px">' + (macro.disclaimer || '') + '</div>' +
+      '</div>';
+  }
+
+  /* Deliberately styled DIFFERENT from every other panel on this page —
+     dashed border, no green/red trade-signal colors, no vote badges, no
+     "I bought this" button. Nothing here should visually read as a trading
+     signal, because it isn't one. See astro_market_view.py's docstring for
+     why this exists and how it's isolated from every trade decision. */
+  function renderAstroView(astro){
+    var box = document.getElementById('ov-astro');
+    if (!box) return;
+    if (!astro || !astro.astronomical_facts) {
+      box.innerHTML = '';
+      return;
+    }
+    var moon = astro.astronomical_facts.moon || {};
+    var mercury = astro.astronomical_facts.mercury || {};
+    var folk = astro.folk_market_view || {};
+
+    box.innerHTML =
+      '<div style="background:#faf5ff;border:1px dashed #c084fc;border-radius:10px;padding:14px 16px">' +
+        '<div style="font-size:13px;font-weight:800;color:#7e22ce;margin-bottom:8px">🔮 Astrological Market View <span style="font-weight:700;color:#a855f7;font-size:10px">— UNVERIFIED, NOT A SIGNAL</span></div>' +
+        '<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:#581c87;margin-bottom:8px">' +
+          '<div><b>Moon:</b> ' + (moon.phase_name || '—') + ' (' + (moon.illumination_pct != null ? moon.illumination_pct + '%' : '—') + ', ' + (moon.waxing ? 'waxing' : 'waning') + ')</div>' +
+          '<div><b>Mercury:</b> ' + (mercury.status || '—') + (mercury.next_station_date ? ' · ' + (mercury.next_station_type || '') + ' ' + mercury.next_station_date : '') + '</div>' +
+        '</div>' +
+        '<div style="font-size:11px;color:#6b21a8;line-height:1.6;margin-bottom:8px">' +
+          (folk.moon_bias || '') + '<br>' + (folk.mercury_bias || '') +
+        '</div>' +
+        '<div style="font-size:10px;color:#86198f;background:#fdf4ff;border-radius:6px;padding:8px 10px;line-height:1.5">' +
+          (astro.disclaimer || '') +
+        '</div>' +
       '</div>';
   }
 })();

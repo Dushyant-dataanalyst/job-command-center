@@ -1,0 +1,27 @@
+{
+  "fetched_at": "08 Jul 2026 14:20 IST",
+  "astronomical_facts": {
+    "moon": {
+      "phase_name": "Last Quarter",
+      "illumination_pct": 44.0,
+      "waxing": false,
+      "age_days_since_new_moon": 23.2,
+      "days_to_next_new_moon": 6.0,
+      "days_to_next_full_moon": 21.2
+    },
+    "mercury": {
+      "status": "retrograde",
+      "days_in_current_status": 8,
+      "next_station_date": "25 Jul 2026",
+      "next_station_type": "goes direct",
+      "days_to_next_station": 17
+    }
+  },
+  "folk_market_view": {
+    "moon_bias": "Waning moon (Last Quarter, 44.0% illuminated) -- some retail market-astrology sources treat the waning half of the lunar cycle as a traditionally 'distributing/bearish-leaning' period.",
+    "mercury_bias": "Mercury retrograde (day 8 of this cycle, goes direct around 25 Jul 2026) -- traditionally associated in folk market-astrology with communication breakdowns, contract/paperwork delays, and choppier price action, most often cited for IT/Telecom/Media names. Not a documented basis for the 4-voter technical engine or the F&O consensus.",
+    "combined_note": "These two lines are a traditional belief, not a signal. They carry no weight anywhere in this system's actual trade logic -- see isolation_notice below."
+  },
+  "isolation_notice": "This feed is NOT read by macro_risk_refresh.py, macro_gate.py, expert_gate.py, trade_brain.py, stock_fo_refresh.py, or equity_scan_core.py -- nothing in the trade-decision path imports this file. It contributes zero points to risk_score, blocks nothing, sizes nothing, and generates no trade or alert by itself.",
+  "disclaimer": "ASTROLOGY HAS NO ESTABLISHED SCIENTIFIC OR CAUSAL MECHANISM FOR PREDICTING STOCK PRICES. The astronomical_facts above (moon phase, Mercury's real orbital motion) are genuine, verifiable, computed data (via pyephem) -- checkable against any almanac. The folk_market_view below them is a traditional belief some retail astrology-influenced traders reference; academic work on lunar-cycle stock effects (e.g. Yuan/Zheng/Zhu 2006, 'Are Investors Moonstruck?') finds at most a marginal, contested effect, nowhere near reliable for trading. Entertainment/informational only -- never used to size, block, or generate any trade in this system."
+}
