@@ -1,8 +1,8 @@
 {
-  "generated_at": "08 Jul 2026 15:12 IST",
+  "generated_at": "08 Jul 2026 15:17 IST",
   "recommendations_total": 64,
-  "open": 13,
-  "closed": 51,
+  "open": 12,
+  "closed": 52,
   "overall": {
     "decisive": 3,
     "won": 2,
@@ -116,8 +116,8 @@
   },
   "flip_diagnostics": {
     "expired_count": 0,
-    "invalidated_count": 48,
-    "invalidated_while_in_profit": 10,
+    "invalidated_count": 49,
+    "invalidated_while_in_profit": 11,
     "note": "invalidated_while_in_profit is a PROXY for false flips (bailed on a green rec when the signal flipped) -- NOT the true 'did it later hit target' metric, which needs post-invalidation tracking the journal doesn't do yet."
   },
   "sample_size_warning": "Fewer than 20 decisive recommendations -- these numbers are noise, not signal. Treat as 'still accumulating', same threshold discipline as the rest of this system.",
