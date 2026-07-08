@@ -11,6 +11,10 @@ this run:
   BUY side:
     - Index F&O consensus flipping to BUY_CE/BUY_PE (fo_latest.json), with
       the full suggested trade (strike/premium/SL/targets)
+    - Stock F&O consensus flipping to BUY_CE/BUY_PE (stock_fo.json, 18
+      tracked stocks) -- added 08-Jul-2026, closing a real gap: this file
+      was never read here at all before, so no stock-level F&O signal in
+      EITHER direction ever reached Telegram, not a CE/PE bias
     - A stock newly reaching STRONG_BUY in the equity scan (equity_scan.json)
 
   EXIT side:
@@ -56,6 +60,7 @@ REPO_ROOT = pathlib.Path(__file__).parent.parent
 STATE_FILE = REPO_ROOT / "logs" / "alert_state.json"
 
 FO_FILE = REPO_ROOT / "fo_latest.json"
+STOCK_FO_FILE = REPO_ROOT / "stock_fo.json"
 SCAN_FILE = REPO_ROOT / "equity_scan.json"
 PAPER_FILE = REPO_ROOT / "trade_journal.json"
 EQUITY_FILE = REPO_ROOT / "equity_journal.json"
@@ -78,6 +83,7 @@ def _load_state():
     if not isinstance(state, dict):
         state = {}
     state.setdefault("fo_consensus", {})
+    state.setdefault("stock_fo_consensus", {})
     state.setdefault("strong_buys", [])
     state.setdefault("alerted_trade_ids", [])
     state.setdefault("position_statuses_alerted", {})
@@ -134,6 +140,40 @@ def _fo_buy_events(fo, gate, state):
                 events.append(f"- {inst}: {cur} ({votes} votes) [raw signal -- expert gate unavailable]{_trade_detail(sig)}")
 
         state["fo_consensus"][inst] = cur
+    return events
+
+
+def _stock_fo_buy_events(stock_fo, state):
+    """Stock-level F&O ENTRY alerts (18 tracked stocks, stock_fo.json).
+
+    REAL GAP CLOSED 08-Jul-2026: stock_fo.json was never read by this
+    module at all -- only index F&O (fo_latest.json) and equity STRONG_BUY
+    were alerted, so a BUY_CE/BUY_PE on e.g. KOTAKBANK/RELIANCE/ITC never
+    reached Telegram regardless of direction. Not a CE/PE bias -- stock F&O
+    just wasn't wired into alerting in either direction.
+
+    expert_gate.py's SCOPE is explicitly index-only (NIFTY50/BANKNIFTY,
+    see its own docstring) -- there's no confirmed-entry gate for stock F&O
+    to prefer, so this alerts on a raw consensus change, same as
+    _fo_buy_events' fail-open branch. A macro-blocked signal (see
+    macro_gate.py) still alerts -- flagged, not suppressed, matching
+    stock_fo_refresh.py's own "human decides manually" policy for this
+    advisory-only feed."""
+    events = []
+    if not isinstance(stock_fo, dict):
+        return events
+    prev_map = state["stock_fo_consensus"]
+    for name, sig in stock_fo.items():
+        if name == "_meta" or not isinstance(sig, dict) or "error" in sig:
+            continue
+        cur = sig.get("consensus")
+        prev = prev_map.get(name)
+        if cur in ("BUY_CE", "BUY_PE") and cur != prev:
+            t = sig.get("trade") or {}
+            macro_flag = " [MACRO: NO-GO]" if sig.get("macro_blocked") else ""
+            events.append(f"- {name} (stock F&O): {cur} ({sig.get('votes', '?')}/6 votes){macro_flag} "
+                          f"-> {t.get('action', '?')} ({t.get('type', '?')}, exp {t.get('expiry', '?')})")
+        prev_map[name] = cur
     return events
 
 
@@ -267,6 +307,7 @@ def main():
     fo = _load_json(FO_FILE)
     gate = _load_json(EXPERT_GATE_FILE)
     buy_events = (_fo_buy_events(fo, gate, state)
+                  + _stock_fo_buy_events(_load_json(STOCK_FO_FILE), state)
                   + _equity_strong_buy_events(_load_json(SCAN_FILE), state))
     exit_events = (_paper_exit_events(_load_json(PAPER_FILE), state)
                    + _real_position_events(_load_json(EQUITY_FILE), state)

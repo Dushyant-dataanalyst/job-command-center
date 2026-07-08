@@ -42,7 +42,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from datetime import date
 
 from ist_time import now_ist_str
-from refresh_fo_cloud import _get_indicators, _signals, _premium_estimate, _next_monthly_expiry
+from refresh_fo_cloud import _get_indicators, _signals, _signal_commentary, _premium_estimate, _next_monthly_expiry
 from macro_gate import load_macro_risk, direction_blocked, macro_context
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
@@ -117,6 +117,7 @@ def _stock_signal(name, macro):
     if not v:
         return {"error": f"No data for {name}"}
     consensus, ce_v, pe_v = _signals(v)
+    commentary = _signal_commentary(v, ce_v, pe_v, consensus)
     spot = v["spot"]
     now_str = now_ist_str()
 
@@ -141,6 +142,7 @@ def _stock_signal(name, macro):
             "data_source": v["data_source"],
             "data_warning": f"{warning_prefix} Verify in Kite before trading.",
             "trade": None,
+            "commentary": commentary,
             "macro_context": macro_context(macro),
         }
 
@@ -174,6 +176,7 @@ def _stock_signal(name, macro):
         "data_source": v["data_source"],
         "data_warning": warning,
         "trade": trade,
+        "commentary": commentary,
         "macro_context": macro_context(macro),
         "macro_blocked": macro_blocked,
     }

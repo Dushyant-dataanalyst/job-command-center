@@ -1054,11 +1054,13 @@ const STRATEGY_DESC = {
   Cianni: '20/50-day breakout with ADX>22 + volume surge',
   Unger: '3 sub-systems vote (breakout/trend/mean-reversion) — 2 of 3 must trigger',
 };
-function _voteBadges(strategies){
+function _voteBadges(strategies, commentary){
   return ['Inna','Pham','Cianni','Unger'].map(name=>{
     const v = (strategies && strategies[name]) || 'NO_SIGNAL';
     const bg = (VOTE_STYLE[v] || VOTE_STYLE.NO_SIGNAL).bg;
-    return `<span title="${name}:${v} — ${STRATEGY_DESC[name]}" style="background:${bg};color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">${name[0]}</span>`;
+    const why = (commentary && commentary[name]) ? ' — ' + commentary[name] : '';
+    const title = (name + ':' + v + ' — ' + STRATEGY_DESC[name] + why).replace(/"/g,'&quot;');
+    return `<span title="${title}" style="background:${bg};color:#fff;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin:1px;display:inline-block">${name[0]}</span>`;
   }).join('');
 }
 /* Pipe-delimited encoding (not JSON) so this survives being embedded as a
@@ -1099,6 +1101,16 @@ function _longTermBadge(name){
   return `<div title="${title.replace(/"/g,'&quot;')}" style="margin-top:4px;background:#ecfdf5;color:#059669;border:1px solid #a7f3d0;border-radius:5px;padding:2px 6px;font-size:9px;font-weight:700;display:inline-block;cursor:help">🌱 Also Long-Term (${lt.composite})</div>`;
 }
 
+/* One visible line combining the reasoning from whichever voters actually
+   agreed (BUY/STRONG_BUY) — the "why is this suggested" the full per-voter
+   breakdown lives in each badge's hover tooltip via _voteBadges(). */
+function _agreeingCommentary(strategies, commentary){
+  if (!commentary) return '';
+  const agreeing = Object.keys(strategies || {}).filter(k => strategies[k] === 'BUY' || strategies[k] === 'STRONG_BUY');
+  if (!agreeing.length) return '';
+  return agreeing.map(k => `<b>${k}:</b> ${commentary[k] || ''}`).join(' · ');
+}
+
 function renderEquityRows(){
   const tbody = document.getElementById('eq-body');
   if (!tbody) return;
@@ -1121,15 +1133,17 @@ function renderEquityRows(){
           style="margin-top:4px;background:#4f46e5;color:#fff;border:none;border-radius:6px;padding:3px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap">
           📌 I BOUGHT
         </button>`;
+    const why = _agreeingCommentary(s.strategies, s.commentary);
     return `<tr class="dr" data-sig="${s.signal}" data-name="${name}" data-sector="${s.sector || 'Other'}">
-      <td>
+      <td style="min-width:220px">
         <div style="font-weight:700;font-size:13px;color:#0f172a">${name}</div>
         <div style="color:#94a3b8;font-size:10px;margin-top:1px">${s.sector || ''}</div>
         ${_longTermBadge(name)}
         ${btnHtml}
+        ${why ? `<div style="font-size:10px;color:#64748b;margin-top:6px;line-height:1.4;max-width:320px">💬 ${why}</div>` : ''}
       </td>
       <td><span style="background:${sig.bg};color:${sig.color};border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap">${sig.emoji} ${sig.label} ${s.buy_votes}/4</span></td>
-      <td>${_voteBadges(s.strategies)}</td>
+      <td>${_voteBadges(s.strategies, s.commentary)}</td>
       <td style="font-weight:700;color:#0f172a">₹${Number(s.entry).toFixed(2)}</td>
       <td style="color:#dc2626;font-weight:600">₹${Number(s.sl).toFixed(2)}</td>
       <td><div style="color:#059669;font-weight:700">₹${Number(s.t1).toFixed(2)}</div>
@@ -1164,7 +1178,7 @@ function renderWatchlist(){
     return `<tr>
       <td style="font-weight:700;color:#0f172a">${name}</td>
       <td style="color:#64748b;font-size:11px">${s.sector || 'Other'}</td>
-      <td>${_voteBadges(s.strategies)}</td>
+      <td>${_voteBadges(s.strategies, s.commentary)}</td>
       <td style="font-weight:600;color:#0f172a">₹${Number(s.entry).toLocaleString('en-IN')}</td>
       <td style="color:#64748b;font-size:11px">${watching}</td>
     </tr>`;
@@ -1922,7 +1936,8 @@ function updateEquityCounts(){
             '<span style="background:' + (actionable ? '#dcfce7' : '#f1f5f9') + ';color:' + (actionable ? '#15803d' : '#64748b') + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' +
               (actionable ? (inst.consensus === 'BUY_CE' ? '↑ ' + votes + '/5 Bullish' : '↓ ' + votes + '/5 Bearish') : votes + '/5 — WAIT') +
             '</span>' +
-          '</div>';
+          '</div>' +
+          (inst.commentary ? '<div style="font-size:10px;color:#64748b;background:rgba(0,0,0,0.03);border-radius:8px;padding:8px 10px;margin-bottom:10px;line-height:1.5">💬 ' + inst.commentary + '</div>' : '');
 
         if (!actionable) {
           html += '<div style="background:rgba(0,0,0,0.04);border-radius:8px;padding:10px 12px;font-size:11px;color:#64748b">' +
@@ -2245,10 +2260,12 @@ function updateEquityCounts(){
         var color = r.consensus === 'WAIT' ? '#64748b' : bullish ? '#15803d' : '#dc2626';
         var bg = r.consensus === 'WAIT' ? '#f8fafc' : bullish ? '#dcfce7' : '#fef2f2';
         var sigLabel = r.consensus === 'WAIT' ? 'WAIT' : (bullish ? '↑ ' : '↓ ') + (r.votes||0) + '/6';
+        var why = (r.commentary || '').replace(/"/g,'&quot;');
+        var sigBadge = '<span title="' + why + '" style="cursor:help;background:' + bg + ';color:' + color + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' + sigLabel + (why ? ' 💬' : '') + '</span>';
 
         if (!r.trade) {
           html += '<tr><td style="font-weight:700;color:#0f172a">' + r.name + '</td>' +
-            '<td><span style="background:' + bg + ';color:' + color + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' + sigLabel + '</span></td>' +
+            '<td>' + sigBadge + '</td>' +
             '<td>' + INR4(r.spot) + '</td>' +
             '<td colspan="4" style="font-size:11px;color:#94a3b8">No trade — consensus not reached (CE ' + r.ce_votes + ', PE ' + r.pe_votes + ')</td></tr>';
           return;
@@ -2267,7 +2284,7 @@ function updateEquityCounts(){
         }
 
         html += '<tr><td style="font-weight:700;color:#0f172a">' + r.name + '</td>' +
-          '<td><span style="background:' + bg + ';color:' + color + ';border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">' + sigLabel + '</span></td>' +
+          '<td>' + sigBadge + '</td>' +
           '<td>' + INR4(r.spot) + '</td>' +
           '<td style="font-size:11px;font-weight:700;color:' + color + '">' + strategyLabel + '</td>' +
           '<td style="font-size:11px;color:#0f172a">' + strikesCell + '</td>' +

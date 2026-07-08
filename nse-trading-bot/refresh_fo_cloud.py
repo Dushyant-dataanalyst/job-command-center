@@ -127,6 +127,49 @@ def _signals(v):
     consensus = "BUY_CE" if ce >= 4 else "BUY_PE" if pe >= 4 else "WAIT"
     return consensus, ce, pe
 
+
+def _signal_commentary(v, ce, pe, consensus):
+    """Human-readable breakdown of WHY _signals() returned this consensus --
+    purely additive (does not touch _signals()' own vote logic or return
+    shape, so backtest_fo.py's direct import of _signals/_atm/_premium_estimate
+    stays byte-identical, zero drift risk per its own design). Walks the
+    same 4 factors _signals() checks, in the same order, stating what fired
+    and what didn't -- shared by index F&O (refresh_fo_cloud._fo_signal)
+    and stock F&O (stock_fo_refresh._stock_signal), since both call
+    _signals() on the same indicator shape."""
+    parts = []
+    if v['spot'] > v['ema18'] > v['ema50']:
+        parts.append(f"price {v['spot']} is above EMA18 ({v['ema18']}) and EMA50 ({v['ema50']}) -- established uptrend (+2 CE)")
+    elif v['spot'] < v['ema18'] < v['ema50']:
+        parts.append(f"price {v['spot']} is below EMA18 ({v['ema18']}) and EMA50 ({v['ema50']}) -- established downtrend (+2 PE)")
+    else:
+        parts.append("EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor")
+
+    if v['macd'] > v['macd_signal']:
+        parts.append(f"MACD ({v['macd']}) is above its signal line ({v['macd_signal']}) -- bullish momentum (+1 CE)")
+    else:
+        parts.append(f"MACD ({v['macd']}) is below its signal line ({v['macd_signal']}) -- bearish momentum (+1 PE)")
+
+    if v['spot'] > v['r1']:
+        parts.append(f"price broke above pivot resistance R1 ({v['r1']}) -- breakout confirmed (+2 CE)")
+    elif v['spot'] < v['s1']:
+        parts.append(f"price broke below pivot support S1 ({v['s1']}) -- breakdown confirmed (+2 PE)")
+    else:
+        parts.append(f"price is between pivot support ({v['s1']}) and resistance ({v['r1']}) -- no breakout yet")
+
+    if v['roc5'] > 1.5:
+        parts.append(f"5-day momentum (ROC5 {v['roc5']}%) is strongly positive (+1 CE)")
+    elif v['roc5'] < -1.5:
+        parts.append(f"5-day momentum (ROC5 {v['roc5']}%) is strongly negative (+1 PE)")
+    else:
+        parts.append(f"5-day momentum (ROC5 {v['roc5']}%) is muted -- no edge from this factor")
+
+    if consensus == "WAIT":
+        verdict = f"WAIT (CE {ce}/6, PE {pe}/6 -- neither side reached the 4-vote threshold): "
+    else:
+        verdict = f"{consensus} ({ce if consensus == 'BUY_CE' else pe}/6 votes): "
+    return verdict + " | ".join(parts)
+
 def _fo_signal(instrument):
     cfg = INSTRUMENTS[instrument]
     v   = _get_indicators(cfg["ticker"])
@@ -151,6 +194,7 @@ def _fo_signal(instrument):
             }
         return {"error": f"No data for {instrument} — yfinance and Kite fallback both unavailable"}
     consensus, ce_v, pe_v = _signals(v)
+    commentary = _signal_commentary(v, ce_v, pe_v, consensus)
     expiry  = _next_monthly_expiry(cfg["expiry_day"])
     days_to = max((expiry - date.today()).days, 1)
     spot    = v["spot"]
@@ -170,6 +214,7 @@ def _fo_signal(instrument):
     return {
         "instrument": instrument, "spot": spot, "ann_vol": v["ann_vol"],
         "consensus": consensus, "ce_votes": ce_v, "pe_votes": pe_v,
+        "commentary": commentary,
         "data_as_of": v["data_date"], "fetched_at": now_str,
         "data_source": v["data_source"],
         "data_warning": (

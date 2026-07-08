@@ -186,6 +186,72 @@ def _strategy_unger(v):
     return "NO_SIGNAL"
 
 
+def _voter_commentary(v, peg):
+    """Human-readable one-liner per voter explaining WHY it voted the way
+    it did -- purely additive, does not touch _strategy_*()'s own logic or
+    return shape (backtest.py imports those 4 functions directly for
+    zero-drift replay of the live logic; this must never affect them).
+    Walks the exact same conditions each _strategy_*() checks, in the same
+    order, so a discrepancy between the vote and this text would mean a
+    copy-paste bug here, not a second scoring system."""
+    rsi = v["rsi"]
+    c = {}
+
+    uptrend = v["spot"] > v["ema50"]
+    touched = v["low_recent_min"] <= v["ema18"] * 1.01
+    bounced = v["spot"] > v["ema18"] and v["spot"] > v["prev_close"]
+    vol_confirm = (v["rel_volume"] or 0) >= 1.3
+    if uptrend and touched and bounced:
+        c["Inna"] = (f"Price pulled back to EMA18 ({v['ema18']:.2f}) within an uptrend (above EMA50 {v['ema50']:.2f}) and bounced"
+                     + (f", with volume {v['rel_volume']}x average confirming it -- high-conviction bounce" if vol_confirm
+                        else f", but volume is only {v['rel_volume']}x average -- lighter conviction"))
+    elif uptrend and touched:
+        c["Inna"] = f"Price touched EMA18 ({v['ema18']:.2f}) within an uptrend but hasn't bounced back above it yet -- watching for confirmation"
+    elif uptrend:
+        c["Inna"] = f"In an uptrend (above EMA50 {v['ema50']:.2f}) but hasn't pulled back to EMA18 ({v['ema18']:.2f}) yet -- no setup"
+    else:
+        c["Inna"] = f"Not in an uptrend (price below EMA50 {v['ema50']:.2f}) -- this pullback strategy needs an uptrend first"
+
+    ema_stack = v["ema9"] > v["ema20"] > v["ema50"]
+    rsi_recovering = rsi is not None and v["rsi_3d_ago"] is not None and 35 <= rsi <= 60 and rsi > v["rsi_3d_ago"]
+    if ema_stack and rsi_recovering:
+        peg_txt = (f", PEG {peg} is attractive" if (peg is not None and peg < 1.5)
+                   else f", PEG {peg} is rich -- capped at WATCH" if (peg is not None and peg >= 2.5)
+                   else f", PEG {peg} is acceptable" if peg is not None else "")
+        c["Pham"] = f"EMA9>EMA20>EMA50 stack confirms uptrend and RSI ({rsi:.1f}) is recovering from {v['rsi_3d_ago']:.1f} through the 35-60 sweet spot{peg_txt}"
+    elif ema_stack or rsi_recovering:
+        c["Pham"] = ("EMA9>EMA20>EMA50 stack is bullish but RSI isn't recovering through the 35-60 band yet" if ema_stack
+                     else f"RSI ({rsi:.1f}) is recovering but the EMA9/20/50 stack isn't confirmed yet")
+    else:
+        c["Pham"] = "Neither the EMA stack nor the RSI-recovery condition is met -- no setup"
+
+    breakout20 = v["high20_prev"] is not None and v["spot"] > v["high20_prev"]
+    breakout50 = v["high50_prev"] is not None and v["spot"] > v["high50_prev"]
+    adx = v["adx"] or 0
+    adx_strong = adx >= 22
+    vol_surge = (v["rel_volume"] or 0) >= 1.3
+    if (breakout20 or breakout50) and adx_strong and vol_surge:
+        c["Cianni"] = f"Broke above its {'50' if breakout50 else '20'}-day high with ADX {adx:.1f} confirming trend strength and {v['rel_volume']}x volume surge backing it"
+    elif (breakout20 or breakout50) and adx_strong:
+        c["Cianni"] = f"Broke above its {'50' if breakout50 else '20'}-day high with ADX {adx:.1f} confirming trend strength, but volume ({v['rel_volume']}x) hasn't surged to back it"
+    elif breakout20 or adx_strong:
+        c["Cianni"] = (f"Broke above its 20-day high but ADX ({adx:.1f}) isn't strong enough yet (needs 22+)" if breakout20
+                       else f"ADX ({adx:.1f}) shows trend strength but price hasn't broken its 20/50-day high yet")
+    else:
+        c["Cianni"] = f"No breakout and ADX ({adx:.1f}) is weak -- no setup"
+
+    sub_breakout = v["high20_prev"] is not None and v["spot"] > v["high20_prev"]
+    sub_trend = v["ema9"] > v["ema18"] > v["ema50"]
+    sub_meanrev = (
+        v["low10_prev"] is not None and v["low_recent_min"] <= v["low10_prev"] * 1.01 and v["spot"] > v["prev_close"]
+    ) or (rsi is not None and rsi < 35 and v["rsi_3d_ago"] is not None and rsi > v["rsi_3d_ago"])
+    fired = [name for name, ok in [("breakout", sub_breakout), ("trend", sub_trend), ("mean-reversion", sub_meanrev)] if ok]
+    c["Unger"] = ((f"{len(fired)}/3 sub-systems agree ({', '.join(fired)})" if fired else "0/3 sub-systems agree")
+                  + " -- needs 2/3 for a BUY, 3/3 for STRONG_BUY")
+
+    return c
+
+
 _VOTER_WEIGHTS_CACHE = None
 
 
@@ -260,6 +326,7 @@ def scan_one(symbol, sector, fetch_peg=True):
         "entry": entry, "sl": sl, "t1": t1, "t2": t2, "t3": t3,
         "pct_t1": pct_t1,
         "strategies": strategies,
+        "commentary": _voter_commentary(v, peg),
         "sector": sector,
         "data_as_of": v["data_date"],
         "data_source": v["data_source"],
