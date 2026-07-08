@@ -1,14 +1,14 @@
 {
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 23964.75,
-    "ann_vol": 0.1244,
+    "spot": 23949.6,
+    "ann_vol": 0.1252,
     "consensus": "WAIT",
     "ce_votes": 1,
     "pe_votes": 2,
-    "commentary": "WAIT (CE 1/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (136.96) is above its signal line (111.36) -- bullish momentum (+1 CE) | price broke below pivot support S1 (24321.47) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -0.17%) is muted -- no edge from this factor",
+    "commentary": "WAIT (CE 1/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (135.75) is above its signal line (111.11) -- bullish momentum (+1 CE) | price broke below pivot support S1 (24321.47) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -0.23%) is muted -- no edge from this factor",
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 14:05 IST",
+    "fetched_at": "08 Jul 2026 14:17 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": {
@@ -28,21 +28,21 @@
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 57071.6,
-    "ann_vol": 0.1587,
+    "spot": 56980.55,
+    "ann_vol": 0.1605,
     "consensus": "BUY_PE",
     "ce_votes": 0,
     "pe_votes": 4,
-    "commentary": "BUY_PE (4/6 votes): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (674.13) is below its signal line (767.27) -- bearish momentum (+1 PE) | price broke below pivot support S1 (58013.5) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -1.66%) is strongly negative (+1 PE)",
+    "commentary": "BUY_PE (4/6 votes): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (666.87) is below its signal line (765.82) -- bearish momentum (+1 PE) | price broke below pivot support S1 (58013.5) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -1.81%) is strongly negative (+1 PE)",
     "data_as_of": "2026-07-08",
-    "fetched_at": "08 Jul 2026 14:05 IST",
+    "fetched_at": "08 Jul 2026 14:17 IST",
     "data_source": "kite",
     "data_warning": "Signals based on 2026-07-08 Kite historical data (official, live session) \u2014 still end-of-day candles, not tick-level. Verify in Kite before trading.",
     "trade": {
-      "action": "BUY BANKNIFTY 57100 PE",
-      "zerodha_symbol": "BANKNIFTY26JUL57100PE",
-      "zerodha_search": "BANKNIFTY JUL 57100 PE",
-      "strike": 57100,
+      "action": "BUY BANKNIFTY 57000 PE",
+      "zerodha_symbol": "BANKNIFTY26JUL57000PE",
+      "zerodha_search": "BANKNIFTY JUL 57000 PE",
+      "strike": 57000,
       "expiry": "29 Jul 2026",
       "days_to_exp": 21,
       "lot_size": 30,
@@ -54,7 +54,7 @@
     }
   },
   "_meta": {
-    "generated_at": "08 Jul 2026 14:05 IST",
+    "generated_at": "08 Jul 2026 14:17 IST",
     "source": "kite (official, live session)"
   }
 }
