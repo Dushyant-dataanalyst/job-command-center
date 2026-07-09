@@ -45,7 +45,7 @@ OUT_FILE = pathlib.Path(__file__).parent / "context_score_dryrun_output.json"
 
 FILES = ["fo_latest.json", "stock_fo.json", "equity_scan.json", "market_regime.json",
          "expert_gate.json", "macro_risk.json", "strategy_performance.json",
-         "recommendation_journal.json"]
+         "recommendation_journal.json", "sector_rotation.json"]
 
 
 def _run(cmd):
@@ -137,6 +137,7 @@ def main():
         expert_gate_data = _show_json(commit, "expert_gate.json")
         macro = _valid_macro(_show_json(commit, "macro_risk.json"))
         strategy_perf = _show_json(commit, "strategy_performance.json")
+        sector_rotation = _show_json(commit, "sector_rotation.json")
         journal = _show_json(commit, "recommendation_journal.json") or {}
         journal_recs = journal.get("recommendations", []) if isinstance(journal, dict) else []
         if not isinstance(journal_recs, list):
@@ -144,7 +145,8 @@ def main():
 
         try:
             per_kind = compute_context_score(fo, stock_fo, equity, regime, expert_gate_data,
-                                              macro, journal_recs, strategy_perf, at_dt)
+                                              macro, journal_recs, strategy_perf, at_dt,
+                                              sector_rotation=sector_rotation)
         except Exception as e:
             print(f"  SKIP {commit[:8]} ({at_dt}): compute_context_score raised {e}")
             continue

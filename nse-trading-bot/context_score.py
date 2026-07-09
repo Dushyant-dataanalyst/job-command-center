@@ -29,11 +29,15 @@ unavailable this run — never a fabricated neutral/default score.
 context_score is a weighted average RENORMALIZED across only the components
 actually available, with inputs_used recording exactly what fed it.
 
-PHASE A (this file, as first written): sector component always None —
-sector_rotation.json gets a relative-strength-vs-NIFTY field in Phase C.
-learning_history reads strategy_performance.json defensively (by_macro_
-risk_level may not exist yet — Phase B) so this file needs zero changes when
-that ships.
+PHASE HISTORY: Phase A (09-Jul-2026) shipped macro/regime/expert-gate-read-
+through/instrument_quality/trade_quality/learning_history, with sector
+always None. Phase B (same day) added strategy_performance.json's
+by_macro_risk_level slice — learning_history reads it defensively via
+.get() so no change was needed here. Phase C (same day) wired the sector
+component to sector_rotation.json's new rs_vs_nifty_pct field via
+equity_scan_core._ticker_sector_map() — still None for fo_index (no sector
+concept) and for stock-F&O tickers that don't resolve to any of the 10
+sectors (LT/BAJFINANCE/TITAN/BHARTIARTL).
 
 NOT WIRED INTO CI as of this commit. See context_score_dryrun.py for the
 manual-review verification step required before this joins the live
@@ -45,16 +49,21 @@ sys.path.insert(0, os.path.dirname(__file__))
 
 from datetime import datetime
 
+import pandas as pd
+
 from ist_time import now_ist, now_ist_str
 from macro_gate import load_macro_risk, direction_blocked, macro_context
 from trade_filters import _run_filters
 from recommendation_tracker import _flip_is_against, _open_key
+from equity_scan_core import _ticker_sector_map
+from market_data import get_ohlcv
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 FO_FILE = REPO_ROOT / "fo_latest.json"
 STOCK_FO_FILE = REPO_ROOT / "stock_fo.json"
 EQUITY_FILE = REPO_ROOT / "equity_scan.json"
 REGIME_FILE = REPO_ROOT / "market_regime.json"
+SECTOR_ROTATION_FILE = REPO_ROOT / "sector_rotation.json"
 EXPERT_GATE_FILE = REPO_ROOT / "expert_gate.json"
 STRATEGY_PERF_FILE = REPO_ROOT / "strategy_performance.json"
 JOURNAL_FILE = REPO_ROOT / "recommendation_journal.json"
@@ -69,6 +78,17 @@ SCORE_NO_TRADE_BELOW = 35
 SCORE_CONFIRMED_ENTRY_AT_OR_ABOVE = 65
 COOLDOWN_LOOKBACK_DAYS = 3            # calendar-day approximation of expert_gate's refresh-counted cooldown
 MIN_DECISIVE_FOR_LEARNING_HISTORY = 20  # same floor strategy_performance.py itself applies
+
+# Earnings/news-shock detection (Phase D, added 09-Jul-2026) -- a per-symbol
+# caution flag, fo_stock/equity only (no "earnings" concept for an index).
+# NOT tied to any real earnings calendar (no such data source exists
+# anywhere in this project) -- purely a statistical read off OHLCV data
+# already flowing through market_data.get_ohlcv(), same rel_volume/ATR-style
+# pattern equity_scan_core.py/market_regime_core.py already use elsewhere.
+EARNINGS_SHOCK_LOOKBACK_DAYS = 3
+EARNINGS_SHOCK_MIN_ABS_RETURN_PCT = 4.0
+EARNINGS_SHOCK_MIN_REL_VOLUME = 2.0
+EARNINGS_SHOCK_SCORE_PENALTY = 15  # shaved off instrument_quality's score, never a hard block
 
 STATE_DISPLAY_MAP = {"IN_TRADE": "HOLD"}  # display-only rename; never touches expert_gate.json itself
 
@@ -147,18 +167,92 @@ def _regime_component(regime_trend, regime_adx, direction):
     return {"score": score, "detail": detail}
 
 
-def _sector_component():
-    """Always None in Phase A -- sector_rotation.json has no relative-
-    strength-vs-NIFTY field yet. See plan doc, Phase C."""
-    return None
+def _sector_rs_lookup(sector_rotation_data):
+    """sector name -> rs_vs_nifty_pct, from ALL 10 sectors (all_sectors_
+    ranked), not just the top-3 stock_picks_by_sector subset -- covers
+    every equity/stock-F&O symbol with a known sector, not only the lucky
+    few in a currently-leading sector's representative picks."""
+    ranked = (sector_rotation_data or {}).get("all_sectors_ranked", [])
+    if not isinstance(ranked, list):
+        return {}
+    return {s["sector"]: s.get("rs_vs_nifty_pct") for s in ranked if isinstance(s, dict) and "sector" in s}
 
 
-def _instrument_quality_component(vote_count, max_votes, extra_detail=None):
+def _sector_component(rs_vs_nifty_pct, direction):
+    """Phase C (added 09-Jul-2026): rs_vs_nifty_pct is a sector's own 5-day
+    ROC% minus NIFTY50's over the same window (sector_rotation_core.py) --
+    a plain difference, not a calibrated percentile rating. None if the
+    symbol's sector is unresolved (equity_scan_core._ticker_sector_map()
+    doesn't cover it, or sector_rotation.json is unavailable/stale) --
+    never a fabricated neutral score."""
+    if rs_vs_nifty_pct is None or direction is None:
+        return None
+    aligned = (direction == "long" and rs_vs_nifty_pct > 0) or (direction == "short" and rs_vs_nifty_pct < 0)
+    opposed = (direction == "long" and rs_vs_nifty_pct < 0) or (direction == "short" and rs_vs_nifty_pct > 0)
+    magnitude = min(abs(rs_vs_nifty_pct) * 5, 35)  # a 7pp+ ROC divergence saturates the swing
+    if aligned:
+        score, verb = min(100.0, 50 + magnitude), "outperforming"
+    elif opposed:
+        score, verb = max(0.0, 50 - magnitude), "underperforming"
+    else:
+        score, verb = 50.0, "tracking"
+    detail = f"sector {verb} NIFTY by {rs_vs_nifty_pct:+.2f}% (5d ROC) -- {'aligns with' if aligned else 'opposes' if opposed else 'neutral to'} a {direction} signal"
+    return {"score": round(score, 1), "detail": detail}
+
+
+def _detect_earnings_shock(ticker):
+    """Best-effort: an unusually large single-day price move on unusually
+    heavy volume within the last EARNINGS_SHOCK_LOOKBACK_DAYS sessions --
+    could be an earnings reaction, could be any other news, this project has
+    no way to distinguish (no earnings-calendar data source exists here).
+    Returns None on ANY fetch/data problem (never fabricates a "no shock"
+    read from missing data) or the most recent qualifying day's stats."""
+    try:
+        df, _source = get_ohlcv(ticker, period="2mo")
+    except Exception:
+        return None
+    if df is None or df.empty or len(df) < 25:
+        return None
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = [c[0].lower() for c in df.columns]
+    else:
+        df.columns = [c.lower() for c in df.columns]
+    close, vol = df["close"], df["volume"]
+    if len(vol[vol > 0]) < 21:
+        return None
+
+    return_pct = close.pct_change() * 100
+    vol_nan_zero = vol.replace(0, None)
+    rel_volume = vol_nan_zero / vol_nan_zero.rolling(20, min_periods=10).mean().shift(1)
+
+    recent = pd.DataFrame({"return_pct": return_pct, "rel_volume": rel_volume}).iloc[-EARNINGS_SHOCK_LOOKBACK_DAYS:]
+    shocks = recent[(recent["return_pct"].abs() >= EARNINGS_SHOCK_MIN_ABS_RETURN_PCT)
+                     & (recent["rel_volume"] >= EARNINGS_SHOCK_MIN_REL_VOLUME)]
+    if shocks.empty:
+        return None
+    last_shock_date = shocks.index[-1]
+    row = shocks.iloc[-1]
+    return {
+        "date": str(last_shock_date.date()),
+        "return_pct": round(float(row["return_pct"]), 2),
+        "rel_volume": round(float(row["rel_volume"]), 2),
+        "days_ago": (df.index[-1] - last_shock_date).days,
+    }
+
+
+def _instrument_quality_component(vote_count, max_votes, extra_detail=None, earnings_shock=None):
     if vote_count is None or not max_votes:
         return None
     score = round(min(100.0, max(0.0, vote_count / max_votes * 100)), 1)
     detail = f"{vote_count}/{max_votes} votes" + (f" ({extra_detail})" if extra_detail else "")
-    return {"score": score, "detail": detail}
+    if earnings_shock:
+        # Caution flag, not an override -- shave a modest, named amount off
+        # the vote-based score rather than silently zeroing a setup that
+        # might still be genuinely good.
+        score = max(0.0, score - EARNINGS_SHOCK_SCORE_PENALTY)
+        detail += (f" -- CAUTION: {earnings_shock['return_pct']:+.1f}% move on {earnings_shock['rel_volume']}x volume "
+                   f"{earnings_shock['days_ago']}d ago, possible earnings/news shock still working through the signal")
+    return {"score": round(score, 1), "detail": detail}
 
 
 def _trade_quality_component(candidate, regime_dict, recent_trades, now_dt):
@@ -336,7 +430,7 @@ def _process_fo_index(fo, expert_gate_data, macro, regime, strategy_perf, now_dt
         components = {
             "macro": _macro_component(macro, direction),
             "regime": _regime_component(regime_inst.get("trend"), regime_inst.get("adx"), direction),
-            "sector": _sector_component(),
+            "sector": _sector_component(None, None),  # no sector concept for an index
             "instrument_quality": _instrument_quality_component(votes, 6, extra_detail="index 3-factor consensus"),
             "trade_quality": _trade_quality_component(candidate, regime, None, now_dt) if direction else None,
             "learning_history": _learning_history_component(strategy_perf, "fo_index", votes, (macro or {}).get("risk_level")),
@@ -354,7 +448,7 @@ def _process_fo_index(fo, expert_gate_data, macro, regime, strategy_perf, now_dt
     return entries
 
 
-def _process_fo_stock(stock_fo, macro, regime, journal_recs, strategy_perf, open_by_key, now_dt):
+def _process_fo_stock(stock_fo, macro, regime, journal_recs, strategy_perf, open_by_key, sector_rs, ticker_sector, now_dt):
     regime_inst = ((regime or {}).get("instruments", {})).get("NIFTY50") or {}  # broad-market proxy, matches recommendation_tracker._regime_for()
     entries = {}
 
@@ -380,11 +474,21 @@ def _process_fo_stock(stock_fo, macro, regime, journal_recs, strategy_perf, open
                      "entry": entry, "stop": stop, "target": target}
         recent = _recent_results_from_journal(journal_recs, "fo_stock")
 
+        # 14/18 tracked stock-F&O tickers resolve to a sector via the same
+        # equity_scan_core._ticker_sector_map() equity already uses; LT/
+        # BAJFINANCE/TITAN/BHARTIARTL don't appear in any of the 10 sectors
+        # -- ticker_sector.get(sym) is None for those, sector stays None,
+        # never fabricated. Not expanding SECTOR_STOCKS' taxonomy here --
+        # separate scope, see plan doc.
+        sector = ticker_sector.get(sym)
+        rs = sector_rs.get(sector) if sector else None
+        shock = _detect_earnings_shock(sym + ".NS")
+
         components = {
             "macro": _macro_component(macro, direction),
             "regime": _regime_component(regime_inst.get("trend"), regime_inst.get("adx"), direction),
-            "sector": _sector_component(),
-            "instrument_quality": _instrument_quality_component(votes, 6, extra_detail="stock 3-factor consensus"),
+            "sector": _sector_component(rs, direction),
+            "instrument_quality": _instrument_quality_component(votes, 6, extra_detail="stock 3-factor consensus", earnings_shock=shock),
             "trade_quality": _trade_quality_component(candidate, regime, recent, now_dt) if direction else None,
             "learning_history": _learning_history_component(strategy_perf, "fo_stock", votes, (macro or {}).get("risk_level")),
         }
@@ -403,7 +507,7 @@ def _process_fo_stock(stock_fo, macro, regime, journal_recs, strategy_perf, open
     return entries
 
 
-def _process_equity(equity, macro, regime, journal_recs, strategy_perf, open_by_key, now_dt):
+def _process_equity(equity, macro, regime, journal_recs, strategy_perf, open_by_key, sector_rs, ticker_sector, now_dt):
     regime_inst = ((regime or {}).get("instruments", {})).get("NIFTY50") or {}
     entries = {}
 
@@ -431,11 +535,15 @@ def _process_equity(equity, macro, regime, journal_recs, strategy_perf, open_by_
                      "entry": sig.get("entry"), "stop": sig.get("sl"), "target": sig.get("t1")}
         recent = _recent_results_from_journal(journal_recs, "equity")
 
+        sector = ticker_sector.get(sym)
+        rs = sector_rs.get(sector) if sector else None
+        shock = _detect_earnings_shock(sym + ".NS")
+
         components = {
             "macro": _macro_component(macro, direction),
             "regime": _regime_component(regime_inst.get("trend"), regime_inst.get("adx"), direction),
-            "sector": _sector_component(),
-            "instrument_quality": _instrument_quality_component(buy_votes, 4, extra_detail="of 4 named voters"),
+            "sector": _sector_component(rs, direction),
+            "instrument_quality": _instrument_quality_component(buy_votes, 4, extra_detail="of 4 named voters", earnings_shock=shock),
             "trade_quality": _trade_quality_component(candidate, regime, recent, now_dt) if direction else None,
             "learning_history": _learning_history_component(strategy_perf, "equity", buy_votes, (macro or {}).get("risk_level")),
         }
@@ -460,12 +568,14 @@ def _process_equity(equity, macro, regime, journal_recs, strategy_perf, open_by_
 # I/O wrapper around it, same split as expert_gate.py's advance()/main().
 # ---------------------------------------------------------------------------
 
-def compute_context_score(fo, stock_fo, equity, regime, expert_gate_data, macro, journal_recs, strategy_perf, now_dt):
+def compute_context_score(fo, stock_fo, equity, regime, expert_gate_data, macro, journal_recs, strategy_perf, now_dt, sector_rotation=None):
     open_by_key = {_open_key(r): r for r in journal_recs if r.get("status") == "open"}
+    sector_rs = _sector_rs_lookup(sector_rotation)
+    ticker_sector = _ticker_sector_map()
     return {
         "fo_index": _process_fo_index(fo, expert_gate_data, macro, regime, strategy_perf, now_dt),
-        "fo_stock": _process_fo_stock(stock_fo, macro, regime, journal_recs, strategy_perf, open_by_key, now_dt),
-        "equity": _process_equity(equity, macro, regime, journal_recs, strategy_perf, open_by_key, now_dt),
+        "fo_stock": _process_fo_stock(stock_fo, macro, regime, journal_recs, strategy_perf, open_by_key, sector_rs, ticker_sector, now_dt),
+        "equity": _process_equity(equity, macro, regime, journal_recs, strategy_perf, open_by_key, sector_rs, ticker_sector, now_dt),
     }
 
 
@@ -477,6 +587,7 @@ def main():
     stock_fo = _load_json(STOCK_FO_FILE, {})
     equity = _load_json(EQUITY_FILE, {})
     regime = _load_json(REGIME_FILE, {})
+    sector_rotation = _load_json(SECTOR_ROTATION_FILE, {})
     expert_gate_data = _load_json(EXPERT_GATE_FILE, {})
     strategy_perf = _load_json(STRATEGY_PERF_FILE, {})
     macro = load_macro_risk()
@@ -486,7 +597,7 @@ def main():
     if not isinstance(journal_recs, list):
         journal_recs = []
 
-    per_kind = compute_context_score(fo, stock_fo, equity, regime, expert_gate_data, macro, journal_recs, strategy_perf, now)
+    per_kind = compute_context_score(fo, stock_fo, equity, regime, expert_gate_data, macro, journal_recs, strategy_perf, now, sector_rotation=sector_rotation)
 
     inputs_available = {
         "macro": macro is not None,
@@ -494,7 +605,7 @@ def main():
         "expert_gate": bool((expert_gate_data or {}).get("instruments")),
         "strategy_performance": bool(strategy_perf),
         "recommendation_journal": isinstance(journal_data, dict) and "recommendations" in journal_data,
-        "sector_rotation": False,  # Phase C not shipped yet
+        "sector_rotation": bool((sector_rotation or {}).get("all_sectors_ranked")),
     }
 
     result = {

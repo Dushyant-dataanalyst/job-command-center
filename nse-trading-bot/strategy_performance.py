@@ -150,6 +150,13 @@ def main():
         "by_regime": _by(decisive, lambda r: [r.get("market_regime")]),
         "by_voter": _by(decisive, lambda r: (r.get("voters") or [None])),
         "by_time_of_day": _by(decisive, lambda r: [_hour_bucket(r)]),
+        # Added 09-Jul-2026 (learning-engine roadmap item 5, Phase B) -- reads
+        # the macro_context_at_open field recommendation_tracker.py now
+        # stamps on every new rec. _by() already skips None keys, so recs
+        # opened BEFORE this change (no such field) are silently excluded
+        # from this dimension, not counted or corrupted -- there is no
+        # retroactive backfill, this only starts accumulating going forward.
+        "by_macro_risk_level": _by(decisive, lambda r: [(r.get("macro_context_at_open") or {}).get("risk_level")]),
         "flip_diagnostics": {
             "expired_count": sum(1 for r in closed if r.get("status") == "expired"),
             "invalidated_count": len(invalidated),

@@ -88,13 +88,29 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
     momentum/volume screen only — not investment advice.
     """
     fetched_at = now_ist_str()
+
+    # Relative strength vs NIFTY (added 09-Jul-2026, learning-engine roadmap
+    # item 5 Phase C) -- fetched ONCE per call, not once per sector/stock, and
+    # reused below. Formula is a simple ROC5 difference, not a calibrated
+    # IBD-style percentile rating -- that needs a longer historical lookback
+    # this project doesn't have; a plain difference is honest about what it
+    # is and doesn't fabricate a precision this data can't support.
+    nifty_roc5_pct = None
+    try:
+        nifty_m = _momentum_volume("^NSEI")
+        if nifty_m:
+            nifty_roc5_pct = nifty_m["roc5_pct"]
+    except Exception:
+        pass
+
     sector_results = {}
     for name, ticker in SECTOR_INDICES.items():
         try:
             m = _momentum_volume(ticker)
             if m:
                 score = round(m["roc5_pct"] * (m["rel_volume"] or 1), 2)
-                sector_results[name] = {**m, "score": score}
+                rs = round(m["roc5_pct"] - nifty_roc5_pct, 2) if nifty_roc5_pct is not None else None
+                sector_results[name] = {**m, "score": score, "rs_vs_nifty_pct": rs}
             else:
                 sector_results[name] = {"error": "insufficient data"}
         except Exception as e:
@@ -125,7 +141,8 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
                 m = _momentum_volume(tkr)
                 if m:
                     score = round(m["roc5_pct"] * (m["rel_volume"] or 1), 2)
-                    picks.append({"symbol": tkr.replace(".NS", ""), **m, "score": score})
+                    rs = round(m["roc5_pct"] - nifty_roc5_pct, 2) if nifty_roc5_pct is not None else None
+                    picks.append({"symbol": tkr.replace(".NS", ""), **m, "score": score, "rs_vs_nifty_pct": rs})
             except Exception:
                 continue
         picks.sort(key=lambda p: p["score"], reverse=True)
@@ -153,7 +170,9 @@ def scan_sector_rotation(top_n: int = 3, stocks_per_sector: int = 3) -> dict:
     return {
         "fetched_at": fetched_at,
         "data_source": source_label,
-        "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
+        "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation. "
+                  "rs_vs_nifty_pct = this sector's/stock's own 5-day ROC% minus NIFTY50's 5-day ROC% over the same window -- a plain difference, not a calibrated percentile rating.",
+        "nifty_roc5_pct": nifty_roc5_pct,
         "all_sectors_ranked": [{"sector": k, **v} for k, v in ranked_sectors],
         "sectors_with_errors": {k: v["error"] for k, v in sector_results.items() if "error" in v},
         "top_sectors": [k for k, _ in top_sectors],

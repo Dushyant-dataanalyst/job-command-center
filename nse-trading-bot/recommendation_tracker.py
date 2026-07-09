@@ -62,6 +62,7 @@ from datetime import datetime
 
 from ist_time import now_ist, now_ist_str
 from refresh_fo_cloud import _premium_estimate
+from macro_gate import load_macro_risk, macro_context
 
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 JOURNAL_FILE = REPO_ROOT / "recommendation_journal.json"
@@ -118,10 +119,21 @@ def _open_key(rec):
     return (rec["kind"], rec["symbol"], rec["direction"])
 
 
-def _collect_current_recs(fo, stock_fo, equity, regime, now_str):
+def _collect_current_recs(fo, stock_fo, equity, regime, now_str, macro=None):
     """Every CURRENTLY-actionable signal, as a candidate recommendation.
-    Dedup against already-open recs happens in main()."""
+    Dedup against already-open recs happens in main().
+
+    macro_context_at_open (added 09-Jul-2026, learning-engine roadmap item
+    5's Phase B prerequisite): a literal reuse of trade_brain.py's own
+    macro_context(macro) one-liner, captured once at open and never mutated
+    afterward (same "captured at open, reused" philosophy as ann_vol_at_
+    open) -- lets strategy_performance.py eventually slice win rate by the
+    macro backdrop a rec was opened into. Recs opened BEFORE this change
+    simply have no such field; there is no retroactive backfill (macro_risk
+    .json isn't versioned per historical open-timestamp anywhere this
+    tracker could look up "what was macro like then")."""
     out = []
+    macro_ctx = macro_context(macro)
 
     # --- F&O index (NIFTY50 / BANKNIFTY): always single-leg CE/PE ---
     for sym in ("NIFTY50", "BANKNIFTY"):
@@ -147,6 +159,7 @@ def _collect_current_recs(fo, stock_fo, equity, regime, now_str):
             "voters": None,  # index engine is a 3-factor score, not the 4 named voters
             "market_regime": _regime_for("fo_index", sym, regime),
             "data_source": sig.get("data_source"),
+            "macro_context_at_open": macro_ctx,
             "opened_at": now_str, "status": "open",
             "close_reason": None, "closed_at": None, "exit": None,
             "outcome_pct": None, "current": trade.get("entry_premium"), "last_checked": now_str,
@@ -167,6 +180,7 @@ def _collect_current_recs(fo, stock_fo, equity, regime, now_str):
             "vote_count": sig.get("votes"), "voters": None,
             "market_regime": _regime_for("fo_stock", sym, regime),
             "data_source": sig.get("data_source"),
+            "macro_context_at_open": macro_ctx,
             "opened_at": now_str, "status": "open",
             "close_reason": None, "closed_at": None, "exit": None, "outcome_pct": None,
             "last_checked": now_str,
@@ -214,6 +228,7 @@ def _collect_current_recs(fo, stock_fo, equity, regime, now_str):
             "vote_count": sig.get("buy_votes"), "voters": voters,
             "market_regime": _regime_for("equity", sym, regime),
             "data_source": sig.get("data_source"),
+            "macro_context_at_open": macro_ctx,
             "opened_at": now_str, "status": "open",
             "close_reason": None, "closed_at": None, "exit": None,
             "outcome_pct": None, "current": sig.get("entry"), "last_checked": now_str,
@@ -395,6 +410,8 @@ def main():
     if not isinstance(journal, list):
         journal = []
 
+    macro = load_macro_risk()
+
     # 1) mark every open rec to market (may close some)
     open_recs = [r for r in journal if r.get("status") == "open"]
     for r in open_recs:
@@ -403,7 +420,7 @@ def main():
     # 2) open new recs for currently-actionable signals not already open
     still_open_keys = {_open_key(r) for r in journal if r.get("status") == "open"}
     opened_now = 0
-    for cand in _collect_current_recs(fo, stock_fo, equity, regime, now_str):
+    for cand in _collect_current_recs(fo, stock_fo, equity, regime, now_str, macro=macro):
         if _open_key(cand) not in still_open_keys:
             journal.append(cand)
             still_open_keys.add(_open_key(cand))

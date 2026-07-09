@@ -38,6 +38,13 @@ a real URL+timestamp, never a paraphrase:
          announcement RSS, already fetched by news_refresh.py earlier in
          the same CI run) for fraud/scam/SEBI/probe keywords against
          tickers actually held -- classified "official" (primary source).
+       - (added 09-Jul-2026) nseindia.com's own corporate-announcements API
+         (undocumented but real -- session-cookie dance verified across 3
+         fresh sessions/2 tickers before wiring in) for held tickers' own
+         filings, scanned for the same regulatory keywords PLUS auditor/
+         director-resignation keywords formal filing language uses that
+         news headlines usually don't. Promoter-pledge data specifically
+         was NOT found after a time-boxed search -- see data_unavailable.
      A factor with no source URL + timestamp is simply never included.
      News older than NEWS_STALE_HOURS is excluded outright, not just
      down-weighted, so cold news can't stay load-bearing.
@@ -45,7 +52,16 @@ a real URL+timestamp, never a paraphrase:
 NOT BUILT (documented under data_unavailable in the output, never silently
 assumed working): FII/DII flows (no free non-scraped source found -- NSE's
 own page blocks non-browser requests), Gift Nifty (no stable free source
-verified), RBI/Fed calendar (explicitly "later" per the build brief).
+verified).
+
+RBI MPC / Fed FOMC policy calendars (added 09-Jul-2026): hardcoded, cited,
+versioned date constants (RBI_MPC_DATES_FY26_27, FED_FOMC_DATES_2026) --
+not a live scrape, these are officially pre-announced and low-volatility.
+Carries NO directional bias (a scheduled date says nothing about the
+decision itself) -- only tightens confirmation_refreshes/min_votes_required
+near the date, surfaced under trade_adjustments + policy_calendar. Degrades
+into data_unavailable per-calendar if its hardcoded list goes stale
+(>90 days past the last date) rather than silently going empty.
 
 market_regime.json's NIFTY50/BANKNIFTY trend+ADX is surfaced read-only under
 regime_context for dashboard/human context -- deliberately NOT re-scored
@@ -123,6 +139,28 @@ GEOPOLITICAL_MIN_SOURCES_FOR_HIGH = 3  # single-source hits are capped "rumor" -
 # own position_news (NSE official RSS, already fetched this run) ---------
 REGULATORY_KEYWORDS = ["fraud", "scam", "probe", "sebi", "penalty", "raid", "insolvency", "default", "fir", "cbi"]
 
+# --- NSE corporate-announcements spike (added 09-Jul-2026, Phase D) -------
+# TIME-BOXED SPIKE, GO/NO-GO CRITERION MET: fetched nseindia.com's own
+# corporate-announcements API (undocumented but real -- confirmed via 3
+# separate fresh sessions across 2 different tickers, all HTTP 200 with real
+# dated JSON, not a one-off) -- see nse-trading-bot's git history for the
+# exact verification. The interactive-site anti-bot pattern (hit the plain
+# HTML page first for session cookies, THEN call the API with them) is a
+# HARDER target than news_refresh.py's own NSE fetch (that one hits a static
+# XML archive subdomain with just a User-Agent, no cookie dance at all) --
+# don't assume this technique is equally durable; if it starts failing,
+# _fetch_nse_announcements() returns None per-ticker and the caller degrades
+# to whatever news_feed.json-only alerts still work, same fail-open
+# discipline as the rest of this module.
+#
+# NOT FOUND after a reasonable time-boxed effort (5 endpoint-name guesses,
+# all 404): a working promoter-pledge-disclosure API. Documented under
+# data_unavailable, not silently assumed working -- see DATA_UNAVAILABLE.
+NSE_ANNOUNCEMENTS_URL = "https://www.nseindia.com/api/corporate-announcements"
+NSE_ANNOUNCEMENTS_REFERER = "https://www.nseindia.com/companies-listing/corporate-filings-announcements"
+AUDITOR_KEYWORDS = ["resignation of statutory auditor", "resignation of auditor", "auditor resignation",
+                     "resignation of director", "removal of director"]
+
 RISK_LEVEL_SIZE_MULT = {"LOW": 1.0, "MODERATE": 0.85, "HIGH": 0.5, "EXTREME": 0.25}
 RISK_LEVEL_MIN_VOTES = {"LOW": None, "MODERATE": None, "HIGH": 5, "EXTREME": 6}          # None = defer to expert_gate's own default
 RISK_LEVEL_CONFIRM_REFRESHES = {"LOW": None, "MODERATE": None, "HIGH": 3, "EXTREME": 4}  # None = defer to expert_gate's own default
@@ -130,8 +168,38 @@ RISK_LEVEL_CONFIRM_REFRESHES = {"LOW": None, "MODERATE": None, "HIGH": 3, "EXTRE
 DATA_UNAVAILABLE = {
     "fii_dii_flows": "No free, non-scraped source found -- NSE's FII/DII page blocks non-browser requests. TODO if a reliable API surfaces.",
     "gift_nifty": "No stable free source verified yet.",
-    "rbi_fed_calendar": "Deferred per build brief ('later').",
+    "pledge_disclosure": "NSE's corporate-announcements API works (see stock_specific_alerts' auditor-resignation scan), "
+                          "but the promoter-share-pledge endpoint could not be found after 5 time-boxed guesses at its "
+                          "path (all 404) -- not the same failure mode as fii_dii_flows/gift_nifty (which have no known "
+                          "API at all), this one's endpoint just wasn't located yet.",
 }
+
+# --- Scheduled policy calendars (added 09-Jul-2026, Phase D) ---------------
+# Hardcoded, cited, versioned date constants -- NOT a live scrape. These are
+# officially pre-announced, low-volatility dates (unlike a scraped page they
+# can't silently break), so a static list beats adding a new scrape target
+# for no real benefit. A scheduled date carries NO directional information
+# by itself (the actual decision isn't knowable in advance without
+# fabricating a view) -- this only tightens confirmation_refreshes/
+# min_votes_required near the date via the same trade_adjustments mechanism
+# risk_level already uses, never a bearish/bullish points contribution to
+# risk_score. STALENESS GUARD: once the last hardcoded date for a calendar
+# is more than POLICY_CALENDAR_STALE_DAYS in the past, that calendar
+# degrades into data_unavailable (see main()) rather than silently going
+# empty forever -- a reminder to add the next cycle's dates, not a silent gap.
+POLICY_CALENDAR_STALE_DAYS = 90
+POLICY_WINDOW_DAYS = 2  # tighten within +/- this many calendar days of a policy date
+
+RBI_MPC_SOURCE = "https://www.rbi.org.in/scripts/annualpolicy.aspx"
+RBI_MPC_DATES_FY26_27 = [  # RBI's own FY26-27 MPC calendar, announced 23-Mar-2026
+    "2026-04-08", "2026-06-05", "2026-08-05", "2026-10-07", "2026-12-04",
+]
+
+FED_FOMC_SOURCE = "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+FED_FOMC_DATES_2026 = [  # decision day = 2nd day of each 2-day FOMC meeting
+    "2026-01-28", "2026-03-18", "2026-04-29", "2026-06-17",
+    "2026-07-29", "2026-09-16", "2026-10-28", "2026-12-09",
+]
 
 
 def _load_json(path, default):
@@ -411,11 +479,81 @@ def _geopolitical_factor(articles, fetch_error, news_source):
     return points, factor, f"ok ({news_source})"
 
 
+def _fetch_nse_announcements(symbol):
+    """One held ticker's recent NSE corporate announcements, or None on ANY
+    fetch/parse problem (fail open -- a broken fetch for one ticker never
+    poisons the whole scan, see _nse_announcement_alerts()). Session dance
+    (hit the plain page first for anti-bot cookies, then call the API) is a
+    harder target than news_refresh.py's static-XML-archive fetch -- see the
+    module-level comment above NSE_ANNOUNCEMENTS_URL."""
+    try:
+        s = requests.Session()
+        s.headers.update({
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": NSE_ANNOUNCEMENTS_REFERER,
+        })
+        r1 = s.get(NSE_ANNOUNCEMENTS_REFERER, timeout=15)
+        if r1.status_code != 200:
+            return None
+        r2 = s.get(NSE_ANNOUNCEMENTS_URL, params={"index": "equities", "symbol": symbol}, timeout=15)
+        if r2.status_code != 200:
+            return None
+        data = r2.json()
+        return data if isinstance(data, list) else None
+    except Exception:
+        return None
+
+
+def _parse_nse_announcement_dt(s):
+    """'08-Jul-2026 19:08:15' -> IST-aware datetime, or None."""
+    try:
+        return datetime.strptime(s, "%d-%b-%Y %H:%M:%S").replace(tzinfo=IST)
+    except Exception:
+        return None
+
+
+def _nse_announcement_alerts(held_tickers):
+    """Scans each held ticker's recent (<=NEWS_STALE_HOURS old) NSE
+    corporate announcements for regulatory + auditor/director-resignation
+    keywords. Held tickers ONLY (not the full universe) -- same scope
+    discipline as the news_feed.json-based scan below, and the same reason:
+    bounding live network calls to what's actually load-bearing. One
+    ticker's fetch failure doesn't affect the others."""
+    now = now_ist()
+    alerts = []
+    fetch_errors = {}
+    for symbol in held_tickers:
+        items = _fetch_nse_announcements(symbol)
+        if items is None:
+            fetch_errors[symbol] = "fetch_failed"
+            continue
+        for item in items:
+            pub = _parse_nse_announcement_dt(item.get("an_dt", ""))
+            if pub is None or (now - pub).total_seconds() / 3600 > NEWS_STALE_HOURS:
+                continue
+            text = (item.get("attchmntText") or item.get("desc") or "").lower()
+            hit = _keyword_hit(text, REGULATORY_KEYWORDS) or _keyword_hit(text, AUDITOR_KEYWORDS)
+            if hit:
+                alerts.append({
+                    "ticker": symbol, "matched_keyword": hit.strip(),
+                    "headline": (item.get("attchmntText") or "")[:200],
+                    "source": item.get("attchmntFile"), "published_at": pub.strftime("%d %b %Y %H:%M IST"),
+                    "evidence_class": "official", "news_source": "nse_corporate_announcements",
+                })
+    return alerts, fetch_errors
+
+
 def _regulatory_alerts():
     """Scans news_feed.json's own position_news (NSE's official
     announcement RSS, already fetched this run by news_refresh.py) for
-    regulatory-risk keywords against tickers actually held. Classified
-    'official' -- this is the primary NSE feed, not a secondhand report."""
+    regulatory-risk keywords against tickers actually held, PLUS (added
+    09-Jul-2026) each held ticker's own NSE corporate-announcements feed for
+    the same regulatory keywords + auditor/director-resignation keywords
+    that news RSS alone wouldn't reliably surface (formal filing language
+    differs from news-headline language). Classified 'official' either
+    way -- both are primary NSE sources, not secondhand reports."""
     data = _load_json(NEWS_FEED_FILE, {})
     alerts = []
     for item in data.get("position_news", []):
@@ -428,8 +566,13 @@ def _regulatory_alerts():
                 "ticker": item.get("ticker"), "matched_keyword": hit.strip(),
                 "headline": item.get("company"), "source": item.get("link"),
                 "published_at": item.get("published"), "evidence_class": "official",
+                "news_source": "nse_rss",
             })
-    return alerts
+
+    held_tickers = data.get("tracked_positions", [])
+    nse_alerts, nse_fetch_errors = _nse_announcement_alerts(held_tickers) if held_tickers else ([], {})
+    alerts.extend(nse_alerts)
+    return alerts, nse_fetch_errors
 
 
 def _risk_level(score):
@@ -437,6 +580,51 @@ def _risk_level(score):
     if score <= 60: return "MODERATE"
     if score <= 80: return "HIGH"
     return "EXTREME"
+
+
+def _max_optional(*vals):
+    """max() over whatever isn't None, or None if nothing is -- lets a
+    caller combine two independent "escalate if set" sources (risk_level's
+    own value + a policy-calendar override) without either one silently
+    looking like a real 0/None when the other actually has a value."""
+    real = [v for v in vals if v is not None]
+    return max(real) if real else None
+
+
+def _policy_calendar_context(now_dt):
+    """Returns (policy_calendar_dict, escalation_dict). escalation_dict
+    carries min_votes_required/confirmation_refreshes ONLY when today falls
+    within POLICY_WINDOW_DAYS of a real hardcoded RBI/Fed date -- empty
+    otherwise, so main() just defers entirely to risk_level's own values
+    when nothing is upcoming. Never touches risk_score/bias -- see the
+    module-level comment above the date constants for why."""
+    today = now_dt.date()
+    stale = {}
+    upcoming = []
+
+    for label, dates, source in (("RBI MPC", RBI_MPC_DATES_FY26_27, RBI_MPC_SOURCE),
+                                  ("Fed FOMC", FED_FOMC_DATES_2026, FED_FOMC_SOURCE)):
+        parsed = [datetime.strptime(d, "%Y-%m-%d").date() for d in dates]
+        last_date = max(parsed)
+        if (today - last_date).days > POLICY_CALENDAR_STALE_DAYS:
+            stale[label] = (f"last hardcoded date ({last_date}) is more than {POLICY_CALENDAR_STALE_DAYS}d in the "
+                             f"past -- needs the next cycle's dates added. Source: {source}")
+            continue
+        for d in parsed:
+            days_away = (d - today).days
+            if abs(days_away) <= POLICY_WINDOW_DAYS:
+                upcoming.append({"event": label, "date": str(d), "days_away": days_away, "source": source})
+
+    upcoming.sort(key=lambda x: abs(x["days_away"]))
+    escalation = {"min_votes_required": 5, "confirmation_refreshes": 3} if upcoming else {}
+    policy_calendar = {
+        "window_days": POLICY_WINDOW_DAYS,
+        "upcoming_events": upcoming,
+        "escalation_applied": bool(upcoming),
+        "note": "A scheduled policy date carries no directional bias by itself -- only tightens confirmation "
+                "strictness near it, same as a HIGH/EXTREME macro risk_level would.",
+    }
+    return policy_calendar, escalation, stale
 
 
 def _regime_context():
@@ -474,7 +662,8 @@ def main():
         factors.append(geo_factor)
         net_points += geo_points
 
-    regulatory_alerts = _regulatory_alerts()
+    regulatory_alerts, nse_announcement_fetch_errors = _regulatory_alerts()
+    policy_calendar, policy_escalation, policy_stale = _policy_calendar_context(now_ist())
 
     risk_score = max(0, min(100, round(BASELINE_RISK + net_points)))
     risk_level = _risk_level(risk_score)
@@ -502,13 +691,20 @@ def main():
     trade_adjustments = {
         "allow_new_longs": allow_new_longs,
         "allow_new_shorts": allow_new_shorts,
-        "min_votes_required": RISK_LEVEL_MIN_VOTES[risk_level],
-        "confirmation_refreshes": RISK_LEVEL_CONFIRM_REFRESHES[risk_level],
+        # _max_optional combines risk_level's own escalation with the policy-
+        # calendar one (added 09-Jul-2026) -- whichever is stricter wins,
+        # same "can only ever tighten, never loosen" contract macro_gate.
+        # escalated() already applies downstream. Stays None (defer to
+        # expert_gate's own default) only when BOTH are None.
+        "min_votes_required": _max_optional(RISK_LEVEL_MIN_VOTES[risk_level], policy_escalation.get("min_votes_required")),
+        "confirmation_refreshes": _max_optional(RISK_LEVEL_CONFIRM_REFRESHES[risk_level], policy_escalation.get("confirmation_refreshes")),
         "position_size_multiplier": RISK_LEVEL_SIZE_MULT[risk_level],
         "avoid_sectors": sorted(avoid_sectors),
         "watch_sectors": sorted(watch_sectors - avoid_sectors),
         "blocked_tickers": sorted({a["ticker"] for a in regulatory_alerts if a.get("ticker")}),
     }
+
+    data_unavailable = {**DATA_UNAVAILABLE, **policy_stale}
 
     result = {
         "fetched_at": fetched_at,
@@ -518,11 +714,13 @@ def main():
         "confidence": confidence,
         "factors": factors,
         "stock_specific_alerts": regulatory_alerts,
+        "nse_announcement_fetch_errors": nse_announcement_fetch_errors,
         "trade_adjustments": trade_adjustments,
+        "policy_calendar": policy_calendar,
         "market_snapshot": market_snapshot,
         "regime_context": _regime_context(),
         "geopolitical_feed_status": geo_status,
-        "data_unavailable": DATA_UNAVAILABLE,
+        "data_unavailable": data_unavailable,
         "method": f"risk_score = baseline({BASELINE_RISK}) + sum of factor points, clamped 0-100. "
                   "Market-data factors are tiered on % move vs previous close (thresholds are named constants "
                   "in source, see MARKET-DATA TIERS). News factors require a real source URL + timestamp -- no "
