@@ -1,7 +1,7 @@
 {
-  "fetched_at": "10 Jul 2026 01:36 IST",
-  "risk_score": 60,
-  "risk_level": "MODERATE",
+  "fetched_at": "10 Jul 2026 02:36 IST",
+  "risk_score": 66,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -15,6 +15,18 @@
       "last": 14.68,
       "previous": 11.65,
       "pct_change": 26.01,
+      "evidence_class": "official"
+    },
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.53% vs previous close (4070.9 -> 4133.1)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4133.1,
+      "previous": 4070.9,
+      "pct_change": 1.53,
       "evidence_class": "official"
     },
     {
@@ -32,11 +44,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -53,9 +65,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 76.06,
+      "last": 76.03,
       "previous": 78.02,
-      "pct_change": -2.51
+      "pct_change": -2.55
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -71,9 +83,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 15.83,
+      "last": 15.84,
       "previous": 16.9,
-      "pct_change": -6.33
+      "pct_change": -6.27
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +107,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4131.2,
+      "last": 4133.1,
       "previous": 4070.9,
-      "pct_change": 1.48
+      "pct_change": 1.53
     }
   },
   "regime_context": {
