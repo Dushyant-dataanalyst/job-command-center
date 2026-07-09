@@ -1,19 +1,19 @@
 {
-  "fetched_at": "09 Jul 2026 18:36 IST",
-  "risk_score": 35,
-  "risk_level": "MODERATE",
+  "fetched_at": "09 Jul 2026 19:36 IST",
+  "risk_score": 27,
+  "risk_level": "LOW",
   "bias": "BEARISH",
-  "confidence": 0.9,
+  "confidence": 0.75,
   "factors": [
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 3,
-      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"International court tells BBC of breakthrough in Sudan war crimes probe\"",
+      "severity": 2,
+      "evidence": "3 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"International court tells BBC of breakthrough in Sudan war crimes probe\"",
       "source": "https://www.bbc.co.uk/news/articles/c9928zr2m5xo?at_medium=RSS&at_campaign=rss",
       "published_at": "09 Jul 2026 14:19 IST",
-      "evidence_class": "reported",
-      "corroborating_sources": 2,
+      "evidence_class": "rumor",
+      "corroborating_sources": 1,
       "news_source": "rss_fallback"
     }
   ],
@@ -24,7 +24,7 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "position_size_multiplier": 1.0,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -41,9 +41,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.66,
+      "last": 77.44,
       "previous": 78.02,
-      "pct_change": 0.82
+      "pct_change": -0.74
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -59,33 +59,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.77,
+      "last": 16.57,
       "previous": 16.9,
-      "pct_change": -0.77
+      "pct_change": -1.95
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7482.71,
-      "previous": 7503.85,
-      "pct_change": -0.28
+      "last": 7511.56,
+      "previous": 7482.71,
+      "pct_change": 0.39
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25870.65,
-      "previous": 25818.69,
-      "pct_change": 0.2
+      "last": 26019.65,
+      "previous": 25870.65,
+      "pct_change": 0.58
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52348.39,
-      "previous": 52925.15,
-      "pct_change": -1.09
+      "last": 52422.06,
+      "previous": 52348.39,
+      "pct_change": 0.14
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4120.3,
+      "last": 4129.1,
       "previous": 4070.9,
-      "pct_change": 1.21
+      "pct_change": 1.43
     }
   },
   "regime_context": {
