@@ -1,20 +1,32 @@
 {
-  "fetched_at": "09 Jul 2026 23:36 IST",
-  "risk_score": 41,
+  "fetched_at": "09 Jul 2026 23:39 IST",
+  "risk_score": 31,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
+      "name": "Crude oil cooling",
+      "impact": "bullish",
+      "severity": 2,
+      "evidence": "BZ=F moved -3.04% vs previous close (78.02 -> 75.65)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 75.65,
+      "previous": 78.02,
+      "pct_change": -3.04,
+      "evidence_class": "official"
+    },
+    {
       "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +1.82% vs previous close (4070.9 -> 4145.0)",
+      "evidence": "GC=F moved +1.85% vs previous close (4070.9 -> 4146.4)",
       "source": "market_data",
       "ticker": "GC=F",
-      "last": 4145.0,
+      "last": 4146.4,
       "previous": 4070.9,
-      "pct_change": 1.82,
+      "pct_change": 1.85,
       "evidence_class": "official"
     },
     {
@@ -53,9 +65,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 75.77,
+      "last": 75.65,
       "previous": 78.02,
-      "pct_change": -2.88
+      "pct_change": -3.04
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -77,27 +89,27 @@
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7545.16,
+      "last": 7544.35,
       "previous": 7482.71,
-      "pct_change": 0.83
+      "pct_change": 0.82
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 26194.6,
+      "last": 26192.8,
       "previous": 25870.65,
       "pct_change": 1.25
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52552.33,
+      "last": 52544.26,
       "previous": 52348.39,
-      "pct_change": 0.39
+      "pct_change": 0.37
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4145.0,
+      "last": 4146.4,
       "previous": 4070.9,
-      "pct_change": 1.82
+      "pct_change": 1.85
     }
   },
   "regime_context": {
