@@ -1,5 +1,5 @@
 {
-  "fetched_at": "09 Jul 2026 16:31 IST",
+  "fetched_at": "09 Jul 2026 17:32 IST",
   "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
@@ -18,6 +18,7 @@
     }
   ],
   "stock_specific_alerts": [],
+  "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
     "allow_new_longs": true,
     "allow_new_shorts": true,
@@ -31,18 +32,24 @@
     ],
     "blocked_tickers": []
   },
+  "policy_calendar": {
+    "window_days": 2,
+    "upcoming_events": [],
+    "escalation_applied": false,
+    "note": "A scheduled policy date carries no directional bias by itself -- only tightens confirmation strictness near it, same as a HIGH/EXTREME macro risk_level would."
+  },
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.74,
+      "last": 78.56,
       "previous": 78.02,
-      "pct_change": 0.92
+      "pct_change": 0.69
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.38,
+      "last": 95.58,
       "previous": 95.59,
-      "pct_change": -0.23
+      "pct_change": -0.01
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -52,9 +59,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.05,
+      "last": 16.9,
       "previous": 16.9,
-      "pct_change": 0.89
+      "pct_change": 0.0
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -76,9 +83,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4107.8,
+      "last": 4116.3,
       "previous": 4070.9,
-      "pct_change": 0.91
+      "pct_change": 1.12
     }
   },
   "regime_context": {
@@ -97,7 +104,7 @@
   "data_unavailable": {
     "fii_dii_flows": "No free, non-scraped source found -- NSE's FII/DII page blocks non-browser requests. TODO if a reliable API surfaces.",
     "gift_nifty": "No stable free source verified yet.",
-    "rbi_fed_calendar": "Deferred per build brief ('later')."
+    "pledge_disclosure": "NSE's corporate-announcements API works (see stock_specific_alerts' auditor-resignation scan), but the promoter-share-pledge endpoint could not be found after 5 time-boxed guesses at its path (all 404) -- not the same failure mode as fii_dii_flows/gift_nifty (which have no known API at all), this one's endpoint just wasn't located yet."
   },
   "method": "risk_score = baseline(15) + sum of factor points, clamped 0-100. Market-data factors are tiered on % move vs previous close (thresholds are named constants in source, see MARKET-DATA TIERS). News factors require a real source URL + timestamp -- no source, no factor; news older than 48h is excluded outright. Geopolitical severity is capped when only one source domain corroborates it (rumor-tier, cannot alone reach HIGH). bias = BEARISH/BULLISH/NEUTRAL by sign of net points (>+10 / <-10 / between). confidence = 0.5 + 0.4*(market-data fetch completeness), shaved 0.15 if any factor is rumor-class.",
   "disclaimer": "Macro risk overlay only. Does NOT generate trades by itself and does not replace the technical signal engine -- it is a risk-adjustment layer for the future expert gate to blend with technical_signal + market_regime + recommendation_history. Deterministic scoring only, no LLM interpretation of headlines anywhere in this module. Educational use only, not investment advice."

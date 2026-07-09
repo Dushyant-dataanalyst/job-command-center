@@ -1,5 +1,5 @@
 {
-  "generated_at": "09 Jul 2026 16:46 IST",
+  "generated_at": "09 Jul 2026 17:33 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -78,7 +78,7 @@
       "state": "COOLDOWN",
       "state_engine": "stateless_v1",
       "state_reason": "a invalidated rec for this symbol closed 08 Jul 2026 12:37 IST (within 3d) -- calendar-day approximation, not expert_gate's refresh-counted cooldown",
-      "context_score": 60.4,
+      "context_score": 60.3,
       "components": {
         "macro": {
           "score": 40,
@@ -88,10 +88,7 @@
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=12.7) -- low conviction for any direction"
         },
-        "sector": {
-          "score": 61.2,
-          "detail": "sector outperforming NIFTY by +2.25% (5d ROC) -- aligns with a long signal"
-        },
+        "sector": null,
         "instrument_quality": {
           "score": 100.0,
           "detail": "6/6 votes (stock 3-factor consensus)"
@@ -135,7 +132,7 @@
       "inputs_used": {
         "macro": true,
         "regime": true,
-        "sector": true,
+        "sector": false,
         "instrument_quality": true,
         "trade_quality": true,
         "learning_history": false
@@ -216,8 +213,8 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 51.0 between 35 and 65",
-      "context_score": 51.0,
+      "state_reason": "context_score 51.5 between 35 and 65",
+      "context_score": 51.5,
       "components": {
         "macro": {
           "score": 40,
@@ -227,10 +224,7 @@
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=12.7) -- low conviction for any direction"
         },
-        "sector": {
-          "score": 47.7,
-          "detail": "sector underperforming NIFTY by -0.46% (5d ROC) -- opposes a long signal"
-        },
+        "sector": null,
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
@@ -274,7 +268,7 @@
       "inputs_used": {
         "macro": true,
         "regime": true,
-        "sector": true,
+        "sector": false,
         "instrument_quality": true,
         "trade_quality": true,
         "learning_history": false
@@ -288,7 +282,7 @@
       "state": "COOLDOWN",
       "state_engine": "stateless_v1",
       "state_reason": "a lost rec for this symbol closed 08 Jul 2026 10:32 IST (within 3d) -- calendar-day approximation, not expert_gate's refresh-counted cooldown",
-      "context_score": 61.5,
+      "context_score": 62.1,
       "components": {
         "macro": {
           "score": 80,
@@ -298,10 +292,7 @@
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=12.7) -- low conviction for any direction"
         },
-        "sector": {
-          "score": 56.7,
-          "detail": "sector outperforming NIFTY by -1.34% (5d ROC) -- aligns with a short signal"
-        },
+        "sector": null,
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
@@ -345,7 +336,7 @@
       "inputs_used": {
         "macro": true,
         "regime": true,
-        "sector": true,
+        "sector": false,
         "instrument_quality": true,
         "trade_quality": true,
         "learning_history": false
@@ -358,8 +349,8 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 59.1 between 35 and 65",
-      "context_score": 59.1,
+      "state_reason": "context_score 62.1 between 35 and 65",
+      "context_score": 62.1,
       "components": {
         "macro": {
           "score": 80,
@@ -369,10 +360,7 @@
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=12.7) -- low conviction for any direction"
         },
-        "sector": {
-          "score": 36.2,
-          "detail": "sector underperforming NIFTY by +2.76% (5d ROC) -- opposes a short signal"
-        },
+        "sector": null,
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
@@ -416,7 +404,7 @@
       "inputs_used": {
         "macro": true,
         "regime": true,
-        "sector": true,
+        "sector": false,
         "instrument_quality": true,
         "trade_quality": true,
         "learning_history": false
@@ -430,7 +418,7 @@
       "state": "COOLDOWN",
       "state_engine": "stateless_v1",
       "state_reason": "a invalidated rec for this symbol closed 09 Jul 2026 00:27 IST (within 3d) -- calendar-day approximation, not expert_gate's refresh-counted cooldown",
-      "context_score": 59.9,
+      "context_score": 62.1,
       "components": {
         "macro": {
           "score": 80,
@@ -440,10 +428,7 @@
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=12.7) -- low conviction for any direction"
         },
-        "sector": {
-          "score": 43.4,
-          "detail": "sector underperforming NIFTY by +1.33% (5d ROC) -- opposes a short signal"
-        },
+        "sector": null,
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
@@ -487,7 +472,7 @@
       "inputs_used": {
         "macro": true,
         "regime": true,
-        "sector": true,
+        "sector": false,
         "instrument_quality": true,
         "trade_quality": true,
         "learning_history": false
@@ -568,8 +553,8 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 59.9 between 35 and 65",
-      "context_score": 59.9,
+      "state_reason": "context_score 62.1 between 35 and 65",
+      "context_score": 62.1,
       "components": {
         "macro": {
           "score": 80,
@@ -579,10 +564,7 @@
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=12.7) -- low conviction for any direction"
         },
-        "sector": {
-          "score": 43.4,
-          "detail": "sector underperforming NIFTY by +1.33% (5d ROC) -- opposes a short signal"
-        },
+        "sector": null,
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
@@ -626,7 +608,7 @@
       "inputs_used": {
         "macro": true,
         "regime": true,
-        "sector": true,
+        "sector": false,
         "instrument_quality": true,
         "trade_quality": true,
         "learning_history": false

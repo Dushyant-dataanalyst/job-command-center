@@ -1,7 +1,8 @@
 {
-  "fetched_at": "09 Jul 2026 16:31 IST",
+  "fetched_at": "09 Jul 2026 17:31 IST",
   "data_source": "mixed: 9 kite (live) / 8 yfinance (EOD/delayed) fetches",
-  "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
+  "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation. rs_vs_nifty_pct = this sector's/stock's own 5-day ROC% minus NIFTY50's 5-day ROC% over the same window -- a plain difference, not a calibrated percentile rating.",
+  "nifty_roc5_pct": null,
   "all_sectors_ranked": [
     {
       "sector": "Realty",
@@ -11,7 +12,8 @@
       "last_close": 906.95,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": 20.34
+      "score": 20.34,
+      "rs_vs_nifty_pct": null
     },
     {
       "sector": "IT",
@@ -21,7 +23,8 @@
       "last_close": 27471.25,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": 1.43
+      "score": 1.43,
+      "rs_vs_nifty_pct": null
     },
     {
       "sector": "Pharma",
@@ -31,7 +34,8 @@
       "last_close": 25656.25,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": 1.18
+      "score": 1.18,
+      "rs_vs_nifty_pct": null
     },
     {
       "sector": "Auto",
@@ -41,7 +45,8 @@
       "last_close": 26676.35,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": 0.64
+      "score": 0.64,
+      "rs_vs_nifty_pct": null
     },
     {
       "sector": "FMCG",
@@ -51,7 +56,8 @@
       "last_close": 49350.15,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": 0.35
+      "score": 0.35,
+      "rs_vs_nifty_pct": null
     },
     {
       "sector": "Metal",
@@ -61,7 +67,8 @@
       "last_close": 12503.3,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": -0.17
+      "score": -0.17,
+      "rs_vs_nifty_pct": null
     },
     {
       "sector": "Energy",
@@ -71,7 +78,8 @@
       "last_close": 38838.1,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": -1.69
+      "score": -1.69,
+      "rs_vs_nifty_pct": null
     },
     {
       "sector": "PSU Bank",
@@ -81,7 +89,8 @@
       "last_close": 8203.2,
       "data_as_of": "2026-07-09",
       "data_source": "yfinance",
-      "score": -5.0
+      "score": -5.0,
+      "rs_vs_nifty_pct": null
     }
   ],
   "sectors_with_errors": {
@@ -104,7 +113,8 @@
         "last_close": 2090.0,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 6.78
+        "score": 6.78,
+        "rs_vs_nifty_pct": null
       },
       {
         "symbol": "GODREJPROP",
@@ -114,7 +124,8 @@
         "last_close": 2028.4,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 2.03
+        "score": 2.03,
+        "rs_vs_nifty_pct": null
       },
       {
         "symbol": "OBEROIRLTY",
@@ -124,7 +135,8 @@
         "last_close": 1875.0,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 1.33
+        "score": 1.33,
+        "rs_vs_nifty_pct": null
       }
     ],
     "IT": [
@@ -136,7 +148,8 @@
         "last_close": 1151.0,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 3.11
+        "score": 3.11,
+        "rs_vs_nifty_pct": null
       },
       {
         "symbol": "TECHM",
@@ -146,7 +159,8 @@
         "last_close": 1432.3,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 1.8
+        "score": 1.8,
+        "rs_vs_nifty_pct": null
       },
       {
         "symbol": "INFY",
@@ -156,7 +170,8 @@
         "last_close": 1055.3,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 0.86
+        "score": 0.86,
+        "rs_vs_nifty_pct": null
       }
     ],
     "Pharma": [
@@ -168,7 +183,8 @@
         "last_close": 1940.7,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 8.91
+        "score": 8.91,
+        "rs_vs_nifty_pct": null
       },
       {
         "symbol": "DIVISLAB",
@@ -178,7 +194,8 @@
         "last_close": 6820.5,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 2.21
+        "score": 2.21,
+        "rs_vs_nifty_pct": null
       },
       {
         "symbol": "AUROPHARMA",
@@ -188,7 +205,8 @@
         "last_close": 1582.7,
         "data_as_of": "2026-07-09",
         "data_source": "kite",
-        "score": 0.69
+        "score": 0.69,
+        "rs_vs_nifty_pct": null
       }
     ]
   },
