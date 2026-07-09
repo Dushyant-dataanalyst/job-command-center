@@ -1,15 +1,27 @@
 {
-  "fetched_at": "09 Jul 2026 19:36 IST",
-  "risk_score": 27,
-  "risk_level": "LOW",
+  "fetched_at": "09 Jul 2026 20:36 IST",
+  "risk_score": 33,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.75,
   "factors": [
     {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.53% vs previous close (4070.9 -> 4133.3)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4133.3,
+      "previous": 4070.9,
+      "pct_change": 1.53,
+      "evidence_class": "official"
+    },
+    {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "3 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"International court tells BBC of breakthrough in Sudan war crimes probe\"",
+      "evidence": "2 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"International court tells BBC of breakthrough in Sudan war crimes probe\"",
       "source": "https://www.bbc.co.uk/news/articles/c9928zr2m5xo?at_medium=RSS&at_campaign=rss",
       "published_at": "09 Jul 2026 14:19 IST",
       "evidence_class": "rumor",
@@ -24,7 +36,7 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 1.0,
+    "position_size_multiplier": 0.85,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -41,9 +53,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 77.44,
+      "last": 76.96,
       "previous": 78.02,
-      "pct_change": -0.74
+      "pct_change": -1.36
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -59,33 +71,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.57,
+      "last": 16.54,
       "previous": 16.9,
-      "pct_change": -1.95
+      "pct_change": -2.13
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7511.56,
+      "last": 7518.1,
       "previous": 7482.71,
-      "pct_change": 0.39
+      "pct_change": 0.47
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 26019.65,
+      "last": 26028.2,
       "previous": 25870.65,
-      "pct_change": 0.58
+      "pct_change": 0.61
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52422.06,
+      "last": 52469.48,
       "previous": 52348.39,
-      "pct_change": 0.14
+      "pct_change": 0.23
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4129.1,
+      "last": 4133.3,
       "previous": 4070.9,
-      "pct_change": 1.43
+      "pct_change": 1.53
     }
   },
   "regime_context": {
