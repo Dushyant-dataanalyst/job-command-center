@@ -19,6 +19,14 @@ FILES_TO_SNAPSHOT = [
     "market_mood.json", "news_feed.json", "equity_journal.json",
     "stock_fo.json", "equity_scan.json", "equity_scan_history.json",
     "market_regime.json",
+    # Added 09-Jul-2026 -- the learning-engine feeds (macro_risk_refresh.py,
+    # expert_gate.py, recommendation_tracker.py, strategy_performance.py)
+    # predate this list and were never added; context_score_dryrun.py needs
+    # point-in-time history of all of these, and git history alone (the
+    # fallback for days before this change) is more work to trawl than a
+    # daily snapshot.
+    "macro_risk.json", "expert_gate.json", "recommendation_journal.json",
+    "strategy_performance.json",
 ]
 
 KEEP_DAYS = 30  # older snapshots are pruned — git history is the real long-term record

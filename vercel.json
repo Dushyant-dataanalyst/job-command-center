@@ -23,6 +23,7 @@
     { "src": "strategy_performance.json", "use": "@vercel/static" },
     { "src": "macro_risk.json",         "use": "@vercel/static" },
     { "src": "astro_view.json",         "use": "@vercel/static" },
+    { "src": "context_score.json",      "use": "@vercel/static" },
     { "src": "api/save-positions.js",   "use": "@vercel/node" }
   ],
   "routes": [
@@ -129,6 +130,11 @@
       "src": "/astro_view.json",
       "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
       "dest": "/astro_view.json"
+    },
+    {
+      "src": "/context_score.json",
+      "headers": { "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0", "Access-Control-Allow-Origin": "*" },
+      "dest": "/context_score.json"
     },
     {
       "src": "/nse_live_dashboard.html",

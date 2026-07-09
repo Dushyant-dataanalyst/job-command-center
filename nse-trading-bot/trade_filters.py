@@ -217,18 +217,30 @@ def _append_filter_log(entry):
     FILTER_LOG_FILE.write_text(json.dumps(log, indent=2), encoding="utf-8")
 
 
+def _run_filters(candidate, regime=None, recent_trades=None, now_dt=None):
+    """Pure -- no logging, no alerting, just the 4 filter results. Extracted
+    from evaluate_trade() 09-Jul-2026 so a per-refresh scorer (context_score.py)
+    can call the filters for informational scoring across many candidates
+    without firing a Telegram WARNING and a filter_log.json entry for every
+    one -- evaluate_trade() (below) is unchanged for its one existing use
+    case (an eventual real executor) and keeps 100% of its current logging/
+    alerting behavior; this is purely an extraction, verified via repo-wide
+    grep to have zero existing callers of evaluate_trade() to break."""
+    return [
+        filter_market_regime(candidate, regime),
+        filter_time_window(now_dt),
+        filter_loss_streak(recent_trades if recent_trades is not None else _recent_results_from_trade_journal()),
+        filter_risk_reward(candidate),
+    ]
+
+
 def evaluate_trade(candidate, regime=None, recent_trades=None, now_dt=None):
     """candidate: {"symbol", "strategy", "product" ("MIS"/"CNC"), "direction"
     ("BUY"/"SELL", defaults to "BUY" if omitted), "entry", "stop", "target"}.
     Returns {"passed": bool, "results": [...]} and logs every evaluation
     (pass or block) to logs/filter_log.json, alerting on WARNING for any
     block per the Brief's alert-level spec."""
-    results = [
-        filter_market_regime(candidate, regime),
-        filter_time_window(now_dt),
-        filter_loss_streak(recent_trades if recent_trades is not None else _recent_results_from_trade_journal()),
-        filter_risk_reward(candidate),
-    ]
+    results = _run_filters(candidate, regime=regime, recent_trades=recent_trades, now_dt=now_dt)
     blocked = [r for r in results if not r["passed"]]
 
     verdict = {
