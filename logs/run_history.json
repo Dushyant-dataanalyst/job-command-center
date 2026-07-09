@@ -1,30 +1,5 @@
 [
   {
-    "timestamp": "08 Jul 2026 05:46 IST",
-    "event": "workflow_dispatch",
-    "steps": {
-      "SNAPSHOT_DAILY": "success",
-      "KITE_PORTFOLIO": "success",
-      "NEWS_REFRESH": "success",
-      "EQUITY_SCAN": "success",
-      "VOTER_WEIGHTS": "success",
-      "STRATEGY_PERFORMANCE": "success",
-      "SECTOR_ROTATION": "success",
-      "SIGNAL_ALERTS": "success",
-      "TRADE_BRAIN": "success",
-      "VALIDATE_JSON": "success",
-      "MARKET_REGIME": "success",
-      "RECOMMENDATION_TRACKER": "success",
-      "EXPERT_GATE": "success",
-      "EQUITY_BRAIN": "success",
-      "STOCK_FO": "success",
-      "FO_REFRESH": "success",
-      "DAILY_REPORT": "success",
-      "MARKET_MOOD": "success"
-    },
-    "any_failed": false
-  },
-  {
     "timestamp": "08 Jul 2026 05:52 IST",
     "event": "workflow_dispatch",
     "steps": {
@@ -5209,7 +5184,34 @@
     "any_failed": false
   },
   {
-    "timestamp": "09 Jul 2026 15:24 IST",
+    "timestamp": "09 Jul 2026 15:12 IST",
+    "event": "workflow_dispatch",
+    "steps": {
+      "SNAPSHOT_DAILY": "skipped",
+      "KITE_PORTFOLIO": "success",
+      "NEWS_REFRESH": "success",
+      "EQUITY_SCAN": "skipped",
+      "VOTER_WEIGHTS": "skipped",
+      "STRATEGY_PERFORMANCE": "success",
+      "MACRO_RISK": "success",
+      "SECTOR_ROTATION": "success",
+      "SIGNAL_ALERTS": "success",
+      "TRADE_BRAIN": "success",
+      "VALIDATE_JSON": "success",
+      "MARKET_REGIME": "success",
+      "RECOMMENDATION_TRACKER": "success",
+      "EXPERT_GATE": "success",
+      "EQUITY_BRAIN": "success",
+      "ASTRO_VIEW": "skipped",
+      "STOCK_FO": "success",
+      "FO_REFRESH": "success",
+      "DAILY_REPORT": "skipped",
+      "MARKET_MOOD": "success"
+    },
+    "any_failed": false
+  },
+  {
+    "timestamp": "09 Jul 2026 15:36 IST",
     "event": "workflow_dispatch",
     "steps": {
       "SNAPSHOT_DAILY": "skipped",
