@@ -169,12 +169,24 @@ tr:last-child td{border-bottom:none}
 .mp-refresh-btn.spin{animation:rot .7s linear infinite}
 #mp-prog{height:3px;background:var(--border);border-radius:3px;flex:1;overflow:hidden}
 #mp-prog-fill{height:100%;background:var(--accent);border-radius:3px;width:100%;transition:width 1s linear}
-.mp-ticker{overflow:hidden;position:relative;height:54px}
-.mp-ticker-item{position:absolute;inset:0;padding:8px 10px;font-size:11px;line-height:1.45;color:var(--text-primary);
+/* Was a single-slot ticker auto-rotating to the next item every 6s -- fixed
+   09-Jul-2026: whatever wasn't showing right now was simply gone until it
+   cycled back around, and a long item (e.g. a real NSE announcement) could
+   hard-clip mid-sentence at this box's fixed height with no way to read the
+   rest. Replaced with a static, always-visible scrollable LIST -- every
+   factor/news item stacked at once, nothing to chase or lose. Ported from
+   nse_dashboard_redesign_mockup.html's validated fix (see that file's git
+   history) -- confirmed with the user directly, then implemented and
+   verified there, but never actually ported to this live dashboard until
+   now. max-height+overflow-y (not a fixed height on one absolutely-
+   positioned item) is what makes the list scroll instead of clipping. */
+.mp-ticker{max-height:240px;overflow-y:auto;scrollbar-width:thin}
+.mp-ticker::-webkit-scrollbar{width:5px}
+.mp-ticker::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
+.mp-ticker-item{padding:10px 12px;font-size:12.5px;line-height:1.5;color:var(--text-primary);
                 background:var(--surface-alt);border-radius:var(--radius-sm);border-left:3px solid var(--border-strong);
-                opacity:0;transition:opacity .5s ease;overflow:hidden}
-.mp-ticker-item.show{opacity:1}
-@media(prefers-reduced-motion:reduce){.mp-ticker{height:auto}.mp-ticker-item{position:static;opacity:1;margin-bottom:6px;transition:none}}
+                margin-bottom:8px}
+.mp-ticker-item:last-child{margin-bottom:0}
 
 /* ── Toast ── */
 .toast{position:fixed;bottom:20px;right:20px;background:#0f172a;color:#f1f5f9;
@@ -2471,9 +2483,6 @@ function updateEquityCounts(){
   const REFRESH_MS = 300000; // matches the 5-min cadence used elsewhere on this page
   var remaining = REFRESH_MS;
   var tickHandle = null;
-  var tickerItems = [];
-  var tickerIdx = 0;
-  var tickerTimer = null;
 
   function setLabel(text){ var l = document.getElementById('mp-refresh-label'); if (l) l.textContent = text; }
   function setProg(pct){ var f = document.getElementById('mp-prog-fill'); if (f) f.style.width = pct + '%'; }
@@ -2569,7 +2578,13 @@ function updateEquityCounts(){
       top.map(function(s){ return '<span style="background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:2px 8px;font-size:9px;font-weight:700">' + s + '</span>'; }).join('') + '</div>';
   }
 
-  // ── Moving ticker: cycles macro-risk factors + fresh NSE announcements ──
+  // ── Live Factors & News: static list, all items at once ──
+  // Was a single-slot ticker auto-rotating to the next item every 6s -- fixed
+  // 09-Jul-2026 (ported from nse_dashboard_redesign_mockup.html's validated
+  // fix, see .mp-ticker's CSS comment above and that file's git history).
+  // renderTicker() is already called on every real refresh() cycle below
+  // with fresh macro_risk.json/news_feed.json data, so there's no rotation
+  // timer to drive here anymore -- nothing rotates, everything just shows.
   function buildTickerItems(macro, news){
     var items = [];
     ((macro && macro.factors) || []).forEach(function(f){
@@ -2582,38 +2597,14 @@ function updateEquityCounts(){
     return items;
   }
 
-  function paintTicker(){
-    var box = document.getElementById('mp-ticker');
-    if (!box || !tickerItems.length) return;
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) {
-      box.innerHTML = tickerItems.map(function(it){ return '<div class="mp-ticker-item show" style="border-left-color:' + it.color + '">' + it.html + '</div>'; }).join('');
-      return;
-    }
-    var it = tickerItems[tickerIdx];
-    var el = document.createElement('div');
-    el.className = 'mp-ticker-item';
-    el.style.borderLeftColor = it.color;
-    el.innerHTML = it.html;
-    box.innerHTML = '';
-    box.appendChild(el);
-    // double rAF so the browser paints the opacity:0 start state before the "show" transition kicks in
-    requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('show'); }); });
-  }
-
   function renderTicker(macro, news){
-    tickerItems = buildTickerItems(macro, news);
-    tickerIdx = 0;
     var box = document.getElementById('mp-ticker');
     if (!box) return;
-    if (!tickerItems.length) { box.innerHTML = '<div style="font-size:11px;color:var(--text-muted);padding:8px 0">No active factors or news this run.</div>'; return; }
-    if (tickerTimer) clearInterval(tickerTimer);
-    paintTicker();
-    tickerTimer = setInterval(function(){
-      if (box.matches(':hover')) return; // pause while the user is reading
-      tickerIdx = (tickerIdx + 1) % tickerItems.length;
-      paintTicker();
-    }, 6000);
+    var items = buildTickerItems(macro, news);
+    if (!items.length) { box.innerHTML = '<div style="font-size:11px;color:var(--text-muted);padding:8px 0">No active factors or news this run.</div>'; return; }
+    box.innerHTML = items.map(function(it){
+      return '<div class="mp-ticker-item" style="border-left-color:' + it.color + '">' + it.html + '</div>';
+    }).join('');
   }
 
   function fetchAll(){
