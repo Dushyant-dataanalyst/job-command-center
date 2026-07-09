@@ -1,14 +1,14 @@
 {
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 24024.4,
-    "ann_vol": 0.1293,
+    "spot": 23990.25,
+    "ann_vol": 0.1288,
     "consensus": "WAIT",
-    "ce_votes": 3,
+    "ce_votes": 1,
     "pe_votes": 0,
-    "commentary": "WAIT (CE 3/6, PE 0/6 -- neither side reached the 4-vote threshold): price 24024.4 is above EMA18 (24012.34) and EMA50 (23924.51) -- established uptrend (+2 CE) | MACD (116.31) is above its signal line (111.31) -- bullish momentum (+1 CE) | price is between pivot support (23691.5) and resistance (24186.3) -- no breakout yet | 5-day momentum (ROC5 -0.63%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 1/6, PE 0/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (113.58) is above its signal line (110.77) -- bullish momentum (+1 CE) | price is between pivot support (23691.5) and resistance (24186.3) -- no breakout yet | 5-day momentum (ROC5 -0.77%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "data_as_of": "2026-07-09",
-    "fetched_at": "09 Jul 2026 10:55 IST",
+    "fetched_at": "09 Jul 2026 11:01 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-09 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
@@ -29,14 +29,14 @@
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 57174.9,
-    "ann_vol": 0.1663,
+    "spot": 57096.15,
+    "ann_vol": 0.1659,
     "consensus": "WAIT",
     "ce_votes": 0,
-    "pe_votes": 1,
-    "commentary": "WAIT (CE 0/6, PE 1/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (565.79) is below its signal line (722.78) -- bearish momentum (+1 PE) | price is between pivot support (56169.47) and resistance (57695.67) -- no breakout yet | 5-day momentum (ROC5 -1.48%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "pe_votes": 2,
+    "commentary": "WAIT (CE 0/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (559.51) is below its signal line (721.52) -- bearish momentum (+1 PE) | price is between pivot support (56169.47) and resistance (57695.67) -- no breakout yet | 5-day momentum (ROC5 -1.61%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "data_as_of": "2026-07-09",
-    "fetched_at": "09 Jul 2026 10:55 IST",
+    "fetched_at": "09 Jul 2026 11:01 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-09 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
@@ -56,7 +56,7 @@
     }
   },
   "_meta": {
-    "generated_at": "09 Jul 2026 10:55 IST",
+    "generated_at": "09 Jul 2026 11:01 IST",
     "source": "yfinance EOD (delayed/unofficial)"
   }
 }
