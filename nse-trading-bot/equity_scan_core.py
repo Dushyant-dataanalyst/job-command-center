@@ -125,10 +125,22 @@ def _extended_indicators(ticker):
 
 
 def _strategy_inna(v):
-    """18-MA pullback in uptrend — bounce off MA18 with volume."""
+    """18-MA pullback in uptrend — bounce off MA18 with volume.
+
+    BACKTESTED FIX 09-Jul-2026: "bounced" used to accept any positive close
+    over prev_close, including noise-level gains of a few paise. Requiring
+    a minimum 0.5% bounce filters that noise -- 3y backtest (1,490 baseline
+    trades) showed a small but consistent improvement (win rate 49.0%->
+    49.3%, avg return 0.4%->0.44%, Sharpe 2.09->2.22, maxDD -48.2%->-47.8%).
+    A stricter 2-consecutive-day confirmation was also tested and REJECTED
+    -- it made things worse (Sharpe 2.09->0.98), likely because genuine
+    bounces in a real uptrend don't linger near EMA18 for 2 days; requiring
+    that selects for weaker, more hesitant setups instead of stronger ones.
+    """
     uptrend = v["spot"] > v["ema50"]
     touched = v["low_recent_min"] <= v["ema18"] * 1.01
-    bounced = v["spot"] > v["ema18"] and v["spot"] > v["prev_close"]
+    gain_pct = (v["spot"] - v["prev_close"]) / v["prev_close"] * 100 if v["prev_close"] else 0
+    bounced = v["spot"] > v["ema18"] and gain_pct >= 0.5
     vol_confirm = (v["rel_volume"] or 0) >= 1.3
     if uptrend and touched and bounced:
         return "STRONG_BUY" if vol_confirm else "BUY"
@@ -154,22 +166,56 @@ def _strategy_pham(v, peg):
 
 
 def _strategy_cianni(v):
-    """20/50-day breakout with ADX>22 + volume surge."""
-    breakout20 = v["high20_prev"] is not None and v["spot"] > v["high20_prev"]
+    """20/50-day breakout with ADX>22 + volume surge.
+
+    BACKTESTED FIX 09-Jul-2026: this used to fire a plain BUY on
+    (breakout20 OR breakout50) + adx_strong with NO volume-surge check at
+    all on that branch -- a real bug, since the strategy's own name and its
+    STRONG_BUY branch both imply volume confirmation is required. Root
+    cause turned out to be the 20-day breakout threshold, not just the
+    missing volume check: a 3y backtest (baseline 484 trades, 45.2% win,
+    avg -0.06%, Sharpe -0.21 -- net NEGATIVE) showed that closing the
+    volume bypass alone barely moved the numbers (still net-negative), but
+    requiring the stronger 50-day breakout (not 20-day) for ANY signal
+    flipped it to net-positive (362 trades, 49.2% win, avg 0.3%, Sharpe
+    0.79, maxDD -82.9%->-55.6%). A literature-backed ADX>=25 entry gate
+    (general breakout-trading guidance: ADX>=25-30 for genuine trend
+    strength) was also tested and REJECTED -- it hurt this voter's own
+    Sharpe (0.79->0.31-0.44) even though it marginally helped the whole
+    4-voter system's aggregate; general trading literature didn't transfer
+    cleanly to this specific voter's data. ADX threshold (22) is kept as a
+    STRONG_BUY/BUY tier split only, not an entry gate.
+    """
     breakout50 = v["high50_prev"] is not None and v["spot"] > v["high50_prev"]
     adx_strong = (v["adx"] or 0) >= 22
     vol_surge = (v["rel_volume"] or 0) >= 1.3
-    if (breakout20 or breakout50) and adx_strong and vol_surge:
-        return "STRONG_BUY" if breakout50 else "BUY"
-    if (breakout20 or breakout50) and adx_strong:
+    if breakout50 and vol_surge and adx_strong:
+        return "STRONG_BUY"
+    if breakout50 and vol_surge:
         return "BUY"
-    if breakout20 or adx_strong:
+    if breakout50 or adx_strong:
         return "WATCH"
     return "NO_SIGNAL"
 
 
 def _strategy_unger(v):
-    """3 sub-systems vote (breakout/trend/mean-reversion) — 2 of 3 must trigger."""
+    """3 sub-systems vote (breakout/trend/mean-reversion) — 2 of 3 must
+    trigger AND must include mean-reversion.
+
+    BACKTESTED FIX 09-Jul-2026: sub_breakout ("spot > 20-day high") and
+    sub_trend ("ema9>ema18>ema50") are both just "is this stock in an
+    uptrend," read two different ways -- not independent confirmations
+    (see the correlation disclaimer in _voter_commentary()'s "_note" key
+    below). Breaking down which sub-system combo fired at each real 3y
+    backtest entry: Breakout+Trend (no meanrev) was the SINGLE LARGEST
+    bucket (534 of ~1,150 trades) and the WEAKEST (47.4% win, avg 0.07%,
+    Sharpe 0.25 -- barely above noise), while Trend+Meanrev -- which
+    combines a genuinely different signal type -- was the strongest
+    large-sample bucket (533 trades, 49.7% win, avg 0.57%, Sharpe 2.56).
+    Requiring mean-reversion be part of any 2-vote signal removes the weak
+    redundant-trend bucket: isolated backtest went from 1,177 trades/48.6%
+    win/avg 0.33%/Sharpe 1.63 to 693 trades/49.6% win/avg 0.52%/Sharpe 2.05.
+    """
     sub_breakout = v["high20_prev"] is not None and v["spot"] > v["high20_prev"]
     sub_trend = v["ema9"] > v["ema18"] > v["ema50"]
     rsi = v["rsi"]
@@ -180,11 +226,9 @@ def _strategy_unger(v):
     votes = sum([sub_breakout, sub_trend, sub_meanrev])
     if votes >= 3:
         return "STRONG_BUY"
-    if votes == 2:
+    if votes == 2 and sub_meanrev:
         return "BUY"
-    if votes == 1:
-        return "WATCH"
-    return "NO_SIGNAL"
+    return "WATCH" if votes >= 1 else "NO_SIGNAL"
 
 
 def _voter_commentary(v, peg):
