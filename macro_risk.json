@@ -1,32 +1,32 @@
 {
-  "fetched_at": "09 Jul 2026 23:39 IST",
-  "risk_score": 31,
-  "risk_level": "MODERATE",
+  "fetched_at": "10 Jul 2026 00:36 IST",
+  "risk_score": 66,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
-      "name": "Crude oil cooling",
-      "impact": "bullish",
-      "severity": 2,
-      "evidence": "BZ=F moved -3.04% vs previous close (78.02 -> 75.65)",
+      "name": "India VIX spike",
+      "impact": "bearish",
+      "severity": 5,
+      "evidence": "^INDIAVIX moved +26.01% vs previous close (11.65 -> 14.68)",
       "source": "market_data",
-      "ticker": "BZ=F",
-      "last": 75.65,
-      "previous": 78.02,
-      "pct_change": -3.04,
+      "ticker": "^INDIAVIX",
+      "last": 14.68,
+      "previous": 11.65,
+      "pct_change": 26.01,
       "evidence_class": "official"
     },
     {
       "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +1.85% vs previous close (4070.9 -> 4146.4)",
+      "evidence": "GC=F moved +1.54% vs previous close (4070.9 -> 4133.4)",
       "source": "market_data",
       "ticker": "GC=F",
-      "last": 4146.4,
+      "last": 4133.4,
       "previous": 4070.9,
-      "pct_change": 1.85,
+      "pct_change": 1.54,
       "evidence_class": "official"
     },
     {
@@ -44,11 +44,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -65,9 +65,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 75.65,
+      "last": 75.96,
       "previous": 78.02,
-      "pct_change": -3.04
+      "pct_change": -2.64
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -77,50 +77,50 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.36,
-      "previous": 14.68,
-      "pct_change": -8.97
+      "last": 14.68,
+      "previous": 11.65,
+      "pct_change": 26.01
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.0,
+      "last": 16.04,
       "previous": 16.9,
-      "pct_change": -5.33
+      "pct_change": -5.09
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7544.35,
+      "last": 7535.45,
       "previous": 7482.71,
-      "pct_change": 0.82
+      "pct_change": 0.7
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 26192.8,
+      "last": 26170.84,
       "previous": 25870.65,
-      "pct_change": 1.25
+      "pct_change": 1.16
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52544.26,
+      "last": 52455.52,
       "previous": 52348.39,
-      "pct_change": 0.37
+      "pct_change": 0.2
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4146.4,
+      "last": 4133.4,
       "previous": 4070.9,
-      "pct_change": 1.85
+      "pct_change": 1.54
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 12.7,
+      "adx": 12.9,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 19.3,
+      "adx": 20.1,
       "volatility": "Low"
     }
   },
