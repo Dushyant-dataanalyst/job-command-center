@@ -129,12 +129,21 @@ body{background:var(--bg-page);color:var(--text-primary);font-family:-apple-syst
 @media(max-width:1150px){.sidebar-col{position:static;max-height:none}}
 .mp-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);border-top:3px solid var(--card-accent,var(--border));padding:12px 14px;box-shadow:var(--shadow-sm)}
 .mp-ttl{font-size:10px;font-weight:800;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-/* Was 56px/11px -- too cramped to read a 2-line headline comfortably (the
-   complaint that prompted this). Taller box, bigger type, room to breathe. */
-.mp-ticker{overflow:hidden;position:relative;height:78px}
-.mp-ticker-item{position:absolute;inset:0;padding:10px 12px;font-size:12.5px;line-height:1.5;color:var(--text-primary);background:var(--surface-alt);border-radius:var(--radius-sm);border-left:3px solid var(--border-strong);opacity:0;transition:opacity .5s ease;overflow:hidden}
-.mp-ticker-item.show{opacity:1}
-@media(prefers-reduced-motion:reduce){.mp-ticker{height:auto}.mp-ticker-item{position:static;opacity:1;margin-bottom:6px}}
+/* Went through two rounds already (56px/11px too cramped to read -> taller
+   box + bigger type; then a long real announcement hard-clipped mid-
+   sentence with no scrollbar -> item-level overflow-y:auto). The actual
+   complaint underneath both: this was a single-slot AUTO-ROTATING ticker,
+   so whatever wasn't showing right now was simply gone until it cycled
+   back around -- "data changing a lot, not easy to come back to something
+   I want to check". Confirmed with the user directly: replace rotation
+   with a static, always-visible scrollable LIST -- every item stacked at
+   once, nothing to chase. max-height+overflow-y here (not a fixed height
+   on a single absolutely-positioned item) is what makes that possible. */
+.mp-ticker{max-height:240px;overflow-y:auto;scrollbar-width:thin}
+.mp-ticker::-webkit-scrollbar{width:5px}
+.mp-ticker::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:4px}
+.mp-ticker-item{padding:10px 12px;font-size:12.5px;line-height:1.5;color:var(--text-primary);background:var(--surface-alt);border-radius:var(--radius-sm);border-left:3px solid var(--border-strong);margin-bottom:8px}
+.mp-ticker-item:last-child{margin-bottom:0}
 
 /* ── Tabs ── */
 .tabs{display:flex;gap:2px;margin:4px 16px 14px;background:var(--surface-sunk);border:1px solid var(--border);border-radius:11px;padding:3px;width:fit-content;flex-wrap:wrap}
@@ -572,7 +581,14 @@ const OI_SAMPLE = {
 
 const TICKER_ITEMS = [
   {color:STATUS.critical, html:'<b>India VIX spike</b> <span style="color:'+STATUS.critical+'">(bearish)</span><br><span style="color:var(--text-secondary)">^INDIAVIX moved +25.82% vs previous close (11.65 → 14.66)</span>'},
+  // Deliberately a long, real-length item (matches an actual NSE corporate
+  // announcement) -- used to verify the ticker box scrolls internally
+  // instead of hard-clipping mid-sentence with no way to read the rest
+  // (the exact bug report this fix addresses).
+  {color:'var(--border-strong)', html:'<b>Tata Motors Passenger Vehicles Limited</b><br><span style="color:var(--text-secondary)">Tata Motors Passenger Vehicles Limited has informed the Exchange regarding Proceedings of Annual General Meeting held on 08 Jul 2026, including all resolutions passed by the shareholders and voting results as required under SEBI LODR Regulations.</span>'},
   {color:STATUS.warning, html:'<b>Asian Paints Limited</b><br><span style="color:var(--text-secondary)">Disclosure under SEBI Takeover Regulations</span>'},
+  {color:STATUS.critical, html:'<b>Crude oil spike</b> <span style="color:'+STATUS.critical+'">(bearish)</span><br><span style="color:var(--text-secondary)">BZ=F moved +5.92% vs previous close (74.16 → 78.55)</span>'},
+  {color:'var(--border-strong)', html:'<b>DLF Limited</b><br><span style="color:var(--text-secondary)">Board approves Q1 FY27 results, revenue up 18% YoY</span>'},
 ];
 
 const STRATEGY_DESC = {
@@ -753,21 +769,22 @@ function renderBrainChart(){
   });
 }
 
-// ───────────────────────── Moving ticker ─────────────────────────
-let tickerIdx = 0, tickerTimer;
-function paintTicker(){
+// ───────────────────────── Live Factors & News list ─────────────────────────
+// Was an auto-rotating single-slot ticker (cross-faded to the next item every
+// 6s). Went through two patches already (bigger text, then internal scroll
+// for a long item) before the actual complaint surfaced: rotating away from
+// an item you cared about, with no way back, is the real problem -- fixed
+// directly by not rotating at all. Every item renders at once; the whole
+// list scrolls (see .mp-ticker's max-height+overflow-y) instead of one item
+// cycling through a fixed slot. In the real (non-mockup) dashboard this
+// would be called again whenever macro_risk.json/news_feed.json actually
+// refresh (the existing 5-min cadence elsewhere on this page), not on a
+// client-side timer -- there's no rotation here left to drive with one.
+function renderTickerList(){
   const box = document.getElementById('mp-ticker');
-  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce){ box.innerHTML = TICKER_ITEMS.map(it => `<div class="mp-ticker-item show" style="border-left-color:${it.color}">${it.html}</div>`).join(''); return; }
-  const it = TICKER_ITEMS[tickerIdx];
-  const el = document.createElement('div');
-  el.className = 'mp-ticker-item'; el.style.borderLeftColor = it.color; el.innerHTML = it.html;
-  box.innerHTML = ''; box.appendChild(el);
-  requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('show')));
-}
-function startTicker(){
-  paintTicker();
-  tickerTimer = setInterval(() => { tickerIdx = (tickerIdx + 1) % TICKER_ITEMS.length; paintTicker(); }, 6000);
+  box.innerHTML = TICKER_ITEMS.map(it =>
+    `<div class="mp-ticker-item" style="border-left-color:${it.color}">${it.html}</div>`
+  ).join('');
 }
 
 // ───────────────────────── Tabs ─────────────────────────
@@ -879,7 +896,7 @@ renderBrainChart();
 setKillCard('daily', 0.61, 2.0, false);
 setKillCard('weekly', 2.08, 5.0, false);
 tickFreshness();
-startTicker();
+renderTickerList();
 measureStickyOffset();
 ensurePanelHeight();
 </script>
