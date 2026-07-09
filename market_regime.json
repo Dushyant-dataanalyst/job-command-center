@@ -2,44 +2,43 @@
   "instruments": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 13.2,
+      "adx": 13.0,
       "volatility": "Low",
-      "atr_pct": 0.86,
-      "atr_percentile_6mo": 1.0,
+      "atr_pct": 1.02,
+      "atr_percentile_6mo": 7.0,
       "volume_behavior": "Normal",
-      "rel_volume": 1.09,
-      "spot": 24398.7,
-      "data_as_of": "2026-07-07",
+      "rel_volume": 1.1,
+      "spot": 23882.05,
+      "data_as_of": "2026-07-08",
       "data_source": "yfinance"
     },
     "BANKNIFTY": {
-      "trend": "Bullish",
-      "adx": 21.0,
+      "trend": "Sideways/Choppy",
+      "adx": 20.1,
       "volatility": "Low",
-      "atr_pct": 1.02,
-      "atr_percentile_6mo": 6.0,
-      "volume_behavior": "Decreasing",
-      "rel_volume": 0.75,
-      "spot": 58200.7,
-      "data_as_of": "2026-07-07",
+      "atr_pct": 1.2,
+      "atr_percentile_6mo": 8.0,
+      "volume_behavior": "Normal",
+      "rel_volume": 0.88,
+      "spot": 56742.6,
+      "data_as_of": "2026-07-08",
       "data_source": "yfinance"
     }
   },
   "errors": {},
   "recommendation": {
     "best_fit_strategies": [
-      "Inna",
-      "Pham",
       "Unger"
     ],
-    "avoid": [],
+    "avoid": [
+      "Cianni"
+    ],
     "reasoning": [
-      "Bullish trend detected \u2014 pullback (Inna) and RSI-recovery (Pham) setups look for continuation entries, which need an established uptrend to work.",
-      "Volume isn't confirming a breakout right now \u2014 Cianni signals should be treated cautiously until volume picks up.",
+      "Sideways/choppy market (low ADX) \u2014 breakout setups (Cianni) are prone to false breakouts without a real trend to follow through.",
       "Unger's 2-of-3 subsystem vote blends breakout/trend/mean-reversion, making it the most regime-agnostic of the four \u2014 still worth a sanity check against the above before acting."
     ]
   },
   "method": "Trend = EMA18/EMA50 stack direction, gated by ADX>=20 (below that = Sideways/Choppy regardless of EMA stack). Volatility = current ATR% ranked against its own trailing 6-month distribution (percentile), not a fixed threshold. Volume behavior = today's volume vs 20-day average.",
   "disclaimer": "Educational regime classification only, not investment advice. Recommendation logic is a heuristic mapping from regime to strategy fit \u2014 not a verified backtest of which strategy performs best in which regime.",
-  "fetched_at": "09 Jul 2026 05:26 IST"
+  "fetched_at": "09 Jul 2026 06:25 IST"
 }

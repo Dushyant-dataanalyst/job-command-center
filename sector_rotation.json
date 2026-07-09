@@ -1,5 +1,5 @@
 {
-  "fetched_at": "09 Jul 2026 05:26 IST",
+  "fetched_at": "09 Jul 2026 06:25 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation.",
   "all_sectors_ranked": [
@@ -15,13 +15,13 @@
     },
     {
       "sector": "IT",
-      "roc5_pct": 6.24,
-      "rel_volume": 1.02,
+      "roc5_pct": 6.93,
+      "rel_volume": 0.76,
       "bullish_trend": false,
-      "last_close": 27939.15,
-      "data_as_of": "2026-07-07",
+      "last_close": 27555.2,
+      "data_as_of": "2026-07-08",
       "data_source": "yfinance",
-      "score": 6.36
+      "score": 5.27
     },
     {
       "sector": "FMCG",
@@ -42,16 +42,6 @@
       "data_as_of": "2026-07-07",
       "data_source": "yfinance",
       "score": 1.0
-    },
-    {
-      "sector": "Banking",
-      "roc5_pct": 1.14,
-      "rel_volume": 0.75,
-      "bullish_trend": true,
-      "last_close": 58200.7,
-      "data_as_of": "2026-07-07",
-      "data_source": "yfinance",
-      "score": 0.85
     },
     {
       "sector": "Metal",
@@ -82,6 +72,16 @@
       "data_as_of": "2026-07-03",
       "data_source": "yfinance",
       "score": -0.88
+    },
+    {
+      "sector": "Banking",
+      "roc5_pct": -2.22,
+      "rel_volume": 0.88,
+      "bullish_trend": false,
+      "last_close": 56742.6,
+      "data_as_of": "2026-07-08",
+      "data_source": "yfinance",
+      "score": -1.95
     },
     {
       "sector": "PSU Bank",
