@@ -1,7 +1,7 @@
 {
-  "fetched_at": "10 Jul 2026 00:36 IST",
-  "risk_score": 66,
-  "risk_level": "HIGH",
+  "fetched_at": "10 Jul 2026 01:36 IST",
+  "risk_score": 60,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -15,18 +15,6 @@
       "last": 14.68,
       "previous": 11.65,
       "pct_change": 26.01,
-      "evidence_class": "official"
-    },
-    {
-      "name": "Gold safe-haven spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "GC=F moved +1.54% vs previous close (4070.9 -> 4133.4)",
-      "source": "market_data",
-      "ticker": "GC=F",
-      "last": 4133.4,
-      "previous": 4070.9,
-      "pct_change": 1.54,
       "evidence_class": "official"
     },
     {
@@ -44,11 +32,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": false,
+    "allow_new_longs": true,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
+    "min_votes_required": null,
+    "confirmation_refreshes": null,
+    "position_size_multiplier": 0.85,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -65,9 +53,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 75.96,
+      "last": 76.06,
       "previous": 78.02,
-      "pct_change": -2.64
+      "pct_change": -2.51
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -83,33 +71,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.04,
+      "last": 15.83,
       "previous": 16.9,
-      "pct_change": -5.09
+      "pct_change": -6.33
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7535.45,
+      "last": 7543.64,
       "previous": 7482.71,
-      "pct_change": 0.7
+      "pct_change": 0.81
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 26170.84,
+      "last": 26206.89,
       "previous": 25870.65,
-      "pct_change": 1.16
+      "pct_change": 1.3
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52455.52,
+      "last": 52487.41,
       "previous": 52348.39,
-      "pct_change": 0.2
+      "pct_change": 0.27
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4133.4,
+      "last": 4131.2,
       "previous": 4070.9,
-      "pct_change": 1.54
+      "pct_change": 1.48
     }
   },
   "regime_context": {
