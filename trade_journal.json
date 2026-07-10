@@ -93,7 +93,7 @@
       "exit_premium": null,
       "exit_reason": null,
       "pnl_pct": null,
-      "last_checked": "10 Jul 2026 12:46 IST"
+      "last_checked": "10 Jul 2026 12:51 IST"
     },
     {
       "id": "BANKNIFTY-2026-07-08-BUY_PE-08Jul20261401IST",
@@ -184,11 +184,39 @@
       },
       "last_checked": "10 Jul 2026 12:46 IST",
       "result": "win"
+    },
+    {
+      "id": "BANKNIFTY-2026-07-10-BUY_CE-10Jul20261251IST",
+      "instrument": "BANKNIFTY",
+      "consensus": "BUY_CE",
+      "option_type": "CE",
+      "votes": "4/5",
+      "votes_n": 4,
+      "strike": 58000,
+      "expiry": "29 Jul 2026",
+      "entry_spot": 58018.45,
+      "entry_premium": 915.0,
+      "sl_premium": 640.0,
+      "target1_premium": 1281.0,
+      "target2_premium": 1830.0,
+      "opened_at": "10 Jul 2026 12:51 IST",
+      "status": "open",
+      "current_premium": 915.0,
+      "closed_at": null,
+      "exit_premium": null,
+      "exit_reason": null,
+      "pnl_pct": null,
+      "macro_context": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 35,
+        "position_size_multiplier": 0.85
+      }
     }
   ],
   "stats": {
     "total_closed": 6,
-    "open_count": 1,
+    "open_count": 2,
     "wins": 4,
     "losses": 2,
     "win_rate": 66.7,
@@ -242,6 +270,6 @@
     "loss_diagnostic": "Only 6 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
   },
   "_meta": {
-    "generated_at": "10 Jul 2026 12:46 IST"
+    "generated_at": "10 Jul 2026 12:51 IST"
   }
 }
