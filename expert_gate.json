@@ -1,37 +1,37 @@
 {
-  "generated_at": "10 Jul 2026 23:27 IST",
-  "refresh_counter": 468,
+  "generated_at": "11 Jul 2026 00:26 IST",
+  "refresh_counter": 469,
   "instruments": {
     "NIFTY50": {
-      "state": "SETUP_FORMING",
-      "direction": "BUY_CE",
-      "persist_count": 94,
+      "state": "WATCH",
+      "direction": null,
+      "persist_count": 0,
       "exit_persist_count": 0,
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "10 Jul 2026 23:27 IST",
-      "reason": "BUY_CE forming -- waiting on: choppy/sideways regime; outside entry time window",
+      "last_update": "11 Jul 2026 00:26 IST",
+      "reason": "signal WAIT/none",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
-      "raw_consensus": "BUY_CE",
-      "adx": 12.1,
+      "raw_consensus": "WAIT",
+      "adx": 12.7,
       "regime_trend": "Sideways/Choppy"
     },
     "BANKNIFTY": {
-      "state": "SETUP_FORMING",
-      "direction": "BUY_CE",
-      "persist_count": 94,
+      "state": "WATCH",
+      "direction": null,
+      "persist_count": 0,
       "exit_persist_count": 0,
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "10 Jul 2026 23:27 IST",
-      "reason": "BUY_CE forming -- waiting on: choppy/sideways regime; outside entry time window",
+      "last_update": "11 Jul 2026 00:26 IST",
+      "reason": "signal WAIT/none",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
-      "raw_consensus": "BUY_CE",
-      "adx": 18.3,
+      "raw_consensus": "WAIT",
+      "adx": 19.3,
       "regime_trend": "Sideways/Choppy"
     }
   },
@@ -43,10 +43,10 @@
     "min_votes_for_entry": 4
   },
   "macro_context": {
-    "risk_level": "MODERATE",
+    "risk_level": "LOW",
     "bias": "BEARISH",
-    "risk_score": 35,
-    "position_size_multiplier": 0.85
+    "risk_score": 27,
+    "position_size_multiplier": 1.0
   },
   "macro_feed_available": true,
   "disclaimer": "Confirmation-and-cooldown state machine over the raw index-F&O signal, to reduce CE/PE whipsaw. Does NOT place/size/authorize any trade (no executor exists -- SEBI static-IP block). Educational signal-lifecycle layer only. Entries can additionally be blocked or escalated (min votes/persistence) by macro_risk.json's trade_adjustments -- see macro_gate.py; fails open if that feed is missing."
