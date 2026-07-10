@@ -1,107 +1,107 @@
 {
-  "fetched_at": "10 Jul 2026 10:36 IST",
+  "fetched_at": "10 Jul 2026 10:41 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation. rs_vs_nifty_pct = this sector's/stock's own 5-day ROC% minus NIFTY50's 5-day ROC% over the same window -- a plain difference, not a calibrated percentile rating.",
-  "nifty_roc5_pct": -0.31,
+  "nifty_roc5_pct": -0.27,
   "all_sectors_ranked": [
     {
       "sector": "Realty",
-      "roc5_pct": 12.47,
+      "roc5_pct": 12.38,
       "rel_volume": 1.89,
       "bullish_trend": true,
-      "last_close": 921.0,
+      "last_close": 920.25,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": 23.57,
-      "rs_vs_nifty_pct": 12.78
-    },
-    {
-      "sector": "Auto",
-      "roc5_pct": 1.69,
-      "rel_volume": 0.65,
-      "bullish_trend": true,
-      "last_close": 26863.7,
-      "data_as_of": "2026-07-10",
-      "data_source": "yfinance",
-      "score": 1.1,
-      "rs_vs_nifty_pct": 2.0
+      "score": 23.4,
+      "rs_vs_nifty_pct": 12.65
     },
     {
       "sector": "IT",
-      "roc5_pct": 1.9,
+      "roc5_pct": 2.01,
       "rel_volume": 0.54,
       "bullish_trend": false,
-      "last_close": 27961.35,
+      "last_close": 27990.05,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": 1.03,
-      "rs_vs_nifty_pct": 2.21
+      "score": 1.09,
+      "rs_vs_nifty_pct": 2.28
+    },
+    {
+      "sector": "Auto",
+      "roc5_pct": 1.62,
+      "rel_volume": 0.65,
+      "bullish_trend": true,
+      "last_close": 26846.55,
+      "data_as_of": "2026-07-10",
+      "data_source": "yfinance",
+      "score": 1.05,
+      "rs_vs_nifty_pct": 1.89
     },
     {
       "sector": "Metal",
-      "roc5_pct": 1.74,
+      "roc5_pct": 1.76,
       "rel_volume": 0.5,
       "bullish_trend": false,
-      "last_close": 12763.45,
+      "last_close": 12765.55,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": 0.87,
-      "rs_vs_nifty_pct": 2.05
+      "score": 0.88,
+      "rs_vs_nifty_pct": 2.03
     },
     {
       "sector": "FMCG",
-      "roc5_pct": 0.88,
+      "roc5_pct": 0.91,
       "rel_volume": 0.77,
-      "bullish_trend": false,
-      "last_close": 49561.5,
+      "bullish_trend": true,
+      "last_close": 49574.75,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": 0.68,
-      "rs_vs_nifty_pct": 1.19
+      "score": 0.7,
+      "rs_vs_nifty_pct": 1.18
     },
     {
       "sector": "Banking",
-      "roc5_pct": -0.07,
+      "roc5_pct": 0.01,
       "rel_volume": 0.68,
       "bullish_trend": true,
-      "last_close": 57900.75,
+      "last_close": 57942.85,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": -0.05,
-      "rs_vs_nifty_pct": 0.24
+      "score": 0.01,
+      "rs_vs_nifty_pct": 0.28
     },
     {
       "sector": "Pharma",
-      "roc5_pct": -0.12,
+      "roc5_pct": -0.11,
       "rel_volume": 1.08,
       "bullish_trend": true,
-      "last_close": 25715.5,
+      "last_close": 25718.1,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": -0.13,
-      "rs_vs_nifty_pct": 0.19
+      "score": -0.12,
+      "rs_vs_nifty_pct": 0.16
     },
     {
       "sector": "Energy",
-      "roc5_pct": -1.06,
+      "roc5_pct": -1.03,
       "rel_volume": 0.76,
       "bullish_trend": false,
-      "last_close": 39298.3,
+      "last_close": 39307.45,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": -0.81,
-      "rs_vs_nifty_pct": -0.75
+      "score": -0.78,
+      "rs_vs_nifty_pct": -0.76
     },
     {
       "sector": "PSU Bank",
-      "roc5_pct": -3.02,
+      "roc5_pct": -2.99,
       "rel_volume": 1.22,
       "bullish_trend": false,
-      "last_close": 8295.25,
+      "last_close": 8297.75,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance",
-      "score": -3.68,
-      "rs_vs_nifty_pct": -2.71
+      "score": -3.65,
+      "rs_vs_nifty_pct": -2.72
     }
   ],
   "sectors_with_errors": {
@@ -109,114 +109,114 @@
   },
   "top_sectors": [
     "Realty",
-    "Auto",
-    "IT"
+    "IT",
+    "Auto"
   ],
   "building_momentum": [],
   "stock_picks_by_sector": {
     "Realty": [
       {
         "symbol": "GODREJPROP",
-        "roc5_pct": 5.09,
-        "rel_volume": 0.51,
+        "roc5_pct": 4.79,
+        "rel_volume": 0.52,
         "bullish_trend": true,
-        "last_close": 2098.0,
+        "last_close": 2092.1,
         "data_as_of": "2026-07-10",
         "data_source": "yfinance",
-        "score": 2.6,
-        "rs_vs_nifty_pct": 5.4
+        "score": 2.49,
+        "rs_vs_nifty_pct": 5.06
       },
       {
         "symbol": "DLF",
-        "roc5_pct": 1.77,
-        "rel_volume": 1.25,
+        "roc5_pct": 1.64,
+        "rel_volume": 1.26,
         "bullish_trend": true,
-        "last_close": 687.85,
+        "last_close": 687.0,
         "data_as_of": "2026-07-10",
         "data_source": "yfinance",
-        "score": 2.21,
-        "rs_vs_nifty_pct": 2.08
+        "score": 2.07,
+        "rs_vs_nifty_pct": 1.91
       },
       {
         "symbol": "PHOENIXLTD",
-        "roc5_pct": 3.28,
-        "rel_volume": 0.26,
+        "roc5_pct": 3.22,
+        "rel_volume": 0.27,
         "bullish_trend": true,
-        "last_close": 2114.7,
+        "last_close": 2113.6,
         "data_as_of": "2026-07-10",
         "data_source": "yfinance",
-        "score": 0.85,
-        "rs_vs_nifty_pct": 3.59
-      }
-    ],
-    "Auto": [
-      {
-        "symbol": "BAJAJ-AUTO",
-        "roc5_pct": 3.15,
-        "rel_volume": 0.35,
-        "bullish_trend": false,
-        "last_close": 10167.5,
-        "data_as_of": "2026-07-10",
-        "data_source": "yfinance",
-        "score": 1.1,
-        "rs_vs_nifty_pct": 3.46
-      },
-      {
-        "symbol": "EICHERMOT",
-        "roc5_pct": 1.79,
-        "rel_volume": 0.11,
-        "bullish_trend": false,
-        "last_close": 7379.5,
-        "data_as_of": "2026-07-10",
-        "data_source": "yfinance",
-        "score": 0.2,
-        "rs_vs_nifty_pct": 2.1
-      },
-      {
-        "symbol": "M&M",
-        "roc5_pct": -0.7,
-        "rel_volume": 0.19,
-        "bullish_trend": false,
-        "last_close": 3120.5,
-        "data_as_of": "2026-07-10",
-        "data_source": "yfinance",
-        "score": -0.13,
-        "rs_vs_nifty_pct": -0.39
+        "score": 0.87,
+        "rs_vs_nifty_pct": 3.49
       }
     ],
     "IT": [
       {
         "symbol": "TECHM",
-        "roc5_pct": 2.77,
+        "roc5_pct": 3.06,
         "rel_volume": 0.27,
         "bullish_trend": true,
-        "last_close": 1449.2,
+        "last_close": 1453.3,
         "data_as_of": "2026-07-10",
         "data_source": "yfinance",
-        "score": 0.75,
-        "rs_vs_nifty_pct": 3.08
+        "score": 0.83,
+        "rs_vs_nifty_pct": 3.33
       },
       {
         "symbol": "HCLTECH",
-        "roc5_pct": 2.34,
+        "roc5_pct": 2.25,
         "rel_volume": 0.31,
         "bullish_trend": true,
-        "last_close": 1165.6,
+        "last_close": 1164.6,
         "data_as_of": "2026-07-10",
         "data_source": "yfinance",
-        "score": 0.73,
-        "rs_vs_nifty_pct": 2.65
+        "score": 0.7,
+        "rs_vs_nifty_pct": 2.52
       },
       {
         "symbol": "INFY",
-        "roc5_pct": 1.96,
+        "roc5_pct": 2.16,
         "rel_volume": 0.27,
         "bullish_trend": false,
-        "last_close": 1067.7,
+        "last_close": 1069.8,
         "data_as_of": "2026-07-10",
         "data_source": "yfinance",
-        "score": 0.53,
-        "rs_vs_nifty_pct": 2.27
+        "score": 0.58,
+        "rs_vs_nifty_pct": 2.43
+      }
+    ],
+    "Auto": [
+      {
+        "symbol": "BAJAJ-AUTO",
+        "roc5_pct": 3.01,
+        "rel_volume": 0.36,
+        "bullish_trend": false,
+        "last_close": 10154.0,
+        "data_as_of": "2026-07-10",
+        "data_source": "yfinance",
+        "score": 1.08,
+        "rs_vs_nifty_pct": 3.28
+      },
+      {
+        "symbol": "EICHERMOT",
+        "roc5_pct": 1.66,
+        "rel_volume": 0.12,
+        "bullish_trend": false,
+        "last_close": 7370.5,
+        "data_as_of": "2026-07-10",
+        "data_source": "yfinance",
+        "score": 0.2,
+        "rs_vs_nifty_pct": 1.93
+      },
+      {
+        "symbol": "M&M",
+        "roc5_pct": -0.67,
+        "rel_volume": 0.21,
+        "bullish_trend": false,
+        "last_close": 3121.5,
+        "data_as_of": "2026-07-10",
+        "data_source": "yfinance",
+        "score": -0.14,
+        "rs_vs_nifty_pct": -0.4
       }
     ]
   },
