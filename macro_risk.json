@@ -1,22 +1,10 @@
 {
-  "fetched_at": "10 Jul 2026 09:16 IST",
-  "risk_score": 41,
+  "fetched_at": "10 Jul 2026 09:21 IST",
+  "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
-    {
-      "name": "Gold safe-haven spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "GC=F moved +1.60% vs previous close (4070.9 -> 4136.0)",
-      "source": "market_data",
-      "ticker": "GC=F",
-      "last": 4136.0,
-      "previous": 4070.9,
-      "pct_change": 1.6,
-      "evidence_class": "official"
-    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -53,21 +41,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 76.5,
+      "last": 76.52,
       "previous": 78.02,
-      "pct_change": -1.95
+      "pct_change": -1.92
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.26,
+      "last": 95.3,
       "previous": 95.86,
-      "pct_change": -0.63
+      "pct_change": -0.58
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.73,
+      "last": 12.62,
       "previous": 13.36,
-      "pct_change": -4.75
+      "pct_change": -5.54
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -95,20 +83,20 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4136.0,
+      "last": 4131.1,
       "previous": 4070.9,
-      "pct_change": 1.6
+      "pct_change": 1.48
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 12.3,
+      "adx": 12.2,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 18.2,
+      "adx": 18.1,
       "volatility": "Low"
     }
   },

@@ -1,14 +1,14 @@
 {
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 24149.85,
-    "ann_vol": 0.1304,
+    "spot": 24159.7,
+    "ann_vol": 0.1306,
     "consensus": "BUY_CE",
-    "ce_votes": 4,
-    "pe_votes": 1,
-    "commentary": "BUY_CE (4/6 votes): price 24149.85 is above EMA18 (24021.02) and EMA50 (23931.91) -- established uptrend (+2 CE) | MACD (110.16) is below its signal line (110.28) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (24089.77) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 -0.5%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "ce_votes": 5,
+    "pe_votes": 0,
+    "commentary": "BUY_CE (5/6 votes): price 24159.7 is above EMA18 (24022.05) and EMA50 (23932.29) -- established uptrend (+2 CE) | MACD (110.94) is above its signal line (110.44) -- bullish momentum (+1 CE) | price broke above pivot resistance R1 (24089.77) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 -0.46%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "data_as_of": "2026-07-10",
-    "fetched_at": "10 Jul 2026 09:16 IST",
+    "fetched_at": "10 Jul 2026 09:21 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-10 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
@@ -20,43 +20,43 @@
       "expiry": "30 Jul 2026",
       "days_to_exp": 20,
       "lot_size": 75,
-      "entry_premium": 295.0,
-      "sl_premium": 206.0,
-      "target1_premium": 413.0,
-      "target_premium": 590.0,
-      "cost_1_lot": 22125.0
+      "entry_premium": 305.0,
+      "sl_premium": 214.0,
+      "target1_premium": 427.0,
+      "target_premium": 610.0,
+      "cost_1_lot": 22875.0
     }
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 57712.3,
-    "ann_vol": 0.167,
+    "spot": 57759.2,
+    "ann_vol": 0.1672,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 1,
-    "commentary": "BUY_CE (4/6 votes): price 57712.3 is above EMA18 (57357.59) and EMA50 (56483.08) -- established uptrend (+2 CE) | MACD (542.65) is below its signal line (687.72) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (57522.0) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 -0.39%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_CE (4/6 votes): price 57759.2 is above EMA18 (57362.52) and EMA50 (56484.92) -- established uptrend (+2 CE) | MACD (546.4) is below its signal line (688.47) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (57522.0) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 -0.31%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "data_as_of": "2026-07-10",
-    "fetched_at": "10 Jul 2026 09:16 IST",
+    "fetched_at": "10 Jul 2026 09:21 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-10 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
-      "action": "BUY BANKNIFTY 57700 CE",
+      "action": "BUY BANKNIFTY 57800 CE",
       "near_expiry_caution": false,
-      "zerodha_symbol": "BANKNIFTY26JUL57700CE",
-      "zerodha_search": "BANKNIFTY JUL 57700 CE",
-      "strike": 57700,
+      "zerodha_symbol": "BANKNIFTY26JUL57800CE",
+      "zerodha_search": "BANKNIFTY JUL 57800 CE",
+      "strike": 57800,
       "expiry": "29 Jul 2026",
       "days_to_exp": 19,
       "lot_size": 30,
-      "entry_premium": 892.0,
-      "sl_premium": 624.0,
-      "target1_premium": 1249.0,
-      "target_premium": 1784.0,
-      "cost_1_lot": 26760.0
+      "entry_premium": 881.0,
+      "sl_premium": 617.0,
+      "target1_premium": 1233.0,
+      "target_premium": 1762.0,
+      "cost_1_lot": 26430.0
     }
   },
   "_meta": {
-    "generated_at": "10 Jul 2026 09:16 IST",
+    "generated_at": "10 Jul 2026 09:21 IST",
     "source": "yfinance EOD (delayed/unofficial)"
   }
 }
