@@ -2,25 +2,25 @@
   "instruments": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 12.4,
+      "adx": 12.3,
       "volatility": "Low",
-      "atr_pct": 1.01,
+      "atr_pct": 1.02,
       "atr_percentile_6mo": 7.0,
       "volume_behavior": "Normal",
       "rel_volume": 1.01,
-      "spot": 24124.7,
+      "spot": 24150.35,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 18.4,
+      "adx": 18.2,
       "volatility": "Low",
-      "atr_pct": 1.2,
-      "atr_percentile_6mo": 8.0,
+      "atr_pct": 1.21,
+      "atr_percentile_6mo": 10.0,
       "volume_behavior": "Decreasing",
       "rel_volume": 0.68,
-      "spot": 57592.5,
+      "spot": 57716.5,
       "data_as_of": "2026-07-10",
       "data_source": "yfinance"
     }
@@ -40,5 +40,5 @@
   },
   "method": "Trend = EMA18/EMA50 stack direction, gated by ADX>=20 (below that = Sideways/Choppy regardless of EMA stack). Volatility = current ATR% ranked against its own trailing 6-month distribution (percentile), not a fixed threshold. Volume behavior = today's volume vs 20-day average.",
   "disclaimer": "Educational regime classification only, not investment advice. Recommendation logic is a heuristic mapping from regime to strategy fit \u2014 not a verified backtest of which strategy performs best in which regime.",
-  "fetched_at": "10 Jul 2026 09:11 IST"
+  "fetched_at": "10 Jul 2026 09:16 IST"
 }
