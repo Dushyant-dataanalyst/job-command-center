@@ -1,5 +1,5 @@
 {
-  "fetched_at": "11 Jul 2026 04:21 IST",
+  "fetched_at": "11 Jul 2026 05:21 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation. rs_vs_nifty_pct = this sector's/stock's own 5-day ROC% minus NIFTY50's 5-day ROC% over the same window -- a plain difference, not a calibrated percentile rating.",
   "nifty_roc5_pct": -0.88,
@@ -116,6 +116,28 @@
   "stock_picks_by_sector": {
     "Realty": [
       {
+        "symbol": "PHOENIXLTD",
+        "roc5_pct": 4.46,
+        "rel_volume": 1.07,
+        "bullish_trend": true,
+        "last_close": 2138.9,
+        "data_as_of": "2026-07-10",
+        "data_source": "yfinance",
+        "score": 4.77,
+        "rs_vs_nifty_pct": 5.34
+      },
+      {
+        "symbol": "DLF",
+        "roc5_pct": 1.46,
+        "rel_volume": 2.28,
+        "bullish_trend": true,
+        "last_close": 685.75,
+        "data_as_of": "2026-07-10",
+        "data_source": "yfinance",
+        "score": 3.33,
+        "rs_vs_nifty_pct": 2.34
+      },
+      {
         "symbol": "GODREJPROP",
         "roc5_pct": 1.68,
         "rel_volume": 1.73,
@@ -125,41 +147,19 @@
         "data_source": "yfinance",
         "score": 2.91,
         "rs_vs_nifty_pct": 2.56
-      },
-      {
-        "symbol": "PHOENIXLTD",
-        "roc5_pct": 1.97,
-        "rel_volume": 1.07,
-        "bullish_trend": false,
-        "last_close": NaN,
-        "data_as_of": "2026-07-10",
-        "data_source": "yfinance",
-        "score": 2.11,
-        "rs_vs_nifty_pct": 2.85
-      },
-      {
-        "symbol": "PRESTIGE",
-        "roc5_pct": 0.35,
-        "rel_volume": 0.85,
-        "bullish_trend": false,
-        "last_close": NaN,
-        "data_as_of": "2026-07-10",
-        "data_source": "yfinance",
-        "score": 0.3,
-        "rs_vs_nifty_pct": 1.23
       }
     ],
     "Pharma": [
       {
         "symbol": "SUNPHARMA",
-        "roc5_pct": 2.05,
+        "roc5_pct": 1.88,
         "rel_volume": 0.75,
-        "bullish_trend": false,
-        "last_close": NaN,
+        "bullish_trend": true,
+        "last_close": 1935.5,
         "data_as_of": "2026-07-10",
         "data_source": "yfinance",
-        "score": 1.54,
-        "rs_vs_nifty_pct": 2.93
+        "score": 1.41,
+        "rs_vs_nifty_pct": 2.76
       },
       {
         "symbol": "DIVISLAB",
@@ -197,6 +197,17 @@
         "rs_vs_nifty_pct": 1.11
       },
       {
+        "symbol": "DABUR",
+        "roc5_pct": -0.19,
+        "rel_volume": 0.77,
+        "bullish_trend": true,
+        "last_close": 443.5,
+        "data_as_of": "2026-07-10",
+        "data_source": "yfinance",
+        "score": -0.15,
+        "rs_vs_nifty_pct": 0.69
+      },
+      {
         "symbol": "BRITANNIA",
         "roc5_pct": -0.33,
         "rel_volume": 0.53,
@@ -206,17 +217,6 @@
         "data_source": "yfinance",
         "score": -0.17,
         "rs_vs_nifty_pct": 0.55
-      },
-      {
-        "symbol": "DABUR",
-        "roc5_pct": -0.27,
-        "rel_volume": 0.77,
-        "bullish_trend": false,
-        "last_close": NaN,
-        "data_as_of": "2026-07-10",
-        "data_source": "yfinance",
-        "score": -0.21,
-        "rs_vs_nifty_pct": 0.61
       }
     ]
   },
