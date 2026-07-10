@@ -1,5 +1,5 @@
 {
-  "generated_at": "10 Jul 2026 14:47 IST",
+  "generated_at": "10 Jul 2026 14:52 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -45,7 +45,7 @@
             {
               "filter": "risk_reward",
               "passed": false,
-              "reason": "RR_TOO_LOW: 1.34 < required 1.5 for MIS"
+              "reason": "RR_TOO_LOW: 1.33 < required 1.5 for MIS"
             }
           ]
         },
@@ -355,74 +355,6 @@
         "macro": {
           "score": 80,
           "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 35)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=12.1) -- low conviction for any direction"
-        },
-        "sector": null,
-        "instrument_quality": {
-          "score": 66.7,
-          "detail": "4/6 votes (stock 3-factor consensus)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "candidate not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 1 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": []
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": false,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-10"
-    },
-    "MARUTI": {
-      "kind": "fo_stock",
-      "symbol": "MARUTI",
-      "raw_signal": "BUY_CE",
-      "state": "SETUP_FORMING",
-      "state_engine": "stateless_v1",
-      "state_reason": "context_score 51.5 between 35 and 65",
-      "context_score": 51.5,
-      "components": {
-        "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
         },
         "regime": {
           "score": 30,
