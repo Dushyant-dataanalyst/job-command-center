@@ -1,7 +1,7 @@
 {
-  "fetched_at": "10 Jul 2026 04:36 IST",
-  "risk_score": 60,
-  "risk_level": "MODERATE",
+  "fetched_at": "10 Jul 2026 05:32 IST",
+  "risk_score": 66,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -15,6 +15,18 @@
       "last": 14.68,
       "previous": 11.65,
       "pct_change": 26.01,
+      "evidence_class": "official"
+    },
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.54% vs previous close (4070.9 -> 4133.6)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4133.6,
+      "previous": 4070.9,
+      "pct_change": 1.54,
       "evidence_class": "official"
     },
     {
@@ -32,11 +44,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -53,15 +65,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 75.98,
+      "last": 76.1,
       "previous": 78.02,
-      "pct_change": -2.61
+      "pct_change": -2.46
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.86,
-      "previous": 95.59,
-      "pct_change": 0.28
+      "last": 95.38,
+      "previous": 95.86,
+      "pct_change": -0.5
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -95,9 +107,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4131.6,
+      "last": 4133.6,
       "previous": 4070.9,
-      "pct_change": 1.49
+      "pct_change": 1.54
     }
   },
   "regime_context": {
