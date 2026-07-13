@@ -1,20 +1,20 @@
 {
-  "fetched_at": "13 Jul 2026 21:21 IST",
-  "risk_score": 62,
-  "risk_level": "HIGH",
+  "fetched_at": "13 Jul 2026 22:21 IST",
+  "risk_score": 81,
+  "risk_level": "EXTREME",
   "bias": "BEARISH",
-  "confidence": 0.75,
+  "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 4,
-      "evidence": "BZ=F moved +4.35% vs previous close (76.01 -> 79.32)",
+      "severity": 5,
+      "evidence": "BZ=F moved +5.22% vs previous close (76.01 -> 79.98)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 79.32,
+      "last": 79.98,
       "previous": 76.01,
-      "pct_change": 4.35,
+      "pct_change": 5.22,
       "evidence_class": "official"
     },
     {
@@ -30,14 +30,26 @@
       "evidence_class": "official"
     },
     {
-      "name": "Geopolitical escalation",
+      "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "5 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Trump says US will become ‘guardian’ of Strait of Hormuz and collect tolls\"",
-      "source": "https://www.aljazeera.com/news/2026/7/13/trump-says-us-will-become-guardian-of-strait-of-hormuz-and-collect-tolls?traffic_source=rss",
-      "published_at": "13 Jul 2026 20:13 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
+      "evidence": "^VIX moved +12.71% vs previous close (15.03 -> 16.94)",
+      "source": "market_data",
+      "ticker": "^VIX",
+      "last": 16.94,
+      "previous": 15.03,
+      "pct_change": 12.71,
+      "evidence_class": "official"
+    },
+    {
+      "name": "Geopolitical escalation",
+      "impact": "bearish",
+      "severity": 3,
+      "evidence": "7 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Sudan's paramilitary RSF chief sentenced to death over war crimes\"",
+      "source": "https://www.bbc.co.uk/news/articles/cn4dk3kl0l4o?at_medium=RSS&at_campaign=rss",
+      "published_at": "13 Jul 2026 17:32 IST",
+      "evidence_class": "reported",
+      "corroborating_sources": 2,
       "news_source": "rss_fallback"
     }
   ],
@@ -46,9 +58,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
+    "min_votes_required": 6,
+    "confirmation_refreshes": 4,
+    "position_size_multiplier": 0.25,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -69,9 +81,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 79.32,
+      "last": 79.98,
       "previous": 76.01,
-      "pct_change": 4.35
+      "pct_change": 5.22
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -87,33 +99,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.21,
+      "last": 16.94,
       "previous": 15.03,
-      "pct_change": 7.85
+      "pct_change": 12.71
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7538.59,
+      "last": 7521.26,
       "previous": 7575.39,
-      "pct_change": -0.49
+      "pct_change": -0.71
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25997.08,
+      "last": 25910.65,
       "previous": 26281.61,
-      "pct_change": -1.08
+      "pct_change": -1.41
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52517.92,
+      "last": 52426.26,
       "previous": 52637.01,
-      "pct_change": -0.23
+      "pct_change": -0.4
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4021.2,
+      "last": 4004.8,
       "previous": 4104.1,
-      "pct_change": -2.02
+      "pct_change": -2.42
     }
   },
   "regime_context": {
