@@ -1,6 +1,6 @@
 {
-  "fetched_at": "13 Jul 2026 11:14 IST",
-  "risk_score": 70,
+  "fetched_at": "13 Jul 2026 11:16 IST",
+  "risk_score": 80,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -18,15 +18,27 @@
       "evidence_class": "official"
     },
     {
+      "name": "USD/INR spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "INR=X moved +0.40% vs previous close (95.39 -> 95.77)",
+      "source": "market_data",
+      "ticker": "INR=X",
+      "last": 95.77,
+      "previous": 95.39,
+      "pct_change": 0.4,
+      "evidence_class": "official"
+    },
+    {
       "name": "India VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^INDIAVIX moved +8.86% vs previous close (12.25 -> 13.34)",
+      "evidence": "^INDIAVIX moved +8.88% vs previous close (12.25 -> 13.34)",
       "source": "market_data",
       "ticker": "^INDIAVIX",
       "last": 13.34,
       "previous": 12.25,
-      "pct_change": 8.86,
+      "pct_change": 8.88,
       "evidence_class": "official"
     },
     {
@@ -56,7 +68,9 @@
     ],
     "watch_sectors": [
       "Defence",
-      "Energy"
+      "Energy",
+      "IT",
+      "Pharma"
     ],
     "blocked_tickers": []
   },
@@ -75,15 +89,15 @@
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.76,
+      "last": 95.77,
       "previous": 95.39,
-      "pct_change": 0.38
+      "pct_change": 0.4
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
       "last": 13.34,
       "previous": 12.25,
-      "pct_change": 8.86
+      "pct_change": 8.88
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -111,9 +125,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4069.9,
+      "last": 4071.5,
       "previous": 4104.1,
-      "pct_change": -0.83
+      "pct_change": -0.79
     }
   },
   "regime_context": {
