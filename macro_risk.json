@@ -1,6 +1,6 @@
 {
-  "fetched_at": "13 Jul 2026 19:21 IST",
-  "risk_score": 62,
+  "fetched_at": "13 Jul 2026 20:21 IST",
+  "risk_score": 68,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.75,
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.47% vs previous close (76.01 -> 78.65)",
+      "evidence": "BZ=F moved +4.42% vs previous close (76.01 -> 79.37)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 78.65,
+      "last": 79.37,
       "previous": 76.01,
-      "pct_change": 3.47,
+      "pct_change": 4.42,
       "evidence_class": "official"
     },
     {
@@ -30,12 +30,24 @@
       "evidence_class": "official"
     },
     {
+      "name": "US VIX spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "^VIX moved +8.85% vs previous close (15.03 -> 16.36)",
+      "source": "market_data",
+      "ticker": "^VIX",
+      "last": 16.36,
+      "previous": 15.03,
+      "pct_change": 8.85,
+      "evidence_class": "official"
+    },
+    {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "2 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"March to July: What’s different as US-Iran fighting escalates again?\"",
-      "source": "https://www.aljazeera.com/news/2026/7/13/march-to-july-whats-different-as-us-iran-fighting-escalates-again?traffic_source=rss",
-      "published_at": "13 Jul 2026 17:42 IST",
+      "evidence": "3 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"EU sanctions nine people over alleged Russian cyber-spying campaign\"",
+      "source": "https://www.aljazeera.com/news/2026/7/13/eu-sanctions-nine-people-over-alleged-russian-cyber-spying-campaign?traffic_source=rss",
+      "published_at": "13 Jul 2026 19:29 IST",
       "evidence_class": "rumor",
       "corroborating_sources": 1,
       "news_source": "rss_fallback"
@@ -69,9 +81,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.65,
+      "last": 79.37,
       "previous": 76.01,
-      "pct_change": 3.47
+      "pct_change": 4.42
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -87,33 +99,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.19,
+      "last": 16.36,
       "previous": 15.03,
-      "pct_change": 7.72
+      "pct_change": 8.85
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7545.58,
+      "last": 7546.92,
       "previous": 7575.39,
-      "pct_change": -0.39
+      "pct_change": -0.38
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25993.92,
+      "last": 26059.01,
       "previous": 26281.61,
-      "pct_change": -1.09
+      "pct_change": -0.85
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52723.84,
+      "last": 52537.47,
       "previous": 52637.01,
-      "pct_change": 0.16
+      "pct_change": -0.19
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4064.9,
+      "last": 4010.0,
       "previous": 4104.1,
-      "pct_change": -0.96
+      "pct_change": -2.29
     }
   },
   "regime_context": {
