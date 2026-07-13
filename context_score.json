@@ -1,54 +1,20 @@
 {
-  "generated_at": "13 Jul 2026 09:37 IST",
+  "generated_at": "13 Jul 2026 09:42 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
       "symbol": "NIFTY50",
-      "raw_signal": "BUY_PE",
-      "state": "SETUP_FORMING",
+      "raw_signal": "WAIT",
+      "state": "WATCH",
       "state_engine": "expert_gate_persistent",
-      "state_reason": "BUY_PE forming -- waiting on: choppy/sideways regime",
-      "context_score": 58.1,
+      "state_reason": "signal WAIT/none",
+      "context_score": null,
       "components": {
-        "macro": {
-          "score": 65,
-          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 50)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.9) -- low conviction for any direction"
-        },
+        "macro": null,
+        "regime": null,
         "sector": null,
-        "instrument_quality": {
-          "score": 66.7,
-          "detail": "4/6 votes (index 3-factor consensus)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "candidate not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.33 < required 1.5 for MIS"
-            }
-          ]
-        },
+        "instrument_quality": null,
+        "trade_quality": null,
         "learning_history": {
           "insufficient_sample": true,
           "detail": "only 1 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
@@ -60,11 +26,11 @@
         "advisory_flags": []
       },
       "inputs_used": {
-        "macro": true,
-        "regime": true,
+        "macro": false,
+        "regime": false,
         "sector": false,
-        "instrument_quality": true,
-        "trade_quality": true,
+        "instrument_quality": false,
+        "trade_quality": false,
         "learning_history": false
       },
       "data_as_of": "2026-07-13"
@@ -247,8 +213,8 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 58.0 between 35 and 65",
-      "context_score": 58.0,
+      "state_reason": "context_score 57.9 between 35 and 65",
+      "context_score": 57.9,
       "components": {
         "macro": {
           "score": 65,
@@ -259,8 +225,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.9) -- low conviction for any direction"
         },
         "sector": {
-          "score": 56.8,
-          "detail": "sector outperforming NIFTY by -1.35% (5d ROC) -- aligns with a short signal"
+          "score": 56.0,
+          "detail": "sector outperforming NIFTY by -1.20% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -318,8 +284,8 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 57.5 between 35 and 65",
-      "context_score": 57.5,
+      "state_reason": "context_score 57.6 between 35 and 65",
+      "context_score": 57.6,
       "components": {
         "macro": {
           "score": 65,
@@ -330,8 +296,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.9) -- low conviction for any direction"
         },
         "sector": {
-          "score": 53.2,
-          "detail": "sector outperforming NIFTY by -0.65% (5d ROC) -- aligns with a short signal"
+          "score": 53.9,
+          "detail": "sector outperforming NIFTY by -0.77% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -389,8 +355,8 @@
       "raw_signal": "BUY_PE",
       "state": "CONFIRMED_ENTRY",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 65.4 >= 65 -- single-refresh read, NOT a persisted confirmation like expert_gate's",
-      "context_score": 65.4,
+      "state_reason": "context_score 65.5 >= 65 -- single-refresh read, NOT a persisted confirmation like expert_gate's",
+      "context_score": 65.5,
       "components": {
         "macro": {
           "score": 65,
@@ -401,8 +367,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.9) -- low conviction for any direction"
         },
         "sector": {
-          "score": 53.2,
-          "detail": "sector outperforming NIFTY by -0.65% (5d ROC) -- aligns with a short signal"
+          "score": 53.9,
+          "detail": "sector outperforming NIFTY by -0.77% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 100.0,

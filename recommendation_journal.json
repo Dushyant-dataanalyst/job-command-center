@@ -1,13 +1,13 @@
 {
-  "generated_at": "13 Jul 2026 09:37 IST",
+  "generated_at": "13 Jul 2026 09:42 IST",
   "summary": {
-    "open_count": 6,
-    "closed_count": 133,
+    "open_count": 5,
+    "closed_count": 134,
     "decisive_count": 4,
     "won": 3,
     "lost": 1,
     "expired_count": 0,
-    "invalidated_count": 129,
+    "invalidated_count": 130,
     "win_rate_pct": 75.0,
     "avg_return_pct": 26.5,
     "by_kind": {
@@ -71,7 +71,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "13 Jul 2026 09:37 IST",
+      "last_checked": "13 Jul 2026 09:42 IST",
       "id": "fospr-ITC-BUY_PE-11Jul20260522IST",
       "kind": "fo_stock_spread",
       "entry": 2.0,
@@ -83,7 +83,7 @@
       "breakeven": 278.0,
       "max_profit": 18.0,
       "max_loss": 2.0,
-      "current": 280.75
+      "current": 280.95
     },
     {
       "symbol": "HINDUNILVR",
@@ -107,7 +107,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "13 Jul 2026 09:37 IST",
+      "last_checked": "13 Jul 2026 09:42 IST",
       "id": "fospr-HINDUNILVR-BUY_PE-11Jul20260522IST",
       "kind": "fo_stock_spread",
       "entry": 16.0,
@@ -119,43 +119,7 @@
       "breakeven": 2134.0,
       "max_profit": 84.0,
       "max_loss": 16.0,
-      "current": 2133.5
-    },
-    {
-      "id": "foidx-NIFTY50-BUY_PE-13Jul20260912IST",
-      "kind": "fo_index",
-      "symbol": "NIFTY50",
-      "direction": "BUY_PE",
-      "entry": 271.0,
-      "entry_basis": "premium_estimate",
-      "entry_spot": 24039.4,
-      "stop": 190.0,
-      "targets": [
-        379.0,
-        542.0
-      ],
-      "strike": 24050,
-      "option_type": "PE",
-      "ann_vol_at_open": 0.1254,
-      "expiry": "30 Jul 2026",
-      "vote_count": 4,
-      "voters": null,
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 55,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "13 Jul 2026 09:12 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 286.0,
-      "last_checked": "13 Jul 2026 09:37 IST"
+      "current": 2136.9
     },
     {
       "symbol": "LT",
@@ -179,7 +143,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "13 Jul 2026 09:37 IST",
+      "last_checked": "13 Jul 2026 09:42 IST",
       "id": "fospr-LT-BUY_PE-13Jul20260912IST",
       "kind": "fo_stock_spread",
       "entry": 36.0,
@@ -191,7 +155,7 @@
       "breakeven": 3864.0,
       "max_profit": 164.0,
       "max_loss": 36.0,
-      "current": 3904.1
+      "current": 3907.8
     },
     {
       "symbol": "MARUTI",
@@ -215,7 +179,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "13 Jul 2026 09:37 IST",
+      "last_checked": "13 Jul 2026 09:42 IST",
       "id": "fospr-MARUTI-BUY_PE-13Jul20260912IST",
       "kind": "fo_stock_spread",
       "entry": 55.0,
@@ -227,7 +191,7 @@
       "breakeven": 13645.0,
       "max_profit": 145.0,
       "max_loss": 55.0,
-      "current": 13608.0
+      "current": 13634.0
     },
     {
       "symbol": "TITAN",
@@ -251,7 +215,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "13 Jul 2026 09:37 IST",
+      "last_checked": "13 Jul 2026 09:42 IST",
       "id": "fospr-TITAN-BUY_CE-13Jul20260927IST",
       "kind": "fo_stock_spread",
       "entry": 59.0,
@@ -263,7 +227,7 @@
       "breakeven": 4559.0,
       "max_profit": 141.0,
       "max_loss": 59.0,
-      "current": 4556.9
+      "current": 4554.1
     },
     {
       "symbol": "ICICIBANK",
@@ -4540,6 +4504,42 @@
       "max_profit": 85.0,
       "max_loss": 15.0,
       "current": 1010.3
+    },
+    {
+      "id": "foidx-NIFTY50-BUY_PE-13Jul20260912IST",
+      "kind": "fo_index",
+      "symbol": "NIFTY50",
+      "direction": "BUY_PE",
+      "entry": 271.0,
+      "entry_basis": "premium_estimate",
+      "entry_spot": 24039.4,
+      "stop": 190.0,
+      "targets": [
+        379.0,
+        542.0
+      ],
+      "strike": 24050,
+      "option_type": "PE",
+      "ann_vol_at_open": 0.1254,
+      "expiry": "30 Jul 2026",
+      "vote_count": 4,
+      "voters": null,
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 55,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "13 Jul 2026 09:12 IST",
+      "status": "invalidated",
+      "close_reason": "signal_invalidated",
+      "closed_at": "13 Jul 2026 09:42 IST",
+      "exit": 261.0,
+      "outcome_pct": -3.69,
+      "current": 261.0,
+      "last_checked": "13 Jul 2026 09:42 IST"
     }
   ],
   "disclaimer": "Virtual recommendation track record -- scores the engine's OWN signals, not trades the user took. F&O marks are estimated premiums (no real option-chain feed exists here); spreads are scored coarsely vs breakeven at expiry. See recommendation_tracker.py docstring for full method + limits. Educational only, not investment advice."
