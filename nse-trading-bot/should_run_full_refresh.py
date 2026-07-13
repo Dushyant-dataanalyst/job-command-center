@@ -54,16 +54,27 @@ MARKET_OPEN_MIN = 7 * 60 + 30    # 07:30 IST -- matches the existing */5 cron wi
 MARKET_CLOSE_MIN = 16 * 60 + 25  # 16:25 IST
 OFF_HOURS_MIN_GAP_MINUTES = 55   # a bit under an hour so trigger jitter doesn't skip a whole cycle
 
-# Once-daily prep window -- centered on the '30 15 * * 1-5' cron (21:00 IST).
-# Widened to a real clock-time window (not an exact-minute match) for the
-# same reason should_run itself avoids matching on github.event.schedule:
-# GitHub's native schedule trigger is documented best-effort and can skip a
-# tick, and cron-job.org (the reliable backstop) only fires every 5 min, so
-# an exact-minute match would miss both. 25 minutes comfortably guarantees
-# at least one cron-job.org ping lands inside it even if the native
-# schedule tick is skipped entirely.
+# Once-daily prep window -- starts at 20:55 IST (just ahead of the
+# '30 15 * * 1-5' cron's 21:00 IST target), open-ended rather than a fixed
+# 25-min slot.
+#
+# BUG FOUND 13-Jul-2026: a fixed end minute (originally 21:20 IST) assumed
+# *some* trigger would land inside a narrow window -- but the real trigger
+# cadence off-hours turned out to be cron-job.org pinging hourly at HH:22
+# (not every 5 min as originally assumed), which structurally never falls
+# inside 20:55-21:20 (22 > 20). Combined with GitHub's native schedule being
+# unreliable/jittery (confirmed via logs/run_history.json: only ~3 native
+# `schedule` events in 3.6 days, all at random market-hour minutes), NO
+# trigger ever landed in the window -- equity_scan/voter_weights/snapshot/
+# astro_view/daily_report silently didn't run for at least 3 straight days.
+#
+# Fixed by dropping the end boundary and instead checking run_history.json
+# for whether the once-daily steps already succeeded today (IST calendar
+# date) -- see _daily_already_ran_today(). Now ANY trigger at/after 20:55
+# IST that day satisfies it, however irregular the trigger cadence is, and
+# the "once daily" guarantee comes from the already-ran check rather than a
+# fragile time slot.
 DAILY_WINDOW_START_MIN = 20 * 60 + 55  # 20:55 IST
-DAILY_WINDOW_END_MIN = 21 * 60 + 20    # 21:20 IST
 
 IST = ZoneInfo("Asia/Kolkata")
 
@@ -79,7 +90,25 @@ def _is_daily_window(now):
     if now.weekday() >= 5:
         return False
     mins = now.hour * 60 + now.minute
-    return DAILY_WINDOW_START_MIN <= mins <= DAILY_WINDOW_END_MIN
+    return mins >= DAILY_WINDOW_START_MIN
+
+
+def _daily_already_ran_today(now):
+    """True if the once-daily step group already succeeded today (IST
+    calendar date), read from logs/run_history.json. EQUITY_SCAN is used as
+    the proxy step since all five once-daily steps are gated by the same
+    `should_run_daily` job output and run together."""
+    if not RUN_HISTORY_FILE.exists():
+        return False
+    try:
+        history = json.loads(RUN_HISTORY_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    today_str = now.strftime("%d %b %Y")
+    for r in history:
+        if r.get("timestamp", "").startswith(today_str) and r.get("steps", {}).get("EQUITY_SCAN") == "success":
+            return True
+    return False
 
 
 def _minutes_since_last_run(now):
@@ -125,9 +154,11 @@ def decide_daily(now, force):
     attach to."""
     if force:
         return True, "forced (workflow_dispatch, force_full_refresh=true)"
-    if _is_daily_window(now):
-        return True, f"within once-daily window ({DAILY_WINDOW_START_MIN//60:02d}:{DAILY_WINDOW_START_MIN%60:02d}-{DAILY_WINDOW_END_MIN//60:02d}:{DAILY_WINDOW_END_MIN%60:02d} IST)"
-    return False, "outside once-daily window -- daily-only steps skipped this trigger"
+    if not _is_daily_window(now):
+        return False, f"before once-daily window opens ({DAILY_WINDOW_START_MIN//60:02d}:{DAILY_WINDOW_START_MIN%60:02d} IST) or weekend"
+    if _daily_already_ran_today(now):
+        return False, "once-daily steps already ran today -- skipping repeat"
+    return True, f"first trigger at/after {DAILY_WINDOW_START_MIN//60:02d}:{DAILY_WINDOW_START_MIN%60:02d} IST today"
 
 
 def main():
