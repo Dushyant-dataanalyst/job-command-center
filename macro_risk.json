@@ -1,20 +1,20 @@
 {
-  "fetched_at": "13 Jul 2026 16:26 IST",
-  "risk_score": 76,
+  "fetched_at": "13 Jul 2026 17:21 IST",
+  "risk_score": 68,
   "risk_level": "HIGH",
   "bias": "BEARISH",
-  "confidence": 0.9,
+  "confidence": 0.75,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.21% vs previous close (76.01 -> 78.45)",
+      "evidence": "BZ=F moved +3.41% vs previous close (76.01 -> 78.6)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 78.45,
+      "last": 78.6,
       "previous": 76.01,
-      "pct_change": 3.21,
+      "pct_change": 3.41,
       "evidence_class": "official"
     },
     {
@@ -33,23 +33,23 @@
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +8.38% vs previous close (15.03 -> 16.29)",
+      "evidence": "^VIX moved +8.25% vs previous close (15.03 -> 16.27)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 16.29,
+      "last": 16.27,
       "previous": 15.03,
-      "pct_change": 8.38,
+      "pct_change": 8.25,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 3,
-      "evidence": "2 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Polish PM pledges memorial to victims of WW2 'genocide by Ukrainian nationalists'\"",
-      "source": "https://www.bbc.co.uk/news/articles/cze94x4361po?at_medium=RSS&at_campaign=rss",
-      "published_at": "12 Jul 2026 03:26 IST",
-      "evidence_class": "reported",
-      "corroborating_sources": 2,
+      "severity": 2,
+      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"EU countries consider sanctions on trade from illegal Israeli settlements\"",
+      "source": "https://www.aljazeera.com/news/2026/7/13/eu-countries-consider-sanctions-on-trade-from-illegal-israeli-settlements?traffic_source=rss",
+      "published_at": "13 Jul 2026 16:02 IST",
+      "evidence_class": "rumor",
+      "corroborating_sources": 1,
       "news_source": "rss_fallback"
     }
   ],
@@ -81,15 +81,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.45,
+      "last": 78.6,
       "previous": 76.01,
-      "pct_change": 3.21
+      "pct_change": 3.41
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.61,
+      "last": 95.72,
       "previous": 95.39,
-      "pct_change": 0.24
+      "pct_change": 0.35
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -99,9 +99,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.29,
+      "last": 16.27,
       "previous": 15.03,
-      "pct_change": 8.38
+      "pct_change": 8.25
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -123,9 +123,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4059.6,
+      "last": 4074.4,
       "previous": 4104.1,
-      "pct_change": -1.08
+      "pct_change": -0.72
     }
   },
   "regime_context": {
