@@ -202,7 +202,7 @@
       "target2_premium": 1830.0,
       "opened_at": "10 Jul 2026 12:51 IST",
       "status": "open",
-      "current_premium": 921.0,
+      "current_premium": 871.0,
       "closed_at": null,
       "exit_premium": null,
       "exit_reason": null,
@@ -213,7 +213,7 @@
         "risk_score": 35,
         "position_size_multiplier": 0.85
       },
-      "last_checked": "13 Jul 2026 23:21 IST"
+      "last_checked": "14 Jul 2026 00:21 IST"
     },
     {
       "id": "NIFTY50-2026-07-13-BUY_PE-13Jul20260911IST",
@@ -230,30 +230,31 @@
       "target1_premium": 379.0,
       "target2_premium": 542.0,
       "opened_at": "13 Jul 2026 09:11 IST",
-      "status": "open",
-      "current_premium": 244.0,
-      "closed_at": null,
-      "exit_premium": null,
-      "exit_reason": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "current_premium": 261.0,
+      "closed_at": "14 Jul 2026 00:21 IST",
+      "exit_premium": 261.0,
+      "exit_reason": "signal_flip",
+      "pnl_pct": -3.7,
       "macro_context": {
         "risk_level": "MODERATE",
         "bias": "BEARISH",
         "risk_score": 55,
         "position_size_multiplier": 0.85
       },
-      "last_checked": "13 Jul 2026 23:21 IST"
+      "last_checked": "14 Jul 2026 00:21 IST",
+      "result": "loss"
     }
   ],
   "stats": {
-    "total_closed": 7,
-    "open_count": 2,
+    "total_closed": 8,
+    "open_count": 1,
     "wins": 4,
-    "losses": 3,
-    "win_rate": 57.1,
+    "losses": 4,
+    "win_rate": 50.0,
     "avg_win_pct": 43.5,
-    "avg_loss_pct": -22.5,
-    "expectancy_pct": 15.19,
+    "avg_loss_pct": -17.8,
+    "expectancy_pct": 12.85,
     "by_instrument": {
       "BANKNIFTY": {
         "total": 4,
@@ -261,9 +262,9 @@
         "win_rate": 50.0
       },
       "NIFTY50": {
-        "total": 3,
+        "total": 4,
         "wins": 2,
-        "win_rate": 66.7
+        "win_rate": 50.0
       }
     },
     "by_votes": {
@@ -278,9 +279,9 @@
         "win_rate": 0.0
       },
       "4/5": {
-        "total": 3,
+        "total": 4,
         "wins": 2,
-        "win_rate": 66.7
+        "win_rate": 50.0
       }
     },
     "loss_by_votes": {
@@ -295,7 +296,7 @@
         "win_rate": 0.0
       },
       "4/5": {
-        "total": 1,
+        "total": 2,
         "wins": 0,
         "win_rate": 0.0
       }
@@ -307,15 +308,15 @@
         "win_rate": 0.0
       },
       "NIFTY50": {
-        "total": 1,
+        "total": 2,
         "wins": 0,
         "win_rate": 0.0
       }
     },
-    "insight": "6/5 setups: 0/1 (0.0% win) \u00b7 5/5 setups: 2/3 (66.7% win) \u00b7 4/5 setups: 2/3 (66.7% win)",
-    "loss_diagnostic": "Only 7 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
+    "insight": "6/5 setups: 0/1 (0.0% win) \u00b7 5/5 setups: 2/3 (66.7% win) \u00b7 4/5 setups: 2/4 (50.0% win)",
+    "loss_diagnostic": "Only 8 closed trades so far \u2014 need at least 10 before a loss pattern means anything more than noise. Keep paper-trading."
   },
   "_meta": {
-    "generated_at": "13 Jul 2026 23:21 IST"
+    "generated_at": "14 Jul 2026 00:21 IST"
   }
 }

@@ -1,7 +1,7 @@
 {
-  "fetched_at": "13 Jul 2026 23:21 IST",
-  "risk_score": 81,
-  "risk_level": "EXTREME",
+  "fetched_at": "14 Jul 2026 00:21 IST",
+  "risk_score": 66,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,43 +9,31 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +7.26% vs previous close (76.01 -> 81.53)",
+      "evidence": "BZ=F moved +8.80% vs previous close (76.01 -> 82.7)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 81.53,
+      "last": 82.7,
       "previous": 76.01,
-      "pct_change": 7.26,
-      "evidence_class": "official"
-    },
-    {
-      "name": "India VIX spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "^INDIAVIX moved +8.41% vs previous close (12.25 -> 13.28)",
-      "source": "market_data",
-      "ticker": "^INDIAVIX",
-      "last": 13.28,
-      "previous": 12.25,
-      "pct_change": 8.41,
+      "pct_change": 8.8,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +10.98% vs previous close (15.03 -> 16.68)",
+      "evidence": "^VIX moved +14.24% vs previous close (15.03 -> 17.17)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 16.68,
+      "last": 17.17,
       "previous": 15.03,
-      "pct_change": 10.98,
+      "pct_change": 14.24,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "7 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Sudan's paramilitary RSF chief sentenced to death over war crimes\"",
+      "evidence": "6 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Sudan's paramilitary RSF chief sentenced to death over war crimes\"",
       "source": "https://www.bbc.co.uk/news/articles/cn4dk3kl0l4o?at_medium=RSS&at_campaign=rss",
       "published_at": "13 Jul 2026 17:32 IST",
       "evidence_class": "reported",
@@ -58,9 +46,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 6,
-    "confirmation_refreshes": 4,
-    "position_size_multiplier": 0.25,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -81,62 +69,62 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 81.53,
+      "last": 82.7,
       "previous": 76.01,
-      "pct_change": 7.26
+      "pct_change": 8.8
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.61,
+      "last": 95.62,
       "previous": 95.39,
-      "pct_change": 0.23
+      "pct_change": 0.24
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.28,
-      "previous": 12.25,
-      "pct_change": 8.41
+      "last": 12.25,
+      "previous": 13.36,
+      "pct_change": -8.31
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.68,
+      "last": 17.17,
       "previous": 15.03,
-      "pct_change": 10.98
+      "pct_change": 14.24
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7519.15,
+      "last": 7524.43,
       "previous": 7575.39,
-      "pct_change": -0.74
+      "pct_change": -0.67
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25882.04,
+      "last": 25918.78,
       "previous": 26281.61,
-      "pct_change": -1.52
+      "pct_change": -1.38
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52486.71,
+      "last": 52488.72,
       "previous": 52637.01,
-      "pct_change": -0.29
+      "pct_change": -0.28
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4005.7,
+      "last": 4006.4,
       "previous": 4104.1,
-      "pct_change": -2.4
+      "pct_change": -2.38
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 11.9,
+      "adx": 12.1,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 17.3,
+      "adx": 18.3,
       "volatility": "Low"
     }
   },
