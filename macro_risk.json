@@ -1,7 +1,7 @@
 {
-  "fetched_at": "13 Jul 2026 09:11 IST",
-  "risk_score": 55,
-  "risk_level": "MODERATE",
+  "fetched_at": "13 Jul 2026 09:16 IST",
+  "risk_score": 70,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,12 +9,24 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.88% vs previous close (76.01 -> 78.96)",
+      "evidence": "BZ=F moved +3.89% vs previous close (76.01 -> 78.97)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 78.96,
+      "last": 78.97,
       "previous": 76.01,
-      "pct_change": 3.88,
+      "pct_change": 3.89,
+      "evidence_class": "official"
+    },
+    {
+      "name": "India VIX spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "^INDIAVIX moved +8.04% vs previous close (12.25 -> 13.23)",
+      "source": "market_data",
+      "ticker": "^INDIAVIX",
+      "last": 13.23,
+      "previous": 12.25,
+      "pct_change": 8.04,
       "evidence_class": "official"
     },
     {
@@ -32,11 +44,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -57,21 +69,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.96,
+      "last": 78.97,
       "previous": 76.01,
-      "pct_change": 3.88
+      "pct_change": 3.89
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.67,
+      "last": 95.66,
       "previous": 95.39,
-      "pct_change": 0.29
+      "pct_change": 0.28
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.25,
-      "previous": 13.36,
-      "pct_change": -8.31
+      "last": 13.23,
+      "previous": 12.25,
+      "pct_change": 8.04
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -99,20 +111,20 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4067.8,
+      "last": 4065.1,
       "previous": 4104.1,
-      "pct_change": -0.88
+      "pct_change": -0.95
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 11.8,
+      "adx": 11.9,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 17.4,
+      "adx": 17.3,
       "volatility": "Low"
     }
   },
