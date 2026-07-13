@@ -1,7 +1,7 @@
 {
-  "fetched_at": "13 Jul 2026 15:51 IST",
-  "risk_score": 57,
-  "risk_level": "MODERATE",
+  "fetched_at": "13 Jul 2026 15:56 IST",
+  "risk_score": 63,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.75,
   "factors": [
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +2.62% vs previous close (76.01 -> 78.0)",
+      "evidence": "BZ=F moved +2.76% vs previous close (76.01 -> 78.11)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 78.0,
+      "last": 78.11,
       "previous": 76.01,
-      "pct_change": 2.62,
+      "pct_change": 2.76,
       "evidence_class": "official"
     },
     {
@@ -27,6 +27,18 @@
       "last": 13.28,
       "previous": 12.25,
       "pct_change": 8.41,
+      "evidence_class": "official"
+    },
+    {
+      "name": "US VIX spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "^VIX moved +8.18% vs previous close (15.03 -> 16.26)",
+      "source": "market_data",
+      "ticker": "^VIX",
+      "last": 16.26,
+      "previous": 15.03,
+      "pct_change": 8.18,
       "evidence_class": "official"
     },
     {
@@ -44,11 +56,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -69,9 +81,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.0,
+      "last": 78.11,
       "previous": 76.01,
-      "pct_change": 2.62
+      "pct_change": 2.76
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -87,9 +99,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.19,
+      "last": 16.26,
       "previous": 15.03,
-      "pct_change": 7.72
+      "pct_change": 8.18
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -111,9 +123,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4075.7,
+      "last": 4074.2,
       "previous": 4104.1,
-      "pct_change": -0.69
+      "pct_change": -0.73
     }
   },
   "regime_context": {
