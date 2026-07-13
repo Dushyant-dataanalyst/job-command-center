@@ -1,6 +1,6 @@
 {
-  "fetched_at": "13 Jul 2026 18:21 IST",
-  "risk_score": 68,
+  "fetched_at": "13 Jul 2026 19:21 IST",
+  "risk_score": 62,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.75,
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +4.22% vs previous close (76.01 -> 79.22)",
+      "evidence": "BZ=F moved +3.47% vs previous close (76.01 -> 78.65)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 79.22,
+      "last": 78.65,
       "previous": 76.01,
-      "pct_change": 4.22,
+      "pct_change": 3.47,
       "evidence_class": "official"
     },
     {
@@ -27,18 +27,6 @@
       "last": 13.28,
       "previous": 12.25,
       "pct_change": 8.41,
-      "evidence_class": "official"
-    },
-    {
-      "name": "US VIX spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "^VIX moved +9.91% vs previous close (15.03 -> 16.52)",
-      "source": "market_data",
-      "ticker": "^VIX",
-      "last": 16.52,
-      "previous": 15.03,
-      "pct_change": 9.91,
       "evidence_class": "official"
     },
     {
@@ -81,15 +69,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 79.22,
+      "last": 78.65,
       "previous": 76.01,
-      "pct_change": 4.22
+      "pct_change": 3.47
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.72,
+      "last": 95.61,
       "previous": 95.39,
-      "pct_change": 0.35
+      "pct_change": 0.23
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -99,33 +87,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.52,
+      "last": 16.19,
       "previous": 15.03,
-      "pct_change": 9.91
+      "pct_change": 7.72
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7575.39,
-      "previous": 7543.64,
-      "pct_change": 0.42
+      "last": 7545.58,
+      "previous": 7575.39,
+      "pct_change": -0.39
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 26281.61,
-      "previous": 26206.89,
-      "pct_change": 0.29
+      "last": 25993.92,
+      "previous": 26281.61,
+      "pct_change": -1.09
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52637.01,
-      "previous": 52487.41,
-      "pct_change": 0.29
+      "last": 52723.84,
+      "previous": 52637.01,
+      "pct_change": 0.16
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4070.6,
+      "last": 4064.9,
       "previous": 4104.1,
-      "pct_change": -0.82
+      "pct_change": -0.96
     }
   },
   "regime_context": {
