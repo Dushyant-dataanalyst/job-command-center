@@ -1,7 +1,7 @@
 {
-  "fetched_at": "13 Jul 2026 13:06 IST",
-  "risk_score": 86,
-  "risk_level": "EXTREME",
+  "fetched_at": "13 Jul 2026 13:11 IST",
+  "risk_score": 76,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,48 +9,36 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.79% vs previous close (76.01 -> 78.89)",
+      "evidence": "BZ=F moved +3.96% vs previous close (76.01 -> 79.02)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 78.89,
+      "last": 79.02,
       "previous": 76.01,
-      "pct_change": 3.79,
-      "evidence_class": "official"
-    },
-    {
-      "name": "USD/INR spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "INR=X moved +0.40% vs previous close (95.39 -> 95.78)",
-      "source": "market_data",
-      "ticker": "INR=X",
-      "last": 95.78,
-      "previous": 95.39,
-      "pct_change": 0.4,
+      "pct_change": 3.96,
       "evidence_class": "official"
     },
     {
       "name": "India VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^INDIAVIX moved +9.71% vs previous close (12.25 -> 13.44)",
+      "evidence": "^INDIAVIX moved +9.78% vs previous close (12.25 -> 13.45)",
       "source": "market_data",
       "ticker": "^INDIAVIX",
-      "last": 13.44,
+      "last": 13.45,
       "previous": 12.25,
-      "pct_change": 9.71,
+      "pct_change": 9.78,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +9.05% vs previous close (15.03 -> 16.39)",
+      "evidence": "^VIX moved +8.98% vs previous close (15.03 -> 16.38)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 16.39,
+      "last": 16.38,
       "previous": 15.03,
-      "pct_change": 9.05,
+      "pct_change": 8.98,
       "evidence_class": "official"
     },
     {
@@ -70,9 +58,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 6,
-    "confirmation_refreshes": 4,
-    "position_size_multiplier": 0.25,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -80,9 +68,7 @@
     ],
     "watch_sectors": [
       "Defence",
-      "Energy",
-      "IT",
-      "Pharma"
+      "Energy"
     ],
     "blocked_tickers": []
   },
@@ -95,27 +81,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 78.89,
+      "last": 79.02,
       "previous": 76.01,
-      "pct_change": 3.79
+      "pct_change": 3.96
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.78,
+      "last": 95.75,
       "previous": 95.39,
-      "pct_change": 0.4
+      "pct_change": 0.38
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.44,
+      "last": 13.45,
       "previous": 12.25,
-      "pct_change": 9.71
+      "pct_change": 9.78
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.39,
+      "last": 16.38,
       "previous": 15.03,
-      "pct_change": 9.05
+      "pct_change": 8.98
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -137,7 +123,7 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4064.9,
+      "last": 4064.6,
       "previous": 4104.1,
       "pct_change": -0.96
     }
