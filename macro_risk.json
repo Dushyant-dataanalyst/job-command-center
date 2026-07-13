@@ -1,20 +1,20 @@
 {
-  "fetched_at": "13 Jul 2026 15:36 IST",
-  "risk_score": 65,
-  "risk_level": "HIGH",
+  "fetched_at": "13 Jul 2026 15:41 IST",
+  "risk_score": 57,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
-  "confidence": 0.9,
+  "confidence": 0.75,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +2.18% vs previous close (76.01 -> 77.67)",
+      "evidence": "BZ=F moved +2.45% vs previous close (76.01 -> 77.87)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 77.67,
+      "last": 77.87,
       "previous": 76.01,
-      "pct_change": 2.18,
+      "pct_change": 2.45,
       "evidence_class": "official"
     },
     {
@@ -32,23 +32,23 @@
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 3,
-      "evidence": "2 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Polish PM pledges memorial to victims of WW2 'genocide by Ukrainian nationalists'\"",
+      "severity": 2,
+      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Polish PM pledges memorial to victims of WW2 'genocide by Ukrainian nationalists'\"",
       "source": "https://www.bbc.co.uk/news/articles/cze94x4361po?at_medium=RSS&at_campaign=rss",
       "published_at": "12 Jul 2026 03:26 IST",
-      "evidence_class": "reported",
-      "corroborating_sources": 2,
+      "evidence_class": "rumor",
+      "corroborating_sources": 1,
       "news_source": "rss_fallback"
     }
   ],
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": false,
+    "allow_new_longs": true,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
+    "min_votes_required": null,
+    "confirmation_refreshes": null,
+    "position_size_multiplier": 0.85,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -69,9 +69,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 77.67,
+      "last": 77.87,
       "previous": 76.01,
-      "pct_change": 2.18
+      "pct_change": 2.45
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -111,9 +111,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4079.0,
+      "last": 4077.0,
       "previous": 4104.1,
-      "pct_change": -0.61
+      "pct_change": -0.66
     }
   },
   "regime_context": {
