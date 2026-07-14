@@ -1,7 +1,7 @@
 {
-  "fetched_at": "15 Jul 2026 04:21 IST",
-  "risk_score": 80,
-  "risk_level": "HIGH",
+  "fetched_at": "15 Jul 2026 05:21 IST",
+  "risk_score": 86,
+  "risk_level": "EXTREME",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,24 +9,24 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +2.57% vs previous close (83.3 -> 85.44)",
+      "evidence": "BZ=F moved +2.45% vs previous close (83.3 -> 85.34)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 85.44,
+      "last": 85.34,
       "previous": 83.3,
-      "pct_change": 2.57,
+      "pct_change": 2.45,
       "evidence_class": "official"
     },
     {
       "name": "USD/INR spike",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "INR=X moved +0.91% vs previous close (95.32 -> 96.19)",
+      "evidence": "INR=X moved +1.02% vs previous close (95.32 -> 96.3)",
       "source": "market_data",
       "ticker": "INR=X",
-      "last": 96.19,
+      "last": 96.3,
       "previous": 95.32,
-      "pct_change": 0.91,
+      "pct_change": 1.02,
       "evidence_class": "official"
     },
     {
@@ -39,6 +39,18 @@
       "last": 13.28,
       "previous": 12.25,
       "pct_change": 8.41,
+      "evidence_class": "official"
+    },
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.59% vs previous close (3997.0 -> 4060.5)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4060.5,
+      "previous": 3997.0,
+      "pct_change": 1.59,
       "evidence_class": "official"
     },
     {
@@ -58,9 +70,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
+    "min_votes_required": 6,
+    "confirmation_refreshes": 4,
+    "position_size_multiplier": 0.25,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -83,15 +95,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.44,
+      "last": 85.34,
       "previous": 83.3,
-      "pct_change": 2.57
+      "pct_change": 2.45
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.19,
+      "last": 96.3,
       "previous": 95.32,
-      "pct_change": 0.91
+      "pct_change": 1.02
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -125,9 +137,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4056.5,
+      "last": 4060.5,
       "previous": 3997.0,
-      "pct_change": 1.49
+      "pct_change": 1.59
     }
   },
   "regime_context": {
