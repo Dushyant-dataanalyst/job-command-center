@@ -1,7 +1,7 @@
 {
-  "fetched_at": "14 Jul 2026 06:21 IST",
-  "risk_score": 66,
-  "risk_level": "HIGH",
+  "fetched_at": "14 Jul 2026 07:21 IST",
+  "risk_score": 81,
+  "risk_level": "EXTREME",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,12 +9,24 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +11.77% vs previous close (76.01 -> 84.96)",
+      "evidence": "BZ=F moved +10.91% vs previous close (76.01 -> 84.3)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 84.96,
+      "last": 84.3,
       "previous": 76.01,
-      "pct_change": 11.77,
+      "pct_change": 10.91,
+      "evidence_class": "official"
+    },
+    {
+      "name": "India VIX spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "^INDIAVIX moved +8.41% vs previous close (12.25 -> 13.28)",
+      "source": "market_data",
+      "ticker": "^INDIAVIX",
+      "last": 13.28,
+      "previous": 12.25,
+      "pct_change": 8.41,
       "evidence_class": "official"
     },
     {
@@ -46,9 +58,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
+    "min_votes_required": 6,
+    "confirmation_refreshes": 4,
+    "position_size_multiplier": 0.25,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -69,9 +81,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 84.96,
+      "last": 84.3,
       "previous": 76.01,
-      "pct_change": 11.77
+      "pct_change": 10.91
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -81,9 +93,9 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.25,
-      "previous": 13.36,
-      "pct_change": -8.31
+      "last": 13.28,
+      "previous": 12.25,
+      "pct_change": 8.41
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -111,20 +123,20 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4010.1,
+      "last": 4006.5,
       "previous": 4104.1,
-      "pct_change": -2.29
+      "pct_change": -2.38
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 12.1,
+      "adx": 11.9,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 18.3,
+      "adx": 17.3,
       "volatility": "Low"
     }
   },
