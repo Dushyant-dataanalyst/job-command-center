@@ -1,6 +1,6 @@
 {
-  "fetched_at": "14 Jul 2026 13:06 IST",
-  "risk_score": 65,
+  "fetched_at": "14 Jul 2026 13:11 IST",
+  "risk_score": 70,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -8,25 +8,25 @@
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +2.85% vs previous close (83.3 -> 85.67)",
+      "severity": 4,
+      "evidence": "BZ=F moved +3.22% vs previous close (83.3 -> 85.98)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 85.67,
+      "last": 85.98,
       "previous": 83.3,
-      "pct_change": 2.85,
+      "pct_change": 3.22,
       "evidence_class": "official"
     },
     {
       "name": "USD/INR spike",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "INR=X moved +0.91% vs previous close (95.32 -> 96.19)",
+      "evidence": "INR=X moved +0.92% vs previous close (95.32 -> 96.2)",
       "source": "market_data",
       "ticker": "INR=X",
-      "last": 96.19,
+      "last": 96.2,
       "previous": 95.32,
-      "pct_change": 0.91,
+      "pct_change": 0.92,
       "evidence_class": "official"
     },
     {
@@ -71,27 +71,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.67,
+      "last": 85.98,
       "previous": 83.3,
-      "pct_change": 2.85
+      "pct_change": 3.22
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.19,
+      "last": 96.2,
       "previous": 95.32,
-      "pct_change": 0.91
+      "pct_change": 0.92
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.57,
+      "last": 13.59,
       "previous": 13.28,
-      "pct_change": 2.18
+      "pct_change": 2.35
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.24,
+      "last": 17.23,
       "previous": 17.16,
-      "pct_change": 0.47
+      "pct_change": 0.41
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -113,9 +113,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4034.6,
+      "last": 4032.0,
       "previous": 3997.0,
-      "pct_change": 0.94
+      "pct_change": 0.88
     }
   },
   "regime_context": {
