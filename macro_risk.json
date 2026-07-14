@@ -1,7 +1,7 @@
 {
-  "fetched_at": "15 Jul 2026 03:22 IST",
-  "risk_score": 86,
-  "risk_level": "EXTREME",
+  "fetched_at": "15 Jul 2026 04:21 IST",
+  "risk_score": 80,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +2.45% vs previous close (83.3 -> 85.34)",
+      "evidence": "BZ=F moved +2.57% vs previous close (83.3 -> 85.44)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 85.34,
+      "last": 85.44,
       "previous": 83.3,
-      "pct_change": 2.45,
+      "pct_change": 2.57,
       "evidence_class": "official"
     },
     {
@@ -42,18 +42,6 @@
       "evidence_class": "official"
     },
     {
-      "name": "Gold safe-haven spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "GC=F moved +1.53% vs previous close (3997.0 -> 4058.3)",
-      "source": "market_data",
-      "ticker": "GC=F",
-      "last": 4058.3,
-      "previous": 3997.0,
-      "pct_change": 1.53,
-      "evidence_class": "official"
-    },
-    {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
@@ -70,9 +58,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 6,
-    "confirmation_refreshes": 4,
-    "position_size_multiplier": 0.25,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -95,9 +83,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.34,
+      "last": 85.44,
       "previous": 83.3,
-      "pct_change": 2.45
+      "pct_change": 2.57
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -137,9 +125,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4058.3,
+      "last": 4056.5,
       "previous": 3997.0,
-      "pct_change": 1.53
+      "pct_change": 1.49
     }
   },
   "regime_context": {
