@@ -1,24 +1,24 @@
 {
-  "fetched_at": "14 Jul 2026 14:56 IST",
-  "composite_score": 58,
-  "label": "Neutral",
+  "fetched_at": "14 Jul 2026 15:01 IST",
+  "composite_score": 64,
+  "label": "Greed",
   "components": {
     "india_vix": {
       "score": 81,
       "weight_pct": 40,
-      "level": 13.8
+      "level": 13.84
     },
     "market_breadth": {
-      "score": 42,
+      "score": 46,
       "weight_pct": 30,
-      "detail": "21/50 stocks above 20-day EMA"
+      "detail": "23/50 stocks above 20-day EMA"
     },
     "nifty_momentum": {
-      "score": 44,
+      "score": 59,
       "weight_pct": 30,
       "detail": {
-        "roc5_pct": -1.45,
-        "ema_aligned_bullish": false,
+        "roc5_pct": -1.41,
+        "ema_aligned_bullish": true,
         "ema_aligned_bearish": false,
         "data_as_of": "2026-07-14"
       }
