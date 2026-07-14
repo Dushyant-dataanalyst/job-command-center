@@ -1,10 +1,22 @@
 {
-  "fetched_at": "14 Jul 2026 11:41 IST",
-  "risk_score": 56,
-  "risk_level": "MODERATE",
+  "fetched_at": "14 Jul 2026 11:46 IST",
+  "risk_score": 71,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
+    {
+      "name": "Crude oil spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "BZ=F moved +1.64% vs previous close (83.3 -> 84.67)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 84.67,
+      "previous": 83.3,
+      "pct_change": 1.64,
+      "evidence_class": "official"
+    },
     {
       "name": "USD/INR spike",
       "impact": "bearish",
@@ -44,12 +56,16 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
-    "avoid_sectors": [],
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
+    "avoid_sectors": [
+      "Auto",
+      "Aviation",
+      "OMC"
+    ],
     "watch_sectors": [
       "Defence",
       "Energy",
@@ -67,9 +83,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 84.54,
+      "last": 84.67,
       "previous": 83.3,
-      "pct_change": 1.49
+      "pct_change": 1.64
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -79,9 +95,9 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.44,
+      "last": 13.45,
       "previous": 13.28,
-      "pct_change": 1.24
+      "pct_change": 1.28
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -109,9 +125,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4037.1,
+      "last": 4036.3,
       "previous": 3997.0,
-      "pct_change": 1.0
+      "pct_change": 0.98
     }
   },
   "regime_context": {

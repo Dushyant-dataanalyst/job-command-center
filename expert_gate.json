@@ -1,6 +1,6 @@
 {
-  "generated_at": "14 Jul 2026 11:42 IST",
-  "refresh_counter": 699,
+  "generated_at": "14 Jul 2026 11:46 IST",
+  "refresh_counter": 700,
   "instruments": {
     "NIFTY50": {
       "state": "WATCH",
@@ -10,7 +10,7 @@
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "14 Jul 2026 11:42 IST",
+      "last_update": "14 Jul 2026 11:46 IST",
       "reason": "signal WAIT/none",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
@@ -26,7 +26,7 @@
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "14 Jul 2026 11:42 IST",
+      "last_update": "14 Jul 2026 11:46 IST",
       "reason": "signal WAIT/none",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
@@ -43,10 +43,10 @@
     "min_votes_for_entry": 4
   },
   "macro_context": {
-    "risk_level": "MODERATE",
+    "risk_level": "HIGH",
     "bias": "BEARISH",
-    "risk_score": 56,
-    "position_size_multiplier": 0.85
+    "risk_score": 71,
+    "position_size_multiplier": 0.5
   },
   "macro_feed_available": true,
   "disclaimer": "Confirmation-and-cooldown state machine over the raw index-F&O signal, to reduce CE/PE whipsaw. Does NOT place/size/authorize any trade (no executor exists -- SEBI static-IP block). Educational signal-lifecycle layer only. Entries can additionally be blocked or escalated (min votes/persistence) by macro_risk.json's trade_adjustments -- see macro_gate.py; fails open if that feed is missing."
