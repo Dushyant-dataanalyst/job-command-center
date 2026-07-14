@@ -1,25 +1,25 @@
 {
-  "fetched_at": "13 Jul 2026 21:23 IST",
+  "fetched_at": "14 Jul 2026 21:26 IST",
   "astronomical_facts": {
     "moon": {
       "phase_name": "New Moon",
-      "illumination_pct": 1.0,
-      "waxing": false,
-      "age_days_since_new_moon": 28.5,
-      "days_to_next_new_moon": 0.7,
-      "days_to_next_full_moon": 15.9
+      "illumination_pct": 0.2,
+      "waxing": true,
+      "age_days_since_new_moon": 0.3,
+      "days_to_next_new_moon": 29.1,
+      "days_to_next_full_moon": 14.9
     },
     "mercury": {
       "status": "retrograde",
-      "days_in_current_status": 13,
+      "days_in_current_status": 14,
       "next_station_date": "24 Jul 2026",
       "next_station_type": "goes direct",
-      "days_to_next_station": 11
+      "days_to_next_station": 10
     }
   },
   "folk_market_view": {
-    "moon_bias": "Waning moon (New Moon, 1.0% illuminated) -- some retail market-astrology sources treat the waning half of the lunar cycle as a traditionally 'distributing/bearish-leaning' period.",
-    "mercury_bias": "Mercury retrograde (day 13 of this cycle, goes direct around 24 Jul 2026) -- traditionally associated in folk market-astrology with communication breakdowns, contract/paperwork delays, and choppier price action, most often cited for IT/Telecom/Media names. Not a documented basis for the 4-voter technical engine or the F&O consensus.",
+    "moon_bias": "Waxing moon (New Moon, 0.2% illuminated) -- some retail market-astrology sources treat the waxing half of the lunar cycle as a traditionally 'accumulating/bullish-leaning' period.",
+    "mercury_bias": "Mercury retrograde (day 14 of this cycle, goes direct around 24 Jul 2026) -- traditionally associated in folk market-astrology with communication breakdowns, contract/paperwork delays, and choppier price action, most often cited for IT/Telecom/Media names. Not a documented basis for the 4-voter technical engine or the F&O consensus.",
     "combined_note": "These two lines are a traditional belief, not a signal. They carry no weight anywhere in this system's actual trade logic -- see isolation_notice below."
   },
   "isolation_notice": "This feed is NOT read by macro_risk_refresh.py, macro_gate.py, expert_gate.py, trade_brain.py, stock_fo_refresh.py, or equity_scan_core.py -- nothing in the trade-decision path imports this file. It contributes zero points to risk_score, blocks nothing, sizes nothing, and generates no trade or alert by itself.",
