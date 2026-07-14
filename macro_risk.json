@@ -1,32 +1,20 @@
 {
-  "fetched_at": "14 Jul 2026 11:06 IST",
-  "risk_score": 66,
-  "risk_level": "HIGH",
+  "fetched_at": "14 Jul 2026 11:11 IST",
+  "risk_score": 56,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
-      "name": "Crude oil spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +1.92% vs previous close (83.3 -> 84.9)",
-      "source": "market_data",
-      "ticker": "BZ=F",
-      "last": 84.9,
-      "previous": 83.3,
-      "pct_change": 1.92,
-      "evidence_class": "official"
-    },
-    {
       "name": "USD/INR spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "INR=X moved +0.79% vs previous close (95.32 -> 96.08)",
+      "severity": 3,
+      "evidence": "INR=X moved +0.83% vs previous close (95.32 -> 96.12)",
       "source": "market_data",
       "ticker": "INR=X",
-      "last": 96.08,
+      "last": 96.12,
       "previous": 95.32,
-      "pct_change": 0.79,
+      "pct_change": 0.83,
       "evidence_class": "official"
     },
     {
@@ -56,16 +44,12 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": false,
+    "allow_new_longs": true,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
-    "avoid_sectors": [
-      "Auto",
-      "Aviation",
-      "OMC"
-    ],
+    "min_votes_required": null,
+    "confirmation_refreshes": null,
+    "position_size_multiplier": 0.85,
+    "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
       "Energy",
@@ -83,21 +67,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 84.9,
+      "last": 84.52,
       "previous": 83.3,
-      "pct_change": 1.92
+      "pct_change": 1.46
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.08,
+      "last": 96.12,
       "previous": 95.32,
-      "pct_change": 0.79
+      "pct_change": 0.83
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.51,
+      "last": 13.5,
       "previous": 13.28,
-      "pct_change": 1.71
+      "pct_change": 1.68
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -125,9 +109,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4028.6,
+      "last": 4032.6,
       "previous": 3997.0,
-      "pct_change": 0.79
+      "pct_change": 0.89
     }
   },
   "regime_context": {
