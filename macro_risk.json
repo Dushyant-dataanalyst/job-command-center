@@ -1,6 +1,6 @@
 {
-  "fetched_at": "14 Jul 2026 17:22 IST",
-  "risk_score": 70,
+  "fetched_at": "14 Jul 2026 18:21 IST",
+  "risk_score": 76,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,12 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.27% vs previous close (83.3 -> 86.02)",
+      "evidence": "BZ=F moved +4.30% vs previous close (83.3 -> 86.88)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 86.02,
+      "last": 86.88,
       "previous": 83.3,
-      "pct_change": 3.27,
+      "pct_change": 4.3,
       "evidence_class": "official"
     },
     {
@@ -27,6 +27,18 @@
       "last": 96.19,
       "previous": 95.32,
       "pct_change": 0.91,
+      "evidence_class": "official"
+    },
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +2.55% vs previous close (3997.0 -> 4098.9)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4098.9,
+      "previous": 3997.0,
+      "pct_change": 2.55,
       "evidence_class": "official"
     },
     {
@@ -71,9 +83,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 86.02,
+      "last": 86.88,
       "previous": 83.3,
-      "pct_change": 3.27
+      "pct_change": 4.3
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -89,9 +101,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.36,
+      "last": 16.7,
       "previous": 17.16,
-      "pct_change": 1.17
+      "pct_change": -2.68
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -113,9 +125,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4036.1,
+      "last": 4098.9,
       "previous": 3997.0,
-      "pct_change": 0.98
+      "pct_change": 2.55
     }
   },
   "regime_context": {
