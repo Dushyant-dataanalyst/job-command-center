@@ -1,5 +1,5 @@
 {
-  "generated_at": "14 Jul 2026 14:02 IST",
+  "generated_at": "14 Jul 2026 14:06 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -71,6 +71,77 @@
     }
   },
   "fo_stock": {
+    "AXISBANK": {
+      "kind": "fo_stock",
+      "symbol": "AXISBANK",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 52.4 between 35 and 65",
+      "context_score": 52.4,
+      "components": {
+        "macro": {
+          "score": 45,
+          "detail": "macro bias BEARISH aligns with a short signal (risk HIGH, score 70)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 49.8,
+          "detail": "sector underperforming NIFTY by +0.05% (5d ROC) -- opposes a short signal"
+        },
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 2 decisive recs for vote_count=4 -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-14"
+    },
     "LT": {
       "kind": "fo_stock",
       "symbol": "LT",
@@ -145,8 +216,8 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 44.3 between 35 and 65",
-      "context_score": 44.3,
+      "state_reason": "context_score 52.2 between 35 and 65",
+      "context_score": 52.2,
       "components": {
         "macro": {
           "score": 5,
@@ -157,12 +228,12 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 60.5,
-          "detail": "sector outperforming NIFTY by +2.09% (5d ROC) -- aligns with a long signal"
+          "score": 60.8,
+          "detail": "sector outperforming NIFTY by +2.15% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
-          "score": 66.7,
-          "detail": "4/6 votes (stock 3-factor consensus)"
+          "score": 100.0,
+          "detail": "6/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
           "score": 75.0,
@@ -192,7 +263,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 2 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 2 decisive recs for vote_count=6 -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -230,8 +301,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 57.8,
-          "detail": "sector outperforming NIFTY by -1.55% (5d ROC) -- aligns with a short signal"
+          "score": 58.0,
+          "detail": "sector outperforming NIFTY by -1.61% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -302,7 +373,7 @@
         },
         "sector": {
           "score": 44.6,
-          "detail": "sector underperforming NIFTY by +1.07% (5d ROC) -- opposes a short signal"
+          "detail": "sector underperforming NIFTY by +1.08% (5d ROC) -- opposes a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -373,7 +444,7 @@
         },
         "sector": {
           "score": 58.5,
-          "detail": "sector outperforming NIFTY by -1.70% (5d ROC) -- aligns with a short signal"
+          "detail": "sector outperforming NIFTY by -1.71% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 100.0,
@@ -514,7 +585,7 @@
         },
         "sector": {
           "score": 58.5,
-          "detail": "sector outperforming NIFTY by -1.70% (5d ROC) -- aligns with a short signal"
+          "detail": "sector outperforming NIFTY by -1.71% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -587,7 +658,7 @@
         },
         "sector": {
           "score": 50.2,
-          "detail": "sector outperforming NIFTY by +0.04% (5d ROC) -- aligns with a long signal"
+          "detail": "sector outperforming NIFTY by +0.05% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
@@ -655,7 +726,7 @@
         },
         "sector": {
           "score": 55.4,
-          "detail": "sector outperforming NIFTY by +1.07% (5d ROC) -- aligns with a long signal"
+          "detail": "sector outperforming NIFTY by +1.08% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
