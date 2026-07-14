@@ -1,6 +1,6 @@
 {
-  "fetched_at": "14 Jul 2026 08:56 IST",
-  "risk_score": 81,
+  "fetched_at": "14 Jul 2026 09:01 IST",
+  "risk_score": 91,
   "risk_level": "EXTREME",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,12 +9,24 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +11.45% vs previous close (76.01 -> 84.71)",
+      "evidence": "BZ=F moved +11.50% vs previous close (76.01 -> 84.75)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 84.71,
+      "last": 84.75,
       "previous": 76.01,
-      "pct_change": 11.45,
+      "pct_change": 11.5,
+      "evidence_class": "official"
+    },
+    {
+      "name": "USD/INR spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "INR=X moved +0.65% vs previous close (95.32 -> 95.94)",
+      "source": "market_data",
+      "ticker": "INR=X",
+      "last": 95.94,
+      "previous": 95.32,
+      "pct_change": 0.65,
       "evidence_class": "official"
     },
     {
@@ -68,7 +80,9 @@
     ],
     "watch_sectors": [
       "Defence",
-      "Energy"
+      "Energy",
+      "IT",
+      "Pharma"
     ],
     "blocked_tickers": []
   },
@@ -81,15 +95,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 84.71,
+      "last": 84.75,
       "previous": 76.01,
-      "pct_change": 11.45
+      "pct_change": 11.5
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 95.61,
+      "last": 95.94,
       "previous": 95.32,
-      "pct_change": 0.3
+      "pct_change": 0.65
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -123,9 +137,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4020.9,
+      "last": 4018.5,
       "previous": 4104.1,
-      "pct_change": -2.03
+      "pct_change": -2.09
     }
   },
   "regime_context": {
