@@ -1,22 +1,10 @@
 {
-  "fetched_at": "15 Jul 2026 12:56 IST",
-  "risk_score": 41,
+  "fetched_at": "15 Jul 2026 13:02 IST",
+  "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
-    {
-      "name": "US VIX spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "^VIX moved +14.17% vs previous close (15.03 -> 17.16)",
-      "source": "market_data",
-      "ticker": "^VIX",
-      "last": 17.16,
-      "previous": 15.03,
-      "pct_change": 14.17,
-      "evidence_class": "official"
-    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -53,9 +41,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.78,
+      "last": 85.81,
       "previous": 84.73,
-      "pct_change": 1.24
+      "pct_change": 1.27
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -65,15 +53,15 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.38,
+      "last": 13.57,
       "previous": 13.75,
-      "pct_change": -2.71
+      "pct_change": -1.31
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.16,
-      "previous": 15.03,
-      "pct_change": 14.17
+      "last": 16.21,
+      "previous": 17.16,
+      "pct_change": -5.54
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +83,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4035.7,
+      "last": 4034.0,
       "previous": 4061.1,
-      "pct_change": -0.63
+      "pct_change": -0.67
     }
   },
   "regime_context": {
