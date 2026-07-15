@@ -1,22 +1,10 @@
 {
-  "fetched_at": "15 Jul 2026 13:56 IST",
-  "risk_score": 50,
+  "fetched_at": "15 Jul 2026 14:02 IST",
+  "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
-    {
-      "name": "Crude oil spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +1.65% vs previous close (84.73 -> 86.13)",
-      "source": "market_data",
-      "ticker": "BZ=F",
-      "last": 86.13,
-      "previous": 84.73,
-      "pct_change": 1.65,
-      "evidence_class": "official"
-    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -37,11 +25,7 @@
     "min_votes_required": null,
     "confirmation_refreshes": null,
     "position_size_multiplier": 0.85,
-    "avoid_sectors": [
-      "Auto",
-      "Aviation",
-      "OMC"
-    ],
+    "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -57,27 +41,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 86.13,
+      "last": 85.98,
       "previous": 84.73,
-      "pct_change": 1.65
+      "pct_change": 1.48
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.24,
+      "last": 96.22,
       "previous": 96.3,
-      "pct_change": -0.06
+      "pct_change": -0.08
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.53,
+      "last": 13.42,
       "previous": 13.75,
-      "pct_change": -1.56
+      "pct_change": -2.38
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.38,
+      "last": 16.33,
       "previous": 17.16,
-      "pct_change": -4.55
+      "pct_change": -4.84
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -99,9 +83,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4028.1,
+      "last": 4029.5,
       "previous": 4061.1,
-      "pct_change": -0.81
+      "pct_change": -0.78
     }
   },
   "regime_context": {
