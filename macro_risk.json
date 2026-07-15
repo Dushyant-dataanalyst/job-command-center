@@ -1,20 +1,20 @@
 {
-  "fetched_at": "15 Jul 2026 07:46 IST",
-  "risk_score": 85,
-  "risk_level": "EXTREME",
+  "fetched_at": "15 Jul 2026 07:51 IST",
+  "risk_score": 80,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 4,
-      "evidence": "BZ=F moved +3.09% vs previous close (83.3 -> 85.87)",
+      "severity": 2,
+      "evidence": "BZ=F moved +2.94% vs previous close (83.3 -> 85.75)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 85.87,
+      "last": 85.75,
       "previous": 83.3,
-      "pct_change": 3.09,
+      "pct_change": 2.94,
       "evidence_class": "official"
     },
     {
@@ -58,9 +58,9 @@
   "trade_adjustments": {
     "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": 6,
-    "confirmation_refreshes": 4,
-    "position_size_multiplier": 0.25,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -83,9 +83,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.87,
+      "last": 85.75,
       "previous": 83.3,
-      "pct_change": 3.09
+      "pct_change": 2.94
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -125,9 +125,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4045.8,
+      "last": 4044.4,
       "previous": 3997.0,
-      "pct_change": 1.22
+      "pct_change": 1.19
     }
   },
   "regime_context": {
