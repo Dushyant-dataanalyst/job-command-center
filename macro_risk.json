@@ -1,19 +1,19 @@
 {
-  "fetched_at": "15 Jul 2026 15:11 IST",
-  "risk_score": 35,
-  "risk_level": "MODERATE",
+  "fetched_at": "15 Jul 2026 15:16 IST",
+  "risk_score": 27,
+  "risk_level": "LOW",
   "bias": "BEARISH",
-  "confidence": 0.9,
+  "confidence": 0.75,
   "factors": [
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 3,
-      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Trump retreat over Hormuz tolls suggests he is struggling to end Iran war\"",
+      "severity": 2,
+      "evidence": "2 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Trump retreat over Hormuz tolls suggests he is struggling to end Iran war\"",
       "source": "https://www.bbc.co.uk/news/articles/crele3r8j19o?at_medium=RSS&at_campaign=rss",
       "published_at": "15 Jul 2026 04:47 IST",
-      "evidence_class": "reported",
-      "corroborating_sources": 2,
+      "evidence_class": "rumor",
+      "corroborating_sources": 1,
       "news_source": "rss_fallback"
     }
   ],
@@ -24,7 +24,7 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "position_size_multiplier": 1.0,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -41,9 +41,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.35,
+      "last": 85.34,
       "previous": 84.73,
-      "pct_change": 0.73
+      "pct_change": 0.72
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -53,15 +53,15 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.25,
+      "last": 13.27,
       "previous": 13.75,
-      "pct_change": -3.62
+      "pct_change": -3.51
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.23,
+      "last": 16.26,
       "previous": 17.16,
-      "pct_change": -5.42
+      "pct_change": -5.24
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -83,9 +83,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4034.4,
+      "last": 4031.9,
       "previous": 4061.1,
-      "pct_change": -0.66
+      "pct_change": -0.72
     }
   },
   "regime_context": {

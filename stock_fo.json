@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "15 Jul 2026 15:12 IST",
+    "generated_at": "15 Jul 2026 15:17 IST",
     "method": "Same 3-factor consensus as refresh_fo_cloud.py (EMA alignment, MACD, pivot breakout, ROC5). votes==6 -> single-leg, votes in [4,5] -> capped-risk spread.",
     "macro_feed_available": true,
     "source": "yfinance EOD (delayed/unofficial)",
@@ -8,14 +8,14 @@
   },
   "ICICIBANK": {
     "name": "ICICIBANK",
-    "spot": 1416.0,
+    "spot": 1417.6,
     "consensus": "BUY_CE",
     "ce_votes": 5,
     "pe_votes": 1,
     "votes": 5,
-    "ann_vol": 0.1721,
+    "ann_vol": 0.1722,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -23,8 +23,8 @@
       "action": "Bull Call Spread: BUY 1400CE + SELL 1500CE",
       "long_strike": 1400,
       "short_strike": 1500,
-      "long_premium": 34.0,
-      "short_premium": 10.0,
+      "long_premium": 35.0,
+      "short_premium": 11.0,
       "net_debit": 24.0,
       "max_profit": 76.0,
       "max_loss": 24.0,
@@ -34,45 +34,45 @@
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_CE (5/6 votes): price 1416.0 is above EMA18 (1385.47) and EMA50 (1344.3) -- established uptrend (+2 CE) | MACD (26.01) is below its signal line (27.46) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (1415.67) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 2.56%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_CE (5/6 votes): price 1417.6 is above EMA18 (1385.64) and EMA50 (1344.37) -- established uptrend (+2 CE) | MACD (26.14) is below its signal line (27.49) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (1415.67) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 2.68%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "AXISBANK": {
     "name": "AXISBANK",
-    "spot": 1312.0,
+    "spot": 1313.1,
     "consensus": "WAIT",
     "ce_votes": 0,
     "pe_votes": 1,
-    "ann_vol": 0.1903,
+    "ann_vol": 0.1901,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 0/6, PE 1/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (-1.63) is below its signal line (5.38) -- bearish momentum (+1 PE) | price is between pivot support (1302.9) and resistance (1328.0) -- no breakout yet | 5-day momentum (ROC5 0.27%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 0/6, PE 1/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (-1.55) is below its signal line (5.4) -- bearish momentum (+1 PE) | price is between pivot support (1302.9) and resistance (1328.0) -- no breakout yet | 5-day momentum (ROC5 0.35%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "LT": {
     "name": "LT",
-    "spot": 3782.7,
+    "spot": 3784.1,
     "consensus": "BUY_PE",
     "ce_votes": 0,
     "pe_votes": 6,
     "votes": 6,
-    "ann_vol": 0.2327,
+    "ann_vol": 0.2325,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "\u2139 6/6 still gets the same capped-risk spread as every other vote level, not extra exposure \u2014 this system's own 3-year backtest found the old \"6-vote = single-leg\" rule was actually its worst-performing bucket (39.7% win, Sharpe 2.71 vs 41.9-45.3% win, Sharpe 3.0-4.8 for spreads). Don't read '6/6' as higher conviction than a 4/6 or 5/6 signal. Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -80,36 +80,36 @@
       "action": "Bear Put Spread: BUY 3800PE + SELL 3600PE",
       "long_strike": 3800,
       "short_strike": 3600,
-      "long_premium": 86.0,
+      "long_premium": 85.0,
       "short_premium": 44.0,
-      "net_debit": 42.0,
-      "max_profit": 158.0,
-      "max_loss": 42.0,
-      "breakeven": 3758.0,
+      "net_debit": 41.0,
+      "max_profit": 159.0,
+      "max_loss": 41.0,
+      "breakeven": 3759.0,
       "expiry": "30 Jul 2026",
       "days_to_exp": 15,
       "strike_step_used": 100,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_PE (6/6 votes): price 3782.7 is below EMA18 (3983.42) and EMA50 (3998.35) -- established downtrend (+2 PE) | MACD (-52.22) is below its signal line (-15.04) -- bearish momentum (+1 PE) | price broke below pivot support S1 (3828.5) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -2.81%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_PE (6/6 votes): price 3784.1 is below EMA18 (3983.56) and EMA50 (3998.41) -- established downtrend (+2 PE) | MACD (-52.11) is below its signal line (-15.01) -- bearish momentum (+1 PE) | price broke below pivot support S1 (3828.5) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -2.77%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "SUNPHARMA": {
     "name": "SUNPHARMA",
-    "spot": 1951.0,
+    "spot": 1949.6,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
     "ann_vol": 0.1227,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -117,8 +117,8 @@
       "action": "Bull Call Spread: BUY 1950CE + SELL 2050CE",
       "long_strike": 1950,
       "short_strike": 2050,
-      "long_premium": 20.0,
-      "short_premium": 12.0,
+      "long_premium": 19.0,
+      "short_premium": 11.0,
       "net_debit": 8.0,
       "max_profit": 92.0,
       "max_loss": 8.0,
@@ -128,25 +128,25 @@
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_CE (4/6 votes): price 1951.0 is above EMA18 (1895.04) and EMA50 (1846.77) -- established uptrend (+2 CE) | MACD (31.75) is above its signal line (25.89) -- bullish momentum (+1 CE) | price is between pivot support (1918.13) and resistance (1958.93) -- no breakout yet | 5-day momentum (ROC5 3.33%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_CE (4/6 votes): price 1949.6 is above EMA18 (1894.89) and EMA50 (1846.71) -- established uptrend (+2 CE) | MACD (31.64) is above its signal line (25.87) -- bullish momentum (+1 CE) | price is between pivot support (1918.13) and resistance (1958.93) -- no breakout yet | 5-day momentum (ROC5 3.25%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "BAJFINANCE": {
     "name": "BAJFINANCE",
-    "spot": 1022.0,
+    "spot": 1021.0,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 1,
     "votes": 4,
-    "ann_vol": 0.2732,
+    "ann_vol": 0.2729,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -154,44 +154,44 @@
       "action": "Bull Call Spread: BUY 1000CE + SELL 1100CE",
       "long_strike": 1000,
       "short_strike": 1100,
-      "long_premium": 41.0,
+      "long_premium": 40.0,
       "short_premium": 9.0,
-      "net_debit": 32.0,
-      "max_profit": 68.0,
-      "max_loss": 32.0,
-      "breakeven": 1032.0,
+      "net_debit": 31.0,
+      "max_profit": 69.0,
+      "max_loss": 31.0,
+      "breakeven": 1031.0,
       "expiry": "30 Jul 2026",
       "days_to_exp": 15,
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_CE (4/6 votes): price 1022.0 is above EMA18 (999.07) and EMA50 (961.06) -- established uptrend (+2 CE) | MACD (24.0) is below its signal line (25.59) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (1020.67) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 1.15%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_CE (4/6 votes): price 1021.0 is above EMA18 (998.97) and EMA50 (961.02) -- established uptrend (+2 CE) | MACD (23.92) is below its signal line (25.57) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (1020.67) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 1.05%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "TITAN": {
     "name": "TITAN",
-    "spot": 4578.0,
+    "spot": 4577.4,
     "consensus": "WAIT",
     "ce_votes": 3,
     "pe_votes": 0,
     "ann_vol": 0.2413,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 3/6, PE 0/6 -- neither side reached the 4-vote threshold): price 4578.0 is above EMA18 (4466.27) and EMA50 (4341.15) -- established uptrend (+2 CE) | MACD (95.78) is above its signal line (83.63) -- bullish momentum (+1 CE) | price is between pivot support (4551.8) and resistance (4597.8) -- no breakout yet | 5-day momentum (ROC5 0.14%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 3/6, PE 0/6 -- neither side reached the 4-vote threshold): price 4577.4 is above EMA18 (4466.21) and EMA50 (4341.13) -- established uptrend (+2 CE) | MACD (95.73) is above its signal line (83.62) -- bullish momentum (+1 CE) | price is between pivot support (4551.8) and resistance (4597.8) -- no breakout yet | 5-day momentum (ROC5 0.13%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "KOTAKBANK": {
@@ -202,48 +202,48 @@
     "pe_votes": 3,
     "ann_vol": 0.2442,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
     "commentary": "WAIT (CE 1/6, PE 3/6 -- neither side reached the 4-vote threshold): price 378.35 is below EMA18 (386.67) and EMA50 (388.49) -- established downtrend (+2 PE) | MACD (-3.85) is below its signal line (-1.56) -- bearish momentum (+1 PE) | price is between pivot support (375.33) and resistance (382.73) -- no breakout yet | 5-day momentum (ROC5 2.23%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "MARUTI": {
     "name": "MARUTI",
-    "spot": 13579.0,
+    "spot": 13587.0,
     "consensus": "WAIT",
     "ce_votes": 0,
     "pe_votes": 2,
-    "ann_vol": 0.2932,
+    "ann_vol": 0.2933,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 0/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (88.95) is below its signal line (172.05) -- bearish momentum (+1 PE) | price is between pivot support (13409.33) and resistance (13629.33) -- no breakout yet | 5-day momentum (ROC5 -2.67%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 0/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (89.59) is below its signal line (172.18) -- bearish momentum (+1 PE) | price is between pivot support (13409.33) and resistance (13629.33) -- no breakout yet | 5-day momentum (ROC5 -2.61%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "SBIN": {
     "name": "SBIN",
-    "spot": 1030.2,
+    "spot": 1030.0,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 1,
     "votes": 4,
-    "ann_vol": 0.1778,
+    "ann_vol": 0.1776,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -262,125 +262,142 @@
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_CE (4/6 votes): price 1030.2 is above EMA18 (1028.58) and EMA50 (1022.03) -- established uptrend (+2 CE) | MACD (4.89) is below its signal line (7.79) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (1028.93) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 1.31%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_CE (4/6 votes): price 1030.0 is above EMA18 (1028.56) and EMA50 (1022.02) -- established uptrend (+2 CE) | MACD (4.87) is below its signal line (7.79) -- bearish momentum (+1 PE) | price broke above pivot resistance R1 (1028.93) -- breakout confirmed (+2 CE) | 5-day momentum (ROC5 1.29%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "HDFCBANK": {
     "name": "HDFCBANK",
-    "spot": 815.65,
+    "spot": 815.15,
     "consensus": "WAIT",
     "ce_votes": 2,
     "pe_votes": 1,
-    "ann_vol": 0.2091,
+    "ann_vol": 0.209,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 2/6, PE 1/6 -- neither side reached the 4-vote threshold): price 815.65 is above EMA18 (803.68) and EMA50 (787.46) -- established uptrend (+2 CE) | MACD (14.1) is below its signal line (14.29) -- bearish momentum (+1 PE) | price is between pivot support (804.8) and resistance (816.2) -- no breakout yet | 5-day momentum (ROC5 0.66%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 2/6, PE 1/6 -- neither side reached the 4-vote threshold): price 815.15 is above EMA18 (803.63) and EMA50 (787.44) -- established uptrend (+2 CE) | MACD (14.06) is below its signal line (14.28) -- bearish momentum (+1 PE) | price is between pivot support (804.8) and resistance (816.2) -- no breakout yet | 5-day momentum (ROC5 0.6%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "RELIANCE": {
     "name": "RELIANCE",
-    "spot": 1294.8,
+    "spot": 1294.2,
     "consensus": "WAIT",
     "ce_votes": 0,
     "pe_votes": 3,
-    "ann_vol": 0.1854,
+    "ann_vol": 0.1853,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 0/6, PE 3/6 -- neither side reached the 4-vote threshold): price 1294.8 is below EMA18 (1301.58) and EMA50 (1319.56) -- established downtrend (+2 PE) | MACD (-6.73) is below its signal line (-6.73) -- bearish momentum (+1 PE) | price is between pivot support (1283.93) and resistance (1305.03) -- no breakout yet | 5-day momentum (ROC5 1.48%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 0/6, PE 3/6 -- neither side reached the 4-vote threshold): price 1294.2 is below EMA18 (1301.52) and EMA50 (1319.54) -- established downtrend (+2 PE) | MACD (-6.77) is below its signal line (-6.74) -- bearish momentum (+1 PE) | price is between pivot support (1283.93) and resistance (1305.03) -- no breakout yet | 5-day momentum (ROC5 1.43%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "TCS": {
     "name": "TCS",
-    "spot": 2189.7,
+    "spot": 2184.9,
     "consensus": "WAIT",
     "ce_votes": 2,
     "pe_votes": 0,
     "ann_vol": 0.325,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 2/6, PE 0/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (-13.2) is above its signal line (-36.36) -- bullish momentum (+1 CE) | price is between pivot support (2165.2) and resistance (2213.93) -- no breakout yet | 5-day momentum (ROC5 7.01%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 2/6, PE 0/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (-13.58) is above its signal line (-36.43) -- bullish momentum (+1 CE) | price is between pivot support (2165.2) and resistance (2213.93) -- no breakout yet | 5-day momentum (ROC5 6.77%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "INFY": {
     "name": "INFY",
-    "spot": 1075.5,
+    "spot": 1075.1,
     "consensus": "WAIT",
     "ce_votes": 1,
     "pe_votes": 2,
-    "ann_vol": 0.3767,
+    "ann_vol": 0.3768,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 1/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (-10.7) is above its signal line (-20.09) -- bullish momentum (+1 CE) | price broke below pivot support S1 (1084.1) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 0.58%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 1/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (-10.73) is above its signal line (-20.1) -- bullish momentum (+1 CE) | price broke below pivot support S1 (1084.1) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 0.54%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   },
   "ITC": {
     "name": "ITC",
-    "spot": 276.6,
-    "consensus": "WAIT",
+    "spot": 276.4,
+    "consensus": "BUY_PE",
     "ce_votes": 0,
-    "pe_votes": 3,
-    "ann_vol": 0.1393,
+    "pe_votes": 4,
+    "votes": 4,
+    "ann_vol": 0.1391,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
-    "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
-    "trade": null,
-    "commentary": "WAIT (CE 0/6, PE 3/6 -- neither side reached the 4-vote threshold): price 276.6 is below EMA18 (284.2) and EMA50 (288.66) -- established downtrend (+2 PE) | MACD (-2.99) is below its signal line (-1.7) -- bearish momentum (+1 PE) | price is between pivot support (273.48) and resistance (279.13) -- no breakout yet | 5-day momentum (ROC5 -1.44%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
+    "trade": {
+      "type": "spread",
+      "action": "Bear Put Spread: BUY 280PE + SELL 260PE",
+      "long_strike": 280,
+      "short_strike": 260,
+      "long_premium": 6.0,
+      "short_premium": 2.0,
+      "net_debit": 4.0,
+      "max_profit": 16.0,
+      "max_loss": 4.0,
+      "breakeven": 276.0,
+      "expiry": "30 Jul 2026",
+      "days_to_exp": 15,
+      "strike_step_used": 10,
+      "near_expiry_caution": false
+    },
+    "commentary": "BUY_PE (4/6 votes): price 276.4 is below EMA18 (284.18) and EMA50 (288.65) -- established downtrend (+2 PE) | MACD (-3.01) is below its signal line (-1.7) -- bearish momentum (+1 PE) | price is between pivot support (273.48) and resistance (279.13) -- no breakout yet | 5-day momentum (ROC5 -1.51%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
-    }
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
+    },
+    "macro_blocked": false
   },
   "WIPRO": {
     "name": "WIPRO",
-    "spot": 174.61,
+    "spot": 174.63,
     "consensus": "BUY_PE",
     "ce_votes": 1,
     "pe_votes": 4,
     "votes": 4,
     "ann_vol": 0.3166,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -399,25 +416,25 @@
       "strike_step_used": 10,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_PE (4/6 votes): price 174.61 is below EMA18 (176.59) and EMA50 (184.72) -- established downtrend (+2 PE) | MACD (-3.18) is above its signal line (-4.26) -- bullish momentum (+1 CE) | price broke below pivot support S1 (175.73) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 1.09%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_PE (4/6 votes): price 174.63 is below EMA18 (176.6) and EMA50 (184.72) -- established downtrend (+2 PE) | MACD (-3.18) is above its signal line (-4.26) -- bullish momentum (+1 CE) | price broke below pivot support S1 (175.73) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 1.11%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "BHARTIARTL": {
     "name": "BHARTIARTL",
-    "spot": 1917.7,
+    "spot": 1917.8,
     "consensus": "BUY_CE",
     "ce_votes": 4,
     "pe_votes": 0,
     "votes": 4,
     "ann_vol": 0.1869,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -436,25 +453,25 @@
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_CE (4/6 votes): price 1917.7 is above EMA18 (1896.34) and EMA50 (1873.96) -- established uptrend (+2 CE) | MACD (19.36) is above its signal line (16.51) -- bullish momentum (+1 CE) | price is between pivot support (1900.63) and resistance (1956.73) -- no breakout yet | 5-day momentum (ROC5 1.57%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_CE (4/6 votes): price 1917.8 is above EMA18 (1896.35) and EMA50 (1873.96) -- established uptrend (+2 CE) | MACD (19.37) is above its signal line (16.51) -- bullish momentum (+1 CE) | price is between pivot support (1900.63) and resistance (1956.73) -- no breakout yet | 5-day momentum (ROC5 1.57%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "HINDUNILVR": {
     "name": "HINDUNILVR",
-    "spot": 2103.6,
+    "spot": 2103.1,
     "consensus": "BUY_PE",
     "ce_votes": 0,
     "pe_votes": 6,
     "votes": 6,
-    "ann_vol": 0.2024,
+    "ann_vol": 0.2025,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "\u2139 6/6 still gets the same capped-risk spread as every other vote level, not extra exposure \u2014 this system's own 3-year backtest found the old \"6-vote = single-leg\" rule was actually its worst-performing bucket (39.7% win, Sharpe 2.71 vs 41.9-45.3% win, Sharpe 3.0-4.8 for spreads). Don't read '6/6' as higher conviction than a 4/6 or 5/6 signal. Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -473,33 +490,33 @@
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
-    "commentary": "BUY_PE (6/6 votes): price 2103.6 is below EMA18 (2151.91) and EMA50 (2166.42) -- established downtrend (+2 PE) | MACD (-8.7) is below its signal line (-1.4) -- bearish momentum (+1 PE) | price broke below pivot support S1 (2109.2) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -1.51%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_PE (6/6 votes): price 2103.1 is below EMA18 (2151.85) and EMA50 (2166.4) -- established downtrend (+2 PE) | MACD (-8.74) is below its signal line (-1.4) -- bearish momentum (+1 PE) | price broke below pivot support S1 (2109.2) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -1.53%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     },
     "macro_blocked": false
   },
   "NESTLEIND": {
     "name": "NESTLEIND",
-    "spot": 1427.1,
+    "spot": 1423.6,
     "consensus": "WAIT",
     "ce_votes": 0,
     "pe_votes": 1,
-    "ann_vol": 0.2064,
+    "ann_vol": 0.2066,
     "data_as_of": "2026-07-15",
-    "fetched_at": "15 Jul 2026 15:12 IST",
+    "fetched_at": "15 Jul 2026 15:17 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
-    "commentary": "WAIT (CE 0/6, PE 1/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (10.72) is below its signal line (11.3) -- bearish momentum (+1 PE) | price is between pivot support (1414.17) and resistance (1444.37) -- no breakout yet | 5-day momentum (ROC5 -1.14%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 0/6, PE 1/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (10.44) is below its signal line (11.25) -- bearish momentum (+1 PE) | price is between pivot support (1414.17) and resistance (1444.37) -- no breakout yet | 5-day momentum (ROC5 -1.38%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "macro_context": {
-      "risk_level": "MODERATE",
+      "risk_level": "LOW",
       "bias": "BEARISH",
-      "risk_score": 35,
-      "position_size_multiplier": 0.85
+      "risk_score": 27,
+      "position_size_multiplier": 1.0
     }
   }
 }
