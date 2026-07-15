@@ -1,6 +1,6 @@
 {
-  "fetched_at": "15 Jul 2026 09:26 IST",
-  "risk_score": 50,
+  "fetched_at": "15 Jul 2026 09:32 IST",
+  "risk_score": 56,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,12 +9,24 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +2.99% vs previous close (83.3 -> 85.79)",
+      "evidence": "BZ=F moved +1.72% vs previous close (83.3 -> 84.73)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 85.79,
+      "last": 84.73,
       "previous": 83.3,
-      "pct_change": 2.99,
+      "pct_change": 1.72,
+      "evidence_class": "official"
+    },
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.60% vs previous close (3997.0 -> 4061.1)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4061.1,
+      "previous": 3997.0,
+      "pct_change": 1.6,
       "evidence_class": "official"
     },
     {
@@ -57,21 +69,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.79,
+      "last": 84.73,
       "previous": 83.3,
-      "pct_change": 2.99
+      "pct_change": 1.72
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.09,
+      "last": 96.12,
       "previous": 96.3,
-      "pct_change": -0.21
+      "pct_change": -0.19
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.29,
+      "last": 13.26,
       "previous": 13.75,
-      "pct_change": -3.33
+      "pct_change": -3.56
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -81,27 +93,27 @@
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7543.59,
+      "last": NaN,
       "previous": 7515.34,
-      "pct_change": 0.38
+      "pct_change": NaN
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 26107.01,
+      "last": NaN,
       "previous": 25873.18,
-      "pct_change": 0.9
+      "pct_change": NaN
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52508.27,
+      "last": NaN,
       "previous": 52498.64,
-      "pct_change": 0.02
+      "pct_change": NaN
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4036.6,
+      "last": 4061.1,
       "previous": 3997.0,
-      "pct_change": 0.99
+      "pct_change": 1.6
     }
   },
   "regime_context": {
