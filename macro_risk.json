@@ -1,6 +1,6 @@
 {
-  "fetched_at": "15 Jul 2026 05:21 IST",
-  "risk_score": 86,
+  "fetched_at": "15 Jul 2026 06:21 IST",
+  "risk_score": 91,
   "risk_level": "EXTREME",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -8,13 +8,13 @@
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +2.45% vs previous close (83.3 -> 85.34)",
+      "severity": 4,
+      "evidence": "BZ=F moved +3.60% vs previous close (83.3 -> 86.3)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 85.34,
+      "last": 86.3,
       "previous": 83.3,
-      "pct_change": 2.45,
+      "pct_change": 3.6,
       "evidence_class": "official"
     },
     {
@@ -45,19 +45,19 @@
       "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +1.59% vs previous close (3997.0 -> 4060.5)",
+      "evidence": "GC=F moved +1.56% vs previous close (3997.0 -> 4059.4)",
       "source": "market_data",
       "ticker": "GC=F",
-      "last": 4060.5,
+      "last": 4059.4,
       "previous": 3997.0,
-      "pct_change": 1.59,
+      "pct_change": 1.56,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "5 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"EU bans gold imports from Sudan to curb money financing the war\"",
+      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"EU bans gold imports from Sudan to curb money financing the war\"",
       "source": "https://www.bbc.co.uk/news/articles/ce3e3nqwr5do?at_medium=RSS&at_campaign=rss",
       "published_at": "14 Jul 2026 14:02 IST",
       "evidence_class": "reported",
@@ -95,9 +95,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.34,
+      "last": 86.3,
       "previous": 83.3,
-      "pct_change": 2.45
+      "pct_change": 3.6
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -137,9 +137,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4060.5,
+      "last": 4059.4,
       "previous": 3997.0,
-      "pct_change": 1.59
+      "pct_change": 1.56
     }
   },
   "regime_context": {

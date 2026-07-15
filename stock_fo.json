@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "15 Jul 2026 05:22 IST",
+    "generated_at": "15 Jul 2026 06:22 IST",
     "method": "Same 3-factor consensus as refresh_fo_cloud.py (EMA alignment, MACD, pivot breakout, ROC5). votes==6 -> single-leg, votes in [4,5] -> capped-risk spread.",
     "macro_feed_available": true,
     "source": "yfinance EOD (delayed/unofficial)",
@@ -14,7 +14,7 @@
     "pe_votes": 1,
     "ann_vol": 0.1733,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -22,7 +22,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -34,7 +34,7 @@
     "pe_votes": 2,
     "ann_vol": 0.1895,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -42,7 +42,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -55,7 +55,7 @@
     "votes": 6,
     "ann_vol": 0.2301,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "\u2139 6/6 still gets the same capped-risk spread as every other vote level, not extra exposure \u2014 this system's own 3-year backtest found the old \"6-vote = single-leg\" rule was actually its worst-performing bucket (39.7% win, Sharpe 2.71 vs 41.9-45.3% win, Sharpe 3.0-4.8 for spreads). Don't read '6/6' as higher conviction than a 4/6 or 5/6 signal. Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -63,14 +63,14 @@
       "action": "Bear Put Spread: BUY 3800PE + SELL 3600PE",
       "long_strike": 3800,
       "short_strike": 3600,
-      "long_premium": 67.0,
-      "short_premium": 36.0,
-      "net_debit": 31.0,
-      "max_profit": 169.0,
-      "max_loss": 31.0,
-      "breakeven": 3769.0,
+      "long_premium": 65.0,
+      "short_premium": 35.0,
+      "net_debit": 30.0,
+      "max_profit": 170.0,
+      "max_loss": 30.0,
+      "breakeven": 3770.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 100,
       "near_expiry_caution": false
     },
@@ -78,7 +78,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": false
@@ -92,7 +92,7 @@
     "votes": 6,
     "ann_vol": 0.1231,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "\u2139 6/6 still gets the same capped-risk spread as every other vote level, not extra exposure \u2014 this system's own 3-year backtest found the old \"6-vote = single-leg\" rule was actually its worst-performing bucket (39.7% win, Sharpe 2.71 vs 41.9-45.3% win, Sharpe 3.0-4.8 for spreads). Don't read '6/6' as higher conviction than a 4/6 or 5/6 signal. \u26a0 macro risk EXTREME/BEARISH blocks new longs (allow_new_longs=false). This is still the raw technical signal (not suppressed \u2014 a human decides manually here), but treat it as a NO-GO until macro risk eases. Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -107,7 +107,7 @@
       "max_loss": 8.0,
       "breakeven": 1958.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
@@ -115,7 +115,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": true
@@ -129,7 +129,7 @@
     "votes": 4,
     "ann_vol": 0.2735,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -137,14 +137,14 @@
       "action": "Bear Put Spread: BUY 1000PE + SELL 900PE",
       "long_strike": 1000,
       "short_strike": 900,
-      "long_premium": 22.0,
+      "long_premium": 21.0,
       "short_premium": 7.0,
-      "net_debit": 15.0,
-      "max_profit": 85.0,
-      "max_loss": 15.0,
-      "breakeven": 985.0,
+      "net_debit": 14.0,
+      "max_profit": 86.0,
+      "max_loss": 14.0,
+      "breakeven": 986.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
@@ -152,7 +152,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": false
@@ -165,7 +165,7 @@
     "pe_votes": 0,
     "ann_vol": 0.2396,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -173,7 +173,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -185,7 +185,7 @@
     "pe_votes": 3,
     "ann_vol": 0.2447,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -193,7 +193,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -206,7 +206,7 @@
     "votes": 4,
     "ann_vol": 0.2928,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -214,14 +214,14 @@
       "action": "Bear Put Spread: BUY 13500PE + SELL 13300PE",
       "long_strike": 13500,
       "short_strike": 13300,
-      "long_premium": 342.0,
-      "short_premium": 294.0,
-      "net_debit": 48.0,
-      "max_profit": 152.0,
-      "max_loss": 48.0,
-      "breakeven": 13452.0,
+      "long_premium": 331.0,
+      "short_premium": 284.0,
+      "net_debit": 47.0,
+      "max_profit": 153.0,
+      "max_loss": 47.0,
+      "breakeven": 13453.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 100,
       "near_expiry_caution": false
     },
@@ -229,7 +229,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": false
@@ -243,7 +243,7 @@
     "votes": 4,
     "ann_vol": 0.1777,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -252,13 +252,13 @@
       "long_strike": 1000,
       "short_strike": 900,
       "long_premium": 13.0,
-      "short_premium": 5.0,
-      "net_debit": 8.0,
-      "max_profit": 92.0,
-      "max_loss": 8.0,
-      "breakeven": 992.0,
+      "short_premium": 4.0,
+      "net_debit": 9.0,
+      "max_profit": 91.0,
+      "max_loss": 9.0,
+      "breakeven": 991.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
@@ -266,7 +266,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": false
@@ -279,7 +279,7 @@
     "pe_votes": 3,
     "ann_vol": 0.2091,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -287,7 +287,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -299,7 +299,7 @@
     "pe_votes": 3,
     "ann_vol": 0.1853,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -307,7 +307,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -319,7 +319,7 @@
     "pe_votes": 0,
     "ann_vol": 0.4051,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -327,7 +327,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -339,7 +339,7 @@
     "pe_votes": 0,
     "ann_vol": 0.3884,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -347,7 +347,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -360,7 +360,7 @@
     "votes": 6,
     "ann_vol": 0.1527,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "\u2139 6/6 still gets the same capped-risk spread as every other vote level, not extra exposure \u2014 this system's own 3-year backtest found the old \"6-vote = single-leg\" rule was actually its worst-performing bucket (39.7% win, Sharpe 2.71 vs 41.9-45.3% win, Sharpe 3.0-4.8 for spreads). Don't read '6/6' as higher conviction than a 4/6 or 5/6 signal. Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -368,14 +368,14 @@
       "action": "Bear Put Spread: BUY 280PE + SELL 260PE",
       "long_strike": 280,
       "short_strike": 260,
-      "long_premium": 8.0,
+      "long_premium": 7.0,
       "short_premium": 2.0,
-      "net_debit": 6.0,
-      "max_profit": 14.0,
-      "max_loss": 6.0,
-      "breakeven": 274.0,
+      "net_debit": 5.0,
+      "max_profit": 15.0,
+      "max_loss": 5.0,
+      "breakeven": 275.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 10,
       "near_expiry_caution": false
     },
@@ -383,7 +383,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": false
@@ -396,7 +396,7 @@
     "pe_votes": 0,
     "ann_vol": 0.3222,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -404,7 +404,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   },
@@ -417,7 +417,7 @@
     "votes": 5,
     "ann_vol": 0.184,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "\u26a0 macro risk EXTREME/BEARISH blocks new longs (allow_new_longs=false). This is still the raw technical signal (not suppressed \u2014 a human decides manually here), but treat it as a NO-GO until macro risk eases. Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -425,14 +425,14 @@
       "action": "Bull Call Spread: BUY 1950CE + SELL 2050CE",
       "long_strike": 1950,
       "short_strike": 2050,
-      "long_premium": 28.0,
-      "short_premium": 16.0,
+      "long_premium": 27.0,
+      "short_premium": 15.0,
       "net_debit": 12.0,
       "max_profit": 88.0,
       "max_loss": 12.0,
       "breakeven": 1962.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
@@ -440,7 +440,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": true
@@ -454,7 +454,7 @@
     "votes": 4,
     "ann_vol": 0.201,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Strike interval is an approximation \u2014 verify actual listed strikes in Kite option chain. No lot size shown (not available from any live source) \u2014 figures are per-share, not total cost. \u26a0 LIQUIDITY UNVERIFIED \u2014 no open-interest or bid-ask data exists anywhere in this system; this strike is chosen by moneyness only and may be thin or wide-spread. Check the live option chain before assuming it's fillable near this premium.",
     "trade": {
@@ -462,14 +462,14 @@
       "action": "Bear Put Spread: BUY 2100PE + SELL 2000PE",
       "long_strike": 2100,
       "short_strike": 2000,
-      "long_premium": 33.0,
-      "short_premium": 20.0,
+      "long_premium": 32.0,
+      "short_premium": 19.0,
       "net_debit": 13.0,
       "max_profit": 87.0,
       "max_loss": 13.0,
       "breakeven": 2087.0,
       "expiry": "30 Jul 2026",
-      "days_to_exp": 16,
+      "days_to_exp": 15,
       "strike_step_used": 50,
       "near_expiry_caution": false
     },
@@ -477,7 +477,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     },
     "macro_blocked": false
@@ -490,7 +490,7 @@
     "pe_votes": 1,
     "ann_vol": 0.2072,
     "data_as_of": "2026-07-14",
-    "fetched_at": "15 Jul 2026 05:22 IST",
+    "fetched_at": "15 Jul 2026 06:22 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": null,
@@ -498,7 +498,7 @@
     "macro_context": {
       "risk_level": "EXTREME",
       "bias": "BEARISH",
-      "risk_score": 86,
+      "risk_score": 91,
       "position_size_multiplier": 0.25
     }
   }
