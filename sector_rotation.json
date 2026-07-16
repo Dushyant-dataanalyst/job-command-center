@@ -1,107 +1,107 @@
 {
-  "fetched_at": "16 Jul 2026 09:35 IST",
+  "fetched_at": "16 Jul 2026 09:40 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation. rs_vs_nifty_pct = this sector's/stock's own 5-day ROC% minus NIFTY50's 5-day ROC% over the same window -- a plain difference, not a calibrated percentile rating.",
   "nifty_roc5_pct": 0.61,
   "all_sectors_ranked": [
     {
       "sector": "IT",
-      "roc5_pct": 4.92,
+      "roc5_pct": 4.88,
       "rel_volume": 0.58,
       "bullish_trend": true,
-      "last_close": 28823.4,
+      "last_close": 28811.65,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": 2.85,
-      "rs_vs_nifty_pct": 4.31
+      "score": 2.83,
+      "rs_vs_nifty_pct": 4.27
     },
     {
       "sector": "Pharma",
-      "roc5_pct": 1.32,
+      "roc5_pct": 1.37,
       "rel_volume": 0.78,
       "bullish_trend": true,
-      "last_close": 25995.7,
+      "last_close": 26007.2,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": 1.03,
-      "rs_vs_nifty_pct": 0.71
+      "score": 1.07,
+      "rs_vs_nifty_pct": 0.76
     },
     {
       "sector": "PSU Bank",
-      "roc5_pct": 0.54,
+      "roc5_pct": 0.49,
       "rel_volume": 1.59,
       "bullish_trend": false,
-      "last_close": 8378.95,
+      "last_close": 8374.85,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": 0.86,
-      "rs_vs_nifty_pct": -0.07
+      "score": 0.78,
+      "rs_vs_nifty_pct": -0.12
     },
     {
       "sector": "Banking",
-      "roc5_pct": 0.72,
+      "roc5_pct": 0.71,
       "rel_volume": 0.73,
       "bullish_trend": false,
-      "last_close": 57663.9,
+      "last_close": 57658.3,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": 0.53,
-      "rs_vs_nifty_pct": 0.11
+      "score": 0.52,
+      "rs_vs_nifty_pct": 0.1
     },
     {
       "sector": "Realty",
-      "roc5_pct": -0.02,
+      "roc5_pct": -0.01,
       "rel_volume": 1.84,
       "bullish_trend": true,
-      "last_close": 906.8,
+      "last_close": 906.85,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": -0.04,
-      "rs_vs_nifty_pct": -0.63
+      "score": -0.02,
+      "rs_vs_nifty_pct": -0.62
     },
     {
       "sector": "Energy",
-      "roc5_pct": -0.46,
+      "roc5_pct": -0.36,
       "rel_volume": 0.61,
       "bullish_trend": false,
-      "last_close": 39299.25,
+      "last_close": 39338.05,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": -0.28,
-      "rs_vs_nifty_pct": -1.07
+      "score": -0.22,
+      "rs_vs_nifty_pct": -0.97
     },
     {
       "sector": "Metal",
-      "roc5_pct": -1.52,
+      "roc5_pct": -1.48,
       "rel_volume": 0.49,
       "bullish_trend": false,
-      "last_close": 12529.5,
+      "last_close": 12534.45,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": -0.74,
-      "rs_vs_nifty_pct": -2.13
+      "score": -0.73,
+      "rs_vs_nifty_pct": -2.09
     },
     {
       "sector": "Auto",
-      "roc5_pct": -2.0,
+      "roc5_pct": -2.05,
       "rel_volume": 0.66,
       "bullish_trend": false,
-      "last_close": 26807.7,
+      "last_close": 26793.7,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": -1.32,
-      "rs_vs_nifty_pct": -2.61
+      "score": -1.35,
+      "rs_vs_nifty_pct": -2.66
     },
     {
       "sector": "FMCG",
-      "roc5_pct": -3.58,
+      "roc5_pct": -3.54,
       "rel_volume": 0.93,
       "bullish_trend": false,
-      "last_close": 48397.6,
+      "last_close": 48418.35,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": -3.33,
-      "rs_vs_nifty_pct": -4.19
+      "score": -3.29,
+      "rs_vs_nifty_pct": -4.15
     }
   ],
   "sectors_with_errors": {
@@ -115,120 +115,131 @@
   "building_momentum": [
     {
       "sector": "Realty",
-      "roc5_pct": -0.02,
+      "roc5_pct": -0.01,
       "rel_volume": 1.84,
       "bullish_trend": true,
-      "last_close": 906.8,
+      "last_close": 906.85,
       "data_as_of": "2026-07-16",
       "data_source": "yfinance",
-      "score": -0.04,
-      "rs_vs_nifty_pct": -0.63
+      "score": -0.02,
+      "rs_vs_nifty_pct": -0.62
+    },
+    {
+      "sector": "PSU Bank",
+      "roc5_pct": 0.49,
+      "rel_volume": 1.59,
+      "bullish_trend": false,
+      "last_close": 8374.85,
+      "data_as_of": "2026-07-16",
+      "data_source": "yfinance",
+      "score": 0.78,
+      "rs_vs_nifty_pct": -0.12
     }
   ],
   "stock_picks_by_sector": {
     "IT": [
       {
         "symbol": "HCLTECH",
-        "roc5_pct": 3.96,
-        "rel_volume": 0.21,
+        "roc5_pct": 3.75,
+        "rel_volume": 0.22,
         "bullish_trend": true,
-        "last_close": 1196.0,
+        "last_close": 1193.5,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 0.83,
-        "rs_vs_nifty_pct": 3.35
+        "score": 0.82,
+        "rs_vs_nifty_pct": 3.14
       },
       {
         "symbol": "TCS",
-        "roc5_pct": 7.79,
-        "rel_volume": 0.09,
+        "roc5_pct": 7.77,
+        "rel_volume": 0.1,
         "bullish_trend": true,
-        "last_close": 2197.1,
+        "last_close": 2196.6,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 0.7,
-        "rs_vs_nifty_pct": 7.18
+        "score": 0.78,
+        "rs_vs_nifty_pct": 7.16
       },
       {
         "symbol": "TECHM",
-        "roc5_pct": 6.07,
+        "roc5_pct": 6.0,
         "rel_volume": 0.09,
         "bullish_trend": true,
-        "last_close": 1515.5,
+        "last_close": 1514.5,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 0.55,
-        "rs_vs_nifty_pct": 5.46
+        "score": 0.54,
+        "rs_vs_nifty_pct": 5.39
       }
     ],
     "Pharma": [
       {
         "symbol": "DIVISLAB",
-        "roc5_pct": 7.93,
-        "rel_volume": 0.08,
+        "roc5_pct": 7.95,
+        "rel_volume": 0.09,
         "bullish_trend": true,
-        "last_close": 7290.5,
+        "last_close": 7292.0,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 0.63,
-        "rs_vs_nifty_pct": 7.32
+        "score": 0.72,
+        "rs_vs_nifty_pct": 7.34
       },
       {
         "symbol": "SUNPHARMA",
-        "roc5_pct": 0.43,
-        "rel_volume": 0.03,
+        "roc5_pct": 0.42,
+        "rel_volume": 0.04,
         "bullish_trend": true,
-        "last_close": 1947.0,
+        "last_close": 1946.8,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 0.01,
-        "rs_vs_nifty_pct": -0.18
+        "score": 0.02,
+        "rs_vs_nifty_pct": -0.19
       },
       {
         "symbol": "AUROPHARMA",
-        "roc5_pct": 0.14,
-        "rel_volume": 0.04,
+        "roc5_pct": 0.2,
+        "rel_volume": 0.05,
         "bullish_trend": false,
-        "last_close": 1559.6,
+        "last_close": 1560.5,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
         "score": 0.01,
-        "rs_vs_nifty_pct": -0.47
+        "rs_vs_nifty_pct": -0.41
       }
     ],
     "PSU Bank": [
       {
         "symbol": "UNIONBANK",
-        "roc5_pct": 9.19,
-        "rel_volume": 0.17,
+        "roc5_pct": 9.02,
+        "rel_volume": 0.18,
         "bullish_trend": true,
-        "last_close": 171.72,
+        "last_close": 171.45,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 1.56,
-        "rs_vs_nifty_pct": 8.58
+        "score": 1.62,
+        "rs_vs_nifty_pct": 8.41
       },
       {
         "symbol": "PNB",
-        "roc5_pct": 1.95,
-        "rel_volume": 0.08,
+        "roc5_pct": 1.85,
+        "rel_volume": 0.09,
         "bullish_trend": false,
-        "last_close": 105.46,
+        "last_close": 105.35,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 0.16,
-        "rs_vs_nifty_pct": 1.34
+        "score": 0.17,
+        "rs_vs_nifty_pct": 1.24
       },
       {
         "symbol": "BANKBARODA",
-        "roc5_pct": 1.74,
-        "rel_volume": 0.03,
+        "roc5_pct": 1.64,
+        "rel_volume": 0.04,
         "bullish_trend": false,
-        "last_close": 248.85,
+        "last_close": 248.6,
         "data_as_of": "2026-07-16",
         "data_source": "yfinance",
-        "score": 0.05,
-        "rs_vs_nifty_pct": 1.13
+        "score": 0.07,
+        "rs_vs_nifty_pct": 1.03
       }
     ]
   },
