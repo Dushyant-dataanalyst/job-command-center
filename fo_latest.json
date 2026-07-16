@@ -1,16 +1,16 @@
 {
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 24052.05,
-    "ann_vol": 0.1231,
+    "spot": 24078.5,
+    "ann_vol": 0.1227,
     "consensus": "WAIT",
     "ce_votes": 2,
-    "pe_votes": 3,
-    "commentary": "WAIT (CE 2/6, PE 3/6 -- neither side reached the 4-vote threshold): price 24052.05 is above EMA18 (24046.98) and EMA50 (23948.44) -- established uptrend (+2 CE) | MACD (103.61) is below its signal line (110.51) -- bearish momentum (+1 PE) | price broke below pivot support S1 (24054.2) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -1.42%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
-    "data_as_of": "2026-07-14",
-    "fetched_at": "16 Jul 2026 06:21 IST",
+    "pe_votes": 1,
+    "commentary": "WAIT (CE 2/6, PE 1/6 -- neither side reached the 4-vote threshold): price 24078.5 is above EMA18 (24050.3) and EMA50 (23953.54) -- established uptrend (+2 CE) | MACD (94.56) is below its signal line (107.32) -- bearish momentum (+1 PE) | price is between pivot support (23998.13) and resistance (24131.53) -- no breakout yet | 5-day momentum (ROC5 0.82%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "data_as_of": "2026-07-15",
+    "fetched_at": "16 Jul 2026 07:21 IST",
     "data_source": "yfinance",
-    "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
+    "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "near_expiry_caution": false,
@@ -29,16 +29,16 @@
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 57462.3,
-    "ann_vol": 0.1655,
+    "spot": 57757.85,
+    "ann_vol": 0.1656,
     "consensus": "WAIT",
-    "ce_votes": 0,
-    "pe_votes": 3,
-    "commentary": "WAIT (CE 0/6, PE 3/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (506.19) is below its signal line (635.5) -- bearish momentum (+1 PE) | price broke below pivot support S1 (57675.7) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -1.27%) is muted -- no edge from this factor \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
-    "data_as_of": "2026-07-14",
-    "fetched_at": "16 Jul 2026 06:21 IST",
+    "ce_votes": 3,
+    "pe_votes": 1,
+    "commentary": "WAIT (CE 3/6, PE 1/6 -- neither side reached the 4-vote threshold): price 57757.85 is above EMA18 (57499.95) and EMA50 (56646.46) -- established uptrend (+2 CE) | MACD (476.03) is below its signal line (603.6) -- bearish momentum (+1 PE) | price is between pivot support (57219.45) and resistance (57772.6) -- no breakout yet | 5-day momentum (ROC5 1.79%) is strongly positive (+1 CE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "data_as_of": "2026-07-15",
+    "fetched_at": "16 Jul 2026 07:21 IST",
     "data_source": "yfinance",
-    "data_warning": "Signals based on 2026-07-14 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
+    "data_warning": "Signals based on 2026-07-15 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
       "action": "WAIT \u2014 No Trade",
       "near_expiry_caution": false,
@@ -56,7 +56,7 @@
     }
   },
   "_meta": {
-    "generated_at": "16 Jul 2026 06:21 IST",
+    "generated_at": "16 Jul 2026 07:21 IST",
     "source": "yfinance EOD (delayed/unofficial)"
   }
 }
