@@ -1,43 +1,43 @@
 {
-  "fetched_at": "17 Jul 2026 15:56 IST",
-  "risk_score": 56,
+  "fetched_at": "17 Jul 2026 16:01 IST",
+  "risk_score": 48,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
-  "confidence": 0.9,
+  "confidence": 0.75,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +1.95% vs previous close (84.23 -> 85.87)",
+      "evidence": "BZ=F moved +1.96% vs previous close (84.23 -> 85.88)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 85.87,
+      "last": 85.88,
       "previous": 84.23,
-      "pct_change": 1.95,
+      "pct_change": 1.96,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +8.67% vs previous close (16.73 -> 18.18)",
+      "evidence": "^VIX moved +8.25% vs previous close (16.73 -> 18.11)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.18,
+      "last": 18.11,
       "previous": 16.73,
-      "pct_change": 8.67,
+      "pct_change": 8.25,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 3,
-      "evidence": "2 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"JD Vance accuses Israel of 'manipulating' US public opinion to prolong Iran war\"",
+      "severity": 2,
+      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"JD Vance accuses Israel of 'manipulating' US public opinion to prolong Iran war\"",
       "source": "https://www.bbc.co.uk/news/articles/c1m107yj327o?at_medium=RSS&at_campaign=rss",
       "published_at": "17 Jul 2026 02:52 IST",
-      "evidence_class": "reported",
-      "corroborating_sources": 2,
+      "evidence_class": "rumor",
+      "corroborating_sources": 1,
       "news_source": "rss_fallback"
     }
   ],
@@ -69,9 +69,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.87,
+      "last": 85.88,
       "previous": 84.23,
-      "pct_change": 1.95
+      "pct_change": 1.96
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -87,9 +87,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.18,
+      "last": 18.11,
       "previous": 16.73,
-      "pct_change": 8.67
+      "pct_change": 8.25
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -111,9 +111,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4000.7,
+      "last": 4000.2,
       "previous": 3985.6,
-      "pct_change": 0.38
+      "pct_change": 0.37
     }
   },
   "regime_context": {
