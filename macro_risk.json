@@ -1,7 +1,7 @@
 {
-  "fetched_at": "17 Jul 2026 23:26 IST",
-  "risk_score": 55,
-  "risk_level": "MODERATE",
+  "fetched_at": "18 Jul 2026 00:26 IST",
+  "risk_score": 61,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,19 +9,31 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +4.54% vs previous close (84.23 -> 88.05)",
+      "evidence": "BZ=F moved +4.18% vs previous close (84.23 -> 87.75)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 88.05,
+      "last": 87.75,
       "previous": 84.23,
-      "pct_change": 4.54,
+      "pct_change": 4.18,
+      "evidence_class": "official"
+    },
+    {
+      "name": "US VIX spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "^VIX moved +12.01% vs previous close (16.73 -> 18.74)",
+      "source": "market_data",
+      "ticker": "^VIX",
+      "last": 18.74,
+      "previous": 16.73,
+      "pct_change": 12.01,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"JD Vance accuses Israel of 'manipulating' US public opinion to prolong Iran war\"",
+      "evidence": "5 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"JD Vance accuses Israel of 'manipulating' US public opinion to prolong Iran war\"",
       "source": "https://www.bbc.co.uk/news/articles/c1m107yj327o?at_medium=RSS&at_campaign=rss",
       "published_at": "17 Jul 2026 02:52 IST",
       "evidence_class": "reported",
@@ -32,11 +44,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -57,9 +69,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 88.05,
+      "last": 87.75,
       "previous": 84.23,
-      "pct_change": 4.54
+      "pct_change": 4.18
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -69,45 +81,45 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.15,
-      "previous": 12.88,
-      "pct_change": 2.1
+      "last": 12.88,
+      "previous": 13.27,
+      "pct_change": -2.94
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.03,
+      "last": 18.74,
       "previous": 16.73,
-      "pct_change": 7.77
+      "pct_change": 12.01
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7473.13,
+      "last": 7469.38,
       "previous": 7533.77,
-      "pct_change": -0.8
+      "pct_change": -0.85
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25603.57,
+      "last": 25580.84,
       "previous": 25881.95,
-      "pct_change": -1.08
+      "pct_change": -1.16
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52265.08,
+      "last": 52236.33,
       "previous": 52552.97,
-      "pct_change": -0.55
+      "pct_change": -0.6
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4016.1,
+      "last": 4012.2,
       "previous": 3985.6,
-      "pct_change": 0.77
+      "pct_change": 0.67
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 10.6,
+      "adx": 11.0,
       "volatility": "Low"
     },
     "BANKNIFTY": {
