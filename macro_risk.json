@@ -1,54 +1,54 @@
 {
-  "fetched_at": "17 Jul 2026 18:26 IST",
-  "risk_score": 48,
-  "risk_level": "MODERATE",
+  "fetched_at": "17 Jul 2026 19:26 IST",
+  "risk_score": 61,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
-  "confidence": 0.75,
+  "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +2.30% vs previous close (84.23 -> 86.17)",
+      "severity": 4,
+      "evidence": "BZ=F moved +3.03% vs previous close (84.23 -> 86.78)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 86.17,
+      "last": 86.78,
       "previous": 84.23,
-      "pct_change": 2.3,
+      "pct_change": 3.03,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +10.64% vs previous close (16.73 -> 18.51)",
+      "evidence": "^VIX moved +13.51% vs previous close (16.73 -> 18.99)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.51,
+      "last": 18.99,
       "previous": 16.73,
-      "pct_change": 10.64,
+      "pct_change": 13.51,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"JD Vance accuses Israel of 'manipulating' US public opinion to prolong Iran war\"",
+      "severity": 3,
+      "evidence": "2 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"JD Vance accuses Israel of 'manipulating' US public opinion to prolong Iran war\"",
       "source": "https://www.bbc.co.uk/news/articles/c1m107yj327o?at_medium=RSS&at_campaign=rss",
       "published_at": "17 Jul 2026 02:52 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
+      "evidence_class": "reported",
+      "corroborating_sources": 2,
       "news_source": "rss_fallback"
     }
   ],
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -69,9 +69,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 86.17,
+      "last": 86.78,
       "previous": 84.23,
-      "pct_change": 2.3
+      "pct_change": 3.03
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -87,33 +87,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.51,
+      "last": 18.99,
       "previous": 16.73,
-      "pct_change": 10.64
+      "pct_change": 13.51
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7533.77,
-      "previous": 7572.4,
-      "pct_change": -0.51
+      "last": 7465.94,
+      "previous": 7533.77,
+      "pct_change": -0.9
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25881.95,
-      "previous": 26269.23,
-      "pct_change": -1.47
+      "last": 25402.93,
+      "previous": 25881.95,
+      "pct_change": -1.85
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52552.97,
-      "previous": 52658.64,
-      "pct_change": -0.2
+      "last": 52466.19,
+      "previous": 52552.97,
+      "pct_change": -0.17
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 3972.6,
+      "last": 3986.6,
       "previous": 3985.6,
-      "pct_change": -0.33
+      "pct_change": 0.03
     }
   },
   "regime_context": {
