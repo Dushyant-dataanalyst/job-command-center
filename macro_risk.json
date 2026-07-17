@@ -1,6 +1,6 @@
 {
-  "fetched_at": "18 Jul 2026 01:26 IST",
-  "risk_score": 61,
+  "fetched_at": "18 Jul 2026 02:26 IST",
+  "risk_score": 71,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,33 +9,42 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 4,
-      "evidence": "BZ=F moved +3.87% vs previous close (84.23 -> 87.49)",
+      "evidence": "BZ=F moved +4.67% vs previous close (84.23 -> 88.16)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 87.49,
+      "last": 88.16,
       "previous": 84.23,
-      "pct_change": 3.87,
+      "pct_change": 4.67,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +12.07% vs previous close (16.73 -> 18.75)",
+      "evidence": "^VIX moved +12.19% vs previous close (16.73 -> 18.77)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.75,
+      "last": 18.77,
       "previous": 16.73,
-      "pct_change": 12.07,
+      "pct_change": 12.19,
+      "evidence_class": "official"
+    },
+    {
+      "name": "US markets selloff (last close)",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "Composite avg -1.06% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.01%, NASDAQ -1.40%, DOW -0.77%)",
+      "source": "market_data",
+      "pct_change": -1.06,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"JD Vance accuses Israel of 'manipulating' US public opinion to prolong Iran war\"",
-      "source": "https://www.bbc.co.uk/news/articles/c1m107yj327o?at_medium=RSS&at_campaign=rss",
-      "published_at": "17 Jul 2026 02:52 IST",
+      "evidence": "5 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"One anti-war critic fined, another held as Russia clamps down on opponents\"",
+      "source": "https://www.bbc.co.uk/news/articles/cn0n3y6ewn4o?at_medium=RSS&at_campaign=rss",
+      "published_at": "18 Jul 2026 01:30 IST",
       "evidence_class": "reported",
       "corroborating_sources": 2,
       "news_source": "rss_fallback"
@@ -69,9 +78,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 87.49,
+      "last": 88.16,
       "previous": 84.23,
-      "pct_change": 3.87
+      "pct_change": 4.67
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -87,33 +96,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.75,
+      "last": 18.77,
       "previous": 16.73,
-      "pct_change": 12.07
+      "pct_change": 12.19
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7467.76,
+      "last": 7457.69,
       "previous": 7533.77,
-      "pct_change": -0.88
+      "pct_change": -1.01
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25571.23,
+      "last": 25520.24,
       "previous": 25881.95,
-      "pct_change": -1.2
+      "pct_change": -1.4
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52210.43,
+      "last": 52146.42,
       "previous": 52552.97,
-      "pct_change": -0.65
+      "pct_change": -0.77
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4015.2,
+      "last": 4020.0,
       "previous": 3985.6,
-      "pct_change": 0.74
+      "pct_change": 0.86
     }
   },
   "regime_context": {
