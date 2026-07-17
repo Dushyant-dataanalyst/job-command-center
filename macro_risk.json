@@ -1,20 +1,32 @@
 {
-  "fetched_at": "17 Jul 2026 15:00 IST",
-  "risk_score": 41,
+  "fetched_at": "17 Jul 2026 15:02 IST",
+  "risk_score": 56,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
+      "name": "Crude oil spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "BZ=F moved +1.63% vs previous close (84.23 -> 85.6)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 85.6,
+      "previous": 84.23,
+      "pct_change": 1.63,
+      "evidence_class": "official"
+    },
+    {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +9.68% vs previous close (16.73 -> 18.35)",
+      "evidence": "^VIX moved +9.80% vs previous close (16.73 -> 18.37)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.35,
+      "last": 18.37,
       "previous": 16.73,
-      "pct_change": 9.68,
+      "pct_change": 9.8,
       "evidence_class": "official"
     },
     {
@@ -37,7 +49,11 @@
     "min_votes_required": null,
     "confirmation_refreshes": null,
     "position_size_multiplier": 0.85,
-    "avoid_sectors": [],
+    "avoid_sectors": [
+      "Auto",
+      "Aviation",
+      "OMC"
+    ],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -53,27 +69,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 85.48,
+      "last": 85.6,
       "previous": 84.23,
-      "pct_change": 1.48
+      "pct_change": 1.63
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.29,
+      "last": 96.27,
       "previous": 96.5,
-      "pct_change": -0.22
+      "pct_change": -0.24
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
       "last": 13.1,
       "previous": 12.88,
-      "pct_change": 1.73
+      "pct_change": 1.67
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.35,
+      "last": 18.37,
       "previous": 16.73,
-      "pct_change": 9.68
+      "pct_change": 9.8
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +111,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4000.3,
+      "last": 4003.4,
       "previous": 3985.6,
-      "pct_change": 0.37
+      "pct_change": 0.45
     }
   },
   "regime_context": {
