@@ -335,11 +335,67 @@
       },
       "last_checked": "17 Jul 2026 14:16 IST",
       "result": "win"
+    },
+    {
+      "id": "NIFTY50-2026-07-17-BUY_CE-17Jul20261421IST",
+      "instrument": "NIFTY50",
+      "consensus": "BUY_CE",
+      "option_type": "CE",
+      "votes": "4/5",
+      "votes_n": 4,
+      "strike": 24300,
+      "expiry": "30 Jul 2026",
+      "entry_spot": 24307.6,
+      "entry_premium": 236.0,
+      "sl_premium": 165.0,
+      "target1_premium": 330.0,
+      "target2_premium": 472.0,
+      "opened_at": "17 Jul 2026 14:21 IST",
+      "status": "open",
+      "current_premium": 236.0,
+      "closed_at": null,
+      "exit_premium": null,
+      "exit_reason": null,
+      "pnl_pct": null,
+      "macro_context": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 41,
+        "position_size_multiplier": 0.85
+      }
+    },
+    {
+      "id": "BANKNIFTY-2026-07-17-BUY_CE-17Jul20261421IST",
+      "instrument": "BANKNIFTY",
+      "consensus": "BUY_CE",
+      "option_type": "CE",
+      "votes": "4/5",
+      "votes_n": 4,
+      "strike": 58300,
+      "expiry": "29 Jul 2026",
+      "entry_spot": 58328.8,
+      "entry_premium": 740.0,
+      "sl_premium": 518.0,
+      "target1_premium": 1036.0,
+      "target2_premium": 1480.0,
+      "opened_at": "17 Jul 2026 14:21 IST",
+      "status": "open",
+      "current_premium": 740.0,
+      "closed_at": null,
+      "exit_premium": null,
+      "exit_reason": null,
+      "pnl_pct": null,
+      "macro_context": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 41,
+        "position_size_multiplier": 0.85
+      }
     }
   ],
   "stats": {
     "total_closed": 12,
-    "open_count": 0,
+    "open_count": 2,
     "wins": 6,
     "losses": 6,
     "win_rate": 50.0,
@@ -408,6 +464,6 @@
     "loss_diagnostic": "Your losses are concentrated in 4/5-vote setups (4 of 6 losses, out of 8 total 4/5 trades). 5/5 setups are 66.7% win so far \u2014 consider raising your entry threshold."
   },
   "_meta": {
-    "generated_at": "17 Jul 2026 14:16 IST"
+    "generated_at": "17 Jul 2026 14:21 IST"
   }
 }
