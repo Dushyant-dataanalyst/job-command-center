@@ -1,15 +1,15 @@
 {
-  "generated_at": "17 Jul 2026 14:12 IST",
+  "generated_at": "17 Jul 2026 14:17 IST",
   "summary": {
     "open_count": 13,
-    "closed_count": 288,
-    "decisive_count": 4,
-    "won": 3,
+    "closed_count": 290,
+    "decisive_count": 6,
+    "won": 5,
     "lost": 1,
     "expired_count": 0,
     "invalidated_count": 284,
-    "win_rate_pct": 75.0,
-    "avg_return_pct": 26.5,
+    "win_rate_pct": 83.3,
+    "avg_return_pct": 38.68,
     "by_kind": {
       "fo_stock": {
         "won": 1,
@@ -18,10 +18,10 @@
         "total": 2
       },
       "fo_index": {
-        "won": 2,
+        "won": 4,
         "lost": 0,
         "win_rate": 100.0,
-        "total": 2
+        "total": 4
       }
     },
     "by_vote_count": {
@@ -32,18 +32,18 @@
         "total": 2
       },
       "4": {
-        "won": 2,
+        "won": 4,
         "lost": 0,
         "win_rate": 100.0,
-        "total": 2
+        "total": 4
       }
     },
     "by_regime": {
       "Sideways/Choppy": {
-        "won": 3,
+        "won": 5,
         "lost": 1,
-        "win_rate": 75.0,
-        "total": 4
+        "win_rate": 83.3,
+        "total": 6
       }
     },
     "false_flip_rate_pct": null
@@ -87,7 +87,7 @@
       "exit": null,
       "outcome_pct": null,
       "current": 312.0,
-      "last_checked": "17 Jul 2026 14:12 IST"
+      "last_checked": "17 Jul 2026 14:17 IST"
     },
     {
       "id": "eq-M&M-BUY-16Jul20262122IST",
@@ -127,7 +127,7 @@
       "exit": null,
       "outcome_pct": null,
       "current": 3117.8,
-      "last_checked": "17 Jul 2026 14:12 IST"
+      "last_checked": "17 Jul 2026 14:17 IST"
     },
     {
       "id": "eq-BPCL-STRONG_BUY-16Jul20262122IST",
@@ -168,7 +168,7 @@
       "exit": null,
       "outcome_pct": null,
       "current": 312.0,
-      "last_checked": "17 Jul 2026 14:12 IST"
+      "last_checked": "17 Jul 2026 14:17 IST"
     },
     {
       "symbol": "LT",
@@ -192,7 +192,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-LT-BUY_PE-17Jul20260516IST",
       "kind": "fo_stock_spread",
       "entry": 47.0,
@@ -204,7 +204,7 @@
       "breakeven": 3753.0,
       "max_profit": 153.0,
       "max_loss": 47.0,
-      "current": 3801.2
+      "current": 3809.4
     },
     {
       "symbol": "ICICIBANK",
@@ -228,7 +228,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-ICICIBANK-BUY_CE-17Jul20260917IST",
       "kind": "fo_stock_spread",
       "entry": 10.0,
@@ -240,7 +240,7 @@
       "breakeven": 1460.0,
       "max_profit": 90.0,
       "max_loss": 10.0,
-      "current": 1438.5
+      "current": 1449.3
     },
     {
       "symbol": "INFY",
@@ -264,7 +264,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-INFY-BUY_CE-17Jul20260917IST",
       "kind": "fo_stock_spread",
       "entry": 31.0,
@@ -276,7 +276,7 @@
       "breakeven": 1131.0,
       "max_profit": 69.0,
       "max_loss": 31.0,
-      "current": 1100.5
+      "current": 1101.9
     },
     {
       "symbol": "WIPRO",
@@ -300,7 +300,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-WIPRO-BUY_PE-17Jul20260917IST",
       "kind": "fo_stock_spread",
       "entry": 2.0,
@@ -312,43 +312,7 @@
       "breakeven": 168.0,
       "max_profit": 18.0,
       "max_loss": 2.0,
-      "current": 175.55
-    },
-    {
-      "id": "foidx-NIFTY50-BUY_CE-17Jul20260921IST",
-      "kind": "fo_index",
-      "symbol": "NIFTY50",
-      "direction": "BUY_CE",
-      "entry": 224.0,
-      "entry_basis": "premium_estimate",
-      "entry_spot": 24186.95,
-      "stop": 157.0,
-      "targets": [
-        314.0,
-        448.0
-      ],
-      "strike": 24200,
-      "option_type": "CE",
-      "ann_vol_at_open": 0.1226,
-      "expiry": "30 Jul 2026",
-      "vote_count": 4,
-      "voters": null,
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "17 Jul 2026 09:21 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 277.0,
-      "last_checked": "17 Jul 2026 14:12 IST"
+      "current": 175.95
     },
     {
       "symbol": "SBIN",
@@ -372,7 +336,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-SBIN-BUY_CE-17Jul20260926IST",
       "kind": "fo_stock_spread",
       "entry": 8.0,
@@ -384,43 +348,7 @@
       "breakeven": 1058.0,
       "max_profit": 92.0,
       "max_loss": 8.0,
-      "current": 1038.9
-    },
-    {
-      "id": "foidx-BANKNIFTY-BUY_CE-17Jul20260932IST",
-      "kind": "fo_index",
-      "symbol": "BANKNIFTY",
-      "direction": "BUY_CE",
-      "entry": 695.0,
-      "entry_basis": "premium_estimate",
-      "entry_spot": 57885.75,
-      "stop": 486.0,
-      "targets": [
-        973.0,
-        1390.0
-      ],
-      "strike": 57900,
-      "option_type": "CE",
-      "ann_vol_at_open": 0.1655,
-      "expiry": "29 Jul 2026",
-      "vote_count": 4,
-      "voters": null,
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "17 Jul 2026 09:32 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 902.0,
-      "last_checked": "17 Jul 2026 14:12 IST"
+      "current": 1047.9
     },
     {
       "symbol": "HDFCBANK",
@@ -444,7 +372,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-HDFCBANK-BUY_CE-17Jul20260947IST",
       "kind": "fo_stock_spread",
       "entry": 6.0,
@@ -456,7 +384,7 @@
       "breakeven": 826.0,
       "max_profit": 34.0,
       "max_loss": 6.0,
-      "current": 818.45
+      "current": 823.45
     },
     {
       "symbol": "BAJFINANCE",
@@ -480,7 +408,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-BAJFINANCE-BUY_CE-17Jul20261017IST",
       "kind": "fo_stock_spread",
       "entry": 16.0,
@@ -492,7 +420,7 @@
       "breakeven": 1066.0,
       "max_profit": 84.0,
       "max_loss": 16.0,
-      "current": 1051.2
+      "current": 1057.7
     },
     {
       "symbol": "TCS",
@@ -516,7 +444,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "17 Jul 2026 14:12 IST",
+      "last_checked": "17 Jul 2026 14:17 IST",
       "id": "fospr-TCS-BUY_CE-17Jul20261037IST",
       "kind": "fo_stock_spread",
       "entry": 20.0,
@@ -528,7 +456,79 @@
       "breakeven": 2270.0,
       "max_profit": 80.0,
       "max_loss": 20.0,
-      "current": 2271.0
+      "current": 2273.2
+    },
+    {
+      "id": "foidx-NIFTY50-BUY_CE-17Jul20261417IST",
+      "kind": "fo_index",
+      "symbol": "NIFTY50",
+      "direction": "BUY_CE",
+      "entry": 231.0,
+      "entry_basis": "premium_estimate",
+      "entry_spot": 24340.45,
+      "stop": 162.0,
+      "targets": [
+        323.0,
+        462.0
+      ],
+      "strike": 24350,
+      "option_type": "CE",
+      "ann_vol_at_open": 0.1256,
+      "expiry": "30 Jul 2026",
+      "vote_count": 4,
+      "voters": null,
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 41,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 14:17 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 231.0,
+      "last_checked": "17 Jul 2026 14:17 IST"
+    },
+    {
+      "id": "foidx-BANKNIFTY-BUY_CE-17Jul20261417IST",
+      "kind": "fo_index",
+      "symbol": "BANKNIFTY",
+      "direction": "BUY_CE",
+      "entry": 729.0,
+      "entry_basis": "premium_estimate",
+      "entry_spot": 58412.75,
+      "stop": 510.0,
+      "targets": [
+        1021.0,
+        1458.0
+      ],
+      "strike": 58400,
+      "option_type": "CE",
+      "ann_vol_at_open": 0.1691,
+      "expiry": "29 Jul 2026",
+      "vote_count": 4,
+      "voters": null,
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 41,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 14:17 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 729.0,
+      "last_checked": "17 Jul 2026 14:17 IST"
     },
     {
       "symbol": "ICICIBANK",
@@ -10413,6 +10413,78 @@
       "max_profit": 160.0,
       "max_loss": 40.0,
       "current": 13790.0
+    },
+    {
+      "id": "foidx-NIFTY50-BUY_CE-17Jul20260921IST",
+      "kind": "fo_index",
+      "symbol": "NIFTY50",
+      "direction": "BUY_CE",
+      "entry": 224.0,
+      "entry_basis": "premium_estimate",
+      "entry_spot": 24186.95,
+      "stop": 157.0,
+      "targets": [
+        314.0,
+        448.0
+      ],
+      "strike": 24200,
+      "option_type": "CE",
+      "ann_vol_at_open": 0.1226,
+      "expiry": "30 Jul 2026",
+      "vote_count": 4,
+      "voters": null,
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 35,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 09:21 IST",
+      "status": "won",
+      "close_reason": "target1_hit",
+      "closed_at": "17 Jul 2026 14:17 IST",
+      "exit": 355.0,
+      "outcome_pct": 58.48,
+      "current": 355.0,
+      "last_checked": "17 Jul 2026 14:17 IST"
+    },
+    {
+      "id": "foidx-BANKNIFTY-BUY_CE-17Jul20260932IST",
+      "kind": "fo_index",
+      "symbol": "BANKNIFTY",
+      "direction": "BUY_CE",
+      "entry": 695.0,
+      "entry_basis": "premium_estimate",
+      "entry_spot": 57885.75,
+      "stop": 486.0,
+      "targets": [
+        973.0,
+        1390.0
+      ],
+      "strike": 57900,
+      "option_type": "CE",
+      "ann_vol_at_open": 0.1655,
+      "expiry": "29 Jul 2026",
+      "vote_count": 4,
+      "voters": null,
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 35,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 09:32 IST",
+      "status": "won",
+      "close_reason": "target1_hit",
+      "closed_at": "17 Jul 2026 14:17 IST",
+      "exit": 1165.0,
+      "outcome_pct": 67.63,
+      "current": 1165.0,
+      "last_checked": "17 Jul 2026 14:17 IST"
     }
   ],
   "disclaimer": "Virtual recommendation track record -- scores the engine's OWN signals, not trades the user took. F&O marks are estimated premiums (no real option-chain feed exists here); spreads are scored coarsely vs breakeven at expiry. See recommendation_tracker.py docstring for full method + limits. Educational only, not investment advice."
