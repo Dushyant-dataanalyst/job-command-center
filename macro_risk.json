@@ -1,5 +1,5 @@
 {
-  "fetched_at": "17 Jul 2026 14:06 IST",
+  "fetched_at": "17 Jul 2026 14:11 IST",
   "risk_score": 41,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
@@ -9,12 +9,12 @@
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +11.24% vs previous close (16.73 -> 18.61)",
+      "evidence": "^VIX moved +10.52% vs previous close (16.73 -> 18.49)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.61,
+      "last": 18.49,
       "previous": 16.73,
-      "pct_change": 11.24,
+      "pct_change": 10.52,
       "evidence_class": "official"
     },
     {
@@ -53,27 +53,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 84.69,
+      "last": 84.66,
       "previous": 84.23,
-      "pct_change": 0.55
+      "pct_change": 0.51
     },
     "usdinr": {
       "ticker": "INR=X",
       "last": 96.35,
       "previous": 96.5,
-      "pct_change": -0.15
+      "pct_change": -0.16
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.09,
+      "last": 13.11,
       "previous": 12.88,
-      "pct_change": 1.63
+      "pct_change": 1.79
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.61,
+      "last": 18.49,
       "previous": 16.73,
-      "pct_change": 11.24
+      "pct_change": 10.52
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +95,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 3998.8,
+      "last": 3994.7,
       "previous": 3985.6,
-      "pct_change": 0.33
+      "pct_change": 0.23
     }
   },
   "regime_context": {
