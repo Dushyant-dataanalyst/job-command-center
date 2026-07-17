@@ -291,19 +291,20 @@
       "target1_premium": 314.0,
       "target2_premium": 448.0,
       "opened_at": "17 Jul 2026 09:21 IST",
-      "status": "open",
-      "current_premium": 306.0,
-      "closed_at": null,
-      "exit_premium": null,
-      "exit_reason": null,
-      "pnl_pct": null,
+      "status": "closed",
+      "current_premium": 316.0,
+      "closed_at": "17 Jul 2026 12:49 IST",
+      "exit_premium": 316.0,
+      "exit_reason": "target1_hit",
+      "pnl_pct": 41.1,
       "macro_context": {
         "risk_level": "MODERATE",
         "bias": "BEARISH",
         "risk_score": 35,
         "position_size_multiplier": 0.85
       },
-      "last_checked": "17 Jul 2026 12:46 IST"
+      "last_checked": "17 Jul 2026 12:49 IST",
+      "result": "win"
     },
     {
       "id": "BANKNIFTY-2026-07-17-BUY_CE-17Jul20260931IST",
@@ -321,7 +322,7 @@
       "target2_premium": 1390.0,
       "opened_at": "17 Jul 2026 09:31 IST",
       "status": "open",
-      "current_premium": 885.0,
+      "current_premium": 922.0,
       "closed_at": null,
       "exit_premium": null,
       "exit_reason": null,
@@ -332,18 +333,18 @@
         "risk_score": 35,
         "position_size_multiplier": 0.85
       },
-      "last_checked": "17 Jul 2026 12:46 IST"
+      "last_checked": "17 Jul 2026 12:49 IST"
     }
   ],
   "stats": {
-    "total_closed": 10,
-    "open_count": 2,
-    "wins": 4,
+    "total_closed": 11,
+    "open_count": 1,
+    "wins": 5,
     "losses": 6,
-    "win_rate": 40.0,
-    "avg_win_pct": 43.5,
+    "win_rate": 45.5,
+    "avg_win_pct": 43.1,
     "avg_loss_pct": -18.7,
-    "expectancy_pct": 6.18,
+    "expectancy_pct": 9.42,
     "by_instrument": {
       "BANKNIFTY": {
         "total": 6,
@@ -351,9 +352,9 @@
         "win_rate": 33.3
       },
       "NIFTY50": {
-        "total": 4,
-        "wins": 2,
-        "win_rate": 50.0
+        "total": 5,
+        "wins": 3,
+        "win_rate": 60.0
       }
     },
     "by_votes": {
@@ -368,9 +369,9 @@
         "win_rate": 0.0
       },
       "4/5": {
-        "total": 6,
-        "wins": 2,
-        "win_rate": 33.3
+        "total": 7,
+        "wins": 3,
+        "win_rate": 42.9
       }
     },
     "loss_by_votes": {
@@ -402,10 +403,10 @@
         "win_rate": 0.0
       }
     },
-    "insight": "6/5 setups: 0/1 (0.0% win) \u00b7 5/5 setups: 2/3 (66.7% win) \u00b7 4/5 setups: 2/6 (33.3% win)",
-    "loss_diagnostic": "Your losses are concentrated in 4/5-vote setups (4 of 6 losses, out of 6 total 4/5 trades). 5/5 setups are 66.7% win so far \u2014 consider raising your entry threshold."
+    "insight": "6/5 setups: 0/1 (0.0% win) \u00b7 5/5 setups: 2/3 (66.7% win) \u00b7 4/5 setups: 3/7 (42.9% win)",
+    "loss_diagnostic": "Your losses are concentrated in 4/5-vote setups (4 of 6 losses, out of 7 total 4/5 trades). 5/5 setups are 66.7% win so far \u2014 consider raising your entry threshold."
   },
   "_meta": {
-    "generated_at": "17 Jul 2026 12:46 IST"
+    "generated_at": "17 Jul 2026 12:49 IST"
   }
 }
