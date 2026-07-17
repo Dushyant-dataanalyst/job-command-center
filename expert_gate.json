@@ -1,17 +1,17 @@
 {
-  "generated_at": "17 Jul 2026 21:27 IST",
-  "refresh_counter": 1135,
+  "generated_at": "17 Jul 2026 22:26 IST",
+  "refresh_counter": 1136,
   "instruments": {
     "NIFTY50": {
       "state": "SETUP_FORMING",
       "direction": "BUY_CE",
-      "persist_count": 91,
+      "persist_count": 92,
       "exit_persist_count": 0,
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "17 Jul 2026 21:27 IST",
-      "reason": "BUY_CE forming -- waiting on: choppy/sideways regime; outside entry time window",
+      "last_update": "17 Jul 2026 22:26 IST",
+      "reason": "BUY_CE forming -- waiting on: choppy/sideways regime; outside entry time window; 4 < 5 votes; macro risk HIGH/BEARISH blocks new longs (allow_new_longs=false)",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
       "raw_consensus": "BUY_CE",
@@ -21,13 +21,13 @@
     "BANKNIFTY": {
       "state": "SETUP_FORMING",
       "direction": "BUY_CE",
-      "persist_count": 89,
+      "persist_count": 90,
       "exit_persist_count": 0,
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "17 Jul 2026 21:27 IST",
-      "reason": "BUY_CE forming -- waiting on: choppy/sideways regime; outside entry time window",
+      "last_update": "17 Jul 2026 22:26 IST",
+      "reason": "BUY_CE forming -- waiting on: choppy/sideways regime; outside entry time window; 4 < 5 votes; macro risk HIGH/BEARISH blocks new longs (allow_new_longs=false)",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
       "raw_consensus": "BUY_CE",
@@ -43,10 +43,10 @@
     "min_votes_for_entry": 4
   },
   "macro_context": {
-    "risk_level": "MODERATE",
+    "risk_level": "HIGH",
     "bias": "BEARISH",
-    "risk_score": 50,
-    "position_size_multiplier": 0.85
+    "risk_score": 61,
+    "position_size_multiplier": 0.5
   },
   "macro_feed_available": true,
   "disclaimer": "Confirmation-and-cooldown state machine over the raw index-F&O signal, to reduce CE/PE whipsaw. Does NOT place/size/authorize any trade (no executor exists -- SEBI static-IP block). Educational signal-lifecycle layer only. Entries can additionally be blocked or escalated (min votes/persistence) by macro_risk.json's trade_adjustments -- see macro_gate.py; fails open if that feed is missing."
