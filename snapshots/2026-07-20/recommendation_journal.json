@@ -1,15 +1,15 @@
 {
-  "generated_at": "20 Jul 2026 21:27 IST",
+  "generated_at": "20 Jul 2026 20:27 IST",
   "summary": {
-    "open_count": 18,
-    "closed_count": 330,
-    "decisive_count": 7,
+    "open_count": 16,
+    "closed_count": 324,
+    "decisive_count": 6,
     "won": 5,
-    "lost": 2,
+    "lost": 1,
     "expired_count": 0,
-    "invalidated_count": 323,
-    "win_rate_pct": 71.4,
-    "avg_return_pct": 32.43,
+    "invalidated_count": 318,
+    "win_rate_pct": 83.3,
+    "avg_return_pct": 38.68,
     "by_kind": {
       "fo_stock": {
         "won": 1,
@@ -22,12 +22,6 @@
         "lost": 0,
         "win_rate": 100.0,
         "total": 4
-      },
-      "equity": {
-        "won": 0,
-        "lost": 1,
-        "win_rate": 0.0,
-        "total": 1
       }
     },
     "by_vote_count": {
@@ -42,25 +36,100 @@
         "lost": 0,
         "win_rate": 100.0,
         "total": 4
-      },
-      "3": {
-        "won": 0,
-        "lost": 1,
-        "win_rate": 0.0,
-        "total": 1
       }
     },
     "by_regime": {
       "Sideways/Choppy": {
         "won": 5,
-        "lost": 2,
-        "win_rate": 71.4,
-        "total": 7
+        "lost": 1,
+        "win_rate": 83.3,
+        "total": 6
       }
     },
     "false_flip_rate_pct": null
   },
   "recommendations": [
+    {
+      "id": "eq-M&M-BUY-16Jul20262122IST",
+      "kind": "equity",
+      "symbol": "M&M",
+      "direction": "BUY",
+      "entry": 3117.8,
+      "entry_basis": "spot_price",
+      "entry_spot": 3117.8,
+      "stop": 3009.11,
+      "targets": [
+        3253.66,
+        3389.53,
+        3525.39
+      ],
+      "strike": null,
+      "option_type": null,
+      "ann_vol_at_open": null,
+      "expiry": null,
+      "vote_count": 2,
+      "voters": [
+        "Inna",
+        "Unger"
+      ],
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 35,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "16 Jul 2026 21:22 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 3179.2,
+      "last_checked": "20 Jul 2026 20:27 IST"
+    },
+    {
+      "id": "eq-HDFCBANK-STRONG_BUY-17Jul20262127IST",
+      "kind": "equity",
+      "symbol": "HDFCBANK",
+      "direction": "STRONG_BUY",
+      "entry": 819.6,
+      "entry_basis": "spot_price",
+      "entry_spot": 819.6,
+      "stop": 797.67,
+      "targets": [
+        847.01,
+        874.43,
+        901.84
+      ],
+      "strike": null,
+      "option_type": null,
+      "ann_vol_at_open": null,
+      "expiry": null,
+      "vote_count": 3,
+      "voters": [
+        "Inna",
+        "Pham",
+        "Unger"
+      ],
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 50,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 21:27 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 819.6,
+      "last_checked": "20 Jul 2026 20:27 IST"
+    },
     {
       "id": "eq-SBIN-STRONG_BUY-17Jul20262127IST",
       "kind": "equity",
@@ -99,8 +168,168 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "current": 1060.0,
-      "last_checked": "20 Jul 2026 21:27 IST"
+      "current": 1044.3,
+      "last_checked": "20 Jul 2026 20:27 IST"
+    },
+    {
+      "id": "eq-TECHM-BUY-17Jul20262127IST",
+      "kind": "equity",
+      "symbol": "TECHM",
+      "direction": "BUY",
+      "entry": 1572.9,
+      "entry_basis": "spot_price",
+      "entry_spot": 1572.9,
+      "stop": 1496.45,
+      "targets": [
+        1668.46,
+        1764.03,
+        1859.59
+      ],
+      "strike": null,
+      "option_type": null,
+      "ann_vol_at_open": null,
+      "expiry": null,
+      "vote_count": 2,
+      "voters": [
+        "Inna",
+        "Cianni"
+      ],
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 50,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 21:27 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 1572.9,
+      "last_checked": "20 Jul 2026 20:27 IST"
+    },
+    {
+      "id": "eq-MARUTI-BUY-17Jul20262127IST",
+      "kind": "equity",
+      "symbol": "MARUTI",
+      "direction": "BUY",
+      "entry": 13803.0,
+      "entry_basis": "spot_price",
+      "entry_spot": 13803.0,
+      "stop": 13320.43,
+      "targets": [
+        14406.21,
+        15009.42,
+        15612.64
+      ],
+      "strike": null,
+      "option_type": null,
+      "ann_vol_at_open": null,
+      "expiry": null,
+      "vote_count": 2,
+      "voters": [
+        "Pham",
+        "Unger"
+      ],
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 50,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 21:27 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 13803.0,
+      "last_checked": "20 Jul 2026 20:27 IST"
+    },
+    {
+      "id": "eq-EICHERMOT-BUY-17Jul20262127IST",
+      "kind": "equity",
+      "symbol": "EICHERMOT",
+      "direction": "BUY",
+      "entry": 7563.5,
+      "entry_basis": "spot_price",
+      "entry_spot": 7563.5,
+      "stop": 7310.59,
+      "targets": [
+        7879.64,
+        8195.77,
+        8511.91
+      ],
+      "strike": null,
+      "option_type": null,
+      "ann_vol_at_open": null,
+      "expiry": null,
+      "vote_count": 2,
+      "voters": [
+        "Inna",
+        "Pham"
+      ],
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 50,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 21:27 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 7563.5,
+      "last_checked": "20 Jul 2026 20:27 IST"
+    },
+    {
+      "id": "eq-PRESTIGE-BUY-17Jul20262127IST",
+      "kind": "equity",
+      "symbol": "PRESTIGE",
+      "direction": "BUY",
+      "entry": 1693.0,
+      "entry_basis": "spot_price",
+      "entry_spot": 1693.0,
+      "stop": 1609.0,
+      "targets": [
+        1798.0,
+        1903.0,
+        2008.0
+      ],
+      "strike": null,
+      "option_type": null,
+      "ann_vol_at_open": null,
+      "expiry": null,
+      "vote_count": 2,
+      "voters": [
+        "Inna",
+        "Unger"
+      ],
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 50,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "17 Jul 2026 21:27 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 1693.0,
+      "last_checked": "20 Jul 2026 20:27 IST"
     },
     {
       "symbol": "ICICIBANK",
@@ -124,7 +353,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-ICICIBANK-BUY_CE-18Jul20260528IST",
       "kind": "fo_stock_spread",
       "entry": 11.0,
@@ -160,7 +389,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-LT-BUY_PE-18Jul20261426IST",
       "kind": "fo_stock_spread",
       "entry": 27.0,
@@ -196,7 +425,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-BAJFINANCE-BUY_CE-18Jul20261426IST",
       "kind": "fo_stock_spread",
       "entry": 20.0,
@@ -232,7 +461,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-AXISBANK-BUY_PE-20Jul20260912IST",
       "kind": "fo_stock_spread",
       "entry": 31.0,
@@ -268,7 +497,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-HDFCBANK-BUY_PE-20Jul20260912IST",
       "kind": "fo_stock_spread",
       "entry": 12.0,
@@ -304,7 +533,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-BHARTIARTL-BUY_CE-20Jul20260916IST",
       "kind": "fo_stock_spread",
       "entry": 29.0,
@@ -340,7 +569,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-NESTLEIND-BUY_CE-20Jul20261037IST",
       "kind": "fo_stock_spread",
       "entry": 11.0,
@@ -376,7 +605,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-SUNPHARMA-BUY_CE-20Jul20261233IST",
       "kind": "fo_stock_spread",
       "entry": 6.0,
@@ -412,7 +641,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "20 Jul 2026 21:27 IST",
+      "last_checked": "20 Jul 2026 20:27 IST",
       "id": "fospr-SBIN-BUY_CE-20Jul20261356IST",
       "kind": "fo_stock_spread",
       "entry": 11.0,
@@ -425,327 +654,6 @@
       "max_profit": 89.0,
       "max_loss": 11.0,
       "current": 1060.0
-    },
-    {
-      "id": "eq-ICICIBANK-BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "ICICIBANK",
-      "direction": "BUY",
-      "entry": 1460.2,
-      "entry_basis": "spot_price",
-      "entry_spot": 1460.2,
-      "stop": 1420.91,
-      "targets": [
-        1509.31,
-        1558.42,
-        1607.54
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Cianni"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 1460.2,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-SBIN-BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "SBIN",
-      "direction": "BUY",
-      "entry": 1060.0,
-      "entry_basis": "spot_price",
-      "entry_spot": 1060.0,
-      "stop": 1030.15,
-      "targets": [
-        1097.31,
-        1134.62,
-        1171.94
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Cianni"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 1060.0,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-CIPLA-BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "CIPLA",
-      "direction": "BUY",
-      "entry": 1441.6,
-      "entry_basis": "spot_price",
-      "entry_spot": 1441.6,
-      "stop": 1401.63,
-      "targets": [
-        1491.56,
-        1541.52,
-        1591.49
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Unger"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 1441.6,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-AUROPHARMA-BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "AUROPHARMA",
-      "direction": "BUY",
-      "entry": 1559.6,
-      "entry_basis": "spot_price",
-      "entry_spot": 1559.6,
-      "stop": 1501.38,
-      "targets": [
-        1632.37,
-        1705.15,
-        1777.92
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Unger"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 1559.6,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-NESTLEIND-BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "NESTLEIND",
-      "direction": "BUY",
-      "entry": 1446.3,
-      "entry_basis": "spot_price",
-      "entry_spot": 1446.3,
-      "stop": 1403.47,
-      "targets": [
-        1499.84,
-        1553.37,
-        1606.91
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Unger"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 1446.3,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-PNB-BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "PNB",
-      "direction": "BUY",
-      "entry": 111.76,
-      "entry_basis": "spot_price",
-      "entry_spot": 111.76,
-      "stop": 107.95,
-      "targets": [
-        116.52,
-        121.29,
-        126.05
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Cianni"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 111.76,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-UNIONBANK-BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "UNIONBANK",
-      "direction": "BUY",
-      "entry": 175.93,
-      "entry_basis": "spot_price",
-      "entry_spot": 175.93,
-      "stop": 167.29,
-      "targets": [
-        186.73,
-        197.53,
-        208.33
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Pham"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 175.93,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-SAREGAMA-STRONG_BUY-20Jul20262127IST",
-      "kind": "equity",
-      "symbol": "SAREGAMA",
-      "direction": "STRONG_BUY",
-      "entry": 514.15,
-      "entry_basis": "spot_price",
-      "entry_spot": 514.15,
-      "stop": 484.46,
-      "targets": [
-        551.26,
-        588.38,
-        625.49
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 3,
-      "voters": [
-        "Inna",
-        "Pham",
-        "Cianni"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "20 Jul 2026 21:27 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "current": 514.15,
-      "last_checked": "20 Jul 2026 21:27 IST"
     },
     {
       "symbol": "ICICIBANK",
@@ -11935,247 +11843,6 @@
       "max_profit": 147.0,
       "max_loss": 53.0,
       "current": 13491.0
-    },
-    {
-      "id": "eq-M&M-BUY-16Jul20262122IST",
-      "kind": "equity",
-      "symbol": "M&M",
-      "direction": "BUY",
-      "entry": 3117.8,
-      "entry_basis": "spot_price",
-      "entry_spot": 3117.8,
-      "stop": 3009.11,
-      "targets": [
-        3253.66,
-        3389.53,
-        3525.39
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Unger"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "16 Jul 2026 21:22 IST",
-      "status": "invalidated",
-      "close_reason": "signal_invalidated",
-      "closed_at": "20 Jul 2026 21:27 IST",
-      "exit": 3165.5,
-      "outcome_pct": 1.53,
-      "current": 3165.5,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-HDFCBANK-STRONG_BUY-17Jul20262127IST",
-      "kind": "equity",
-      "symbol": "HDFCBANK",
-      "direction": "STRONG_BUY",
-      "entry": 819.6,
-      "entry_basis": "spot_price",
-      "entry_spot": 819.6,
-      "stop": 797.67,
-      "targets": [
-        847.01,
-        874.43,
-        901.84
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 3,
-      "voters": [
-        "Inna",
-        "Pham",
-        "Unger"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 50,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "17 Jul 2026 21:27 IST",
-      "status": "lost",
-      "close_reason": "stop_loss",
-      "closed_at": "20 Jul 2026 21:27 IST",
-      "exit": 777.6,
-      "outcome_pct": -5.12,
-      "current": 777.6,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-TECHM-BUY-17Jul20262127IST",
-      "kind": "equity",
-      "symbol": "TECHM",
-      "direction": "BUY",
-      "entry": 1572.9,
-      "entry_basis": "spot_price",
-      "entry_spot": 1572.9,
-      "stop": 1496.45,
-      "targets": [
-        1668.46,
-        1764.03,
-        1859.59
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Cianni"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 50,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "17 Jul 2026 21:27 IST",
-      "status": "invalidated",
-      "close_reason": "signal_invalidated",
-      "closed_at": "20 Jul 2026 21:27 IST",
-      "exit": 1576.4,
-      "outcome_pct": 0.22,
-      "current": 1576.4,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-MARUTI-BUY-17Jul20262127IST",
-      "kind": "equity",
-      "symbol": "MARUTI",
-      "direction": "BUY",
-      "entry": 13803.0,
-      "entry_basis": "spot_price",
-      "entry_spot": 13803.0,
-      "stop": 13320.43,
-      "targets": [
-        14406.21,
-        15009.42,
-        15612.64
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Pham",
-        "Unger"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 50,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "17 Jul 2026 21:27 IST",
-      "status": "invalidated",
-      "close_reason": "signal_invalidated",
-      "closed_at": "20 Jul 2026 21:27 IST",
-      "exit": 13514.0,
-      "outcome_pct": -2.09,
-      "current": 13514.0,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-EICHERMOT-BUY-17Jul20262127IST",
-      "kind": "equity",
-      "symbol": "EICHERMOT",
-      "direction": "BUY",
-      "entry": 7563.5,
-      "entry_basis": "spot_price",
-      "entry_spot": 7563.5,
-      "stop": 7310.59,
-      "targets": [
-        7879.64,
-        8195.77,
-        8511.91
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Pham"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 50,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "17 Jul 2026 21:27 IST",
-      "status": "invalidated",
-      "close_reason": "signal_invalidated",
-      "closed_at": "20 Jul 2026 21:27 IST",
-      "exit": 7563.5,
-      "outcome_pct": 0.0,
-      "current": 7563.5,
-      "last_checked": "20 Jul 2026 21:27 IST"
-    },
-    {
-      "id": "eq-PRESTIGE-BUY-17Jul20262127IST",
-      "kind": "equity",
-      "symbol": "PRESTIGE",
-      "direction": "BUY",
-      "entry": 1693.0,
-      "entry_basis": "spot_price",
-      "entry_spot": 1693.0,
-      "stop": 1609.0,
-      "targets": [
-        1798.0,
-        1903.0,
-        2008.0
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Unger"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 50,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "17 Jul 2026 21:27 IST",
-      "status": "invalidated",
-      "close_reason": "signal_invalidated",
-      "closed_at": "20 Jul 2026 21:27 IST",
-      "exit": 1669.1,
-      "outcome_pct": -1.41,
-      "current": 1669.1,
-      "last_checked": "20 Jul 2026 21:27 IST"
     }
   ],
   "disclaimer": "Virtual recommendation track record -- scores the engine's OWN signals, not trades the user took. F&O marks are estimated premiums (no real option-chain feed exists here); spreads are scored coarsely vs breakeven at expiry. See recommendation_tracker.py docstring for full method + limits. Educational only, not investment advice."
