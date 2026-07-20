@@ -1,20 +1,20 @@
 {
-  "fetched_at": "20 Jul 2026 05:21 IST",
-  "risk_score": 63,
+  "fetched_at": "20 Jul 2026 06:31 IST",
+  "risk_score": 66,
   "risk_level": "HIGH",
   "bias": "BEARISH",
-  "confidence": 0.75,
+  "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 4,
-      "evidence": "BZ=F moved +3.04% vs previous close (88.1 -> 90.78)",
+      "severity": 2,
+      "evidence": "BZ=F moved +2.74% vs previous close (88.1 -> 90.51)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 90.78,
+      "last": 90.51,
       "previous": 88.1,
-      "pct_change": 3.04,
+      "pct_change": 2.74,
       "evidence_class": "official"
     },
     {
@@ -41,12 +41,12 @@
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russians turn to cash, putting more strain on slowing wartime economy\"",
+      "severity": 3,
+      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russians turn to cash, putting more strain on slowing wartime economy\"",
       "source": "https://www.bbc.co.uk/news/articles/cglj255jk8ko?at_medium=RSS&at_campaign=rss",
       "published_at": "19 Jul 2026 05:29 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
+      "evidence_class": "reported",
+      "corroborating_sources": 2,
       "news_source": "rss_fallback"
     }
   ],
@@ -78,9 +78,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 90.78,
+      "last": 90.51,
       "previous": 88.1,
-      "pct_change": 3.04
+      "pct_change": 2.74
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -120,9 +120,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 3995.0,
+      "last": 4004.1,
       "previous": 4012.7,
-      "pct_change": -0.44
+      "pct_change": -0.21
     }
   },
   "regime_context": {
