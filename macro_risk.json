@@ -1,24 +1,15 @@
 {
-  "fetched_at": "20 Jul 2026 18:26 IST",
-  "risk_score": 45,
+  "fetched_at": "20 Jul 2026 19:26 IST",
+  "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
-      "name": "US markets selloff (last close)",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "Composite avg -1.06% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.01%, NASDAQ -1.40%, DOW -0.77%)",
-      "source": "market_data",
-      "pct_change": -1.06,
-      "evidence_class": "official"
-    },
-    {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "2 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russians turn to cash, putting more strain on slowing wartime economy\"",
+      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Russians turn to cash, putting more strain on slowing wartime economy\"",
       "source": "https://www.bbc.co.uk/news/articles/cglj255jk8ko?at_medium=RSS&at_campaign=rss",
       "published_at": "19 Jul 2026 05:29 IST",
       "evidence_class": "reported",
@@ -50,9 +41,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 88.63,
+      "last": 87.93,
       "previous": 88.1,
-      "pct_change": 0.6
+      "pct_change": -0.19
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -68,33 +59,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.11,
+      "last": 17.74,
       "previous": 18.77,
-      "pct_change": -3.52
+      "pct_change": -5.49
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7457.69,
-      "previous": 7533.77,
-      "pct_change": -1.01
+      "last": 7486.49,
+      "previous": 7457.69,
+      "pct_change": 0.39
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25520.24,
-      "previous": 25881.95,
-      "pct_change": -1.4
+      "last": 25700.31,
+      "previous": 25520.24,
+      "pct_change": 0.71
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52146.42,
-      "previous": 52552.97,
-      "pct_change": -0.77
+      "last": 52120.1,
+      "previous": 52146.42,
+      "pct_change": -0.05
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4017.8,
+      "last": 4014.6,
       "previous": 4012.7,
-      "pct_change": 0.13
+      "pct_change": 0.05
     }
   },
   "regime_context": {
