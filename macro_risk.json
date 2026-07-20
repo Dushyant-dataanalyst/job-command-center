@@ -1,27 +1,15 @@
 {
-  "fetched_at": "21 Jul 2026 00:21 IST",
-  "risk_score": 50,
+  "fetched_at": "21 Jul 2026 01:21 IST",
+  "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
-      "name": "Crude oil spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +1.52% vs previous close (88.1 -> 89.44)",
-      "source": "market_data",
-      "ticker": "BZ=F",
-      "last": 89.44,
-      "previous": 88.1,
-      "pct_change": 1.52,
-      "evidence_class": "official"
-    },
-    {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Ryanair profits drop as Iran war puts off passengers and lifts fuel costs\"",
+      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Ryanair profits drop as Iran war puts off passengers and lifts fuel costs\"",
       "source": "https://www.bbc.co.uk/news/articles/cn8nldwj12jo?at_medium=RSS&at_campaign=rss",
       "published_at": "20 Jul 2026 15:42 IST",
       "evidence_class": "reported",
@@ -37,11 +25,7 @@
     "min_votes_required": null,
     "confirmation_refreshes": null,
     "position_size_multiplier": 0.85,
-    "avoid_sectors": [
-      "Auto",
-      "Aviation",
-      "OMC"
-    ],
+    "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -57,9 +41,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 89.44,
+      "last": 88.97,
       "previous": 88.1,
-      "pct_change": 1.52
+      "pct_change": 0.99
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -75,33 +59,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.08,
+      "last": 18.43,
       "previous": 18.77,
-      "pct_change": -3.68
+      "pct_change": -1.81
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7453.11,
+      "last": 7449.8,
       "previous": 7457.69,
-      "pct_change": -0.06
+      "pct_change": -0.11
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25572.96,
+      "last": 25543.13,
       "previous": 25520.24,
-      "pct_change": 0.21
+      "pct_change": 0.09
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 51838.77,
+      "last": 51876.86,
       "previous": 52146.42,
-      "pct_change": -0.59
+      "pct_change": -0.52
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4010.3,
+      "last": 4014.8,
       "previous": 4012.7,
-      "pct_change": -0.06
+      "pct_change": 0.05
     }
   },
   "regime_context": {
