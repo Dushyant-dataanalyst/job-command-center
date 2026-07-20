@@ -1,5 +1,5 @@
 {
-  "generated_at": "20 Jul 2026 09:22 IST",
+  "generated_at": "20 Jul 2026 09:27 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -89,8 +89,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 47.1,
-          "detail": "sector underperforming NIFTY by -0.57% (5d ROC) -- opposes a long signal"
+          "score": 47.0,
+          "detail": "sector underperforming NIFTY by -0.61% (5d ROC) -- opposes a long signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -162,8 +162,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 52.9,
-          "detail": "sector outperforming NIFTY by -0.57% (5d ROC) -- aligns with a short signal"
+          "score": 53.0,
+          "detail": "sector outperforming NIFTY by -0.61% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -371,8 +371,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 52.9,
-          "detail": "sector outperforming NIFTY by -0.57% (5d ROC) -- aligns with a short signal"
+          "score": 53.0,
+          "detail": "sector outperforming NIFTY by -0.61% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 100.0,
@@ -424,6 +424,79 @@
       },
       "data_as_of": "2026-07-20"
     },
+    "SBIN": {
+      "kind": "fo_stock",
+      "symbol": "SBIN",
+      "raw_signal": "BUY_CE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 43.9 between 35 and 65",
+      "context_score": 43.9,
+      "components": {
+        "macro": {
+          "score": 9,
+          "detail": "macro bias BEARISH opposes a long signal (risk HIGH, score 66)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 53.6,
+          "detail": "sector outperforming NIFTY by +0.72% (5d ROC) -- aligns with a long signal"
+        },
+        "instrument_quality": {
+          "score": 83.3,
+          "detail": "5/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 2 decisive recs for kind=fo_stock -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": [
+          "macro_adverse_direction"
+        ]
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-20"
+    },
     "HDFCBANK": {
       "kind": "fo_stock",
       "symbol": "HDFCBANK",
@@ -442,8 +515,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 52.9,
-          "detail": "sector outperforming NIFTY by -0.57% (5d ROC) -- aligns with a short signal"
+          "score": 53.0,
+          "detail": "sector outperforming NIFTY by -0.61% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
@@ -484,6 +557,79 @@
         "hard_blocked": false,
         "hard_block_reason": null,
         "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-20"
+    },
+    "RELIANCE": {
+      "kind": "fo_stock",
+      "symbol": "RELIANCE",
+      "raw_signal": "BUY_CE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 40.0 between 35 and 65",
+      "context_score": 40.0,
+      "components": {
+        "macro": {
+          "score": 9,
+          "detail": "macro bias BEARISH opposes a long signal (risk HIGH, score 66)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 53.7,
+          "detail": "sector outperforming NIFTY by +0.74% (5d ROC) -- aligns with a long signal"
+        },
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": [
+          "macro_adverse_direction"
+        ]
       },
       "inputs_used": {
         "macro": true,
@@ -585,8 +731,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 47.1,
-          "detail": "sector underperforming NIFTY by -0.57% (5d ROC) -- opposes a long signal"
+          "score": 47.0,
+          "detail": "sector underperforming NIFTY by -0.61% (5d ROC) -- opposes a long signal"
         },
         "instrument_quality": {
           "score": 75.0,
@@ -642,7 +788,7 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction STRONG_BUY)",
-      "context_score": 41.7,
+      "context_score": 42.0,
       "components": {
         "macro": {
           "score": 9,
@@ -653,8 +799,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 51.7,
-          "detail": "sector outperforming NIFTY by +0.34% (5d ROC) -- aligns with a long signal"
+          "score": 53.6,
+          "detail": "sector outperforming NIFTY by +0.72% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 75.0,
@@ -710,7 +856,7 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 33.0,
+      "context_score": 32.6,
       "components": {
         "macro": {
           "score": 9,
@@ -721,8 +867,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 57.3,
-          "detail": "sector outperforming NIFTY by +1.46% (5d ROC) -- aligns with a long signal"
+          "score": 54.5,
+          "detail": "sector outperforming NIFTY by +0.90% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 35.0,
@@ -778,7 +924,7 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 35.6,
+      "context_score": 35.7,
       "components": {
         "macro": {
           "score": 9,
@@ -789,8 +935,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.0,
-          "detail": "sector tracking NIFTY by +0.00% (5d ROC) -- neutral to a long signal"
+          "score": 50.8,
+          "detail": "sector outperforming NIFTY by +0.16% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
@@ -848,7 +994,7 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 16 Jul 2026 21:22 IST (direction BUY)",
-      "context_score": 35.6,
+      "context_score": 35.7,
       "components": {
         "macro": {
           "score": 9,
@@ -859,8 +1005,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.0,
-          "detail": "sector tracking NIFTY by +0.00% (5d ROC) -- neutral to a long signal"
+          "score": 50.8,
+          "detail": "sector outperforming NIFTY by +0.16% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
@@ -918,7 +1064,7 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 35.6,
+      "context_score": 35.7,
       "components": {
         "macro": {
           "score": 9,
@@ -929,8 +1075,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.0,
-          "detail": "sector tracking NIFTY by +0.00% (5d ROC) -- neutral to a long signal"
+          "score": 50.8,
+          "detail": "sector outperforming NIFTY by +0.16% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
@@ -988,7 +1134,7 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 33.8,
+      "context_score": 34.0,
       "components": {
         "macro": {
           "score": 9,
@@ -999,8 +1145,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.2) -- low conviction for any direction"
         },
         "sector": {
-          "score": 34.1,
-          "detail": "sector underperforming NIFTY by -3.17% (5d ROC) -- opposes a long signal"
+          "score": 36.1,
+          "detail": "sector underperforming NIFTY by -2.78% (5d ROC) -- opposes a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
