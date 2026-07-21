@@ -1,10 +1,23 @@
 {
-  "fetched_at": "21 Jul 2026 15:55 IST",
-  "risk_score": 15,
+  "fetched_at": "21 Jul 2026 16:01 IST",
+  "risk_score": 21,
   "risk_level": "LOW",
   "bias": "NEUTRAL",
   "confidence": 0.9,
-  "factors": [],
+  "factors": [
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.55% vs previous close (4010.3 -> 4072.6)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4072.6,
+      "previous": 4010.3,
+      "pct_change": 1.55,
+      "evidence_class": "official"
+    }
+  ],
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
@@ -26,9 +39,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 89.64,
+      "last": 89.67,
       "previous": 89.22,
-      "pct_change": 0.47
+      "pct_change": 0.5
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -68,9 +81,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4070.0,
+      "last": 4072.6,
       "previous": 4010.3,
-      "pct_change": 1.49
+      "pct_change": 1.55
     }
   },
   "regime_context": {
