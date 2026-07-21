@@ -1,32 +1,21 @@
 {
-  "fetched_at": "21 Jul 2026 16:06 IST",
-  "risk_score": 33,
-  "risk_level": "MODERATE",
-  "bias": "BEARISH",
-  "confidence": 0.75,
+  "fetched_at": "21 Jul 2026 16:11 IST",
+  "risk_score": 21,
+  "risk_level": "LOW",
+  "bias": "NEUTRAL",
+  "confidence": 0.9,
   "factors": [
     {
       "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +1.58% vs previous close (4010.3 -> 4073.8)",
+      "evidence": "GC=F moved +1.56% vs previous close (4010.3 -> 4072.7)",
       "source": "market_data",
       "ticker": "GC=F",
-      "last": 4073.8,
+      "last": 4072.7,
       "previous": 4010.3,
-      "pct_change": 1.58,
+      "pct_change": 1.56,
       "evidence_class": "official"
-    },
-    {
-      "name": "Geopolitical escalation",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Can AI systems make moral decisions in war?\"",
-      "source": "https://www.aljazeera.com/news/2026/7/21/can-ai-systems-make-moral-decisions-in-war?traffic_source=rss",
-      "published_at": "21 Jul 2026 15:51 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
-      "news_source": "rss_fallback"
     }
   ],
   "stock_specific_alerts": [],
@@ -36,12 +25,9 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "position_size_multiplier": 1.0,
     "avoid_sectors": [],
-    "watch_sectors": [
-      "Defence",
-      "Energy"
-    ],
+    "watch_sectors": [],
     "blocked_tickers": []
   },
   "policy_calendar": {
@@ -53,9 +39,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 89.71,
+      "last": 89.59,
       "previous": 89.22,
-      "pct_change": 0.55
+      "pct_change": 0.41
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -71,9 +57,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.55,
+      "last": 17.56,
       "previous": 18.65,
-      "pct_change": -5.9
+      "pct_change": -5.84
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +81,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4073.8,
+      "last": 4072.7,
       "previous": 4010.3,
-      "pct_change": 1.58
+      "pct_change": 1.56
     }
   },
   "regime_context": {
@@ -112,7 +98,7 @@
       "volatility": "Low"
     }
   },
-  "geopolitical_feed_status": "ok (rss_fallback)",
+  "geopolitical_feed_status": "no_matches (rss_fallback)",
   "data_unavailable": {
     "fii_dii_flows": "No free, non-scraped source found -- NSE's FII/DII page blocks non-browser requests. TODO if a reliable API surfaces.",
     "gift_nifty": "No stable free source verified yet.",
