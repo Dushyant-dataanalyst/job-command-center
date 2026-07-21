@@ -1,10 +1,22 @@
 {
-  "fetched_at": "21 Jul 2026 15:26 IST",
-  "risk_score": 35,
+  "fetched_at": "21 Jul 2026 15:32 IST",
+  "risk_score": 41,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.54% vs previous close (4010.3 -> 4072.0)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4072.0,
+      "previous": 4010.3,
+      "pct_change": 1.54,
+      "evidence_class": "official"
+    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -41,27 +53,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 89.72,
+      "last": 89.8,
       "previous": 89.22,
-      "pct_change": 0.56
+      "pct_change": 0.65
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.25,
+      "last": 96.24,
       "previous": 96.28,
-      "pct_change": -0.04
+      "pct_change": -0.05
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.58,
+      "last": 12.54,
       "previous": 12.98,
-      "pct_change": -3.06
+      "pct_change": -3.41
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.58,
+      "last": 17.51,
       "previous": 18.65,
-      "pct_change": -5.74
+      "pct_change": -6.11
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -83,9 +95,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4067.6,
+      "last": 4072.0,
       "previous": 4010.3,
-      "pct_change": 1.43
+      "pct_change": 1.54
     }
   },
   "regime_context": {

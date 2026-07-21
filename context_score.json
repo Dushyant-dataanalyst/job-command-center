@@ -1,5 +1,5 @@
 {
-  "generated_at": "21 Jul 2026 15:26 IST",
+  "generated_at": "21 Jul 2026 15:32 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -77,28 +77,28 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 46.9 between 35 and 65",
-      "context_score": 46.9,
+      "state_reason": "context_score 49.9 between 35 and 65",
+      "context_score": 49.9,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.4,
-          "detail": "sector outperforming NIFTY by +0.07% (5d ROC) -- aligns with a long signal"
+          "score": 50.1,
+          "detail": "sector outperforming NIFTY by +0.03% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -107,8 +107,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -148,28 +148,28 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 52.7 between 35 and 65",
-      "context_score": 52.7,
+      "state_reason": "context_score 55.7 between 35 and 65",
+      "context_score": 55.7,
       "components": {
         "macro": {
-          "score": 80,
-          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 35)"
+          "score": 74,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 49.6,
-          "detail": "sector underperforming NIFTY by +0.07% (5d ROC) -- opposes a short signal"
+          "score": 49.9,
+          "detail": "sector underperforming NIFTY by +0.03% (5d ROC) -- opposes a short signal"
         },
         "instrument_quality": {
           "score": 51.7,
           "detail": "4/6 votes (stock 3-factor consensus) -- CAUTION: -5.5% move on 4.04x volume 1d ago, possible earnings/news shock still working through the signal"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -178,8 +178,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -219,12 +219,12 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 46.5 between 35 and 65",
-      "context_score": 46.5,
+      "state_reason": "context_score 49.9 between 35 and 65",
+      "context_score": 49.9,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
@@ -236,8 +236,8 @@
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -246,8 +246,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -287,12 +287,12 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 55.3 between 35 and 65",
-      "context_score": 55.3,
+      "state_reason": "context_score 58.7 between 35 and 65",
+      "context_score": 58.7,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
@@ -304,8 +304,8 @@
           "detail": "6/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -314,8 +314,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -355,28 +355,28 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 47.1 between 35 and 65",
-      "context_score": 47.1,
+      "state_reason": "context_score 50.1 between 35 and 65",
+      "context_score": 50.1,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 51.7,
-          "detail": "sector outperforming NIFTY by +0.34% (5d ROC) -- aligns with a long signal"
+          "score": 51.6,
+          "detail": "sector outperforming NIFTY by +0.33% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -385,8 +385,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -426,28 +426,28 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 56.2 between 35 and 65",
-      "context_score": 56.2,
+      "state_reason": "context_score 59.3 between 35 and 65",
+      "context_score": 59.3,
       "components": {
         "macro": {
-          "score": 80,
-          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 35)"
+          "score": 74,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 49.6,
-          "detail": "sector underperforming NIFTY by +0.07% (5d ROC) -- opposes a short signal"
+          "score": 49.9,
+          "detail": "sector underperforming NIFTY by +0.03% (5d ROC) -- opposes a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -456,8 +456,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -497,28 +497,28 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 56.1 between 35 and 65",
-      "context_score": 56.1,
+      "state_reason": "context_score 59.1 between 35 and 65",
+      "context_score": 59.1,
       "components": {
         "macro": {
-          "score": 80,
-          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 35)"
+          "score": 74,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 48.1,
-          "detail": "sector underperforming NIFTY by +0.38% (5d ROC) -- opposes a short signal"
+          "score": 48.4,
+          "detail": "sector underperforming NIFTY by +0.33% (5d ROC) -- opposes a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -527,8 +527,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -568,28 +568,28 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 60.1 between 35 and 65",
-      "context_score": 60.1,
+      "state_reason": "context_score 63.1 between 35 and 65",
+      "context_score": 63.1,
       "components": {
         "macro": {
-          "score": 80,
-          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 35)"
+          "score": 74,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 48.9,
-          "detail": "sector underperforming NIFTY by +0.23% (5d ROC) -- opposes a short signal"
+          "score": 49.0,
+          "detail": "sector underperforming NIFTY by +0.21% (5d ROC) -- opposes a short signal"
         },
         "instrument_quality": {
           "score": 83.3,
           "detail": "5/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -598,8 +598,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -639,28 +639,28 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 56.2 between 35 and 65",
-      "context_score": 56.2,
+      "state_reason": "context_score 59.2 between 35 and 65",
+      "context_score": 59.2,
       "components": {
         "macro": {
-          "score": 80,
-          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 35)"
+          "score": 74,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 48.9,
-          "detail": "sector underperforming NIFTY by +0.23% (5d ROC) -- opposes a short signal"
+          "score": 49.0,
+          "detail": "sector underperforming NIFTY by +0.21% (5d ROC) -- opposes a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -669,8 +669,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -713,27 +713,27 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 43.0,
+      "context_score": 46.0,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.4,
-          "detail": "sector outperforming NIFTY by +0.07% (5d ROC) -- aligns with a long signal"
+          "score": 50.1,
+          "detail": "sector outperforming NIFTY by +0.03% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
           "detail": "2/4 votes (of 4 named voters)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -742,8 +742,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -784,27 +784,27 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction STRONG_BUY)",
-      "context_score": 43.1,
+      "context_score": 46.1,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 51.7,
-          "detail": "sector outperforming NIFTY by +0.34% (5d ROC) -- aligns with a long signal"
+          "score": 51.6,
+          "detail": "sector outperforming NIFTY by +0.33% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
           "detail": "2/4 votes (of 4 named voters)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -813,8 +813,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -855,27 +855,27 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 43.0,
+      "context_score": 46.0,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.8,
-          "detail": "sector outperforming NIFTY by +0.15% (5d ROC) -- aligns with a long signal"
+          "score": 50.7,
+          "detail": "sector outperforming NIFTY by +0.14% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
           "detail": "2/4 votes (of 4 named voters)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -884,8 +884,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -926,27 +926,27 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 43.0,
+      "context_score": 46.0,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.8,
-          "detail": "sector outperforming NIFTY by +0.15% (5d ROC) -- aligns with a long signal"
+          "score": 50.7,
+          "detail": "sector outperforming NIFTY by +0.14% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
           "detail": "2/4 votes (of 4 named voters)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -955,8 +955,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -997,27 +997,27 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 42.8,
+      "context_score": 45.8,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 48.5,
-          "detail": "sector underperforming NIFTY by -0.31% (5d ROC) -- opposes a long signal"
+          "score": 48.4,
+          "detail": "sector underperforming NIFTY by -0.33% (5d ROC) -- opposes a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
           "detail": "2/4 votes (of 4 named voters)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -1026,8 +1026,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -1068,27 +1068,27 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 39.6,
+      "context_score": 42.6,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 51.7,
-          "detail": "sector outperforming NIFTY by +0.34% (5d ROC) -- aligns with a long signal"
+          "score": 51.6,
+          "detail": "sector outperforming NIFTY by +0.33% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 35.0,
           "detail": "2/4 votes (of 4 named voters) -- CAUTION: +5.7% move on 7.47x volume 1d ago, possible earnings/news shock still working through the signal"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -1097,8 +1097,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -1139,27 +1139,27 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 43.1,
+      "context_score": 46.1,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 51.7,
-          "detail": "sector outperforming NIFTY by +0.34% (5d ROC) -- aligns with a long signal"
+          "score": 51.6,
+          "detail": "sector outperforming NIFTY by +0.33% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
           "detail": "2/4 votes (of 4 named voters)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -1168,8 +1168,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
@@ -1210,11 +1210,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction STRONG_BUY)",
-      "context_score": 48.7,
+      "context_score": 52.1,
       "components": {
         "macro": {
-          "score": 40,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 35)"
+          "score": 34,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 41)"
         },
         "regime": {
           "score": 30,
@@ -1226,8 +1226,8 @@
           "detail": "3/4 votes (of 4 named voters)"
         },
         "trade_quality": {
-          "score": 50.0,
-          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -1236,8 +1236,8 @@
             },
             {
               "filter": "time_window",
-              "passed": false,
-              "reason": "within last 15 min of session (15:15-15:30) \u2014 closing volatility/pin risk"
+              "passed": true,
+              "reason": "outside all blocked windows"
             },
             {
               "filter": "loss_streak",
