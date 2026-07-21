@@ -1,31 +1,31 @@
 {
-  "fetched_at": "21 Jul 2026 15:32 IST",
-  "risk_score": 41,
+  "fetched_at": "21 Jul 2026 15:36 IST",
+  "risk_score": 33,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
-  "confidence": 0.9,
+  "confidence": 0.75,
   "factors": [
     {
       "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +1.54% vs previous close (4010.3 -> 4072.0)",
+      "evidence": "GC=F moved +1.56% vs previous close (4010.3 -> 4072.8)",
       "source": "market_data",
       "ticker": "GC=F",
-      "last": 4072.0,
+      "last": 4072.8,
       "previous": 4010.3,
-      "pct_change": 1.54,
+      "pct_change": 1.56,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 3,
-      "evidence": "2 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Ryanair profits drop as Iran war puts off passengers and lifts fuel costs\"",
+      "severity": 2,
+      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Ryanair profits drop as Iran war puts off passengers and lifts fuel costs\"",
       "source": "https://www.bbc.co.uk/news/articles/cn8nldwj12jo?at_medium=RSS&at_campaign=rss",
       "published_at": "20 Jul 2026 15:42 IST",
-      "evidence_class": "reported",
-      "corroborating_sources": 2,
+      "evidence_class": "rumor",
+      "corroborating_sources": 1,
       "news_source": "rss_fallback"
     }
   ],
@@ -53,9 +53,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 89.8,
+      "last": 89.88,
       "previous": 89.22,
-      "pct_change": 0.65
+      "pct_change": 0.74
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -65,15 +65,15 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.54,
+      "last": 12.6,
       "previous": 12.98,
-      "pct_change": -3.41
+      "pct_change": -2.93
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.51,
+      "last": 17.5,
       "previous": 18.65,
-      "pct_change": -6.11
+      "pct_change": -6.17
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +95,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4072.0,
+      "last": 4072.8,
       "previous": 4010.3,
-      "pct_change": 1.54
+      "pct_change": 1.56
     }
   },
   "regime_context": {
