@@ -1,5 +1,5 @@
 {
-  "generated_at": "21 Jul 2026 16:04 IST",
+  "generated_at": "21 Jul 2026 16:06 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -17,7 +17,7 @@
         "trade_quality": null,
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for kind=fo_index -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -51,7 +51,7 @@
         "trade_quality": null,
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for kind=fo_index -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -77,12 +77,12 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 60.5 between 35 and 65",
-      "context_score": 60.5,
+      "state_reason": "context_score 51.8 between 35 and 65",
+      "context_score": 51.8,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -124,7 +124,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -148,12 +148,12 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 56.9 between 35 and 65",
-      "context_score": 56.9,
+      "state_reason": "context_score 57.6 between 35 and 65",
+      "context_score": 57.6,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a short signal (risk LOW, score 21)"
+          "score": 82,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -195,7 +195,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -219,12 +219,12 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 61.9 between 35 and 65",
-      "context_score": 61.9,
+      "state_reason": "context_score 52.0 between 35 and 65",
+      "context_score": 52.0,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -263,7 +263,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -285,14 +285,14 @@
       "kind": "fo_stock",
       "symbol": "TITAN",
       "raw_signal": "BUY_CE",
-      "state": "CONFIRMED_ENTRY",
+      "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 70.7 >= 65 -- single-refresh read, NOT a persisted confirmation like expert_gate's",
-      "context_score": 70.7,
+      "state_reason": "context_score 60.9 between 35 and 65",
+      "context_score": 60.9,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -331,7 +331,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 2 decisive recs for vote_count=6 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -355,12 +355,12 @@
       "raw_signal": "BUY_CE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 60.7 between 35 and 65",
-      "context_score": 60.7,
+      "state_reason": "context_score 52.0 between 35 and 65",
+      "context_score": 52.0,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -402,7 +402,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -426,12 +426,12 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 60.4 between 35 and 65",
-      "context_score": 60.4,
+      "state_reason": "context_score 61.1 between 35 and 65",
+      "context_score": 61.1,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a short signal (risk LOW, score 21)"
+          "score": 82,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -473,7 +473,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -497,12 +497,12 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 60.2 between 35 and 65",
-      "context_score": 60.2,
+      "state_reason": "context_score 60.9 between 35 and 65",
+      "context_score": 60.9,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a short signal (risk LOW, score 21)"
+          "score": 82,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -544,7 +544,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -568,12 +568,12 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 64.2 between 35 and 65",
-      "context_score": 64.2,
+      "state_reason": "context_score 64.9 between 35 and 65",
+      "context_score": 64.9,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a short signal (risk LOW, score 21)"
+          "score": 82,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -615,7 +615,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 2 decisive recs for kind=fo_stock -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -639,12 +639,12 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 60.3 between 35 and 65",
-      "context_score": 60.3,
+      "state_reason": "context_score 61.0 between 35 and 65",
+      "context_score": 61.0,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a short signal (risk LOW, score 21)"
+          "score": 82,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -686,7 +686,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -713,11 +713,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 56.6,
+      "context_score": 47.9,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -759,7 +759,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for kind=equity -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -784,11 +784,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction STRONG_BUY)",
-      "context_score": 56.8,
+      "context_score": 48.0,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -830,7 +830,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for kind=equity -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -855,11 +855,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 56.6,
+      "context_score": 47.9,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -901,7 +901,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for kind=equity -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -926,11 +926,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 56.6,
+      "context_score": 47.9,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -972,7 +972,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for kind=equity -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -997,11 +997,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 56.3,
+      "context_score": 47.6,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -1043,7 +1043,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for kind=equity -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -1068,11 +1068,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 53.2,
+      "context_score": 44.5,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -1114,7 +1114,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for kind=equity -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -1139,11 +1139,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 56.8,
+      "context_score": 48.0,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -1185,7 +1185,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for kind=equity -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -1210,11 +1210,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction STRONG_BUY)",
-      "context_score": 64.1,
+      "context_score": 54.2,
       "components": {
         "macro": {
-          "score": 79,
-          "detail": "macro bias NEUTRAL neutral to a long signal (risk LOW, score 21)"
+          "score": 42,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 33)"
         },
         "regime": {
           "score": 30,
@@ -1253,7 +1253,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 1 decisive recs for vote_count=3 -- treat as unproven, not scored"
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
