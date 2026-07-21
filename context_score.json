@@ -1,5 +1,5 @@
 {
-  "generated_at": "21 Jul 2026 20:27 IST",
+  "generated_at": "21 Jul 2026 21:27 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -706,14 +706,14 @@
     }
   },
   "equity": {
-    "ICICIBANK": {
+    "M&M": {
       "kind": "equity",
-      "symbol": "ICICIBANK",
+      "symbol": "M&M",
       "raw_signal": "BUY",
       "state": "HOLD",
       "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 44.4,
+      "state_reason": "open recommendation since 21 Jul 2026 21:27 IST (direction BUY)",
+      "context_score": 44.6,
       "components": {
         "macro": {
           "score": 27,
@@ -724,8 +724,8 @@
           "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
         },
         "sector": {
-          "score": 50.5,
-          "detail": "sector outperforming NIFTY by +0.09% (5d ROC) -- aligns with a long signal"
+          "score": 52.8,
+          "detail": "sector outperforming NIFTY by +0.55% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 50.0,
@@ -765,7 +765,9 @@
       "gating": {
         "hard_blocked": false,
         "hard_block_reason": null,
-        "advisory_flags": []
+        "advisory_flags": [
+          "sector_avoid"
+        ]
       },
       "inputs_used": {
         "macro": true,
@@ -775,158 +777,16 @@
         "trade_quality": true,
         "learning_history": false
       },
-      "data_as_of": "2026-07-20"
-    },
-    "SBIN": {
-      "kind": "equity",
-      "symbol": "SBIN",
-      "raw_signal": "BUY",
-      "state": "HOLD",
-      "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 17 Jul 2026 21:27 IST (direction STRONG_BUY)",
-      "context_score": 44.5,
-      "components": {
-        "macro": {
-          "score": 27,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
-        },
-        "sector": {
-          "score": 51.9,
-          "detail": "sector outperforming NIFTY by +0.37% (5d ROC) -- aligns with a long signal"
-        },
-        "instrument_quality": {
-          "score": 50.0,
-          "detail": "2/4 votes (of 4 named voters)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "Inna not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": []
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": true,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-20"
-    },
-    "CIPLA": {
-      "kind": "equity",
-      "symbol": "CIPLA",
-      "raw_signal": "BUY",
-      "state": "HOLD",
-      "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 44.4,
-      "components": {
-        "macro": {
-          "score": 27,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
-        },
-        "sector": {
-          "score": 50.8,
-          "detail": "sector outperforming NIFTY by +0.16% (5d ROC) -- aligns with a long signal"
-        },
-        "instrument_quality": {
-          "score": 50.0,
-          "detail": "2/4 votes (of 4 named voters)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "Inna not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": []
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": true,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-20"
+      "data_as_of": "2026-07-21"
     },
     "AUROPHARMA": {
       "kind": "equity",
       "symbol": "AUROPHARMA",
-      "raw_signal": "BUY",
+      "raw_signal": "STRONG_BUY",
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 44.4,
+      "context_score": 50.3,
       "components": {
         "macro": {
           "score": 27,
@@ -940,287 +800,6 @@
           "score": 50.8,
           "detail": "sector outperforming NIFTY by +0.16% (5d ROC) -- aligns with a long signal"
         },
-        "instrument_quality": {
-          "score": 50.0,
-          "detail": "2/4 votes (of 4 named voters)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "Inna not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": []
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": true,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-20"
-    },
-    "NESTLEIND": {
-      "kind": "equity",
-      "symbol": "NESTLEIND",
-      "raw_signal": "BUY",
-      "state": "HOLD",
-      "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 44.1,
-      "components": {
-        "macro": {
-          "score": 27,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
-        },
-        "sector": {
-          "score": 48.3,
-          "detail": "sector underperforming NIFTY by -0.34% (5d ROC) -- opposes a long signal"
-        },
-        "instrument_quality": {
-          "score": 50.0,
-          "detail": "2/4 votes (of 4 named voters)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "Inna not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": []
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": true,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-20"
-    },
-    "PNB": {
-      "kind": "equity",
-      "symbol": "PNB",
-      "raw_signal": "BUY",
-      "state": "HOLD",
-      "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 41.0,
-      "components": {
-        "macro": {
-          "score": 27,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
-        },
-        "sector": {
-          "score": 51.9,
-          "detail": "sector outperforming NIFTY by +0.37% (5d ROC) -- aligns with a long signal"
-        },
-        "instrument_quality": {
-          "score": 35.0,
-          "detail": "2/4 votes (of 4 named voters) -- CAUTION: +5.7% move on 7.47x volume 1d ago, possible earnings/news shock still working through the signal"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "Inna not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": []
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": true,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-20"
-    },
-    "UNIONBANK": {
-      "kind": "equity",
-      "symbol": "UNIONBANK",
-      "raw_signal": "BUY",
-      "state": "HOLD",
-      "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 44.5,
-      "components": {
-        "macro": {
-          "score": 27,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
-        },
-        "sector": {
-          "score": 51.9,
-          "detail": "sector outperforming NIFTY by +0.37% (5d ROC) -- aligns with a long signal"
-        },
-        "instrument_quality": {
-          "score": 50.0,
-          "detail": "2/4 votes (of 4 named voters)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "Inna not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": []
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": true,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-20"
-    },
-    "SAREGAMA": {
-      "kind": "equity",
-      "symbol": "SAREGAMA",
-      "raw_signal": "STRONG_BUY",
-      "state": "HOLD",
-      "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 20 Jul 2026 21:27 IST (direction STRONG_BUY)",
-      "context_score": 50.2,
-      "components": {
-        "macro": {
-          "score": 27,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
-        },
-        "sector": null,
         "instrument_quality": {
           "score": 75.0,
           "detail": "3/4 votes (of 4 named voters)"
@@ -1264,12 +843,154 @@
       "inputs_used": {
         "macro": true,
         "regime": true,
-        "sector": false,
+        "sector": true,
         "instrument_quality": true,
         "trade_quality": true,
         "learning_history": false
       },
-      "data_as_of": "2026-07-20"
+      "data_as_of": "2026-07-21"
+    },
+    "DLF": {
+      "kind": "equity",
+      "symbol": "DLF",
+      "raw_signal": "BUY",
+      "state": "HOLD",
+      "state_engine": "stateless_v1",
+      "state_reason": "open recommendation since 21 Jul 2026 21:27 IST (direction BUY)",
+      "context_score": 43.4,
+      "components": {
+        "macro": {
+          "score": 27,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 42.0,
+          "detail": "sector underperforming NIFTY by -1.61% (5d ROC) -- opposes a long signal"
+        },
+        "instrument_quality": {
+          "score": 50.0,
+          "detail": "2/4 votes (of 4 named voters)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "Inna not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-21"
+    },
+    "PRESTIGE": {
+      "kind": "equity",
+      "symbol": "PRESTIGE",
+      "raw_signal": "BUY",
+      "state": "HOLD",
+      "state_engine": "stateless_v1",
+      "state_reason": "open recommendation since 21 Jul 2026 21:27 IST (direction BUY)",
+      "context_score": 43.4,
+      "components": {
+        "macro": {
+          "score": 27,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 48)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 42.0,
+          "detail": "sector underperforming NIFTY by -1.61% (5d ROC) -- opposes a long signal"
+        },
+        "instrument_quality": {
+          "score": 50.0,
+          "detail": "2/4 votes (of 4 named voters)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "Inna not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-21"
     }
   },
   "inputs_available": {
