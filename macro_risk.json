@@ -1,22 +1,10 @@
 {
-  "fetched_at": "21 Jul 2026 15:46 IST",
-  "risk_score": 27,
+  "fetched_at": "21 Jul 2026 15:51 IST",
+  "risk_score": 15,
   "risk_level": "LOW",
-  "bias": "BEARISH",
-  "confidence": 0.75,
-  "factors": [
-    {
-      "name": "Geopolitical escalation",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Ryanair profits drop as Iran war puts off passengers and lifts fuel costs\"",
-      "source": "https://www.bbc.co.uk/news/articles/cn8nldwj12jo?at_medium=RSS&at_campaign=rss",
-      "published_at": "20 Jul 2026 15:42 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
-      "news_source": "rss_fallback"
-    }
-  ],
+  "bias": "NEUTRAL",
+  "confidence": 0.9,
+  "factors": [],
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
@@ -26,10 +14,7 @@
     "confirmation_refreshes": null,
     "position_size_multiplier": 1.0,
     "avoid_sectors": [],
-    "watch_sectors": [
-      "Defence",
-      "Energy"
-    ],
+    "watch_sectors": [],
     "blocked_tickers": []
   },
   "policy_calendar": {
@@ -41,9 +26,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 89.76,
+      "last": 89.39,
       "previous": 89.22,
-      "pct_change": 0.61
+      "pct_change": 0.19
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -59,9 +44,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.58,
+      "last": 17.63,
       "previous": 18.65,
-      "pct_change": -5.74
+      "pct_change": -5.47
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -83,9 +68,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4067.9,
+      "last": 4069.9,
       "previous": 4010.3,
-      "pct_change": 1.44
+      "pct_change": 1.49
     }
   },
   "regime_context": {
@@ -100,7 +85,7 @@
       "volatility": "Low"
     }
   },
-  "geopolitical_feed_status": "ok (rss_fallback)",
+  "geopolitical_feed_status": "no_matches (rss_fallback)",
   "data_unavailable": {
     "fii_dii_flows": "No free, non-scraped source found -- NSE's FII/DII page blocks non-browser requests. TODO if a reliable API surfaces.",
     "gift_nifty": "No stable free source verified yet.",
