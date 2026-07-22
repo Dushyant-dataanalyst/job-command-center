@@ -1,39 +1,39 @@
 {
-  "fetched_at": "22 Jul 2026 22:27 IST",
-  "risk_score": 56,
-  "risk_level": "MODERATE",
+  "fetched_at": "22 Jul 2026 23:26 IST",
+  "risk_score": 61,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "BZ=F moved +2.72% vs previous close (91.01 -> 93.49)",
+      "severity": 4,
+      "evidence": "BZ=F moved +3.37% vs previous close (91.01 -> 94.08)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 93.49,
+      "last": 94.08,
       "previous": 91.01,
-      "pct_change": 2.72,
+      "pct_change": 3.37,
       "evidence_class": "official"
     },
     {
       "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +2.00% vs previous close (4071.1 -> 4152.5)",
+      "evidence": "GC=F moved +1.86% vs previous close (4071.1 -> 4146.8)",
       "source": "market_data",
       "ticker": "GC=F",
-      "last": 4152.5,
+      "last": 4146.8,
       "previous": 4071.1,
-      "pct_change": 2.0,
+      "pct_change": 1.86,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "6 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Iran war has cost US $37.5bn so far, Hegseth says, as Pentagon seeks billions more\"",
+      "evidence": "5 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Iran war has cost US $37.5bn so far, Hegseth says, as Pentagon seeks billions more\"",
       "source": "https://www.bbc.co.uk/news/articles/c70gek2kqyno?at_medium=RSS&at_campaign=rss",
       "published_at": "22 Jul 2026 07:45 IST",
       "evidence_class": "reported",
@@ -44,11 +44,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -69,9 +69,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 93.49,
+      "last": 94.08,
       "previous": 91.01,
-      "pct_change": 2.72
+      "pct_change": 3.37
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -87,33 +87,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 16.82,
+      "last": 16.81,
       "previous": 17.05,
-      "pct_change": -1.35
+      "pct_change": -1.41
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7524.78,
+      "last": 7511.88,
       "previous": 7509.2,
-      "pct_change": 0.21
+      "pct_change": 0.04
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25827.52,
+      "last": 25757.31,
       "previous": 25837.21,
-      "pct_change": -0.04
+      "pct_change": -0.31
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 52402.24,
+      "last": 52317.49,
       "previous": 52224.64,
-      "pct_change": 0.34
+      "pct_change": 0.18
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4152.5,
+      "last": 4146.8,
       "previous": 4071.1,
-      "pct_change": 2.0
+      "pct_change": 1.86
     }
   },
   "regime_context": {
