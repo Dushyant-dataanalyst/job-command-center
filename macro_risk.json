@@ -1,6 +1,6 @@
 {
-  "fetched_at": "22 Jul 2026 12:01 IST",
-  "risk_score": 56,
+  "fetched_at": "22 Jul 2026 12:06 IST",
+  "risk_score": 50,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,24 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +1.88% vs previous close (91.01 -> 92.72)",
+      "evidence": "BZ=F moved +2.10% vs previous close (91.01 -> 92.92)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 92.72,
+      "last": 92.92,
       "previous": 91.01,
-      "pct_change": 1.88,
-      "evidence_class": "official"
-    },
-    {
-      "name": "Gold safe-haven spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "GC=F moved +1.54% vs previous close (4071.1 -> 4133.9)",
-      "source": "market_data",
-      "ticker": "GC=F",
-      "last": 4133.9,
-      "previous": 4071.1,
-      "pct_change": 1.54,
+      "pct_change": 2.1,
       "evidence_class": "official"
     },
     {
@@ -69,21 +57,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 92.72,
+      "last": 92.92,
       "previous": 91.01,
-      "pct_change": 1.88
+      "pct_change": 2.1
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.47,
+      "last": 96.48,
       "previous": 96.49,
-      "pct_change": -0.02
+      "pct_change": -0.01
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.01,
+      "last": 12.97,
       "previous": 12.6,
-      "pct_change": 3.27
+      "pct_change": 2.94
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -111,9 +99,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4133.9,
+      "last": 4126.1,
       "previous": 4071.1,
-      "pct_change": 1.54
+      "pct_change": 1.35
     }
   },
   "regime_context": {
@@ -124,7 +112,7 @@
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 13.9,
+      "adx": 13.8,
       "volatility": "Low"
     }
   },
