@@ -1,5 +1,5 @@
 {
-  "generated_at": "23 Jul 2026 04:26 IST",
+  "generated_at": "23 Jul 2026 05:26 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -70,7 +70,777 @@
       "data_as_of": "2026-07-21"
     }
   },
-  "fo_stock": {},
+  "fo_stock": {
+    "ICICIBANK": {
+      "kind": "fo_stock",
+      "symbol": "ICICIBANK",
+      "raw_signal": "BUY_CE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 46.6 between 35 and 65",
+      "context_score": 46.6,
+      "components": {
+        "macro": {
+          "score": 20,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 50.5,
+          "detail": "sector outperforming NIFTY by +0.09% (5d ROC) -- aligns with a long signal"
+        },
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "AXISBANK": {
+      "kind": "fo_stock",
+      "symbol": "AXISBANK",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 60.2 between 35 and 65",
+      "context_score": 60.2,
+      "components": {
+        "macro": {
+          "score": 60,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 49.5,
+          "detail": "sector underperforming NIFTY by +0.09% (5d ROC) -- opposes a short signal"
+        },
+        "instrument_quality": {
+          "score": 85.0,
+          "detail": "6/6 votes (stock 3-factor consensus) -- CAUTION: -5.5% move on 4.04x volume 2d ago, possible earnings/news shock still working through the signal"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "LT": {
+      "kind": "fo_stock",
+      "symbol": "LT",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 61.2 between 35 and 65",
+      "context_score": 61.2,
+      "components": {
+        "macro": {
+          "score": 60,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": null,
+        "instrument_quality": {
+          "score": 83.3,
+          "detail": "5/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": false,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "BAJFINANCE": {
+      "kind": "fo_stock",
+      "symbol": "BAJFINANCE",
+      "raw_signal": "BUY_CE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 46.1 between 35 and 65",
+      "context_score": 46.1,
+      "components": {
+        "macro": {
+          "score": 20,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": null,
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": false,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "TITAN": {
+      "kind": "fo_stock",
+      "symbol": "TITAN",
+      "raw_signal": "BUY_CE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 55.0 between 35 and 65",
+      "context_score": 55.0,
+      "components": {
+        "macro": {
+          "score": 20,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": null,
+        "instrument_quality": {
+          "score": 100.0,
+          "detail": "6/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": false,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "KOTAKBANK": {
+      "kind": "fo_stock",
+      "symbol": "KOTAKBANK",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 59.8 between 35 and 65",
+      "context_score": 59.8,
+      "components": {
+        "macro": {
+          "score": 60,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 49.5,
+          "detail": "sector underperforming NIFTY by +0.09% (5d ROC) -- opposes a short signal"
+        },
+        "instrument_quality": {
+          "score": 83.3,
+          "detail": "5/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "HDFCBANK": {
+      "kind": "fo_stock",
+      "symbol": "HDFCBANK",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 55.9 between 35 and 65",
+      "context_score": 55.9,
+      "components": {
+        "macro": {
+          "score": 60,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 49.5,
+          "detail": "sector underperforming NIFTY by +0.09% (5d ROC) -- opposes a short signal"
+        },
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "RELIANCE": {
+      "kind": "fo_stock",
+      "symbol": "RELIANCE",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 56.3 between 35 and 65",
+      "context_score": 56.3,
+      "components": {
+        "macro": {
+          "score": 60,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 52.4,
+          "detail": "sector outperforming NIFTY by -0.47% (5d ROC) -- aligns with a short signal"
+        },
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "INFY": {
+      "kind": "fo_stock",
+      "symbol": "INFY",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 59.7 between 35 and 65",
+      "context_score": 59.7,
+      "components": {
+        "macro": {
+          "score": 60,
+          "detail": "macro bias BEARISH aligns with a short signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 48.3,
+          "detail": "sector underperforming NIFTY by +0.34% (5d ROC) -- opposes a short signal"
+        },
+        "instrument_quality": {
+          "score": 83.3,
+          "detail": "5/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "BHARTIARTL": {
+      "kind": "fo_stock",
+      "symbol": "BHARTIARTL",
+      "raw_signal": "BUY_CE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 46.1 between 35 and 65",
+      "context_score": 46.1,
+      "components": {
+        "macro": {
+          "score": 20,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": null,
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": false,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    },
+    "NESTLEIND": {
+      "kind": "fo_stock",
+      "symbol": "NESTLEIND",
+      "raw_signal": "BUY_CE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 53.4 between 35 and 65",
+      "context_score": 53.4,
+      "components": {
+        "macro": {
+          "score": 20,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 55)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=9.8) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 41.5,
+          "detail": "sector underperforming NIFTY by -1.70% (5d ROC) -- opposes a long signal"
+        },
+        "instrument_quality": {
+          "score": 100.0,
+          "detail": "6/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 75.0,
+          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": true,
+              "reason": "outside all blocked windows"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-22"
+    }
+  },
   "equity": {
     "BAJAJ-AUTO": {
       "kind": "equity",
@@ -79,11 +849,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 22 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 41.7,
+      "context_score": 39.3,
       "components": {
         "macro": {
-          "score": 15,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 60)"
+          "score": 20,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 55)"
         },
         "regime": {
           "score": 30,
@@ -94,8 +864,8 @@
           "detail": "sector outperforming NIFTY by +0.33% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
-          "score": 50.0,
-          "detail": "2/4 votes (of 4 named voters)"
+          "score": 35.0,
+          "detail": "2/4 votes (of 4 named voters) -- CAUTION: +5.7% move on 3.44x volume 0d ago, possible earnings/news shock still working through the signal"
         },
         "trade_quality": {
           "score": 75.0,
@@ -152,11 +922,11 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 22 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 40.5,
+      "context_score": 41.6,
       "components": {
         "macro": {
-          "score": 15,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 60)"
+          "score": 20,
+          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 55)"
         },
         "regime": {
           "score": 30,
