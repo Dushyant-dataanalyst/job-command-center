@@ -1,19 +1,19 @@
 {
-  "fetched_at": "22 Jul 2026 11:06 IST",
-  "risk_score": 50,
+  "fetched_at": "22 Jul 2026 11:11 IST",
+  "risk_score": 41,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
-      "name": "Crude oil spike",
+      "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "BZ=F moved +1.52% vs previous close (91.01 -> 92.39)",
+      "evidence": "GC=F moved +1.52% vs previous close (4071.1 -> 4132.9)",
       "source": "market_data",
-      "ticker": "BZ=F",
-      "last": 92.39,
-      "previous": 91.01,
+      "ticker": "GC=F",
+      "last": 4132.9,
+      "previous": 4071.1,
       "pct_change": 1.52,
       "evidence_class": "official"
     },
@@ -37,11 +37,7 @@
     "min_votes_required": null,
     "confirmation_refreshes": null,
     "position_size_multiplier": 0.85,
-    "avoid_sectors": [
-      "Auto",
-      "Aviation",
-      "OMC"
-    ],
+    "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -57,9 +53,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 92.39,
+      "last": 92.2,
       "previous": 91.01,
-      "pct_change": 1.52
+      "pct_change": 1.31
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -99,9 +95,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4129.2,
+      "last": 4132.9,
       "previous": 4071.1,
-      "pct_change": 1.43
+      "pct_change": 1.52
     }
   },
   "regime_context": {
