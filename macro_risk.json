@@ -1,20 +1,20 @@
 {
-  "fetched_at": "22 Jul 2026 10:51 IST",
-  "risk_score": 41,
+  "fetched_at": "22 Jul 2026 10:56 IST",
+  "risk_score": 50,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
-      "name": "Gold safe-haven spike",
+      "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +1.56% vs previous close (4071.1 -> 4134.6)",
+      "evidence": "BZ=F moved +1.52% vs previous close (91.01 -> 92.39)",
       "source": "market_data",
-      "ticker": "GC=F",
-      "last": 4134.6,
-      "previous": 4071.1,
-      "pct_change": 1.56,
+      "ticker": "BZ=F",
+      "last": 92.39,
+      "previous": 91.01,
+      "pct_change": 1.52,
       "evidence_class": "official"
     },
     {
@@ -37,7 +37,11 @@
     "min_votes_required": null,
     "confirmation_refreshes": null,
     "position_size_multiplier": 0.85,
-    "avoid_sectors": [],
+    "avoid_sectors": [
+      "Auto",
+      "Aviation",
+      "OMC"
+    ],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -53,9 +57,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 92.28,
+      "last": 92.39,
       "previous": 91.01,
-      "pct_change": 1.4
+      "pct_change": 1.52
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -65,9 +69,9 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.12,
+      "last": 13.03,
       "previous": 12.6,
-      "pct_change": 4.13
+      "pct_change": 3.43
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -95,9 +99,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4134.6,
+      "last": 4130.5,
       "previous": 4071.1,
-      "pct_change": 1.56
+      "pct_change": 1.46
     }
   },
   "regime_context": {
