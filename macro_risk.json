@@ -1,20 +1,32 @@
 {
-  "fetched_at": "22 Jul 2026 11:56 IST",
-  "risk_score": 41,
+  "fetched_at": "22 Jul 2026 12:01 IST",
+  "risk_score": 56,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
+      "name": "Crude oil spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "BZ=F moved +1.88% vs previous close (91.01 -> 92.72)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 92.72,
+      "previous": 91.01,
+      "pct_change": 1.88,
+      "evidence_class": "official"
+    },
+    {
       "name": "Gold safe-haven spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "GC=F moved +1.59% vs previous close (4071.1 -> 4135.8)",
+      "evidence": "GC=F moved +1.54% vs previous close (4071.1 -> 4133.9)",
       "source": "market_data",
       "ticker": "GC=F",
-      "last": 4135.8,
+      "last": 4133.9,
       "previous": 4071.1,
-      "pct_change": 1.59,
+      "pct_change": 1.54,
       "evidence_class": "official"
     },
     {
@@ -37,7 +49,11 @@
     "min_votes_required": null,
     "confirmation_refreshes": null,
     "position_size_multiplier": 0.85,
-    "avoid_sectors": [],
+    "avoid_sectors": [
+      "Auto",
+      "Aviation",
+      "OMC"
+    ],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -53,9 +69,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 92.37,
+      "last": 92.72,
       "previous": 91.01,
-      "pct_change": 1.49
+      "pct_change": 1.88
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -65,9 +81,9 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.97,
+      "last": 13.01,
       "previous": 12.6,
-      "pct_change": 2.9
+      "pct_change": 3.27
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -95,9 +111,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4135.8,
+      "last": 4133.9,
       "previous": 4071.1,
-      "pct_change": 1.59
+      "pct_change": 1.54
     }
   },
   "regime_context": {
