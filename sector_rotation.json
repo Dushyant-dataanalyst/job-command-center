@@ -1,5 +1,5 @@
 {
-  "fetched_at": "23 Jul 2026 19:20 IST",
+  "fetched_at": "23 Jul 2026 20:20 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation. rs_vs_nifty_pct = this sector's/stock's own 5-day ROC% minus NIFTY50's 5-day ROC% over the same window -- a plain difference, not a calibrated percentile rating.",
   "nifty_roc5_pct": -0.84,
@@ -162,6 +162,17 @@
         "rs_vs_nifty_pct": 2.55
       },
       {
+        "symbol": "BRITANNIA",
+        "roc5_pct": 1.46,
+        "rel_volume": 1.18,
+        "bullish_trend": false,
+        "last_close": 5388.0,
+        "data_as_of": "2026-07-23",
+        "data_source": "yfinance",
+        "score": 1.72,
+        "rs_vs_nifty_pct": 2.3
+      },
+      {
         "symbol": "HINDUNILVR",
         "roc5_pct": 3.02,
         "rel_volume": 0.47,
@@ -171,17 +182,6 @@
         "data_source": "yfinance",
         "score": 1.42,
         "rs_vs_nifty_pct": 3.86
-      },
-      {
-        "symbol": "ITC",
-        "roc5_pct": 0.7,
-        "rel_volume": 1.64,
-        "bullish_trend": false,
-        "last_close": 281.3,
-        "data_as_of": "2026-07-23",
-        "data_source": "yfinance",
-        "score": 1.15,
-        "rs_vs_nifty_pct": 1.54
       }
     ],
     "IT": [

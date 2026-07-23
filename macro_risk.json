@@ -1,52 +1,52 @@
 {
-  "fetched_at": "23 Jul 2026 19:21 IST",
-  "risk_score": 33,
+  "fetched_at": "23 Jul 2026 20:21 IST",
+  "risk_score": 45,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
-  "confidence": 0.75,
+  "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil cooling",
       "impact": "bullish",
       "severity": 2,
-      "evidence": "BZ=F moved -7.99% vs previous close (94.07 -> 86.55)",
+      "evidence": "BZ=F moved -7.58% vs previous close (94.07 -> 86.94)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 86.55,
+      "last": 86.94,
       "previous": 94.07,
-      "pct_change": -7.99,
+      "pct_change": -7.58,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "^VIX moved +12.98% vs previous close (16.64 -> 18.8)",
+      "severity": 3,
+      "evidence": "^VIX moved +15.44% vs previous close (16.64 -> 19.21)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.8,
+      "last": 19.21,
       "previous": 16.64,
-      "pct_change": 12.98,
+      "pct_change": 15.44,
       "evidence_class": "official"
     },
     {
       "name": "US markets selloff (last close)",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "Composite avg -1.19% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -0.95%, NASDAQ -1.70%, DOW -0.92%)",
+      "evidence": "Composite avg -1.54% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.23%, NASDAQ -2.34%, DOW -1.04%)",
       "source": "market_data",
-      "pct_change": -1.19,
+      "pct_change": -1.54,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "1 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Can Iran withstand new pressure from the US?\"",
-      "source": "https://www.aljazeera.com/video/project-force-2/2026/7/23/can-iran-withstand-new-pressure-from-the-us?traffic_source=rss",
-      "published_at": "23 Jul 2026 17:25 IST",
-      "evidence_class": "rumor",
-      "corroborating_sources": 1,
+      "severity": 3,
+      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Oil prices hit $100 for the first time since May\"",
+      "source": "https://www.bbc.co.uk/news/articles/cx2djnzrqk2o?at_medium=RSS&at_campaign=rss",
+      "published_at": "23 Jul 2026 20:20 IST",
+      "evidence_class": "reported",
+      "corroborating_sources": 2,
       "news_source": "rss_fallback"
     }
   ],
@@ -74,15 +74,15 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 86.55,
+      "last": 86.94,
       "previous": 94.07,
-      "pct_change": -7.99
+      "pct_change": -7.58
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.57,
+      "last": 96.56,
       "previous": 96.34,
-      "pct_change": 0.24
+      "pct_change": 0.23
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
@@ -92,33 +92,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.8,
+      "last": 19.21,
       "previous": 16.64,
-      "pct_change": 12.98
+      "pct_change": 15.44
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7427.48,
+      "last": 7406.58,
       "previous": 7498.96,
-      "pct_change": -0.95
+      "pct_change": -1.23
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25253.23,
+      "last": 25090.93,
       "previous": 25690.9,
-      "pct_change": -1.7
+      "pct_change": -2.34
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 51738.44,
+      "last": 51677.51,
       "previous": 52218.58,
-      "pct_change": -0.92
+      "pct_change": -1.04
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4060.2,
+      "last": 4060.0,
       "previous": 4146.9,
-      "pct_change": -2.09
+      "pct_change": -2.1
     }
   },
   "regime_context": {
