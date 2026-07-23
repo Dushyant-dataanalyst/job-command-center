@@ -1,18 +1,52 @@
 {
-  "positions": [],
+  "positions": [
+    {
+      "name": "DLF",
+      "entry": 667.25,
+      "sl": 642.62,
+      "t1": 698.04,
+      "t2": 728.83,
+      "votes_at_buy": 3,
+      "bought_at": "3 Jul 2026"
+    },
+    {
+      "name": "SUNPHARMA",
+      "entry": 1910.7,
+      "sl": 1871.09,
+      "t1": 1960.21,
+      "t2": 2009.73,
+      "votes_at_buy": 3,
+      "bought_at": "3 Jul 2026"
+    }
+  ],
   "removedDefaults": [
-    "HDFCBANK",
     "KOTAKBANK",
-    "SBIN",
-    "ICICIBANK"
+    "HDFCBANK",
+    "ICICIBANK",
+    "SBIN"
   ],
   "closedTrades": [
     {
-      "name": "KOTAKBANK",
-      "entry": 409,
-      "exit": 400.45,
-      "outcome_pct": -2.09,
+      "name": "HDFCBANK",
+      "entry": 796.3,
+      "exit": 796.15,
+      "outcome_pct": -0.02,
       "votes_at_buy": 4,
+      "strategies_at_buy": {
+        "Inna": "NO_SIGNAL",
+        "Pham": "NO_SIGNAL",
+        "Cianni": "NO_SIGNAL",
+        "Unger": "NO_SIGNAL"
+      },
+      "bought_at": "1 Jul 2026",
+      "closed_at": "2 Jul 2026"
+    },
+    {
+      "name": "SBIN",
+      "entry": 1049.9,
+      "exit": 1047.4,
+      "outcome_pct": -0.24,
+      "votes_at_buy": 3,
       "strategies_at_buy": {
         "Inna": "NO_SIGNAL",
         "Pham": "NO_SIGNAL",
@@ -24,9 +58,9 @@
     },
     {
       "name": "PAGEIND",
-      "entry": 40950,
-      "exit": 42885,
-      "outcome_pct": 4.73,
+      "entry": 40810,
+      "exit": 40810,
+      "outcome_pct": 0,
       "votes_at_buy": 3,
       "strategies_at_buy": {
         "Inna": "NO_SIGNAL",
@@ -34,68 +68,23 @@
         "Cianni": "NO_SIGNAL",
         "Unger": "NO_SIGNAL"
       },
-      "bought_at": "26 Jun 2026",
-      "closed_at": "2 Jul 2026"
-    },
-    {
-      "name": "SBIN",
-      "entry": 1045.4,
-      "exit": 1047,
-      "outcome_pct": 0.15,
-      "votes_at_buy": 3,
-      "strategies_at_buy": {
-        "Inna": "NO_SIGNAL",
-        "Pham": "NO_SIGNAL",
-        "Cianni": "NO_SIGNAL",
-        "Unger": "NO_SIGNAL"
-      },
-      "bought_at": "26 Jun 2026",
+      "bought_at": "25 Jun 2026",
       "closed_at": "2 Jul 2026"
     },
     {
       "name": "ICICIBANK",
-      "entry": 1387.5,
-      "exit": 1379.8,
-      "outcome_pct": -0.55,
-      "votes_at_buy": 4,
-      "strategies_at_buy": {
-        "Inna": "NO_SIGNAL",
-        "Pham": "NO_SIGNAL",
-        "Cianni": "NO_SIGNAL",
-        "Unger": "NO_SIGNAL"
-      },
-      "bought_at": "26 Jun 2026",
-      "closed_at": "2 Jul 2026"
-    },
-    {
-      "name": "PHOENIXLTD",
-      "entry": 2018.5,
-      "exit": 2012.5,
-      "outcome_pct": -0.3,
+      "entry": 1410.3,
+      "exit": 1410.3,
+      "outcome_pct": 0,
       "votes_at_buy": 3,
       "strategies_at_buy": {
-        "Inna": "STRONG_BUY",
+        "Inna": "BUY",
         "Pham": "WATCH",
-        "Cianni": "STRONG_BUY",
+        "Cianni": "BUY",
         "Unger": "BUY"
       },
-      "bought_at": "2 Jul 2026",
-      "closed_at": "2 Jul 2026"
-    },
-    {
-      "name": "NESTLEIND",
-      "entry": 1453.8,
-      "exit": 1446,
-      "outcome_pct": -0.54,
-      "votes_at_buy": 3,
-      "strategies_at_buy": {
-        "Inna": "STRONG_BUY",
-        "Pham": "BUY",
-        "Cianni": "NO_SIGNAL",
-        "Unger": "BUY"
-      },
-      "bought_at": "2 Jul 2026",
-      "closed_at": "2 Jul 2026"
+      "bought_at": "3 Jul 2026",
+      "closed_at": "3 Jul 2026"
     }
   ]
 }
