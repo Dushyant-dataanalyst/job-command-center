@@ -1,6 +1,6 @@
 {
-  "fetched_at": "23 Jul 2026 22:21 IST",
-  "risk_score": 76,
+  "fetched_at": "23 Jul 2026 23:21 IST",
+  "risk_score": 80,
   "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
@@ -9,40 +9,40 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +6.95% vs previous close (94.07 -> 100.61)",
+      "evidence": "BZ=F moved +7.64% vs previous close (94.07 -> 101.26)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 100.61,
+      "last": 101.26,
       "previous": 94.07,
-      "pct_change": 6.95,
+      "pct_change": 7.64,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
-      "severity": 2,
-      "evidence": "^VIX moved +14.12% vs previous close (16.64 -> 18.99)",
+      "severity": 3,
+      "evidence": "^VIX moved +17.49% vs previous close (16.64 -> 19.55)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.99,
+      "last": 19.55,
       "previous": 16.64,
-      "pct_change": 14.12,
+      "pct_change": 17.49,
       "evidence_class": "official"
     },
     {
       "name": "US markets selloff (last close)",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "Composite avg -1.48% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.26%, NASDAQ -2.17%, DOW -1.01%)",
+      "evidence": "Composite avg -1.50% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.26%, NASDAQ -2.14%, DOW -1.10%)",
       "source": "market_data",
-      "pct_change": -1.48,
+      "pct_change": -1.5,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Oil prices hit $100 for the first time since May\"",
+      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Oil prices hit $100 for the first time since May\"",
       "source": "https://www.bbc.co.uk/news/articles/cx2djnzrqk2o?at_medium=RSS&at_campaign=rss",
       "published_at": "23 Jul 2026 21:01 IST",
       "evidence_class": "reported",
@@ -78,9 +78,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 100.61,
+      "last": 101.26,
       "previous": 94.07,
-      "pct_change": 6.95
+      "pct_change": 7.64
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -96,33 +96,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.99,
+      "last": 19.55,
       "previous": 16.64,
-      "pct_change": 14.12
+      "pct_change": 17.49
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7404.31,
+      "last": 7404.5,
       "previous": 7498.96,
       "pct_change": -1.26
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25134.65,
+      "last": 25141.63,
       "previous": 25690.9,
-      "pct_change": -2.17
+      "pct_change": -2.14
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 51689.54,
+      "last": 51641.64,
       "previous": 52218.58,
-      "pct_change": -1.01
+      "pct_change": -1.1
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4052.5,
+      "last": 4046.2,
       "previous": 4146.9,
-      "pct_change": -2.28
+      "pct_change": -2.43
     }
   },
   "regime_context": {
