@@ -1,6 +1,6 @@
 {
-  "generated_at": "23 Jul 2026 11:26 IST",
-  "refresh_counter": 1603,
+  "generated_at": "23 Jul 2026 11:32 IST",
+  "refresh_counter": 1604,
   "instruments": {
     "NIFTY50": {
       "state": "WATCH",
@@ -10,7 +10,7 @@
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "23 Jul 2026 11:26 IST",
+      "last_update": "23 Jul 2026 11:32 IST",
       "reason": "signal WAIT/none",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
@@ -19,18 +19,18 @@
       "regime_trend": "Sideways/Choppy"
     },
     "BANKNIFTY": {
-      "state": "WATCH",
-      "direction": null,
-      "persist_count": 0,
+      "state": "SETUP_FORMING",
+      "direction": "BUY_PE",
+      "persist_count": 1,
       "exit_persist_count": 0,
       "cooldown_until": 0,
       "entry_votes": null,
       "entered_at": null,
-      "last_update": "23 Jul 2026 11:26 IST",
-      "reason": "signal WAIT/none",
+      "last_update": "23 Jul 2026 11:32 IST",
+      "reason": "BUY_PE forming -- waiting on: persist 1/2; choppy/sideways regime",
       "entry_confirmed_this_run": false,
       "exit_confirmed_this_run": false,
-      "raw_consensus": "WAIT",
+      "raw_consensus": "BUY_PE",
       "adx": 13.4,
       "regime_trend": "Sideways/Choppy"
     }
