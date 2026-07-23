@@ -1,20 +1,32 @@
 {
-  "fetched_at": "23 Jul 2026 05:26 IST",
-  "risk_score": 55,
-  "risk_level": "MODERATE",
+  "fetched_at": "23 Jul 2026 06:26 IST",
+  "risk_score": 66,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
     {
       "name": "Crude oil spike",
       "impact": "bearish",
-      "severity": 4,
-      "evidence": "BZ=F moved +4.97% vs previous close (91.01 -> 95.53)",
+      "severity": 5,
+      "evidence": "BZ=F moved +5.12% vs previous close (91.01 -> 95.67)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 95.53,
+      "last": 95.67,
       "previous": 91.01,
-      "pct_change": 4.97,
+      "pct_change": 5.12,
+      "evidence_class": "official"
+    },
+    {
+      "name": "Gold safe-haven spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "GC=F moved +1.52% vs previous close (4071.1 -> 4133.0)",
+      "source": "market_data",
+      "ticker": "GC=F",
+      "last": 4133.0,
+      "previous": 4071.1,
+      "pct_change": 1.52,
       "evidence_class": "official"
     },
     {
@@ -32,11 +44,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -57,9 +69,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 95.53,
+      "last": 95.67,
       "previous": 91.01,
-      "pct_change": 4.97
+      "pct_change": 5.12
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -99,9 +111,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4128.2,
+      "last": 4133.0,
       "previous": 4071.1,
-      "pct_change": 1.4
+      "pct_change": 1.52
     }
   },
   "regime_context": {
