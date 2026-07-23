@@ -1,10 +1,22 @@
 {
-  "fetched_at": "23 Jul 2026 07:41 IST",
-  "risk_score": 35,
+  "fetched_at": "23 Jul 2026 07:46 IST",
+  "risk_score": 60,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
+    {
+      "name": "Crude oil spike",
+      "impact": "bearish",
+      "severity": 5,
+      "evidence": "BZ=F moved +5.25% vs previous close (91.01 -> 95.79)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 95.79,
+      "previous": 91.01,
+      "pct_change": 5.25,
+      "evidence_class": "official"
+    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -25,7 +37,11 @@
     "min_votes_required": null,
     "confirmation_refreshes": null,
     "position_size_multiplier": 0.85,
-    "avoid_sectors": [],
+    "avoid_sectors": [
+      "Auto",
+      "Aviation",
+      "OMC"
+    ],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -41,9 +57,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 95.86,
-      "previous": NaN,
-      "pct_change": NaN
+      "last": 95.79,
+      "previous": 91.01,
+      "pct_change": 5.25
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -83,9 +99,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4121.3,
+      "last": 4117.5,
       "previous": 4071.1,
-      "pct_change": 1.23
+      "pct_change": 1.14
     }
   },
   "regime_context": {
