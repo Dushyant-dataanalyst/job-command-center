@@ -1,10 +1,22 @@
 {
-  "fetched_at": "23 Jul 2026 16:26 IST",
-  "risk_score": 27,
-  "risk_level": "LOW",
+  "fetched_at": "23 Jul 2026 17:22 IST",
+  "risk_score": 33,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.75,
   "factors": [
+    {
+      "name": "US VIX spike",
+      "impact": "bearish",
+      "severity": 2,
+      "evidence": "^VIX moved +9.62% vs previous close (16.64 -> 18.24)",
+      "source": "market_data",
+      "ticker": "^VIX",
+      "last": 18.24,
+      "previous": 16.64,
+      "pct_change": 9.62,
+      "evidence_class": "official"
+    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -24,7 +36,7 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 1.0,
+    "position_size_multiplier": 0.85,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -41,9 +53,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 92.73,
+      "last": 93.28,
       "previous": 94.07,
-      "pct_change": -1.42
+      "pct_change": -0.84
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -59,9 +71,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.55,
+      "last": 18.24,
       "previous": 16.64,
-      "pct_change": 5.47
+      "pct_change": 9.62
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -83,9 +95,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4090.7,
+      "last": 4080.0,
       "previous": 4146.9,
-      "pct_change": -1.36
+      "pct_change": -1.61
     }
   },
   "regime_context": {
