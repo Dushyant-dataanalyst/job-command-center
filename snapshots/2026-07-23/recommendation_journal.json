@@ -1,15 +1,15 @@
 {
-  "generated_at": "23 Jul 2026 21:22 IST",
+  "generated_at": "23 Jul 2026 20:22 IST",
   "summary": {
-    "open_count": 11,
-    "closed_count": 438,
-    "decisive_count": 8,
+    "open_count": 12,
+    "closed_count": 437,
+    "decisive_count": 7,
     "won": 5,
-    "lost": 3,
+    "lost": 2,
     "expired_count": 0,
     "invalidated_count": 430,
-    "win_rate_pct": 62.5,
-    "avg_return_pct": 27.99,
+    "win_rate_pct": 71.4,
+    "avg_return_pct": 32.43,
     "by_kind": {
       "fo_stock": {
         "won": 1,
@@ -25,9 +25,9 @@
       },
       "equity": {
         "won": 0,
-        "lost": 2,
+        "lost": 1,
         "win_rate": 0.0,
-        "total": 2
+        "total": 1
       }
     },
     "by_vote_count": {
@@ -48,20 +48,14 @@
         "lost": 1,
         "win_rate": 0.0,
         "total": 1
-      },
-      "2": {
-        "won": 0,
-        "lost": 1,
-        "win_rate": 0.0,
-        "total": 1
       }
     },
     "by_regime": {
       "Sideways/Choppy": {
         "won": 5,
-        "lost": 3,
-        "win_rate": 62.5,
-        "total": 8
+        "lost": 2,
+        "win_rate": 71.4,
+        "total": 7
       }
     },
     "false_flip_rate_pct": null
@@ -104,8 +98,48 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "current": 11283.5,
-      "last_checked": "23 Jul 2026 21:22 IST"
+      "current": 10998.5,
+      "last_checked": "23 Jul 2026 20:22 IST"
+    },
+    {
+      "id": "eq-NESTLEIND-BUY-22Jul20262127IST",
+      "kind": "equity",
+      "symbol": "NESTLEIND",
+      "direction": "BUY",
+      "entry": 1493.6,
+      "entry_basis": "spot_price",
+      "entry_spot": 1493.6,
+      "stop": 1450.33,
+      "targets": [
+        1547.69,
+        1601.77,
+        1655.86
+      ],
+      "strike": null,
+      "option_type": null,
+      "ann_vol_at_open": null,
+      "expiry": null,
+      "vote_count": 2,
+      "voters": [
+        "Inna",
+        "Cianni"
+      ],
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 56,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "22 Jul 2026 21:27 IST",
+      "status": "open",
+      "close_reason": null,
+      "closed_at": null,
+      "exit": null,
+      "outcome_pct": null,
+      "current": 1493.6,
+      "last_checked": "23 Jul 2026 20:22 IST"
     },
     {
       "symbol": "AXISBANK",
@@ -129,7 +163,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-AXISBANK-BUY_PE-23Jul20260526IST",
       "kind": "fo_stock_spread",
       "entry": 20.0,
@@ -165,7 +199,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-NESTLEIND-BUY_CE-23Jul20260526IST",
       "kind": "fo_stock_spread",
       "entry": 10.0,
@@ -213,7 +247,7 @@
       "exit": null,
       "outcome_pct": null,
       "current": 1278.0,
-      "last_checked": "23 Jul 2026 21:22 IST"
+      "last_checked": "23 Jul 2026 20:22 IST"
     },
     {
       "symbol": "RELIANCE",
@@ -237,7 +271,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-RELIANCE-BUY_PE-23Jul20261232IST",
       "kind": "fo_stock_spread",
       "entry": 28.0,
@@ -273,7 +307,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-LT-BUY_PE-23Jul20261242IST",
       "kind": "fo_stock_spread",
       "entry": 24.0,
@@ -309,7 +343,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-MARUTI-BUY_PE-23Jul20261342IST",
       "kind": "fo_stock_spread",
       "entry": 27.0,
@@ -345,7 +379,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-TCS-BUY_CE-23Jul20261342IST",
       "kind": "fo_stock_spread",
       "entry": 15.0,
@@ -381,7 +415,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-SBIN-BUY_PE-23Jul20261442IST",
       "kind": "fo_stock_spread",
       "entry": 7.0,
@@ -417,7 +451,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-TITAN-BUY_CE-23Jul20261506IST",
       "kind": "fo_stock_spread",
       "entry": 18.0,
@@ -453,7 +487,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "23 Jul 2026 21:22 IST",
+      "last_checked": "23 Jul 2026 20:22 IST",
       "id": "fospr-HDFCBANK-BUY_PE-23Jul20261506IST",
       "kind": "fo_stock_spread",
       "entry": 4.0,
@@ -15803,46 +15837,6 @@
       "max_profit": 89.0,
       "max_loss": 11.0,
       "current": 1953.8
-    },
-    {
-      "id": "eq-NESTLEIND-BUY-22Jul20262127IST",
-      "kind": "equity",
-      "symbol": "NESTLEIND",
-      "direction": "BUY",
-      "entry": 1493.6,
-      "entry_basis": "spot_price",
-      "entry_spot": 1493.6,
-      "stop": 1450.33,
-      "targets": [
-        1547.69,
-        1601.77,
-        1655.86
-      ],
-      "strike": null,
-      "option_type": null,
-      "ann_vol_at_open": null,
-      "expiry": null,
-      "vote_count": 2,
-      "voters": [
-        "Inna",
-        "Cianni"
-      ],
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 56,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "22 Jul 2026 21:27 IST",
-      "status": "lost",
-      "close_reason": "stop_loss",
-      "closed_at": "23 Jul 2026 21:22 IST",
-      "exit": 1447.9,
-      "outcome_pct": -3.06,
-      "current": 1447.9,
-      "last_checked": "23 Jul 2026 21:22 IST"
     }
   ],
   "disclaimer": "Virtual recommendation track record -- scores the engine's OWN signals, not trades the user took. F&O marks are estimated premiums (no real option-chain feed exists here); spreads are scored coarsely vs breakeven at expiry. See recommendation_tracker.py docstring for full method + limits. Educational only, not investment advice."

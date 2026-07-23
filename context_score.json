@@ -1,5 +1,5 @@
 {
-  "generated_at": "23 Jul 2026 20:22 IST",
+  "generated_at": "23 Jul 2026 21:22 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -17,7 +17,7 @@
         "trade_quality": null,
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -85,7 +85,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -158,7 +158,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -226,7 +226,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -294,7 +294,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -365,7 +365,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -436,7 +436,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -507,7 +507,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -578,7 +578,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -649,7 +649,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -720,7 +720,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -782,7 +782,7 @@
             {
               "filter": "loss_streak",
               "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
+              "reason": "2 consecutive loss(es), below the 3 limit"
             },
             {
               "filter": "risk_reward",
@@ -793,80 +793,7 @@
         },
         "learning_history": {
           "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
-        }
-      },
-      "gating": {
-        "hard_blocked": false,
-        "hard_block_reason": null,
-        "advisory_flags": [
-          "sector_avoid"
-        ]
-      },
-      "inputs_used": {
-        "macro": true,
-        "regime": true,
-        "sector": true,
-        "instrument_quality": true,
-        "trade_quality": true,
-        "learning_history": false
-      },
-      "data_as_of": "2026-07-22"
-    },
-    "NESTLEIND": {
-      "kind": "equity",
-      "symbol": "NESTLEIND",
-      "raw_signal": "BUY",
-      "state": "HOLD",
-      "state_engine": "stateless_v1",
-      "state_reason": "open recommendation since 22 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 45.8,
-      "components": {
-        "macro": {
-          "score": 30,
-          "detail": "macro bias BEARISH opposes a long signal (risk MODERATE, score 45)"
-        },
-        "regime": {
-          "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=10.1) -- low conviction for any direction"
-        },
-        "sector": {
-          "score": 56.5,
-          "detail": "sector outperforming NIFTY by +1.30% (5d ROC) -- aligns with a long signal"
-        },
-        "instrument_quality": {
-          "score": 50.0,
-          "detail": "2/4 votes (of 4 named voters)"
-        },
-        "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
-          "filters": [
-            {
-              "filter": "market_regime",
-              "passed": true,
-              "reason": "Inna not flagged for the current regime"
-            },
-            {
-              "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
-            },
-            {
-              "filter": "loss_streak",
-              "passed": true,
-              "reason": "1 consecutive loss(es), below the 3 limit"
-            },
-            {
-              "filter": "risk_reward",
-              "passed": false,
-              "reason": "RR_TOO_LOW: 1.25 < required 2.0 for CNC"
-            }
-          ]
-        },
-        "learning_history": {
-          "insufficient_sample": true,
-          "detail": "only 4 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
+          "detail": "only 5 decisive recs for macro_risk_level=MODERATE -- treat as unproven, not scored"
         }
       },
       "gating": {
@@ -882,7 +809,7 @@
         "trade_quality": true,
         "learning_history": false
       },
-      "data_as_of": "2026-07-22"
+      "data_as_of": "2026-07-23"
     }
   },
   "inputs_available": {
