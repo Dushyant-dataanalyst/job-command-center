@@ -1,5 +1,5 @@
 {
-  "fetched_at": "23 Jul 2026 23:21 IST",
+  "fetched_at": "24 Jul 2026 00:21 IST",
   "risk_score": 80,
   "risk_level": "HIGH",
   "bias": "BEARISH",
@@ -9,33 +9,33 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +7.64% vs previous close (94.07 -> 101.26)",
+      "evidence": "BZ=F moved +6.97% vs previous close (94.07 -> 100.63)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 101.26,
+      "last": 100.63,
       "previous": 94.07,
-      "pct_change": 7.64,
+      "pct_change": 6.97,
       "evidence_class": "official"
     },
     {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "^VIX moved +17.49% vs previous close (16.64 -> 19.55)",
+      "evidence": "^VIX moved +17.07% vs previous close (16.64 -> 19.48)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 19.55,
+      "last": 19.48,
       "previous": 16.64,
-      "pct_change": 17.49,
+      "pct_change": 17.07,
       "evidence_class": "official"
     },
     {
       "name": "US markets selloff (last close)",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "Composite avg -1.50% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.26%, NASDAQ -2.14%, DOW -1.10%)",
+      "evidence": "Composite avg -1.58% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.37%, NASDAQ -2.33%, DOW -1.04%)",
       "source": "market_data",
-      "pct_change": -1.5,
+      "pct_change": -1.58,
       "evidence_class": "official"
     },
     {
@@ -78,9 +78,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 101.26,
+      "last": 100.63,
       "previous": 94.07,
-      "pct_change": 7.64
+      "pct_change": 6.97
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -90,51 +90,51 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.48,
-      "previous": 13.29,
-      "pct_change": 1.39
+      "last": 13.29,
+      "previous": 12.6,
+      "pct_change": 5.48
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 19.55,
+      "last": 19.48,
       "previous": 16.64,
-      "pct_change": 17.49
+      "pct_change": 17.07
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7404.5,
+      "last": 7395.88,
       "previous": 7498.96,
-      "pct_change": -1.26
+      "pct_change": -1.37
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25141.63,
+      "last": 25092.68,
       "previous": 25690.9,
-      "pct_change": -2.14
+      "pct_change": -2.33
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 51641.64,
+      "last": 51675.15,
       "previous": 52218.58,
-      "pct_change": -1.1
+      "pct_change": -1.04
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4046.2,
+      "last": 4047.8,
       "previous": 4146.9,
-      "pct_change": -2.43
+      "pct_change": -2.39
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 10.1,
+      "adx": 9.6,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 13.7,
-      "volatility": "Normal"
+      "adx": 13.8,
+      "volatility": "Low"
     }
   },
   "geopolitical_feed_status": "ok (rss_fallback)",
