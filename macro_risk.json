@@ -1,29 +1,41 @@
 {
-  "fetched_at": "23 Jul 2026 17:22 IST",
-  "risk_score": 33,
-  "risk_level": "MODERATE",
-  "bias": "BEARISH",
+  "fetched_at": "23 Jul 2026 18:21 IST",
+  "risk_score": 23,
+  "risk_level": "LOW",
+  "bias": "NEUTRAL",
   "confidence": 0.75,
   "factors": [
+    {
+      "name": "Crude oil cooling",
+      "impact": "bullish",
+      "severity": 2,
+      "evidence": "BZ=F moved -7.79% vs previous close (94.07 -> 86.74)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 86.74,
+      "previous": 94.07,
+      "pct_change": -7.79,
+      "evidence_class": "official"
+    },
     {
       "name": "US VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^VIX moved +9.62% vs previous close (16.64 -> 18.24)",
+      "evidence": "^VIX moved +11.84% vs previous close (16.64 -> 18.61)",
       "source": "market_data",
       "ticker": "^VIX",
-      "last": 18.24,
+      "last": 18.61,
       "previous": 16.64,
-      "pct_change": 9.62,
+      "pct_change": 11.84,
       "evidence_class": "official"
     },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "3 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Top US and Russian diplomats discuss Ukraine war in Manila\"",
-      "source": "https://www.aljazeera.com/news/2026/7/23/top-us-and-russian-diplomats-discuss-ukraine-war-in-manila?traffic_source=rss",
-      "published_at": "23 Jul 2026 12:48 IST",
+      "evidence": "4 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Can Iran withstand new pressure from the US?\"",
+      "source": "https://www.aljazeera.com/video/project-force-2/2026/7/23/can-iran-withstand-new-pressure-from-the-us?traffic_source=rss",
+      "published_at": "23 Jul 2026 17:25 IST",
       "evidence_class": "rumor",
       "corroborating_sources": 1,
       "news_source": "rss_fallback"
@@ -36,7 +48,7 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "position_size_multiplier": 1.0,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -53,9 +65,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 93.28,
+      "last": 86.74,
       "previous": 94.07,
-      "pct_change": -0.84
+      "pct_change": -7.79
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -71,9 +83,9 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.24,
+      "last": 18.61,
       "previous": 16.64,
-      "pct_change": 9.62
+      "pct_change": 11.84
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +107,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4080.0,
+      "last": 4074.4,
       "previous": 4146.9,
-      "pct_change": -1.61
+      "pct_change": -1.75
     }
   },
   "regime_context": {
