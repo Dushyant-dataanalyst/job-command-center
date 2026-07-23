@@ -1,7 +1,7 @@
 {
-  "fetched_at": "23 Jul 2026 06:26 IST",
-  "risk_score": 66,
-  "risk_level": "HIGH",
+  "fetched_at": "23 Jul 2026 07:26 IST",
+  "risk_score": 60,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
@@ -9,24 +9,12 @@
       "name": "Crude oil spike",
       "impact": "bearish",
       "severity": 5,
-      "evidence": "BZ=F moved +5.12% vs previous close (91.01 -> 95.67)",
+      "evidence": "BZ=F moved +5.13% vs previous close (91.01 -> 95.68)",
       "source": "market_data",
       "ticker": "BZ=F",
-      "last": 95.67,
+      "last": 95.68,
       "previous": 91.01,
-      "pct_change": 5.12,
-      "evidence_class": "official"
-    },
-    {
-      "name": "Gold safe-haven spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "GC=F moved +1.52% vs previous close (4071.1 -> 4133.0)",
-      "source": "market_data",
-      "ticker": "GC=F",
-      "last": 4133.0,
-      "previous": 4071.1,
-      "pct_change": 1.52,
+      "pct_change": 5.13,
       "evidence_class": "official"
     },
     {
@@ -44,11 +32,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": false,
+    "allow_new_longs": true,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
+    "min_votes_required": null,
+    "confirmation_refreshes": null,
+    "position_size_multiplier": 0.85,
     "avoid_sectors": [
       "Auto",
       "Aviation",
@@ -69,21 +57,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 95.67,
+      "last": 95.68,
       "previous": 91.01,
-      "pct_change": 5.12
+      "pct_change": 5.13
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.34,
-      "previous": 96.49,
-      "pct_change": -0.15
+      "last": 96.55,
+      "previous": 96.34,
+      "pct_change": 0.22
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 12.6,
-      "previous": 12.98,
-      "pct_change": -2.93
+      "last": 13.29,
+      "previous": 12.6,
+      "pct_change": 5.48
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -111,20 +99,20 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4133.0,
+      "last": 4125.8,
       "previous": 4071.1,
-      "pct_change": 1.52
+      "pct_change": 1.34
     }
   },
   "regime_context": {
     "NIFTY50": {
       "trend": "Sideways/Choppy",
-      "adx": 9.8,
+      "adx": 9.6,
       "volatility": "Low"
     },
     "BANKNIFTY": {
       "trend": "Sideways/Choppy",
-      "adx": 14.7,
+      "adx": 13.8,
       "volatility": "Low"
     }
   },
