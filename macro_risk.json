@@ -1,22 +1,10 @@
 {
-  "fetched_at": "23 Jul 2026 15:11 IST",
-  "risk_score": 17,
+  "fetched_at": "23 Jul 2026 15:16 IST",
+  "risk_score": 27,
   "risk_level": "LOW",
-  "bias": "NEUTRAL",
+  "bias": "BEARISH",
   "confidence": 0.75,
   "factors": [
-    {
-      "name": "Crude oil cooling",
-      "impact": "bullish",
-      "severity": 2,
-      "evidence": "BZ=F moved -7.90% vs previous close (94.07 -> 86.64)",
-      "source": "market_data",
-      "ticker": "BZ=F",
-      "last": 86.64,
-      "previous": 94.07,
-      "pct_change": -7.9,
-      "evidence_class": "official"
-    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -53,9 +41,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 86.64,
+      "last": 93.02,
       "previous": 94.07,
-      "pct_change": -7.9
+      "pct_change": -1.12
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -65,15 +53,15 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 13.47,
+      "last": 13.45,
       "previous": 13.29,
-      "pct_change": 1.37
+      "pct_change": 1.24
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 17.61,
+      "last": 17.62,
       "previous": 16.64,
-      "pct_change": 5.83
+      "pct_change": 5.89
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -95,9 +83,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4091.6,
+      "last": 4095.0,
       "previous": 4146.9,
-      "pct_change": -1.33
+      "pct_change": -1.25
     }
   },
   "regime_context": {
