@@ -1,22 +1,10 @@
 {
-  "fetched_at": "24 Jul 2026 11:46 IST",
-  "risk_score": 66,
-  "risk_level": "HIGH",
+  "fetched_at": "24 Jul 2026 11:51 IST",
+  "risk_score": 51,
+  "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
-    {
-      "name": "India VIX spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "^INDIAVIX moved +6.05% vs previous close (13.48 -> 14.3)",
-      "source": "market_data",
-      "ticker": "^INDIAVIX",
-      "last": 14.3,
-      "previous": 13.48,
-      "pct_change": 6.05,
-      "evidence_class": "official"
-    },
     {
       "name": "US VIX spike",
       "impact": "bearish",
@@ -53,11 +41,11 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": false,
+    "allow_new_longs": true,
     "allow_new_shorts": true,
-    "min_votes_required": 5,
-    "confirmation_refreshes": 3,
-    "position_size_multiplier": 0.5,
+    "min_votes_required": null,
+    "confirmation_refreshes": null,
+    "position_size_multiplier": 0.85,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -74,9 +62,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 100.35,
+      "last": 99.93,
       "previous": 100.69,
-      "pct_change": -0.34
+      "pct_change": -0.75
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -86,9 +74,9 @@
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 14.3,
+      "last": 14.17,
       "previous": 13.48,
-      "pct_change": 6.05
+      "pct_change": 5.14
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -116,9 +104,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4027.0,
+      "last": 4029.0,
       "previous": 4046.6,
-      "pct_change": -0.48
+      "pct_change": -0.43
     }
   },
   "regime_context": {
