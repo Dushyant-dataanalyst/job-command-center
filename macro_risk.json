@@ -1,10 +1,22 @@
 {
-  "fetched_at": "24 Jul 2026 07:41 IST",
-  "risk_score": 51,
-  "risk_level": "MODERATE",
+  "fetched_at": "24 Jul 2026 07:46 IST",
+  "risk_score": 76,
+  "risk_level": "HIGH",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
+    {
+      "name": "Crude oil spike",
+      "impact": "bearish",
+      "severity": 5,
+      "evidence": "BZ=F moved +6.52% vs previous close (94.07 -> 100.2)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 100.2,
+      "previous": 94.07,
+      "pct_change": 6.52,
+      "evidence_class": "official"
+    },
     {
       "name": "US VIX spike",
       "impact": "bearish",
@@ -41,12 +53,16 @@
   "stock_specific_alerts": [],
   "nse_announcement_fetch_errors": {},
   "trade_adjustments": {
-    "allow_new_longs": true,
+    "allow_new_longs": false,
     "allow_new_shorts": true,
-    "min_votes_required": null,
-    "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
-    "avoid_sectors": [],
+    "min_votes_required": 5,
+    "confirmation_refreshes": 3,
+    "position_size_multiplier": 0.5,
+    "avoid_sectors": [
+      "Auto",
+      "Aviation",
+      "OMC"
+    ],
     "watch_sectors": [
       "Defence",
       "Energy"
@@ -62,9 +78,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 100.21,
-      "previous": NaN,
-      "pct_change": NaN
+      "last": 100.2,
+      "previous": 94.07,
+      "pct_change": 6.52
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -104,9 +120,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4046.4,
+      "last": 4045.0,
       "previous": 4146.9,
-      "pct_change": -2.42
+      "pct_change": -2.46
     }
   },
   "regime_context": {
