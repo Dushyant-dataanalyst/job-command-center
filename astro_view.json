@@ -1,25 +1,25 @@
 {
-  "fetched_at": "23 Jul 2026 21:22 IST",
+  "fetched_at": "24 Jul 2026 21:27 IST",
   "astronomical_facts": {
     "moon": {
       "phase_name": "Waxing Gibbous",
-      "illumination_pct": 70.8,
+      "illumination_pct": 79.1,
       "waxing": true,
-      "age_days_since_new_moon": 9.3,
-      "days_to_next_new_moon": 20.1,
-      "days_to_next_full_moon": 5.9
+      "age_days_since_new_moon": 10.3,
+      "days_to_next_new_moon": 19.1,
+      "days_to_next_full_moon": 4.9
     },
     "mercury": {
-      "status": "retrograde",
-      "days_in_current_status": 23,
-      "next_station_date": "24 Jul 2026",
-      "next_station_type": "goes direct",
-      "days_to_next_station": 1
+      "status": "direct",
+      "days_in_current_status": 0,
+      "next_station_date": "25 Oct 2026",
+      "next_station_type": "goes retrograde",
+      "days_to_next_station": 93
     }
   },
   "folk_market_view": {
-    "moon_bias": "Waxing moon (Waxing Gibbous, 70.8% illuminated) -- some retail market-astrology sources treat the waxing half of the lunar cycle as a traditionally 'accumulating/bullish-leaning' period.",
-    "mercury_bias": "Mercury retrograde (day 23 of this cycle, goes direct around 24 Jul 2026) -- traditionally associated in folk market-astrology with communication breakdowns, contract/paperwork delays, and choppier price action, most often cited for IT/Telecom/Media names. Not a documented basis for the 4-voter technical engine or the F&O consensus.",
+    "moon_bias": "Waxing moon (Waxing Gibbous, 79.1% illuminated) -- some retail market-astrology sources treat the waxing half of the lunar cycle as a traditionally 'accumulating/bullish-leaning' period.",
+    "mercury_bias": "Mercury direct (day 0 of this cycle) -- no retrograde-associated caution in folk market-astrology right now.",
     "combined_note": "These two lines are a traditional belief, not a signal. They carry no weight anywhere in this system's actual trade logic -- see isolation_notice below."
   },
   "isolation_notice": "This feed is NOT read by macro_risk_refresh.py, macro_gate.py, expert_gate.py, trade_brain.py, stock_fo_refresh.py, or equity_scan_core.py -- nothing in the trade-decision path imports this file. It contributes zero points to risk_score, blocks nothing, sizes nothing, and generates no trade or alert by itself.",
