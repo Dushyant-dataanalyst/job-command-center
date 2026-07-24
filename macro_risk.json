@@ -1,5 +1,5 @@
 {
-  "fetched_at": "24 Jul 2026 11:41 IST",
+  "fetched_at": "24 Jul 2026 11:46 IST",
   "risk_score": 66,
   "risk_level": "HIGH",
   "bias": "BEARISH",
@@ -9,12 +9,12 @@
       "name": "India VIX spike",
       "impact": "bearish",
       "severity": 2,
-      "evidence": "^INDIAVIX moved +6.88% vs previous close (13.48 -> 14.41)",
+      "evidence": "^INDIAVIX moved +6.05% vs previous close (13.48 -> 14.3)",
       "source": "market_data",
       "ticker": "^INDIAVIX",
-      "last": 14.41,
+      "last": 14.3,
       "previous": 13.48,
-      "pct_change": 6.88,
+      "pct_change": 6.05,
       "evidence_class": "official"
     },
     {
@@ -42,7 +42,7 @@
       "name": "Geopolitical escalation",
       "impact": "bearish",
       "severity": 3,
-      "evidence": "4 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Oil prices hit $100 for the first time since May\"",
+      "evidence": "5 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"Oil prices hit $100 for the first time since May\"",
       "source": "https://www.bbc.co.uk/news/articles/cx2djnzrqk2o?at_medium=RSS&at_campaign=rss",
       "published_at": "23 Jul 2026 21:01 IST",
       "evidence_class": "reported",
@@ -74,21 +74,21 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 100.3,
+      "last": 100.35,
       "previous": 100.69,
-      "pct_change": -0.39
+      "pct_change": -0.34
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.53,
+      "last": 96.54,
       "previous": 96.56,
-      "pct_change": -0.03
+      "pct_change": -0.02
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 14.41,
+      "last": 14.3,
       "previous": 13.48,
-      "pct_change": 6.88
+      "pct_change": 6.05
     },
     "us_vix": {
       "ticker": "^VIX",
@@ -116,7 +116,7 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4027.3,
+      "last": 4027.0,
       "previous": 4046.6,
       "pct_change": -0.48
     }
