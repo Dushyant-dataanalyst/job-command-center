@@ -1,40 +1,19 @@
 {
-  "fetched_at": "24 Jul 2026 18:26 IST",
-  "risk_score": 35,
-  "risk_level": "MODERATE",
+  "fetched_at": "24 Jul 2026 19:26 IST",
+  "risk_score": 27,
+  "risk_level": "LOW",
   "bias": "BEARISH",
-  "confidence": 0.9,
+  "confidence": 0.75,
   "factors": [
-    {
-      "name": "Crude oil cooling",
-      "impact": "bullish",
-      "severity": 2,
-      "evidence": "BZ=F moved -9.09% vs previous close (100.69 -> 91.54)",
-      "source": "market_data",
-      "ticker": "BZ=F",
-      "last": 91.54,
-      "previous": 100.69,
-      "pct_change": -9.09,
-      "evidence_class": "official"
-    },
-    {
-      "name": "US markets selloff (last close)",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "Composite avg -1.44% across S&P500/Nasdaq/Dow last close vs previous session (SP500 -1.21%, NASDAQ -2.15%, DOW -0.97%)",
-      "source": "market_data",
-      "pct_change": -1.44,
-      "evidence_class": "official"
-    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
-      "severity": 3,
-      "evidence": "3 article(s) from 2 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"US and Iran trade more strikes in Gulf as fears of escalation mount\"",
+      "severity": 2,
+      "evidence": "2 article(s) from 1 distinct source(s) matching war/escalation/conflict keywords in the last 48h -- most recent: \"US and Iran trade more strikes in Gulf as fears of escalation mount\"",
       "source": "https://www.bbc.co.uk/news/articles/c05ql5llj4do?at_medium=RSS&at_campaign=rss",
       "published_at": "24 Jul 2026 14:50 IST",
-      "evidence_class": "reported",
-      "corroborating_sources": 2,
+      "evidence_class": "rumor",
+      "corroborating_sources": 1,
       "news_source": "rss_fallback"
     }
   ],
@@ -45,7 +24,7 @@
     "allow_new_shorts": true,
     "min_votes_required": null,
     "confirmation_refreshes": null,
-    "position_size_multiplier": 0.85,
+    "position_size_multiplier": 1.0,
     "avoid_sectors": [],
     "watch_sectors": [
       "Defence",
@@ -62,9 +41,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 91.54,
+      "last": 97.86,
       "previous": 100.69,
-      "pct_change": -9.09
+      "pct_change": -2.81
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -80,33 +59,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.69,
+      "last": 18.82,
       "previous": 18.7,
-      "pct_change": -0.05
+      "pct_change": 0.64
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7408.3,
-      "previous": 7498.96,
-      "pct_change": -1.21
+      "last": 7398.85,
+      "previous": 7408.3,
+      "pct_change": -0.13
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 25137.69,
-      "previous": 25690.9,
-      "pct_change": -2.15
+      "last": 24975.23,
+      "previous": 25137.69,
+      "pct_change": -0.65
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 51711.65,
-      "previous": 52218.58,
-      "pct_change": -0.97
+      "last": 51769.12,
+      "previous": 51711.65,
+      "pct_change": 0.11
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4058.6,
+      "last": 4054.8,
       "previous": 4046.6,
-      "pct_change": 0.3
+      "pct_change": 0.2
     }
   },
   "regime_context": {
