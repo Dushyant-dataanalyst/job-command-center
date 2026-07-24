@@ -1,10 +1,22 @@
 {
-  "fetched_at": "24 Jul 2026 19:26 IST",
-  "risk_score": 27,
+  "fetched_at": "24 Jul 2026 20:26 IST",
+  "risk_score": 17,
   "risk_level": "LOW",
-  "bias": "BEARISH",
+  "bias": "NEUTRAL",
   "confidence": 0.75,
   "factors": [
+    {
+      "name": "Crude oil cooling",
+      "impact": "bullish",
+      "severity": 2,
+      "evidence": "BZ=F moved -3.50% vs previous close (100.69 -> 97.17)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 97.17,
+      "previous": 100.69,
+      "pct_change": -3.5,
+      "evidence_class": "official"
+    },
     {
       "name": "Geopolitical escalation",
       "impact": "bearish",
@@ -18,7 +30,10 @@
     }
   ],
   "stock_specific_alerts": [],
-  "nse_announcement_fetch_errors": {},
+  "nse_announcement_fetch_errors": {
+    "DLF": "fetch_failed",
+    "SUNPHARMA": "fetch_failed"
+  },
   "trade_adjustments": {
     "allow_new_longs": true,
     "allow_new_shorts": true,
@@ -41,9 +56,9 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 97.86,
+      "last": 97.17,
       "previous": 100.69,
-      "pct_change": -2.81
+      "pct_change": -3.5
     },
     "usdinr": {
       "ticker": "INR=X",
@@ -59,33 +74,33 @@
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.82,
+      "last": 18.61,
       "previous": 18.7,
-      "pct_change": 0.64
+      "pct_change": -0.48
     },
     "sp500": {
       "ticker": "^GSPC",
-      "last": 7398.85,
+      "last": 7416.75,
       "previous": 7408.3,
-      "pct_change": -0.13
+      "pct_change": 0.11
     },
     "nasdaq": {
       "ticker": "^IXIC",
-      "last": 24975.23,
+      "last": 25009.27,
       "previous": 25137.69,
-      "pct_change": -0.65
+      "pct_change": -0.51
     },
     "dow": {
       "ticker": "^DJI",
-      "last": 51769.12,
+      "last": 51789.67,
       "previous": 51711.65,
-      "pct_change": 0.11
+      "pct_change": 0.15
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4054.8,
+      "last": 4061.6,
       "previous": 4046.6,
-      "pct_change": 0.2
+      "pct_change": 0.37
     }
   },
   "regime_context": {
