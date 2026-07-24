@@ -1,22 +1,10 @@
 {
-  "fetched_at": "24 Jul 2026 12:55 IST",
-  "risk_score": 51,
+  "fetched_at": "24 Jul 2026 13:01 IST",
+  "risk_score": 45,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
-    {
-      "name": "US VIX spike",
-      "impact": "bearish",
-      "severity": 2,
-      "evidence": "^VIX moved +12.38% vs previous close (16.64 -> 18.7)",
-      "source": "market_data",
-      "ticker": "^VIX",
-      "last": 18.7,
-      "previous": 16.64,
-      "pct_change": 12.38,
-      "evidence_class": "official"
-    },
     {
       "name": "US markets selloff (last close)",
       "impact": "bearish",
@@ -62,27 +50,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 98.88,
+      "last": 98.89,
       "previous": 100.69,
-      "pct_change": -1.8
+      "pct_change": -1.79
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.48,
+      "last": 96.39,
       "previous": 96.56,
-      "pct_change": -0.08
+      "pct_change": -0.17
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 14.02,
+      "last": 13.98,
       "previous": 13.48,
-      "pct_change": 4.02
+      "pct_change": 3.75
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.7,
-      "previous": 16.64,
-      "pct_change": 12.38
+      "last": 18.96,
+      "previous": 18.7,
+      "pct_change": 1.39
     },
     "sp500": {
       "ticker": "^GSPC",
