@@ -1,42 +1,42 @@
 {
   "NIFTY50": {
     "instrument": "NIFTY50",
-    "spot": 23717.95,
-    "ann_vol": 0.1266,
+    "spot": 23741.55,
+    "ann_vol": 0.1262,
     "consensus": "BUY_PE",
     "ce_votes": 0,
     "pe_votes": 4,
-    "commentary": "BUY_PE (4/6 votes): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (17.55) is below its signal line (73.17) -- bearish momentum (+1 PE) | price broke below pivot support S1 (23787.62) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -2.53%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "BUY_PE (4/6 votes): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (19.44) is below its signal line (73.55) -- bearish momentum (+1 PE) | price broke below pivot support S1 (23787.62) -- breakdown confirmed (+2 PE) | 5-day momentum (ROC5 -2.44%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "data_as_of": "2026-07-24",
-    "fetched_at": "24 Jul 2026 12:20 IST",
+    "fetched_at": "24 Jul 2026 12:25 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-24 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
-      "action": "BUY NIFTY 23700 PE",
+      "action": "BUY NIFTY 23750 PE",
       "near_expiry_caution": false,
-      "zerodha_symbol": "NIFTY26AUG23700PE",
-      "zerodha_search": "NIFTY AUG 23700 PE",
-      "strike": 23700,
+      "zerodha_symbol": "NIFTY26AUG23750PE",
+      "zerodha_search": "NIFTY AUG 23750 PE",
+      "strike": 23750,
       "expiry": "27 Aug 2026",
       "days_to_exp": 34,
       "lot_size": 75,
-      "entry_premium": 367.0,
-      "sl_premium": 257.0,
-      "target1_premium": 514.0,
-      "target_premium": 734.0,
-      "cost_1_lot": 27525.0
+      "entry_premium": 374.0,
+      "sl_premium": 262.0,
+      "target1_premium": 524.0,
+      "target_premium": 748.0,
+      "cost_1_lot": 28050.0
     }
   },
   "BANKNIFTY": {
     "instrument": "BANKNIFTY",
-    "spot": 56370.15,
-    "ann_vol": 0.1707,
+    "spot": 56453.15,
+    "ann_vol": 0.1704,
     "consensus": "WAIT",
     "ce_votes": 0,
     "pe_votes": 2,
-    "commentary": "WAIT (CE 0/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (105.07) is below its signal line (356.44) -- bearish momentum (+1 PE) | price is between pivot support (56334.45) and resistance (56889.85) -- no breakout yet | 5-day momentum (ROC5 -3.68%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
+    "commentary": "WAIT (CE 0/6, PE 2/6 -- neither side reached the 4-vote threshold): EMA18/EMA50 not cleanly stacked with price -- no trend edge from this factor | MACD (111.69) is below its signal line (357.77) -- bearish momentum (+1 PE) | price is between pivot support (56334.45) and resistance (56889.85) -- no breakout yet | 5-day momentum (ROC5 -3.53%) is strongly negative (+1 PE) \u26a0 All 4 factors above are derived from the same single price series -- not independent confirmations. A high vote count means one strong trend measured 4 ways, not 4 separate signals agreeing.",
     "data_as_of": "2026-07-24",
-    "fetched_at": "24 Jul 2026 12:20 IST",
+    "fetched_at": "24 Jul 2026 12:25 IST",
     "data_source": "yfinance",
     "data_warning": "Signals based on 2026-07-24 close (yfinance EOD, delayed/unofficial). Verify in Kite before trading.",
     "trade": {
@@ -56,7 +56,7 @@
     }
   },
   "_meta": {
-    "generated_at": "24 Jul 2026 12:20 IST",
+    "generated_at": "24 Jul 2026 12:25 IST",
     "source": "yfinance EOD (delayed/unofficial)"
   }
 }
