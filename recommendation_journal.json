@@ -1,13 +1,13 @@
 {
-  "generated_at": "24 Jul 2026 14:51 IST",
+  "generated_at": "24 Jul 2026 14:56 IST",
   "summary": {
-    "open_count": 6,
-    "closed_count": 489,
+    "open_count": 5,
+    "closed_count": 490,
     "decisive_count": 8,
     "won": 5,
     "lost": 3,
     "expired_count": 0,
-    "invalidated_count": 481,
+    "invalidated_count": 482,
     "win_rate_pct": 62.5,
     "avg_return_pct": 27.99,
     "by_kind": {
@@ -105,7 +105,7 @@
       "exit": null,
       "outcome_pct": null,
       "current": 11283.5,
-      "last_checked": "24 Jul 2026 14:51 IST"
+      "last_checked": "24 Jul 2026 14:56 IST"
     },
     {
       "symbol": "AXISBANK",
@@ -129,7 +129,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "24 Jul 2026 14:51 IST",
+      "last_checked": "24 Jul 2026 14:56 IST",
       "id": "fospr-AXISBANK-BUY_PE-24Jul20260521IST",
       "kind": "fo_stock_spread",
       "entry": 9.0,
@@ -141,7 +141,7 @@
       "breakeven": 1191.0,
       "max_profit": 91.0,
       "max_loss": 9.0,
-      "current": 1229.6
+      "current": 1230.7
     },
     {
       "symbol": "RELIANCE",
@@ -165,7 +165,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "24 Jul 2026 14:51 IST",
+      "last_checked": "24 Jul 2026 14:56 IST",
       "id": "fospr-RELIANCE-BUY_PE-24Jul20260521IST",
       "kind": "fo_stock_spread",
       "entry": 8.0,
@@ -177,7 +177,7 @@
       "breakeven": 1242.0,
       "max_profit": 92.0,
       "max_loss": 8.0,
-      "current": 1277.8
+      "current": 1279.5
     },
     {
       "symbol": "BAJFINANCE",
@@ -201,7 +201,7 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "last_checked": "24 Jul 2026 14:51 IST",
+      "last_checked": "24 Jul 2026 14:56 IST",
       "id": "fospr-BAJFINANCE-BUY_PE-24Jul20260917IST",
       "kind": "fo_stock_spread",
       "entry": 14.0,
@@ -213,7 +213,7 @@
       "breakeven": 986.0,
       "max_profit": 86.0,
       "max_loss": 14.0,
-      "current": 1012.4
+      "current": 1013.8
     },
     {
       "id": "foidx-NIFTY50-BUY_PE-24Jul20261421IST",
@@ -248,44 +248,8 @@
       "closed_at": null,
       "exit": null,
       "outcome_pct": null,
-      "current": 391.0,
-      "last_checked": "24 Jul 2026 14:51 IST"
-    },
-    {
-      "symbol": "HINDUNILVR",
-      "direction": "BUY_PE",
-      "entry_spot": 2144.8,
-      "option_type": "PE",
-      "expiry": "27 Aug 2026",
-      "vote_count": 4,
-      "voters": null,
-      "market_regime": "Sideways/Choppy",
-      "data_source": "yfinance",
-      "macro_context_at_open": {
-        "risk_level": "MODERATE",
-        "bias": "BEARISH",
-        "risk_score": 35,
-        "position_size_multiplier": 0.85
-      },
-      "opened_at": "24 Jul 2026 14:46 IST",
-      "status": "open",
-      "close_reason": null,
-      "closed_at": null,
-      "exit": null,
-      "outcome_pct": null,
-      "last_checked": "24 Jul 2026 14:51 IST",
-      "id": "fospr-HINDUNILVR-BUY_PE-24Jul20261446IST",
-      "kind": "fo_stock_spread",
-      "entry": 21.0,
-      "entry_basis": "spread_underlying_vs_breakeven",
-      "stop": null,
-      "targets": null,
-      "long_strike": 2150,
-      "short_strike": 2050,
-      "breakeven": 2129.0,
-      "max_profit": 79.0,
-      "max_loss": 21.0,
-      "current": 2143.2
+      "current": 380.0,
+      "last_checked": "24 Jul 2026 14:56 IST"
     },
     {
       "symbol": "ICICIBANK",
@@ -17499,6 +17463,42 @@
       "max_profit": 59.0,
       "max_loss": 41.0,
       "current": 1035.7
+    },
+    {
+      "symbol": "HINDUNILVR",
+      "direction": "BUY_PE",
+      "entry_spot": 2144.8,
+      "option_type": "PE",
+      "expiry": "27 Aug 2026",
+      "vote_count": 4,
+      "voters": null,
+      "market_regime": "Sideways/Choppy",
+      "data_source": "yfinance",
+      "macro_context_at_open": {
+        "risk_level": "MODERATE",
+        "bias": "BEARISH",
+        "risk_score": 35,
+        "position_size_multiplier": 0.85
+      },
+      "opened_at": "24 Jul 2026 14:46 IST",
+      "status": "invalidated",
+      "close_reason": "signal_invalidated",
+      "closed_at": "24 Jul 2026 14:56 IST",
+      "exit": 2146.4,
+      "outcome_pct": 0.07,
+      "last_checked": "24 Jul 2026 14:56 IST",
+      "id": "fospr-HINDUNILVR-BUY_PE-24Jul20261446IST",
+      "kind": "fo_stock_spread",
+      "entry": 21.0,
+      "entry_basis": "spread_underlying_vs_breakeven",
+      "stop": null,
+      "targets": null,
+      "long_strike": 2150,
+      "short_strike": 2050,
+      "breakeven": 2129.0,
+      "max_profit": 79.0,
+      "max_loss": 21.0,
+      "current": 2146.4
     }
   ],
   "disclaimer": "Virtual recommendation track record -- scores the engine's OWN signals, not trades the user took. F&O marks are estimated premiums (no real option-chain feed exists here); spreads are scored coarsely vs breakeven at expiry. See recommendation_tracker.py docstring for full method + limits. Educational only, not investment advice."
