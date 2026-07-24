@@ -1,5 +1,5 @@
 {
-  "generated_at": "24 Jul 2026 09:12 IST",
+  "generated_at": "24 Jul 2026 09:17 IST",
   "fo_index": {
     "NIFTY50": {
       "kind": "fo_index",
@@ -7,8 +7,8 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "expert_gate_persistent",
-      "state_reason": "BUY_PE forming -- waiting on: persist 1/3; choppy/sideways regime; outside entry time window; 4 < 5 votes",
-      "context_score": 51.2,
+      "state_reason": "BUY_PE forming -- waiting on: persist 2/3; choppy/sideways regime; outside entry time window; 4 < 5 votes",
+      "context_score": 46.2,
       "components": {
         "macro": {
           "score": 39,
@@ -16,7 +16,7 @@
         },
         "regime": {
           "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.0) -- low conviction for any direction"
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
         },
         "sector": null,
         "instrument_quality": {
@@ -24,8 +24,8 @@
           "detail": "4/6 votes (index 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -34,8 +34,8 @@
             },
             {
               "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
             },
             {
               "filter": "loss_streak",
@@ -76,7 +76,7 @@
       "state": "SETUP_FORMING",
       "state_engine": "expert_gate_persistent",
       "state_reason": "BUY_PE forming -- waiting on: choppy/sideways regime; outside entry time window; 4 < 5 votes",
-      "context_score": 51.2,
+      "context_score": 46.2,
       "components": {
         "macro": {
           "score": 39,
@@ -92,8 +92,8 @@
           "detail": "4/6 votes (index 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -102,8 +102,8 @@
             },
             {
               "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
             },
             {
               "filter": "loss_streak",
@@ -145,8 +145,8 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 51.8 between 35 and 65",
-      "context_score": 51.8,
+      "state_reason": "context_score 47.4 between 35 and 65",
+      "context_score": 47.4,
       "components": {
         "macro": {
           "score": 39,
@@ -154,19 +154,19 @@
         },
         "regime": {
           "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.0) -- low conviction for any direction"
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
         },
         "sector": {
-          "score": 56.4,
-          "detail": "sector outperforming NIFTY by -1.28% (5d ROC) -- aligns with a short signal"
+          "score": 56.8,
+          "detail": "sector outperforming NIFTY by -1.35% (5d ROC) -- aligns with a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -175,8 +175,286 @@
             },
             {
               "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
+            },
+            {
+              "filter": "loss_streak",
               "passed": true,
-              "reason": "outside all blocked windows"
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-24"
+    },
+    "LT": {
+      "kind": "fo_stock",
+      "symbol": "LT",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 50.6 between 35 and 65",
+      "context_score": 50.6,
+      "components": {
+        "macro": {
+          "score": 39,
+          "detail": "macro bias BEARISH aligns with a short signal (risk HIGH, score 76)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
+        },
+        "sector": null,
+        "instrument_quality": {
+          "score": 83.3,
+          "detail": "5/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 2 decisive recs for kind=fo_stock -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": false,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-24"
+    },
+    "BAJFINANCE": {
+      "kind": "fo_stock",
+      "symbol": "BAJFINANCE",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 46.2 between 35 and 65",
+      "context_score": 46.2,
+      "components": {
+        "macro": {
+          "score": 39,
+          "detail": "macro bias BEARISH aligns with a short signal (risk HIGH, score 76)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
+        },
+        "sector": null,
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": false,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-24"
+    },
+    "MARUTI": {
+      "kind": "fo_stock",
+      "symbol": "MARUTI",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 44.4 between 35 and 65",
+      "context_score": 44.4,
+      "components": {
+        "macro": {
+          "score": 39,
+          "detail": "macro bias BEARISH aligns with a short signal (risk HIGH, score 76)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 30.9,
+          "detail": "sector underperforming NIFTY by +3.83% (5d ROC) -- opposes a short signal"
+        },
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 4 decisive recs for vote_count=4 -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-24"
+    },
+    "HDFCBANK": {
+      "kind": "fo_stock",
+      "symbol": "HDFCBANK",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 47.4 between 35 and 65",
+      "context_score": 47.4,
+      "components": {
+        "macro": {
+          "score": 39,
+          "detail": "macro bias BEARISH aligns with a short signal (risk HIGH, score 76)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 56.8,
+          "detail": "sector outperforming NIFTY by -1.35% (5d ROC) -- aligns with a short signal"
+        },
+        "instrument_quality": {
+          "score": 66.7,
+          "detail": "4/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
             },
             {
               "filter": "loss_streak",
@@ -216,8 +494,8 @@
       "raw_signal": "BUY_PE",
       "state": "SETUP_FORMING",
       "state_engine": "stateless_v1",
-      "state_reason": "context_score 50.0 between 35 and 65",
-      "context_score": 50.0,
+      "state_reason": "context_score 45.6 between 35 and 65",
+      "context_score": 45.6,
       "components": {
         "macro": {
           "score": 39,
@@ -225,19 +503,19 @@
         },
         "regime": {
           "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.0) -- low conviction for any direction"
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
         },
         "sector": {
-          "score": 41.2,
-          "detail": "sector underperforming NIFTY by +1.76% (5d ROC) -- opposes a short signal"
+          "score": 40.9,
+          "detail": "sector underperforming NIFTY by +1.82% (5d ROC) -- opposes a short signal"
         },
         "instrument_quality": {
           "score": 66.7,
           "detail": "4/6 votes (stock 3-factor consensus)"
         },
         "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -246,8 +524,8 @@
             },
             {
               "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
             },
             {
               "filter": "loss_streak",
@@ -280,6 +558,77 @@
         "learning_history": false
       },
       "data_as_of": "2026-07-24"
+    },
+    "INFY": {
+      "kind": "fo_stock",
+      "symbol": "INFY",
+      "raw_signal": "BUY_PE",
+      "state": "SETUP_FORMING",
+      "state_engine": "stateless_v1",
+      "state_reason": "context_score 54.6 between 35 and 65",
+      "context_score": 54.6,
+      "components": {
+        "macro": {
+          "score": 39,
+          "detail": "macro bias BEARISH aligns with a short signal (risk HIGH, score 76)"
+        },
+        "regime": {
+          "score": 30,
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
+        },
+        "sector": {
+          "score": 51.0,
+          "detail": "sector outperforming NIFTY by -0.21% (5d ROC) -- aligns with a short signal"
+        },
+        "instrument_quality": {
+          "score": 100.0,
+          "detail": "6/6 votes (stock 3-factor consensus)"
+        },
+        "trade_quality": {
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
+          "filters": [
+            {
+              "filter": "market_regime",
+              "passed": true,
+              "reason": "candidate not flagged for the current regime"
+            },
+            {
+              "filter": "time_window",
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
+            },
+            {
+              "filter": "loss_streak",
+              "passed": true,
+              "reason": "1 consecutive loss(es), below the 3 limit"
+            },
+            {
+              "filter": "risk_reward",
+              "passed": false,
+              "reason": "missing entry/stop/target \u2014 cannot evaluate R:R, fail closed"
+            }
+          ]
+        },
+        "learning_history": {
+          "insufficient_sample": true,
+          "detail": "only 2 decisive recs for vote_count=6 -- treat as unproven, not scored"
+        }
+      },
+      "gating": {
+        "hard_blocked": false,
+        "hard_block_reason": null,
+        "advisory_flags": []
+      },
+      "inputs_used": {
+        "macro": true,
+        "regime": true,
+        "sector": true,
+        "instrument_quality": true,
+        "trade_quality": true,
+        "learning_history": false
+      },
+      "data_as_of": "2026-07-24"
     }
   },
   "equity": {
@@ -290,7 +639,7 @@
       "state": "HOLD",
       "state_engine": "stateless_v1",
       "state_reason": "open recommendation since 22 Jul 2026 21:27 IST (direction BUY)",
-      "context_score": 36.8,
+      "context_score": 32.3,
       "components": {
         "macro": {
           "score": 0,
@@ -298,19 +647,19 @@
         },
         "regime": {
           "score": 30,
-          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.0) -- low conviction for any direction"
+          "detail": "choppy/weak-trend regime (trend=Sideways/Choppy, ADX=11.1) -- low conviction for any direction"
         },
         "sector": {
-          "score": 70.5,
-          "detail": "sector outperforming NIFTY by +4.11% (5d ROC) -- aligns with a long signal"
+          "score": 69.2,
+          "detail": "sector outperforming NIFTY by +3.83% (5d ROC) -- aligns with a long signal"
         },
         "instrument_quality": {
           "score": 35.0,
           "detail": "2/4 votes (of 4 named voters) -- CAUTION: +5.7% move on 3.44x volume 2d ago, possible earnings/news shock still working through the signal"
         },
         "trade_quality": {
-          "score": 75.0,
-          "detail": "market_regime:OK; time_window:OK; loss_streak:OK; risk_reward:FAIL",
+          "score": 50.0,
+          "detail": "market_regime:OK; time_window:FAIL; loss_streak:OK; risk_reward:FAIL",
           "filters": [
             {
               "filter": "market_regime",
@@ -319,8 +668,8 @@
             },
             {
               "filter": "time_window",
-              "passed": true,
-              "reason": "outside all blocked windows"
+              "passed": false,
+              "reason": "within first 15 min of session (09:15-09:30) \u2014 opening volatility/spread risk"
             },
             {
               "filter": "loss_streak",
