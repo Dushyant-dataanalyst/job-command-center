@@ -1,10 +1,22 @@
 {
-  "fetched_at": "24 Jul 2026 13:06 IST",
-  "risk_score": 45,
+  "fetched_at": "24 Jul 2026 13:11 IST",
+  "risk_score": 35,
   "risk_level": "MODERATE",
   "bias": "BEARISH",
   "confidence": 0.9,
   "factors": [
+    {
+      "name": "Crude oil cooling",
+      "impact": "bullish",
+      "severity": 2,
+      "evidence": "BZ=F moved -8.15% vs previous close (100.69 -> 92.48)",
+      "source": "market_data",
+      "ticker": "BZ=F",
+      "last": 92.48,
+      "previous": 100.69,
+      "pct_change": -8.15,
+      "evidence_class": "official"
+    },
     {
       "name": "US markets selloff (last close)",
       "impact": "bearish",
@@ -50,27 +62,27 @@
   "market_snapshot": {
     "crude_brent": {
       "ticker": "BZ=F",
-      "last": 98.66,
+      "last": 92.48,
       "previous": 100.69,
-      "pct_change": -2.02
+      "pct_change": -8.15
     },
     "usdinr": {
       "ticker": "INR=X",
-      "last": 96.42,
+      "last": 96.44,
       "previous": 96.56,
-      "pct_change": -0.14
+      "pct_change": -0.12
     },
     "india_vix": {
       "ticker": "^INDIAVIX",
-      "last": 14.03,
+      "last": 14.15,
       "previous": 13.48,
-      "pct_change": 4.12
+      "pct_change": 4.99
     },
     "us_vix": {
       "ticker": "^VIX",
-      "last": 18.83,
+      "last": 18.76,
       "previous": 18.7,
-      "pct_change": 0.7
+      "pct_change": 0.32
     },
     "sp500": {
       "ticker": "^GSPC",
@@ -92,9 +104,9 @@
     },
     "gold": {
       "ticker": "GC=F",
-      "last": 4051.8,
+      "last": 4053.2,
       "previous": 4046.6,
-      "pct_change": 0.13
+      "pct_change": 0.16
     }
   },
   "regime_context": {
