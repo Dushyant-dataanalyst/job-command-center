@@ -1,5 +1,5 @@
 {
-  "fetched_at": "24 Jul 2026 15:31 IST",
+  "fetched_at": "24 Jul 2026 15:35 IST",
   "data_source": "yfinance (NSE EOD/delayed quotes, fetched live at call time)",
   "method": "score = 5-day ROC% x relative volume (today's volume / 20-day avg volume). Higher = stronger momentum + heavier-than-usual participation. rs_vs_nifty_pct = this sector's/stock's own 5-day ROC% minus NIFTY50's 5-day ROC% over the same window -- a plain difference, not a calibrated percentile rating.",
   "nifty_roc5_pct": -2.33,
@@ -128,14 +128,14 @@
       },
       {
         "symbol": "EICHERMOT",
-        "roc5_pct": 1.12,
+        "roc5_pct": 0.85,
         "rel_volume": 0.55,
         "bullish_trend": true,
-        "last_close": 7648.0,
+        "last_close": 7628.0,
         "data_as_of": "2026-07-24",
         "data_source": "yfinance",
-        "score": 0.62,
-        "rs_vs_nifty_pct": 3.45
+        "score": 0.47,
+        "rs_vs_nifty_pct": 3.18
       },
       {
         "symbol": "M&M",
@@ -152,14 +152,14 @@
     "FMCG": [
       {
         "symbol": "ITC",
-        "roc5_pct": 1.18,
+        "roc5_pct": 0.98,
         "rel_volume": 1.83,
         "bullish_trend": false,
-        "last_close": 284.0,
+        "last_close": 283.45,
         "data_as_of": "2026-07-24",
         "data_source": "yfinance",
-        "score": 2.16,
-        "rs_vs_nifty_pct": 3.51
+        "score": 1.79,
+        "rs_vs_nifty_pct": 3.31
       },
       {
         "symbol": "NESTLEIND",
@@ -174,14 +174,14 @@
       },
       {
         "symbol": "HINDUNILVR",
-        "roc5_pct": 0.13,
+        "roc5_pct": 0.06,
         "rel_volume": 0.91,
         "bullish_trend": false,
-        "last_close": 2146.5,
+        "last_close": 2145.0,
         "data_as_of": "2026-07-24",
         "data_source": "yfinance",
-        "score": 0.12,
-        "rs_vs_nifty_pct": 2.46
+        "score": 0.05,
+        "rs_vs_nifty_pct": 2.39
       }
     ],
     "Pharma": [
@@ -198,25 +198,25 @@
       },
       {
         "symbol": "DIVISLAB",
-        "roc5_pct": 0.03,
+        "roc5_pct": 0.43,
         "rel_volume": 0.77,
         "bullish_trend": true,
-        "last_close": 7220.0,
+        "last_close": 7248.5,
         "data_as_of": "2026-07-24",
         "data_source": "yfinance",
-        "score": 0.02,
-        "rs_vs_nifty_pct": 2.36
+        "score": 0.33,
+        "rs_vs_nifty_pct": 2.76
       },
       {
         "symbol": "AUROPHARMA",
-        "roc5_pct": -0.41,
+        "roc5_pct": -0.09,
         "rel_volume": 0.35,
         "bullish_trend": false,
-        "last_close": 1527.1,
+        "last_close": 1532.0,
         "data_as_of": "2026-07-24",
         "data_source": "yfinance",
-        "score": -0.14,
-        "rs_vs_nifty_pct": 1.92
+        "score": -0.03,
+        "rs_vs_nifty_pct": 2.24
       }
     ]
   },
