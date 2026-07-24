@@ -442,7 +442,7 @@
       "target2_premium": 738.0,
       "opened_at": "24 Jul 2026 09:10 IST",
       "status": "open",
-      "current_premium": 370.0,
+      "current_premium": 377.0,
       "closed_at": null,
       "exit_premium": null,
       "exit_reason": null,
@@ -453,12 +453,40 @@
         "risk_score": 76,
         "position_size_multiplier": 0.5
       },
-      "last_checked": "24 Jul 2026 09:47 IST"
+      "last_checked": "24 Jul 2026 09:50 IST"
+    },
+    {
+      "id": "BANKNIFTY-2026-07-24-BUY_PE-24Jul20260950IST",
+      "instrument": "BANKNIFTY",
+      "consensus": "BUY_PE",
+      "option_type": "PE",
+      "votes": "4/5",
+      "votes_n": 4,
+      "strike": 56100,
+      "expiry": "26 Aug 2026",
+      "entry_spot": 56072.9,
+      "entry_premium": 1191.0,
+      "sl_premium": 834.0,
+      "target1_premium": 1667.0,
+      "target2_premium": 2382.0,
+      "opened_at": "24 Jul 2026 09:50 IST",
+      "status": "open",
+      "current_premium": 1191.0,
+      "closed_at": null,
+      "exit_premium": null,
+      "exit_reason": null,
+      "pnl_pct": null,
+      "macro_context": {
+        "risk_level": "HIGH",
+        "bias": "BEARISH",
+        "risk_score": 66,
+        "position_size_multiplier": 0.5
+      }
     }
   ],
   "stats": {
     "total_closed": 15,
-    "open_count": 1,
+    "open_count": 2,
     "wins": 7,
     "losses": 8,
     "win_rate": 46.7,
@@ -527,6 +555,6 @@
     "loss_diagnostic": "Your losses are concentrated in 4/5-vote setups (6 of 8 losses, out of 11 total 4/5 trades). 5/5 setups are 66.7% win so far \u2014 consider raising your entry threshold."
   },
   "_meta": {
-    "generated_at": "24 Jul 2026 09:47 IST"
+    "generated_at": "24 Jul 2026 09:50 IST"
   }
 }
